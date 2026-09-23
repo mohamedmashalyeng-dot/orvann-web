@@ -1,0 +1,112 @@
+.index {
+  display: grid;
+  gap: var(--space-8);
+}
+
+/* ---------- Filter bar ---------- */
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  padding-block-end: var(--space-5);
+  border-block-end: 1px solid var(--line-strong);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.filter {
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: none;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.filter:hover {
+  border-color: var(--text);
+}
+
+.filter[aria-pressed="true"] {
+  border-color: var(--text);
+  background-color: var(--text);
+  color: var(--surface);
+}
+
+.count {
+  color: var(--text-muted);
+}
+
+/* ---------- Cards ---------- */
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8) var(--grid-gap);
+  align-items: start;
+}
+
+@media (min-width: 48em) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.article {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* The frame takes the image's own proportions, so every project is shown whole. */
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 2 / 1);
+  margin-block-end: var(--space-2);
+  background-color: var(--surface-raised);
+}
+
+.image {
+  object-fit: cover;
+  transition: scale 900ms var(--ease-out-expo);
+}
+
+.media:hover .image {
+  scale: 1.03;
+}
+
+.mediaLink {
+  position: absolute;
+  inset: 0;
+}
+
+.title {
+  max-width: 24ch;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline;
+}
+
+.disciplines {
+  color: var(--accent-text);
+}

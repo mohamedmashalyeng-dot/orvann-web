@@ -1,0 +1,333 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-block-end: var(--space-9);
+}
+
+.headMain,
+.headAside {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.headAside {
+  gap: var(--space-4);
+}
+
+/* ---------- Discipline groups ---------- */
+
+.group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  padding-block: var(--space-7) var(--space-8);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.groupHead {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  justify-items: start;
+}
+
+.groupTitle {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.verb {
+  font-size: var(--text-3xl);
+  line-height: 0.9;
+  color: var(--accent-text);
+  transition: translate var(--duration-slow) var(--ease-standard);
+}
+
+/* The group's verb leans toward whichever of its rows is active. */
+.group:has(.trigger:hover, .trigger:focus-visible, .row[data-open="true"]) .verb {
+  translate: calc(0.08em * var(--dir)) 0;
+}
+
+/* ---------- Numbered rows ---------- */
+
+.rows {
+  display: grid;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) 2.75rem;
+  column-gap: var(--space-3);
+  border-block-start: 1px solid var(--line);
+}
+
+.row:first-child {
+  border-block-start-color: transparent;
+}
+
+/* Accent hairline that draws along the row's top edge on hover, focus or open. */
+.row::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: -1px;
+  height: 1px;
+  background-color: var(--accent-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+[dir="rtl"] .row::before {
+  transform-origin: right center;
+}
+
+.row:hover::before,
+.row:focus-within::before,
+.row[data-open="true"]::before {
+  transform: scaleX(1);
+}
+
+.rowHeading {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.trigger {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: start;
+  padding: var(--space-5) 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.number {
+  grid-column: 1;
+  padding-block-start: 0.55em;
+  color: var(--text-muted);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.rowTitle {
+  grid-column: 2;
+}
+
+.icon {
+  grid-column: 3;
+  justify-self: end;
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition:
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.icon::before,
+.icon::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 0.875rem;
+  height: 1.5px;
+  background-color: currentColor;
+  translate: -50% -50%;
+  transition: rotate var(--duration-slow) var(--ease-standard);
+}
+
+[dir="rtl"] .icon::before,
+[dir="rtl"] .icon::after {
+  translate: 50% -50%;
+}
+
+.icon::after {
+  rotate: 90deg;
+}
+
+.trigger:hover .number,
+.trigger:focus-visible .number,
+.row[data-open="true"] .number {
+  color: var(--accent-text);
+}
+
+.trigger:hover .icon,
+.trigger:focus-visible .icon {
+  border-color: var(--text);
+}
+
+.row[data-open="true"] .icon {
+  border-color: var(--text);
+  background-color: var(--text);
+  color: var(--surface);
+}
+
+.row[data-open="true"] .icon::after {
+  rotate: 0deg;
+}
+
+.rowText {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  padding-block-end: var(--space-5);
+}
+
+/* Details open with a height transition that needs no measuring (0fr → 1fr). */
+.panel {
+  grid-column: 2 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--duration-slow) var(--ease-standard),
+    visibility 0s linear var(--duration-slow);
+}
+
+.row[data-open="true"] .panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.detailsLabel {
+  margin-block-end: var(--space-3);
+  color: var(--text-muted);
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-block-end: var(--space-5);
+}
+
+.details li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-raised);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ---------- Also from ORVANN ---------- */
+
+.more {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  padding-block-start: var(--space-7);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.moreTitle {
+  color: var(--text-muted);
+}
+
+.all {
+  margin-block-start: var(--space-8);
+}
+
+.moreList {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.moreItemTitle {
+  font-weight: var(--weight-medium);
+  margin-block-end: var(--space-1);
+}
+
+@media (min-width: 48em) {
+  .moreList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+}
+
+@media (min-width: 64em) {
+  .head,
+  .group,
+  .more {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .head {
+    align-items: end;
+  }
+
+  .headMain {
+    grid-column: 1 / span 8;
+  }
+
+  .headAside {
+    grid-column: 9 / -1;
+  }
+
+  .groupHead {
+    grid-column: 1 / span 4;
+    position: sticky;
+    inset-block-start: calc(var(--header-height) + var(--space-6));
+    align-self: start;
+  }
+
+  .rowsWrap {
+    grid-column: 6 / -1;
+  }
+
+  /* Number | title | description | toggle. The description overlaps the trigger's
+     row but lets clicks through, so the whole row header toggles the details. */
+  .row {
+    grid-template-columns: 3rem minmax(0, 0.9fr) minmax(0, 1.1fr) 2.75rem;
+    column-gap: var(--grid-gap);
+  }
+
+  .trigger {
+    padding-block-end: var(--space-5);
+  }
+
+  .icon {
+    grid-column: 4;
+  }
+
+  .rowText {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    padding-block: var(--space-5);
+    pointer-events: none;
+  }
+
+  .panel {
+    grid-column: 3 / -1;
+    grid-row: 2;
+  }
+
+  .moreTitle {
+    grid-column: 1 / span 4;
+  }
+
+  .moreList {
+    grid-column: 6 / -1;
+  }
+}

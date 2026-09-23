@@ -1,0 +1,94 @@
+/*
+ * Hover and keyboard focus share one feedback: a fill wipes up behind the label and the
+ * arrow nudges forward. Only a pseudo-element and the icon move — the link's own box
+ * (the click target) never changes size or position.
+ */
+.button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  /* Labels stay on one line, but may wrap rather than overflow on very narrow screens. */
+  max-width: 100%;
+  text-wrap: balance;
+  transition:
+    color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: var(--hover-bg);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.button:hover,
+.button:focus-visible {
+  color: var(--hover-fg);
+  border-color: var(--hover-bg);
+}
+
+/* Label and icon travel together; magnetic buttons move this, never the link itself. */
+.inner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.md {
+  min-height: 3.25rem;
+  padding-block: var(--space-2);
+  /* Narrower padding on small screens keeps long labels inside the column at large text sizes. */
+  padding-inline: clamp(var(--space-4), 6vw, var(--space-6));
+  font-size: var(--text-base);
+}
+
+.sm {
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.primary {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.secondary {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.icon {
+  width: 1.125em;
+  height: 1.125em;
+  flex: none;
+  transition: translate var(--duration-base) var(--ease-standard);
+}
+
+.button:hover .icon,
+.button:focus-visible .icon {
+  translate: calc(0.25em * var(--dir)) 0;
+}

@@ -1,0 +1,84 @@
+/* ---------- Family index beside the intro (desktop) ---------- */
+
+.index {
+  display: grid;
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.indexLink {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--line);
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.indexLink span {
+  color: var(--text-muted);
+}
+
+.indexLink:hover,
+.indexLink:focus-visible {
+  color: var(--accent-text);
+}
+
+/* ---------- Service families ---------- */
+
+.family + .family {
+  border-block-start: 1px solid var(--line);
+}
+
+.familyLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.familyHead {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+  align-content: start;
+}
+
+.familyNumber {
+  color: var(--accent-text);
+}
+
+.items {
+  display: grid;
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.item {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-block-end: 1px solid var(--line);
+}
+
+.item p {
+  max-width: var(--measure);
+}
+
+@media (min-width: 64em) {
+  .familyLayout {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  /* The family's heading stays in view while its services scroll past. */
+  .familyHead {
+    grid-column: 1 / span 5;
+    position: sticky;
+    inset-block-start: calc(var(--header-height) + var(--space-6));
+    align-self: start;
+  }
+
+  .itemsWrap {
+    grid-column: 7 / -1;
+  }
+}

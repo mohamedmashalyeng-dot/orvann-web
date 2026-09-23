@@ -1,0 +1,35 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.title {
+  color: var(--accent-text);
+}
+
+.text {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-heading);
+  font-variation-settings: "wdth" var(--wdth-heading);
+  max-width: 30ch;
+}
+
+@media (min-width: 64em) {
+  .layout {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .head {
+    grid-column: 1 / span 3;
+    padding-block-start: 0.6em;
+  }
+
+  .text {
+    grid-column: 4 / -1;
+  }
+}

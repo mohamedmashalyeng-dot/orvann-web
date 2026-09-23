@@ -1,0 +1,85 @@
+.float {
+  position: fixed;
+  inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+  inset-inline-end: var(--space-5);
+  z-index: var(--z-float);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3.25rem;
+  padding-inline: var(--space-4) var(--space-5);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  box-shadow: 0 0.75rem 2rem -0.75rem rgb(10 12 18 / 0.6);
+  opacity: 0;
+  transform: translateY(1.5rem) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity var(--duration-slow) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-out-expo),
+    background-color var(--duration-base) var(--ease-standard);
+}
+
+.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.float:hover,
+.float:focus-visible {
+  background-color: var(--color-blue-700);
+}
+
+:global(html.menu-open) .float {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* A soft ring that breathes behind the icon to draw the eye, without moving the target. */
+.pulse {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3.25rem;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .visible .pulse {
+    animation: pulse 2.8s var(--ease-standard) infinite;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(88 153 255 / 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 1.25rem rgb(88 153 255 / 0);
+  }
+}
+
+/* On small screens the button is a round icon; the label stays for screen readers. */
+@media (max-width: 47.99em) {
+  .float {
+    padding: 0;
+    width: 3.25rem;
+    justify-content: center;
+  }
+
+  .label {
+    display: none;
+  }
+}

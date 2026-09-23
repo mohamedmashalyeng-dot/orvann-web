@@ -1,0 +1,146 @@
+.graphic {
+  overflow: visible;
+  color: var(--text);
+}
+
+.gridPath {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.09;
+  stroke-width: 1;
+}
+
+.ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.32;
+  stroke-width: 1.25;
+}
+
+.orbit {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.22;
+  stroke-width: 1;
+  stroke-dasharray: 2 10;
+}
+
+.ticks {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.45;
+  stroke-width: 1.25;
+}
+
+.foundation {
+  fill: var(--color-blue-500);
+}
+
+.serif {
+  fill: currentColor;
+}
+
+.growth,
+.growthSerif {
+  fill: none;
+  stroke: var(--color-blue-400);
+  stroke-width: 3;
+  stroke-linecap: square;
+}
+
+.node {
+  fill: var(--surface);
+  stroke: var(--color-blue-400);
+  stroke-width: 2;
+}
+
+.nodeActive {
+  fill: var(--color-blue-400);
+}
+
+.halo {
+  fill: none;
+  stroke: var(--color-blue-400);
+  stroke-opacity: 0.4;
+  stroke-width: 1;
+}
+
+.label {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* The labels are unreadably small once the graphic shrinks. */
+@media (max-width: 47.99em) {
+  .label {
+    display: none;
+  }
+}
+
+/* ---- Entrance: starts after the CTAs (timings in tokens.css) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .graphic [data-part="grid"] {
+    animation: graphic-fade var(--entrance-graphic-duration) var(--ease-standard) var(--entrance-graphic) both;
+  }
+
+  .graphic [data-part="ring"] {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: graphic-ring var(--entrance-graphic-duration) var(--ease-out-expo) var(--entrance-graphic) both;
+  }
+
+  .graphic [data-part="foundation"] {
+    animation: graphic-drop var(--entrance-graphic-duration) var(--ease-out-expo) calc(var(--entrance-graphic) + 100ms) both;
+  }
+
+  .graphic [data-draw] {
+    stroke-dasharray: 1;
+    animation: graphic-draw calc(var(--entrance-graphic-duration) * 0.8) var(--ease-in-out) calc(var(--entrance-graphic) + 250ms) both;
+  }
+
+  .graphic [data-node] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: graphic-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--entrance-graphic) + 550ms + var(--i, 0) * 120ms) both;
+  }
+
+  .graphic [data-label] {
+    animation: graphic-fade 600ms var(--ease-standard) calc(var(--entrance-graphic) + 800ms) both;
+  }
+}
+
+@keyframes graphic-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes graphic-ring {
+  from {
+    opacity: 0;
+    transform: rotate(-24deg) scale(0.86);
+  }
+}
+
+@keyframes graphic-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-48px);
+  }
+}
+
+@keyframes graphic-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes graphic-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}

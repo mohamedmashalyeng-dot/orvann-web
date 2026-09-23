@@ -1,0 +1,52 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  border-color: var(--text);
+  background-color: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  overflow: visible;
+}
+
+/* Shows the theme you would switch to: a sun in dark mode, a moon in light mode. */
+.sun,
+.moon {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity var(--duration-slow) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.moon {
+  opacity: 0;
+  transform: rotate(-60deg) scale(0.6);
+}
+
+:global([data-theme="light"]) .sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+:global([data-theme="light"]) .moon {
+  opacity: 1;
+  transform: none;
+}

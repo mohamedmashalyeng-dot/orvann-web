@@ -1,0 +1,136 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-block-end: var(--space-8);
+}
+
+.headMain,
+.headAside {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.sequence {
+  position: relative;
+}
+
+/* Desktop progress line sits on the sequence's top rule; hidden elsewhere. */
+.track {
+  display: none;
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-text);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+[dir="rtl"] .bar {
+  transform-origin: right center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.step {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  border-block-end: 1px solid var(--line);
+}
+
+.index {
+  color: var(--accent-text);
+}
+
+.index,
+.stepTitle,
+.arrow {
+  transition: color var(--duration-slow) var(--ease-standard);
+}
+
+.stepTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  font-variation-settings: "wdth" var(--wdth-heading);
+}
+
+.arrow {
+  display: none;
+  width: 0.6em;
+  height: 0.6em;
+  flex: none;
+  color: var(--text-muted);
+}
+
+@media (min-width: 48em) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+}
+
+@media (min-width: 64em) {
+  .head {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: end;
+  }
+
+  .headMain {
+    grid-column: 1 / span 7;
+  }
+
+  .headAside {
+    grid-column: 9 / -1;
+  }
+
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .step {
+    border-block-end: 0;
+    padding-inline-end: var(--space-4);
+  }
+
+  .arrow {
+    display: block;
+  }
+
+  .track {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    z-index: 1;
+    height: 2px;
+    margin-block-start: -0.5px;
+  }
+
+  /* Once scroll tracking is live, steps ahead of the line wait in the muted text colour
+     (still well above contrast minimums) and the reached steps take the accent. */
+  .sequence[data-progress="on"] .step:not([data-active]) :is(.index, .stepTitle) {
+    color: var(--text-muted);
+  }
+
+  .sequence[data-progress="on"] .step[data-active] .arrow {
+    color: var(--accent-text);
+  }
+}

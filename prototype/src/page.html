@@ -1,0 +1,721 @@
+<title>ORVANN Homepage</title>
+<meta name="description" content="Transform ideas into success with ORVANN. Project management, marketing, and consulting services for sustainable growth in the Middle East.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F3F5FB;
+  --surface:#FFFFFF;
+  --ink:#0A1433;
+  --ink-2:#465173;
+  --rule:#D3DAEE;
+  --brand:#3C69F1;
+  --brand-ink:#2447C8;
+  --tint:#E6ECFD;
+  --hero:#2B55E3;
+  --hero-deep:#1E3FC0;
+  --band:#0A1433;
+  --band-ink:#E9EDFA;
+  --band-ink-2:#9DA9CC;
+  --band-rule:rgba(233,237,250,.16);
+  --signal:#7BE7F2;
+  --on-blue:#FFFFFF;
+  --on-brand:#FFFFFF;
+  --on-blue-2:rgba(255,255,255,.78);
+  --on-blue-rule:rgba(255,255,255,.3);
+
+  --f-display:"Bodoni Moda","Amiri",Didot,"Bodoni 72",Georgia,serif;
+  --f-body:"Hanken Grotesk","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono","IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace;
+
+  --wrap:1200px;
+  --gutter:clamp(16px,4vw,40px);
+  --hdr:72px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#070C1F;
+    --surface:#0D1532;
+    --ink:#E9EDFA;
+    --ink-2:#A2ADCC;
+    --rule:#1E2A4E;
+    --brand:#6F90FF;
+    --brand-ink:#94ADFF;
+    --tint:#121D45;
+    --hero:#1F42C4;
+    --hero-deep:#16309A;
+    --band:#030718;
+    --on-brand:#07103A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#070C1F;
+  --surface:#0D1532;
+  --ink:#E9EDFA;
+  --ink-2:#A2ADCC;
+  --rule:#1E2A4E;
+  --brand:#6F90FF;
+  --brand-ink:#94ADFF;
+  --tint:#121D45;
+  --hero:#1F42C4;
+  --hero-deep:#16309A;
+  --band:#030718;
+  --on-brand:#07103A;
+}
+[lang="ar"]{
+  --f-display:"Amiri","Bodoni Moda",Georgia,serif;
+  --f-body:"IBM Plex Sans Arabic","Hanken Grotesk",system-ui,sans-serif;
+  --f-mono:"IBM Plex Sans Arabic","IBM Plex Mono",ui-monospace,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--hdr) + 16px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+em{font-style:italic}
+[lang="ar"] em{font-style:normal}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* labels */
+.label{font-family:var(--f-mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-ink);display:inline-flex;align-items:center;gap:10px}
+.label::before{content:"";width:18px;height:1px;background:currentColor}
+[lang="ar"] .label{letter-spacing:0;font-size:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:2px;font:600 15px/1.2 var(--f-body);text-decoration:none;border:1px solid transparent;transition:background-color .2s,color .2s,border-color .2s,transform .2s}
+.btn svg{width:16px;height:16px;flex:none;transition:transform .2s}
+.btn:hover svg{transform:translateX(3px)}
+[dir="rtl"] .btn svg{transform:scaleX(-1)}
+[dir="rtl"] .btn:hover svg{transform:scaleX(-1) translateX(3px)}
+.btn-light{background:var(--on-blue);color:var(--hero-deep)}
+.btn-light:hover{background:var(--signal);color:#06124A}
+.btn-ghost{border-color:var(--on-blue-rule);color:var(--on-blue)}
+.btn-ghost:hover{border-color:var(--on-blue);background:rgba(255,255,255,.08)}
+.btn-brand{background:var(--brand-ink);color:var(--on-brand)}
+.btn-brand:hover{background:var(--ink);color:var(--paper)}
+.btn-line{border-color:var(--rule);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.link{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--brand-ink);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.link:hover{color:var(--ink)}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--hdr);color:var(--on-blue);transition:background-color .25s,color .25s,box-shadow .25s}
+.hdr.scrolled{background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--ink);box-shadow:0 1px 0 var(--rule)}
+.hdr .wrap{height:100%;display:flex;align-items:center;gap:24px}
+.brand{display:block;width:132px;height:35px;flex:none;background:currentColor;-webkit-mask:url({{WORDMARK}}) center/contain no-repeat;mask:url({{WORDMARK}}) center/contain no-repeat}
+.nav{display:flex;gap:4px;margin-inline-start:auto}
+.nav a{padding:8px 12px;font-size:15px;font-weight:500;text-decoration:none;border-radius:2px;opacity:.88}
+.nav a:hover{opacity:1;background:color-mix(in srgb,currentColor 10%,transparent)}
+.hdr-tools{display:flex;align-items:center;gap:10px}
+.lang{min-height:40px;min-width:48px;padding:6px 12px;border:1px solid color-mix(in srgb,currentColor 35%,transparent);background:transparent;color:inherit;border-radius:2px;font:500 14px/1 var(--f-body);cursor:pointer}
+.lang:hover{border-color:currentColor}
+.lang [lang="ar"]{font-family:"IBM Plex Sans Arabic",sans-serif}
+.hdr .btn{min-height:40px;padding:8px 16px;font-size:14px}
+.hdr:not(.scrolled) .btn-cta{background:var(--on-blue);color:var(--hero-deep)}
+.hdr.scrolled .btn-cta{background:var(--brand-ink);color:var(--on-brand)}
+.menu-btn{display:none;width:44px;height:40px;border:1px solid color-mix(in srgb,currentColor 35%,transparent);background:transparent;color:inherit;border-radius:2px;cursor:pointer;align-items:center;justify-content:center}
+.menu-btn svg{width:20px;height:20px}
+@media (max-width:1020px){
+  .nav{display:none}
+  .menu-btn{display:inline-flex}
+  .hdr-tools{margin-inline-start:auto}
+  .hdr .btn-cta{display:none}
+  .nav.open{display:flex;flex-direction:column;position:absolute;inset-inline:0;top:var(--hdr);margin:0;padding:12px var(--gutter) 20px;background:var(--paper);color:var(--ink);box-shadow:0 1px 0 var(--rule),0 18px 30px -20px rgba(10,20,51,.35)}
+  .nav.open a{padding:14px 4px;font-size:17px;border-bottom:1px solid var(--rule);border-radius:0}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;margin-top:calc(-1 * var(--hdr));padding-top:calc(var(--hdr) + clamp(40px,7vw,88px));color:var(--on-blue);overflow:hidden;
+  background-color:var(--hero);
+  background-image:
+    radial-gradient(120% 90% at 85% 0%,rgba(123,231,242,.16),transparent 55%),
+    linear-gradient(rgba(255,255,255,.085) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.085) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(180deg,var(--hero),var(--hero-deep));
+  background-size:auto,96px 96px,96px 96px,24px 24px,24px 24px,auto;
+  background-position:center,-1px -1px,-1px -1px,-1px -1px,-1px -1px,center}
+.mark{position:absolute;inset-inline-end:-6vw;top:40px;font-family:"Bodoni Moda",Georgia,serif;font-weight:600;font-size:clamp(280px,42vw,640px);line-height:.8;color:rgba(255,255,255,.07);pointer-events:none;user-select:none;letter-spacing:-.18em;direction:ltr}
+.mark span:last-child{font-style:italic;margin-inline-start:-.08em}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:end}
+.hero .label{color:var(--on-blue)}
+.hero .label::before{background:var(--signal)}
+.hero h1{font-size:clamp(46px,8.2vw,112px);line-height:.98;font-weight:500;margin-top:22px;letter-spacing:-.025em}
+[lang="ar"] .hero h1{line-height:1.25;letter-spacing:0;font-weight:700}
+.hero h1 em{color:var(--signal);font-weight:400}
+.hero-lede{max-width:56ch;margin-top:28px;font-size:clamp(17px,1.6vw,20px);line-height:1.6;color:var(--on-blue-2)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+
+.dim{display:flex;align-items:center;gap:14px;margin-top:48px;font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-blue-2);max-width:640px}
+[lang="ar"] .dim{letter-spacing:0;font-size:14px}
+.dim i{position:relative;flex:1;height:1px;background:var(--on-blue-2);transform-origin:left;animation:draw 1.1s .3s cubic-bezier(.6,0,.2,1) both}
+[dir="rtl"] .dim i{transform-origin:right}
+.dim i::before,.dim i::after{content:"";position:absolute;top:-5px;width:1px;height:11px;background:var(--on-blue-2)}
+.dim i::before{inset-inline-start:0}.dim i::after{inset-inline-end:0}
+.dim b{font-weight:500;color:var(--on-blue)}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.tblock{border:1px solid var(--on-blue-rule);font-size:14px;background:rgba(10,20,80,.18);backdrop-filter:blur(2px)}
+.tblock-h{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--on-blue-rule);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-blue)}
+[lang="ar"] .tblock-h{letter-spacing:0;font-size:13px}
+.tblock dl{margin:0;display:grid;grid-template-columns:auto 1fr}
+.tblock dt,.tblock dd{margin:0;padding:11px 14px;border-bottom:1px solid var(--on-blue-rule)}
+.tblock dt{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-blue-2);border-inline-end:1px solid var(--on-blue-rule);padding-top:13px}
+[lang="ar"] .tblock dt{letter-spacing:0;font-size:13px;padding-top:11px}
+.tblock dd{font-weight:500}
+.tblock dl > :nth-last-child(-n+2){border-bottom:0}
+
+.partners{position:relative;margin-top:clamp(56px,8vw,96px);border-top:1px solid var(--on-blue-rule);padding-block:26px 30px}
+.partners .wrap{display:grid;grid-template-columns:180px minmax(0,1fr);gap:32px;align-items:center}
+.partners-label{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-blue-2);line-height:1.5}
+[lang="ar"] .partners-label{letter-spacing:0;font-size:14px}
+.marquee{overflow:hidden;direction:ltr;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;width:max-content;animation:slide 38s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.set{display:flex;align-items:center;gap:56px;padding-inline-end:56px}
+.set img{height:38px;width:auto;opacity:.9}
+.set img.tall{height:50px}
+.set img.short{height:30px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.sec{padding-block:clamp(72px,10vw,128px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px 64px;align-items:end;margin-bottom:clamp(40px,6vw,64px)}
+.sec h2{font-size:clamp(34px,4.6vw,60px);line-height:1.05;margin-top:18px}
+[lang="ar"] .sec h2{line-height:1.35;font-weight:700}
+.sec h2 em{color:var(--brand-ink)}
+.sec-lede{color:var(--ink-2);font-size:18px;max-width:52ch}
+.sec-lede + .link{margin-top:20px}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,88px);align-items:center}
+.about-copy p{color:var(--ink-2);font-size:18px;max-width:54ch}
+.about-copy p + p{margin-top:16px}
+.about-copy h2 + p{margin-top:28px}
+.about-copy .link{margin-top:28px}
+.fig{margin:0;position:relative}
+.fig img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:2px}
+.fig figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+[lang="ar"] .fig figcaption{letter-spacing:0;font-size:13px}
+.fig::before,.fig::after{content:"";position:absolute;width:22px;height:22px;border:1px solid var(--brand);pointer-events:none}
+.fig::before{top:-10px;inset-inline-start:-10px;border-right:0;border-bottom:0}
+.fig::after{bottom:24px;inset-inline-end:-10px;border-left:0;border-top:0}
+[dir="rtl"] .fig::before{border-left:0;border-right:1px solid var(--brand)}
+[dir="rtl"] .fig::after{border-right:0;border-left:1px solid var(--brand)}
+
+.mv{display:grid;grid-template-columns:1fr 1fr;margin-top:clamp(64px,8vw,104px);border-top:1px solid var(--ink)}
+.mv > div{padding-top:28px;padding-inline-end:clamp(24px,4vw,56px)}
+.mv > div + div{border-inline-start:1px solid var(--rule);padding-inline-start:clamp(24px,4vw,56px);padding-inline-end:0}
+.mv h3{font-size:30px;margin-top:14px}
+.mv p{margin-top:12px;color:var(--ink-2);max-width:48ch}
+.mv .yr{display:flex;align-items:baseline;gap:14px;margin-top:22px}
+.mv .yr strong{font-family:"Bodoni Moda",Georgia,serif;font-size:64px;line-height:1;font-weight:500;color:var(--brand-ink);font-variant-numeric:lining-nums}
+.mv .yr span{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+[lang="ar"] .mv .yr span{letter-spacing:0;font-size:13px}
+
+/* services */
+.svc-sec{background:var(--surface);border-block:1px solid var(--rule)}
+.svc{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.svc a{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 48px;gap:24px 48px;align-items:start;padding:30px 12px;border-bottom:1px solid var(--rule);text-decoration:none;transition:background-color .2s}
+.svc a:hover{background:var(--tint)}
+.svc h3{font-size:clamp(24px,2.6vw,32px);line-height:1.15}
+[lang="ar"] .svc h3{font-weight:700;line-height:1.5}
+.svc p{color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tags span{font-family:var(--f-mono);font-size:12px;padding:4px 9px;border:1px solid var(--rule);border-radius:2px;color:var(--ink-2);background:var(--paper)}
+[lang="ar"] .tags span{font-size:13px}
+.arrow{width:44px;height:44px;border:1px solid var(--rule);border-radius:50%;display:grid;place-items:center;color:var(--brand-ink);transition:background-color .2s,color .2s,border-color .2s,transform .2s}
+.arrow svg{width:16px;height:16px}
+[dir="rtl"] .arrow svg{transform:scaleX(-1)}
+.svc a:hover .arrow{background:var(--brand-ink);border-color:var(--brand-ink);color:var(--surface);transform:rotate(-45deg)}
+[dir="rtl"] .svc a:hover .arrow{transform:rotate(45deg)}
+
+/* approach */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative}
+.steps::before{content:"";position:absolute;top:7px;inset-inline:0;height:1px;background:var(--rule)}
+.steps li{position:relative;padding-inline-end:28px}
+.node{position:relative;width:15px;height:15px;border-radius:50%;background:var(--paper);border:1px solid var(--brand-ink)}
+.node::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--brand-ink)}
+.steps li:last-child .node{background:var(--brand-ink)}
+.phase{display:block;margin-top:22px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-ink)}
+[lang="ar"] .phase{letter-spacing:0;font-size:13.5px}
+.steps h3{font-size:26px;line-height:1.15;margin-top:10px}
+[lang="ar"] .steps h3{font-weight:700;line-height:1.5}
+.steps p{color:var(--ink-2);margin-top:10px;font-size:16px}
+
+/* why */
+.why-sec{border-top:1px solid var(--rule)}
+.why{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(40px,7vw,104px);align-items:start}
+.why-head{position:sticky;top:calc(var(--hdr) + 32px)}
+.why-head p{margin-top:24px;color:var(--ink-2);font-size:18px;max-width:40ch}
+.reasons{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.reasons li{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px 32px;padding-block:26px;border-bottom:1px solid var(--rule)}
+.reasons h3{font-family:var(--f-body);font-size:19px;font-weight:600;letter-spacing:0;display:flex;gap:12px;align-items:baseline}
+.reasons h3::before{content:"";flex:none;width:8px;height:8px;background:var(--brand);transform:rotate(45deg) translateY(-2px)}
+.reasons p{color:var(--ink-2)}
+
+/* exhibitions */
+.expo{background:var(--band);color:var(--band-ink);position:relative;overflow:hidden}
+.expo::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--band-rule) 1px,transparent 1px),linear-gradient(90deg,var(--band-rule) 1px,transparent 1px);background-size:48px 48px;opacity:.35;-webkit-mask:radial-gradient(80% 90% at 75% 50%,#000,transparent 75%);mask:radial-gradient(80% 90% at 75% 50%,#000,transparent 75%)}
+.expo .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,88px);align-items:center}
+.expo .label{color:var(--signal)}
+.expo h2{font-size:clamp(44px,6.6vw,96px);line-height:.95;margin-top:20px;letter-spacing:-.02em}
+[lang="ar"] .expo h2{line-height:1.3;font-weight:700;letter-spacing:0}
+.expo h2 em{color:var(--signal);font-weight:400}
+.expo p{margin-top:26px;color:var(--band-ink-2);font-size:18px;max-width:46ch}
+.expo .btn{margin-top:32px}
+.plan{width:100%;height:auto;max-width:560px;justify-self:end}
+.plan text{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;fill:var(--band-ink-2)}
+[lang="ar"] .plan text{letter-spacing:0;font-size:10.5px}
+.plan .you text{fill:#06124A;font-weight:500}
+.plan .route{animation:dash 2.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,6vw,88px);align-items:start}
+.contact h2{font-size:clamp(40px,5.6vw,76px);line-height:1;margin-top:18px}
+[lang="ar"] .contact h2{line-height:1.35}
+.contact-copy p{margin-top:24px;color:var(--ink-2);font-size:18px;max-width:48ch}
+.contact-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:2px}
+.card-h{padding:14px 20px;border-bottom:1px solid var(--rule);font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-ink)}
+[lang="ar"] .card-h{letter-spacing:0;font-size:13px}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.row:last-child{border-bottom:0}
+.row .k{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+[lang="ar"] .row .k{letter-spacing:0;font-size:13px}
+.row .v{font-weight:600;font-size:17px;user-select:all;overflow-wrap:anywhere}
+.row .v[dir="ltr"]{unicode-bidi:isolate;text-align:start}
+.row a.v{user-select:auto;text-decoration:none}
+.row a.v:hover{color:var(--brand-ink)}
+.copy{min-height:36px;padding:6px 12px;border:1px solid var(--rule);background:transparent;color:var(--ink-2);border-radius:2px;font:500 13px/1 var(--f-body);cursor:pointer}
+.copy:hover{border-color:var(--ink);color:var(--ink)}
+.copy.done{border-color:var(--brand-ink);color:var(--brand-ink)}
+.ext{color:var(--ink-2);display:inline-flex}
+.ext svg{width:16px;height:16px}
+
+/* footer */
+.ftr{background:var(--band);color:var(--band-ink);padding-block:56px 32px}
+.ftr-top{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,.8fr));gap:40px;padding-bottom:40px;border-bottom:1px solid var(--band-rule)}
+.ftr .brand{width:170px;height:46px;color:var(--band-ink)}
+.ftr-tag{margin-top:18px;color:var(--band-ink-2);max-width:36ch;font-size:15px}
+.ftr h4{margin:0 0 14px;font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
+[lang="ar"] .ftr h4{letter-spacing:0;font-size:13px}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ftr ul a{text-decoration:none;color:var(--band-ink-2);font-size:15px}
+.ftr ul a:hover{color:var(--band-ink)}
+.ftr-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:24px;font-size:13px;color:var(--band-ink-2)}
+.ftr-bottom a{color:var(--band-ink-2)}
+
+/* responsive */
+@media (max-width:960px){
+  .hero-grid,.about-grid,.sec-head,.why,.expo .wrap,.contact{grid-template-columns:1fr}
+  .tblock{max-width:440px}
+  .why-head{position:static}
+  .plan{justify-self:start}
+  .steps{grid-template-columns:1fr 1fr;row-gap:44px}
+  .steps::before{display:none}
+  .ftr-top{grid-template-columns:1fr 1fr}
+  .ftr-top > :first-child{grid-column:1/-1}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .partners .wrap{grid-template-columns:1fr;gap:16px}
+  .mv{grid-template-columns:1fr}
+  .mv > div + div{border-inline-start:0;padding-inline-start:0;border-top:1px solid var(--rule);margin-top:32px}
+  .svc a{grid-template-columns:minmax(0,1fr) 44px;padding:24px 4px}
+  .svc a > div:nth-child(2){grid-column:1/-1;grid-row:2}
+  .svc .arrow{grid-column:2;grid-row:1}
+  .steps{grid-template-columns:1fr;row-gap:0}
+  .steps li{padding-inline-start:32px;padding-bottom:32px;padding-inline-end:0}
+  .steps li::before{content:"";position:absolute;inset-inline-start:7px;top:15px;bottom:0;width:1px;background:var(--rule)}
+  .steps li:last-child::before{display:none}
+  .node{position:absolute;inset-inline-start:0;top:0}
+  .phase{margin-top:0}
+  .reasons li{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr auto}
+  .row .k{grid-column:1/-1}
+  .ftr-top{grid-template-columns:1fr}
+  .mark{font-size:300px;top:120px;inset-inline-end:-120px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .track{width:auto}
+  .set{flex-wrap:wrap;gap:24px 40px;padding:0}
+  .set[aria-hidden="true"]{display:none}
+  .marquee{-webkit-mask:none;mask:none}
+}
+</style>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="ORVANN — home"></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#approach" data-i18n="nav.approach">Approach</a>
+      <a href="#exhibitions" data-i18n="nav.expo">Exhibitions &amp; Conferences</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="hdr-tools">
+      <button class="lang" id="lang" type="button" aria-label="Switch language"><span lang="ar">عربي</span></button>
+      <a class="btn btn-cta" href="#contact" data-i18n="nav.cta">Schedule a consultation</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h16M2 14h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <div class="mark" aria-hidden="true"><span>O</span><span>V</span></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="label" data-i18n="hero.eyebrow">ORVANN — The Future Business Builder</span>
+        <h1 data-i18n="hero.title">Where creativity<br>meets <em>strategy.</em></h1>
+        <p class="hero-lede" data-i18n="hero.lede">Transform your ideas into impactful realities. We deliver project management, marketing solutions, and strategic consulting designed to elevate your business and foster sustainable growth.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-light" href="#contact"><span data-i18n="hero.cta1">Get started today</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+          <a class="btn btn-ghost" href="https://orvann.com/contact-us/" data-i18n="hero.cta2">Schedule a consultation</a>
+        </div>
+        <div class="dim" aria-hidden="true"><b data-i18n="dim.a">Idea</b><i></i><b data-i18n="dim.b">Impact</b></div>
+      </div>
+      <aside class="tblock" aria-label="Project brief">
+        <div class="tblock-h"><span data-i18n="tb.h">Project brief</span><span>OV–01</span></div>
+        <dl>
+          <dt data-i18n="tb.k1">Client</dt><dd data-i18n="tb.v1">Your business</dd>
+          <dt data-i18n="tb.k2">Built by</dt><dd data-i18n="tb.v2">ORVANN</dd>
+          <dt data-i18n="tb.k3">Scope</dt><dd data-i18n="tb.v3">Strategy → execution</dd>
+          <dt data-i18n="tb.k4">Region</dt><dd data-i18n="tb.v4">Middle East</dd>
+          <dt data-i18n="tb.k5">Horizon</dt><dd data-i18n="tb.v5">Vision 2030</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="partners">
+      <div class="wrap">
+        <p class="partners-label" data-i18n="partners">Our success stories</p>
+        <div class="marquee">
+          <div class="track">
+            <div class="set">
+              {{PARTNERS}}
+            </div>
+            <div class="set" aria-hidden="true">
+              {{PARTNERS_DUP}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-copy">
+          <span class="label" data-i18n="about.eyebrow">About ORVANN</span>
+          <h2 data-i18n="about.title">Welcome to the ORVANN <em>Creativity Hub</em></h2>
+          <p data-i18n="about.p1">Ever wondered what it takes to turn a small idea into a big success? At ORVANN, dreams meet strategy to create something truly extraordinary.</p>
+          <p data-i18n="about.p2">Think of us as your trusted partner — a seasoned architect designing not just buildings, but legacies that stand the test of time.</p>
+          <a class="link" href="https://orvann.com/about-us/" data-i18n="about.more">More about us</a>
+        </div>
+        <figure class="fig">
+          <img src="{{BOARD}}" alt="A team meeting in a glass boardroom overlooking a city at night" width="603" height="406" loading="lazy">
+          <figcaption><span data-i18n="fig.a">Fig. 1 — Strategy session</span><span data-i18n="fig.b">Scale: idea → legacy</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="mv">
+        <div>
+          <span class="label" data-i18n="mission.k">Our mission</span>
+          <h3 data-i18n="mission.h">Excellence, innovation, integrity.</h3>
+          <p data-i18n="mission.p">To deliver comprehensive project management and marketing solutions with excellence, innovation, and integrity, empowering clients to achieve sustainable growth and success.</p>
+        </div>
+        <div>
+          <span class="label" data-i18n="vision.k">Our vision</span>
+          <h3 data-i18n="vision.h">The region's leading integrated partner.</h3>
+          <p data-i18n="vision.p">To become the leading provider of integrated project management and marketing solutions in the Middle East, recognized for quality, innovation, and long-term client partnerships.</p>
+          <div class="yr"><strong>2030</strong><span data-i18n="vision.by">Target year</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec svc-sec" id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="label" data-i18n="svc.eyebrow">Our services</span>
+          <h2 data-i18n="svc.title">Tailored solutions for <em>your business</em></h2>
+        </div>
+        <div>
+          <p class="sec-lede" data-i18n="svc.lede">A comprehensive suite of services designed to elevate your brand and accelerate growth — under one roof, managed end to end.</p>
+        </div>
+      </div>
+      <ul class="svc">
+        <li><a href="https://orvann.com/services/">
+          <h3 data-i18n="s1.h">Marketing &amp; Brand Development</h3>
+          <div><p data-i18n="s1.p">From logo design to social media management and campaigns, we craft strategies that make your brand stand out.</p>
+            <div class="tags"><span data-i18n="s1.t1">Logo &amp; identity</span><span data-i18n="s1.t2">Social media</span><span data-i18n="s1.t3">Campaigns</span></div></div>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+        </a></li>
+        <li><a href="https://orvann.com/services/">
+          <h3 data-i18n="s2.h">Marketing Production &amp; Supply</h3>
+          <div><p data-i18n="s2.p">High-quality marketing materials, exhibition displays, corporate gifts, and uniforms that reinforce your brand.</p>
+            <div class="tags"><span data-i18n="s2.t1">Print</span><span data-i18n="s2.t2">Exhibition stands</span><span data-i18n="s2.t3">Corporate gifts</span><span data-i18n="s2.t4">Uniforms</span></div></div>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+        </a></li>
+        <li><a href="https://orvann.com/services/">
+          <h3 data-i18n="s3.h">Business Consulting &amp; Advisory</h3>
+          <div><p data-i18n="s3.p">Market research, feasibility studies, startup guidance, and AI integrations to foster smart growth.</p>
+            <div class="tags"><span data-i18n="s3.t1">Market research</span><span data-i18n="s3.t2">Feasibility studies</span><span data-i18n="s3.t3">Startups</span><span data-i18n="s3.t4">AI integration</span></div></div>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+        </a></li>
+        <li><a href="https://orvann.com/services/">
+          <h3 data-i18n="s4.h">Digital Solutions &amp; Online Presence</h3>
+          <div><p data-i18n="s4.p">Responsive websites, e-commerce platforms, and SEO strategies to boost your visibility.</p>
+            <div class="tags"><span data-i18n="s4.t1">Websites</span><span data-i18n="s4.t2">E-commerce</span><span>SEO</span></div></div>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+        </a></li>
+        <li><a href="https://orvann.com/services/">
+          <h3 data-i18n="s5.h">Event Planning &amp; Management</h3>
+          <div><p data-i18n="s5.p">From conferences to luxury private events, we handle every detail with professionalism and style.</p>
+            <div class="tags"><span data-i18n="s5.t1">Conferences</span><span data-i18n="s5.t2">Private events</span></div></div>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="approach">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="label" data-i18n="ap.eyebrow">Our approach &amp; methodology</span>
+          <h2 data-i18n="ap.title">Collaboration, innovation and strategic <em>precision</em></h2>
+        </div>
+        <p class="sec-lede" data-i18n="ap.lede">Four pillars carry every project — from preparing your team on day one to a partnership that keeps growing with your business.</p>
+      </div>
+      <ol class="steps">
+        <li><span class="node"></span><span class="phase" data-i18n="st1.k">Phase 1 · Prepare</span><h3 data-i18n="st1.h">Client Preparation</h3><p data-i18n="st1.p">Equipping your team with the right strategies, tools, and training for success.</p></li>
+        <li><span class="node"></span><span class="phase" data-i18n="st2.k">Phase 2 · Support</span><h3 data-i18n="st2.h">Supporting Basic Needs</h3><p data-i18n="st2.p">Providing resources and expertise when you need them most.</p></li>
+        <li><span class="node"></span><span class="phase" data-i18n="st3.k">Phase 3 · Deliver</span><h3 data-i18n="st3.h">Complete Project Management</h3><p data-i18n="st3.p">We oversee your project from inception to delivery, ensuring seamless results.</p></li>
+        <li><span class="node"></span><span class="phase" data-i18n="st4.k">Phase 4 · Grow</span><h3 data-i18n="st4.h">Long-Term Partnerships</h3><p data-i18n="st4.p">Building lasting relationships that grow with your business.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec why-sec" id="why">
+    <div class="wrap why">
+      <div class="why-head">
+        <span class="label" data-i18n="why.eyebrow">Why choose ORVANN</span>
+        <h2 data-i18n="why.title">Why partner with <em>ORVANN?</em></h2>
+        <p data-i18n="why.p">One team that owns the whole picture — so nothing you need falls between agencies.</p>
+      </div>
+      <ul class="reasons">
+        <li><h3 data-i18n="r1.h">Holistic solutions</h3><p data-i18n="r1.p">From strategy to execution, we manage every aspect of your project.</p></li>
+        <li><h3 data-i18n="r2.h">Innovation-driven</h3><p data-i18n="r2.p">Embracing creativity and advanced technology to stay ahead of trends.</p></li>
+        <li><h3 data-i18n="r3.h">Long-term partnerships</h3><p data-i18n="r3.p">Building trust and delivering consistent results over time.</p></li>
+        <li><h3 data-i18n="r4.h">Quality &amp; sustainability</h3><p data-i18n="r4.p">Committed to excellence and responsible practices that support lasting growth.</p></li>
+        <li><h3 data-i18n="r5.h">Regional expertise</h3><p data-i18n="r5.p">A deep understanding of Middle East market dynamics.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec expo" id="exhibitions">
+    <div class="wrap">
+      <div>
+        <span class="label" data-i18n="ex.eyebrow">Exhibitions &amp; Conferences</span>
+        <h2 data-i18n="ex.title">Your brand<br><em>leads</em> the event.</h2>
+        <p data-i18n="ex.p">We make sure your brand appears with purpose and impact at every exhibition and conference, through thoughtful planning and seamless execution.</p>
+        <a class="btn btn-light" href="https://orvann.com/exhibitions-conferences/"><span data-i18n="ex.more">Explore exhibitions</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+      <svg class="plan" viewBox="0 0 440 330" role="img" aria-label="Exhibition floor plan with your brand's stand placed on the main aisle, facing the entrance">
+        <g fill="none" stroke="var(--band-ink-2)" stroke-opacity=".55" stroke-width="1">
+          <rect x="10" y="30" width="420" height="260"/>
+          <rect x="30" y="50" width="70" height="50"/><rect x="100" y="50" width="70" height="50"/><rect x="170" y="50" width="70" height="50"/><rect x="240" y="50" width="70" height="50"/><rect x="310" y="50" width="100" height="50"/>
+          <rect x="30" y="140" width="70" height="50"/><rect x="100" y="140" width="70" height="50"/>
+          <rect x="310" y="140" width="100" height="50"/>
+          <rect x="30" y="220" width="70" height="50"/><rect x="100" y="220" width="70" height="50"/><rect x="270" y="220" width="70" height="50"/><rect x="340" y="220" width="70" height="50"/>
+        </g>
+        <g stroke="var(--band-ink-2)" stroke-opacity=".3" stroke-width="1">
+          <path d="M40 60l50 30M110 60l50 30M180 60l50 30M250 60l50 30M320 60l80 30"/>
+          <path d="M40 150l50 30M110 150l50 30M320 150l80 30M40 230l50 30M110 230l50 30M280 230l50 30M350 230l50 30"/>
+        </g>
+        <path d="M195 290h50" stroke="var(--band)" stroke-width="3"/>
+        <path class="route" d="M220 330 V290 V250 H230 V214" fill="none" stroke="var(--signal)" stroke-width="1.5" stroke-dasharray="4 8"/>
+        <g class="you">
+          <rect x="180" y="132" width="110" height="80" fill="var(--signal)"/>
+          <text x="235" y="168" text-anchor="middle" data-i18n="plan.you">YOUR BRAND</text>
+          <text x="235" y="184" text-anchor="middle" style="font-size:8px">B-07</text>
+        </g>
+        <g>
+          <text x="10" y="20" data-i18n="plan.hall">HALL B · MAIN AISLE</text>
+          <text x="430" y="20" text-anchor="end">1:200</text>
+          <text x="220" y="312" text-anchor="middle" data-i18n="plan.entry" style="fill:var(--band-ink)">ENTRANCE</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="sec" id="contact">
+    <div class="wrap contact">
+      <div class="contact-copy">
+        <span class="label" data-i18n="ct.eyebrow">Contact us</span>
+        <h2 data-i18n="ct.title">Ready to build the <em>future?</em></h2>
+        <p data-i18n="ct.p">Let's turn your ideas into impactful realities. Contact ORVANN today and start your journey toward sustainable growth and success.</p>
+        <div class="contact-ctas">
+          <a class="btn btn-brand" href="https://wa.me/201080784465"><span data-i18n="ct.wa">Chat on WhatsApp</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+          <a class="btn btn-line" href="https://orvann.com/contact-us/" data-i18n="ct.book">Schedule a consultation</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h" data-i18n="ct.card">Direct lines</div>
+        <div class="row"><span class="k" data-i18n="ct.phone">Phone</span><span class="v" dir="ltr" id="phone">+20 108 078 4465</span><button class="copy" type="button" data-copy="phone" data-i18n="ct.copy">Copy</button></div>
+        <div class="row"><span class="k" data-i18n="ct.email">Email</span><span class="v" dir="ltr" id="email">info@orvann.com</span><button class="copy" type="button" data-copy="email" data-i18n="ct.copy">Copy</button></div>
+        <div class="row"><span class="k">WhatsApp</span><a class="v" dir="ltr" href="https://wa.me/201080784465">wa.me/201080784465</a><span class="ext" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg></span></div>
+        <div class="row"><span class="k">LinkedIn</span><a class="v" dir="ltr" href="https://www.linkedin.com/company/orvann/">/company/orvann</a><span class="ext" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg></span></div>
+        <div class="row"><span class="k">Instagram</span><a class="v" dir="ltr" href="https://www.instagram.com/orvann.eg/">@orvann.eg</a><span class="ext" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg></span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div>
+        <span class="brand" role="img" aria-label="ORVANN Creativity Hub"></span>
+        <p class="ftr-tag" data-i18n="ft.tag">The Future Business Builder — project management, marketing and consulting for sustainable growth across the Middle East.</p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.links">Links</h4>
+        <ul>
+          <li><a href="https://orvann.com/about-us/" data-i18n="nav.about">About</a></li>
+          <li><a href="https://orvann.com/services/" data-i18n="nav.services">Services</a></li>
+          <li><a href="https://orvann.com/exhibitions-conferences/" data-i18n="nav.expo">Exhibitions &amp; Conferences</a></li>
+          <li><a href="https://orvann.com/contact-us/" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="ft.follow">Follow</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/orvann/">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/orvann.eg/">Instagram</a></li>
+          <li><a href="https://wa.me/201080784465">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span>© <span id="yr">2026</span> ORVANN. <span data-i18n="ft.rights">All rights reserved.</span></span>
+      <a href="https://orvann.com/privacy-policy/" data-i18n="ft.privacy">Privacy policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var AR = {
+    "nav.about":"من نحن","nav.services":"خدماتنا","nav.approach":"منهجيتنا","nav.expo":"المعارض والمؤتمرات","nav.contact":"تواصل معنا","nav.cta":"احجز استشارة",
+    "hero.eyebrow":"أورفان — بناة مستقبل الأعمال",
+    "hero.title":"حيث يلتقي الإبداع<br><em>بالاستراتيجية.</em>",
+    "hero.lede":"حوّل أفكارك إلى واقع مؤثر مع أورفان. نقدم حلولًا مبتكرة في إدارة المشاريع، والتسويق، والاستشارات الاستراتيجية، تهدف إلى تطوير أعمالك وتحقيق نمو مستدام.",
+    "hero.cta1":"ابدأ اليوم","hero.cta2":"احجز استشارة",
+    "dim.a":"فكرة","dim.b":"أثر",
+    "tb.h":"بطاقة المشروع","tb.k1":"العميل","tb.v1":"أعمالك","tb.k2":"التنفيذ","tb.v2":"أورفان","tb.k3":"النطاق","tb.v3":"من الاستراتيجية إلى التنفيذ","tb.k4":"المنطقة","tb.v4":"الشرق الأوسط","tb.k5":"الأفق","tb.v5":"رؤية 2030",
+    "partners":"قصص نجاحنا مع شركائنا المميزين",
+    "about.eyebrow":"عن أورفان","about.title":"مرحبًا بك في <em>مركز الإبداع</em> أورفان",
+    "about.p1":"هل تساءلت يومًا كيف تتحول فكرة بسيطة إلى قصة نجاح كبيرة؟ في أورفان يلتقي الإبداع بالفكر الاستراتيجي لنصنع معًا شيئًا استثنائيًا.",
+    "about.p2":"نحن شريك موثوق يشبه المهندس المتمرس؛ لا يصمم مجرد مبانٍ، بل يرسم ملامح إرث يدوم ويُحدث فرقًا.",
+    "about.more":"اعرف المزيد عنا","fig.a":"شكل ١ — جلسة استراتيجية","fig.b":"المقياس: فكرة ← إرث",
+    "mission.k":"رسالتنا","mission.h":"تميّز، ابتكار، نزاهة.",
+    "mission.p":"تقديم حلول شاملة في إدارة المشاريع والتسويق، ترتكز على التميز والابتكار والنزاهة، لتمكين عملائنا من تحقيق نمو مستدام ونجاح حقيقي.",
+    "vision.k":"رؤيتنا","vision.h":"الشريك المتكامل الرائد في المنطقة.",
+    "vision.p":"أن نصبح المزود الرائد في الشرق الأوسط لحلول إدارة المشاريع والتسويق المتكاملة، معترفًا بنا في الجودة والابتكار وبناء شراكات طويلة الأمد مع العملاء.",
+    "vision.by":"عام الهدف",
+    "svc.eyebrow":"خدماتنا","svc.title":"حلول متكاملة مُصممة خصيصًا <em>لنجاح أعمالك</em>",
+    "svc.lede":"مجموعة متكاملة من الخدمات لدعم علامتك التجارية وتسريع نمو أعمالك — تحت سقف واحد، ونديرها من البداية للنهاية.",
+    "s1.h":"التسويق وتطوير العلامة التجارية","s1.p":"من تصميم الشعار إلى إدارة حسابات التواصل الاجتماعي وتنفيذ الحملات الإعلانية، نصمم استراتيجيات تضمن تميز علامتك في السوق.","s1.t1":"الهوية والشعار","s1.t2":"التواصل الاجتماعي","s1.t3":"الحملات الإعلانية",
+    "s2.h":"إنتاج وتوريد المواد التسويقية","s2.p":"مواد دعائية عالية الجودة، تجهيزات للمعارض، هدايا مؤسسية، وزي موحد يعزز حضور علامتك التجارية.","s2.t1":"المطبوعات","s2.t2":"أجنحة المعارض","s2.t3":"هدايا مؤسسية","s2.t4":"زي موحد",
+    "s3.h":"الاستشارات والتوجيه التجاري","s3.p":"أبحاث السوق، دراسات الجدوى، دعم الشركات الناشئة، وتكاملات ذكية بالذكاء الاصطناعي لتعزيز النمو الذكي.","s3.t1":"أبحاث السوق","s3.t2":"دراسات الجدوى","s3.t3":"الشركات الناشئة","s3.t4":"الذكاء الاصطناعي",
+    "s4.h":"الحلول الرقمية والحضور الإلكتروني","s4.p":"مواقع إلكترونية متجاوبة، منصات تجارة إلكترونية، واستراتيجيات تحسين محركات البحث لزيادة ظهورك الرقمي.","s4.t1":"مواقع إلكترونية","s4.t2":"تجارة إلكترونية",
+    "s5.h":"تنظيم وإدارة الفعاليات","s5.p":"من المؤتمرات إلى الفعاليات الخاصة الفاخرة، نعتني بكل التفاصيل بأعلى درجات الاحتراف والرقي.","s5.t1":"مؤتمرات","s5.t2":"فعاليات خاصة",
+    "ap.eyebrow":"منهجيتنا وأسلوبنا في العمل","ap.title":"التعاون، والابتكار، و<em>الدقة</em> الاستراتيجية",
+    "ap.lede":"أربع ركائز أساسية ترافق كل مشروع — من تهيئة فريقك في اليوم الأول حتى شراكة تنمو مع نمو أعمالك.",
+    "st1.k":"المرحلة ١ · التهيئة","st1.h":"تهيئة الفريق للنجاح","st1.p":"نزوّد فريقك بالاستراتيجيات والأدوات والتدريب المناسب لتحقيق أفضل النتائج.",
+    "st2.k":"المرحلة ٢ · الدعم","st2.h":"دعم الاحتياجات الأساسية","st2.p":"نوفر لك الموارد والخبرة في اللحظات التي تحتاج فيها إلى دعم حقيقي.",
+    "st3.k":"المرحلة ٣ · التنفيذ","st3.h":"إدارة متكاملة للمشروعات","st3.p":"نشرف على مشروعك من الفكرة الأولى وحتى التسليم، لضمان تنفيذ سلس ونتائج متقنة.",
+    "st4.k":"المرحلة ٤ · النمو","st4.h":"شراكات طويلة الأمد","st4.p":"نحرص على بناء علاقات مستمرة تنمو مع نمو أعمالك وتواكب تطلعاتك.",
+    "why.eyebrow":"لماذا أورفان","why.title":"لماذا تختار <em>أورفان</em> شريكًا لك؟",
+    "why.p":"فريق واحد يرى الصورة كاملة — فلا يضيع شيء مما تحتاجه بين أكثر من جهة.",
+    "r1.h":"حلول شاملة","r1.p":"ندير مشروعك من وضع الاستراتيجية وحتى التنفيذ، بكل تفاصيله.",
+    "r2.h":"نقود بالابتكار","r2.p":"ندمج بين الإبداع والتكنولوجيا المتقدمة لنواكب التغيرات ونسبق التوجهات.",
+    "r3.h":"شراكات طويلة الأمد","r3.p":"نبني الثقة على أساس من النتائج المستمرة والعلاقات المستقرة.",
+    "r4.h":"جودة واستدامة","r4.p":"نلتزم بالتميز والممارسات المهنية التي تدعم النمو طويل الأمد.",
+    "r5.h":"خبرة إقليمية","r5.p":"فهم عميق لطبيعة السوق في الشرق الأوسط وتحولاته.",
+    "ex.eyebrow":"المعارض والمؤتمرات","ex.title":"علامتك<br><em>تتصدّر</em> الحدث.",
+    "ex.p":"نضمن لعلامتك التجارية حضورًا مؤثرًا في كل معرض ومؤتمر من خلال تخطيط مدروس وتنفيذ احترافي متكامل.",
+    "ex.more":"اعرف المزيد","plan.you":"علامتك","plan.hall":"القاعة B · الممر الرئيسي","plan.entry":"المدخل",
+    "ct.eyebrow":"تواصل معنا","ct.title":"هل أنت جاهز لبناء <em>المستقبل</em> معنا؟",
+    "ct.p":"دعنا نساعدك في تحويل أفكارك إلى واقع فعّال وناجح. تواصل مع أورفان اليوم وابدأ رحلتك نحو نمو مستدام ونجاح ملموس.",
+    "ct.wa":"تواصل عبر واتساب","ct.book":"احجز استشارة","ct.card":"قنوات التواصل المباشر","ct.phone":"الهاتف","ct.email":"البريد","ct.copy":"نسخ","ct.copied":"تم النسخ",
+    "ft.tag":"بناة مستقبل الأعمال — إدارة مشاريع وتسويق واستشارات لنمو مستدام في الشرق الأوسط.",
+    "ft.links":"الروابط","ft.follow":"تابعنا","ft.rights":"جميع الحقوق محفوظة.","ft.privacy":"سياسة الخصوصية"
+  };
+  var nodes = document.querySelectorAll("[data-i18n]");
+  var EN = {"ct.copy":"Copy","ct.copied":"Copied"};
+  nodes.forEach(function(el){ EN[el.getAttribute("data-i18n")] = el.innerHTML; });
+  var root = document.documentElement, btn = document.getElementById("lang"), cur = "en";
+
+  function apply(lang){
+    var d = lang === "ar" ? AR : EN;
+    cur = lang;
+    root.lang = lang; root.dir = lang === "ar" ? "rtl" : "ltr";
+    nodes.forEach(function(el){ var k = el.getAttribute("data-i18n"); if (d[k] != null) el.innerHTML = d[k]; });
+    btn.innerHTML = lang === "ar" ? '<span lang="en">EN</span>' : '<span lang="ar">عربي</span>';
+    btn.setAttribute("aria-label", lang === "ar" ? "Switch to English" : "التبديل إلى العربية");
+    try { localStorage.setItem("orvann-lang", lang); } catch(e){}
+  }
+  btn.addEventListener("click", function(){ apply(cur === "ar" ? "en" : "ar"); });
+  var start = location.hash === "#ar" ? "ar" : null;
+  if (!start) { try { start = localStorage.getItem("orvann-lang"); } catch(e){} }
+  if (start === "ar") apply("ar");
+
+  var hdr = document.getElementById("hdr");
+  function onScroll(){ hdr.classList.toggle("scrolled", window.scrollY > 24); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  var nav = document.getElementById("nav"), mb = document.getElementById("menuBtn");
+  mb.addEventListener("click", function(){
+    var open = nav.classList.toggle("open");
+    mb.setAttribute("aria-expanded", open);
+    if (open) hdr.classList.add("scrolled"); else onScroll();
+  });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) { nav.classList.remove("open"); mb.setAttribute("aria-expanded", "false"); } });
+
+  document.querySelectorAll(".copy").forEach(function(b){
+    b.addEventListener("click", function(){
+      var el = document.getElementById(b.getAttribute("data-copy"));
+      var text = el.textContent.trim();
+      function done(){ var d = cur === "ar" ? AR : EN; b.textContent = d["ct.copied"]; b.classList.add("done");
+        setTimeout(function(){ b.textContent = d["ct.copy"]; b.classList.remove("done"); }, 1600); }
+      function fallback(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try { navigator.clipboard.writeText(text).then(done, fallback); } catch(e){ fallback(); }
+    });
+  });
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+})();
+</script>

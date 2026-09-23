@@ -1,0 +1,35 @@
+.logo {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Source: public/brand/orvann-logo.png (1544 × 411, trimmed from orvann.com) */
+.full {
+  aspect-ratio: 1544 / 411;
+  height: 2.5rem;
+  -webkit-mask-image: url("/brand/orvann-logo.png");
+  mask-image: url("/brand/orvann-logo.png");
+}
+
+/* Source: public/brand/orvann-monogram.png (479 × 411, cut from the same logo) */
+.mark {
+  aspect-ratio: 479 / 411;
+  height: 2.5rem;
+  -webkit-mask-image: url("/brand/orvann-monogram.png");
+  mask-image: url("/brand/orvann-monogram.png");
+}
+
+/* Printers often drop backgrounds; keep the logo visible on paper. */
+@media print {
+  .logo {
+    background-color: #000;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,22 @@
+.page {
+  display: grid;
+  align-items: center;
+  min-height: 80svh;
+  padding-block: calc(var(--header-height) + var(--space-9)) var(--space-9);
+}
+
+.body {
+  display: grid;
+  gap: var(--space-6);
+  justify-items: start;
+}
+
+.body > h1 {
+  max-width: 16ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

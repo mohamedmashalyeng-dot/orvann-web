@@ -1,0 +1,22 @@
+/* An even logo wall (2 × 4 on phones, 4 × 2 from tablets up) — no stragglers. */
+.logos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: var(--space-7) var(--space-6);
+}
+
+@media (min-width: 48em) {
+  .logos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Source logos are white: shown as-is on the dark theme, inverted to ink on the light one. */
+.logo {
+  opacity: 0.78;
+}
+
+:global([data-theme="light"]) .logo {
+  filter: invert(1);
+}

@@ -1,0 +1,10 @@
+/* --p runs 0 → 1 as the paragraph scrolls by (set by GSAP); default 1 = full colour.
+   The muted end still meets text contrast, so every in-between state stays readable. */
+.word {
+  --p: 1;
+  color: color-mix(in srgb, var(--text) calc(var(--p) * 100%), var(--text-muted));
+}
+
+.scrub {
+  text-wrap: pretty;
+}

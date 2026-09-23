@@ -1,0 +1,167 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-block-end: var(--space-8);
+}
+
+.headMain {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8) var(--grid-gap);
+}
+
+.article {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* The frame takes the image's own proportions, so every project is shown whole. */
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 2 / 1);
+  background-color: var(--surface-raised);
+}
+
+.mediaInner {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+  transition: scale 900ms var(--ease-out-expo);
+}
+
+.caption {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.disciplines {
+  color: var(--accent-text);
+}
+
+.summary {
+  max-width: var(--measure);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline;
+}
+
+/* ---------- Picture link (pointer only) and its "View project" pill ---------- */
+
+.mediaWrap {
+  position: relative;
+}
+
+.mediaLink {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end start;
+  padding: var(--space-4);
+  text-decoration: none;
+}
+
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.viewIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mediaLink:hover .view {
+  opacity: 1;
+  transform: none;
+}
+
+.mediaWrap:hover .image {
+  scale: 1.03;
+}
+
+.more {
+  margin-block-start: var(--space-9);
+}
+
+@media (min-width: 64em) {
+  .head,
+  .items {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .head {
+    align-items: end;
+  }
+
+  .headMain {
+    grid-column: 1 / span 7;
+  }
+
+  .intro {
+    grid-column: 9 / -1;
+  }
+
+  .items {
+    row-gap: var(--space-9);
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+
+  .wide .caption {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: baseline;
+  }
+
+  .wide .caption > :nth-child(1) {
+    grid-column: 1 / span 5;
+  }
+
+  .wide .caption > :nth-child(2) {
+    grid-column: 6 / span 3;
+  }
+
+  .wide .caption > :nth-child(3) {
+    grid-column: 9 / -1;
+  }
+
+  .left {
+    grid-column: 1 / span 7;
+  }
+
+  /* The smaller of the pair sits lower, for an editorial stagger. */
+  .right {
+    grid-column: 8 / -1;
+    margin-block-start: var(--space-10);
+  }
+}

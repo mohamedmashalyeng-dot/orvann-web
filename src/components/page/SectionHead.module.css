@@ -1,0 +1,32 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-block-end: var(--space-8);
+}
+
+.main {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.title {
+  max-width: 18ch;
+}
+
+@media (min-width: 64em) {
+  .head {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: end;
+  }
+
+  .main {
+    grid-column: 1 / span 7;
+  }
+
+  .intro {
+    grid-column: 9 / -1;
+  }
+}

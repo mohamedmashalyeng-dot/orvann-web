@@ -1,0 +1,55 @@
+.band {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* The O of the monogram as a slow-turning ring in the corner (decorative). */
+.orbit {
+  position: absolute;
+  z-index: -1;
+  inset-block-start: 50%;
+  inset-inline-end: -12vw;
+  width: min(70vw, 52rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  translate: 0 -50%;
+}
+
+.orbit::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 1px dashed var(--line);
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .orbit::before {
+    animation: spin 60s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block-start: var(--space-3);
+}
