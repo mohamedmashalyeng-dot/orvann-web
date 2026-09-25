@@ -1,6 +1,8 @@
+/* The bottom padding clears the floating WhatsApp button (3.25rem tall, 1.5rem up), so it
+   never covers the last row once the page is scrolled to the end. */
 .footer {
   overflow: clip;
-  padding-block-start: var(--space-9);
+  padding-block: var(--space-9) calc(3.25rem + var(--space-5) + var(--space-4) + env(safe-area-inset-bottom, 0px));
 }
 
 /* ---------- Big closing line ---------- */

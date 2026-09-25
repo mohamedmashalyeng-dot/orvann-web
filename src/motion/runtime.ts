@@ -5,7 +5,7 @@
  */
 export { gsap, ScrollTrigger, conditions } from "./gsap";
 export { revealSplitHeading, scrubWords } from "./text";
-export { animateLayout, attachMagnetic, captureLayout, driveMarqueeWithScroll, revealSignature } from "./interaction";
+export { animateLayout, attachMagnetic, captureLayout, driveMarqueeWithScroll } from "./interaction";
 export { attachPointerDepth, createHeroExit } from "./hero";
 export { revealOnScroll } from "./reveal";
 export { animateMediaFrame, trackStepProgress } from "./scroll";

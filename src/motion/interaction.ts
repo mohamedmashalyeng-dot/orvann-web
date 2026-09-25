@@ -114,17 +114,3 @@ export function animateLayout(state: Flip.FlipState): gsap.core.Timeline {
       gsap.fromTo(elements, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration, stagger, ease: motion.ease.out }),
   });
 }
-
-/** Footer signature: the full-width logo rises out of a mask as you reach the bottom. */
-export function revealSignature(signature: HTMLElement): void {
-  gsap.fromTo(
-    signature,
-    { clipPath: "inset(100% 0% 0% 0%)", yPercent: 20 },
-    {
-      clipPath: "inset(0% 0% 0% 0%)",
-      yPercent: 0,
-      ease: "none",
-      scrollTrigger: { trigger: signature, start: "top bottom", end: "bottom bottom", scrub: 0.5 },
-    },
-  );
-}

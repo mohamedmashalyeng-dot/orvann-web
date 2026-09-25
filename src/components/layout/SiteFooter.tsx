@@ -5,7 +5,6 @@ import { cn } from "@/lib/cn";
 import { ArrowUpIcon } from "@/components/ui/Icons";
 import { Logo } from "@/components/ui/Logo";
 import { SocialLinks } from "@/components/sections/SocialLinks";
-import { FooterSignature } from "@/components/motion/FooterSignature";
 import styles from "./SiteFooter.module.css";
 
 type Props = {
@@ -87,8 +86,6 @@ export function SiteFooter({ content }: Props) {
           </a>
         </div>
       </div>
-
-      <FooterSignature label={a11y.logo} />
     </footer>
   );
 }

@@ -40,7 +40,6 @@ export const en: SiteContent = {
     newTab: "(opens in a new tab)",
     lightMode: "Light mode",
     whatsappFloat: "Chat with ORVANN on WhatsApp",
-    logo: "ORVANN",
   },
 
   review: {

@@ -1,8 +1,8 @@
 /**
  * ORVANN motion settings for everything GSAP drives: pointer depth, the hero → Services
  * scroll transition, section and heading reveals, scroll-highlighted text, marquees,
- * magnetic buttons, project imagery and filtering, the Approach progress line, the footer
- * signature and the mobile menu. (Page transitions: TransitionShell. Entrances: tokens.css.)
+ * magnetic buttons, project imagery and filtering, the Approach progress line and the mobile
+ * menu. (Page transitions: TransitionShell. Entrances: tokens.css.)
  * Durations are in seconds. Distances are px unless noted.
  */
 export const motion = {

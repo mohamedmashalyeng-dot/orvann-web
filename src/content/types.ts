@@ -103,7 +103,6 @@ export type SiteContent = {
     newTab: string;
     lightMode: string;
     whatsappFloat: string;
-    logo: string;
   };
   review: { proposedCopy: string };
   header: { nav: Link[]; cta: Link; menu: string; close: string };

@@ -77,7 +77,7 @@ src/
                        CtaBand, ProjectsIndex (filterable project grid)
     visuals/           page-intro illustrations (values orbit, reach globe, stage, shield — SVG in
                        the hero graphic's language), ProjectFan, ImageMarquee (moving project strip)
-    motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, FooterSignature, MotionRuntime
+    motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, MotionRuntime
   motion/              GSAP runtime (lazy-loaded) and motion builders
 tests/site.test.mjs    release checks over every prerendered page (node:test, no dependencies)
 public/                partner logos, project images, brand mark
@@ -107,7 +107,7 @@ from orvann.com; neutrals and scales are new. Typography roles are global classe
   through `useMotion()` (`src/motion/useMotion.ts`); none of it is on the critical path.
   Settings: `src/motion/config.ts` (pointer depth, hero → services transition, reveals,
   project imagery and filtering, scroll-highlighted text, marquee, magnetic buttons,
-  Approach progress line, footer signature, mobile menu).
+  Approach progress line, mobile menu).
 - `prefers-reduced-motion: reduce` turns off the entrance, parallax, pointer depth and scroll
   movement; content is visible immediately. If motion code fails to load, the page stays static
   and fully visible. Printing always shows everything.
