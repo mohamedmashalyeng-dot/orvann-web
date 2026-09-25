@@ -47,7 +47,7 @@ export default function HomePage() {
       <Services services={content.services} proposedCopyLabel={proposed} />
       {featured.length > 0 && <Work work={content.work} projects={featured} />}
       <Approach approach={content.approach} proposedCopyLabel={proposed} />
-      <About about={content.about} proposedCopyLabel={proposed} />
+      <About about={content.about} newTabLabel={content.a11y.newTab} proposedCopyLabel={proposed} />
       <Contact contact={content.contact} newTabLabel={content.a11y.newTab} proposedCopyLabel={proposed} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd() }} />
     </>

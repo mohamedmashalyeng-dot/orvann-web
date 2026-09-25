@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# font archives as delivered (the fonts the site uses live in src/fonts)
+*.zip

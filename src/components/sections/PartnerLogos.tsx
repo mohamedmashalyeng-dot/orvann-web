@@ -1,7 +1,16 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
-import { partners } from "@/config/site";
+import Link from "next/link";
+import { partners, type Partner } from "@/config/site";
 import { cn } from "@/lib/cn";
+import { Marquee } from "@/components/motion/Marquee";
 import styles from "./PartnerLogos.module.css";
+
+type Props = {
+  /** Localized "(opens in a new tab)", read after partners that link to their own site. */
+  newTabLabel: string;
+  className?: string;
+};
 
 /** Logos have very different proportions; scale each to a similar visual weight. */
 function logoSize(width: number, height: number) {
@@ -10,18 +19,59 @@ function logoSize(width: number, height: number) {
   return { height: displayHeight, width: Math.round(displayHeight * ratio) };
 }
 
-/** The partner logo wall. Items are marked data-reveal, so wrap it in a Reveal to stagger. */
-export function PartnerLogos({ className }: { className?: string }) {
+function PartnerTile({ partner, newTabLabel, focusable }: { partner: Partner; newTabLabel: string; focusable: boolean }) {
+  const size = logoSize(partner.width, partner.height);
+  const logo = (
+    <span
+      className={styles.logo}
+      data-has-color={partner.colorSrc ? "" : undefined}
+      style={{ "--w": `${size.width}px`, "--h": `${size.height}px` } as CSSProperties}
+    >
+      <Image src={partner.src} alt={partner.name} fill sizes={`${size.width * 2}px`} className={styles.mono} />
+      {partner.colorSrc && (
+        // Same logo in colour, revealed on hover; the white one above already names it.
+        <Image src={partner.colorSrc} alt="" aria-hidden="true" fill sizes={`${size.width * 2}px`} className={styles.color} />
+      )}
+    </span>
+  );
+  const tabIndex = focusable ? undefined : -1;
+
+  if (partner.href) {
+    return (
+      <a href={partner.href} className={styles.tile} target="_blank" rel="noopener noreferrer" tabIndex={tabIndex}>
+        {logo}
+        <span className="visually-hidden"> {newTabLabel}</span>
+      </a>
+    );
+  }
   return (
-    <ul className={cn(styles.logos, className)}>
-      {partners.map((partner) => {
-        const size = logoSize(partner.width, partner.height);
-        return (
-          <li key={partner.name} data-reveal="">
-            <Image src={partner.src} alt={partner.name} width={size.width} height={size.height} className={styles.logo} />
-          </li>
-        );
-      })}
+    <Link href={`/our-projects/${partner.project}/`} className={styles.tile} tabIndex={tabIndex}>
+      {logo}
+    </Link>
+  );
+}
+
+/**
+ * The partner logos as a carousel: it runs on its own, stops while hovered or focused,
+ * and each logo lights up in its own colours and links to the partner's website (or, where
+ * none is verified yet, to the case study). With reduced motion it is a still, wrapped row.
+ */
+export function PartnerLogos({ newTabLabel, className }: Props) {
+  const list = (focusable: boolean) => (
+    <ul className={styles.list}>
+      {partners.map((partner) => (
+        <li key={partner.name}>
+          <PartnerTile partner={partner} newTabLabel={newTabLabel} focusable={focusable} />
+        </li>
+      ))}
     </ul>
+  );
+
+  return (
+    <div className={cn(styles.carousel, className)}>
+      <Marquee duration={45} pauseOnHover wrapWhenStill repeat={list(false)}>
+        {list(true)}
+      </Marquee>
+    </div>
   );
 }

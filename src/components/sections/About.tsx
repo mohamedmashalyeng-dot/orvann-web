@@ -9,10 +9,11 @@ import styles from "./About.module.css";
 
 type Props = {
   about: SiteContent["about"];
+  newTabLabel: string;
   proposedCopyLabel?: string;
 };
 
-export function About({ about, proposedCopyLabel }: Props) {
+export function About({ about, newTabLabel, proposedCopyLabel }: Props) {
   return (
     <section id="about" className="tone-base section" aria-labelledby="about-title">
       <div className="container">
@@ -53,7 +54,7 @@ export function About({ about, proposedCopyLabel }: Props) {
           <h3 className={cn("type-label", styles.partnersLabel)} data-reveal="">
             {about.partnersLabel}
           </h3>
-          <PartnerLogos className={styles.logos} />
+          <PartnerLogos className={styles.logos} newTabLabel={newTabLabel} />
         </Reveal>
       </div>
     </section>

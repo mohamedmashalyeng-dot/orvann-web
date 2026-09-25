@@ -89,7 +89,7 @@ export default function AboutPage() {
             </ul>
           </Reveal>
           <Reveal className={styles.logos}>
-            <PartnerLogos />
+            <PartnerLogos newTabLabel={content.a11y.newTab} />
           </Reveal>
         </div>
       </section>

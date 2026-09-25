@@ -26,8 +26,32 @@
     animation-direction: reverse;
   }
 
-  .marquee[data-paused] .track {
+  .marquee[data-paused] .track,
+  .pauseOnHover:hover .track,
+  .pauseOnHover:focus-within .track {
     animation-play-state: paused;
+  }
+}
+
+/* Still: every item stays reachable, wrapped onto rows, and the repeat is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .wrapWhenStill {
+    direction: inherit;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .wrapWhenStill .track {
+    width: auto;
+  }
+
+  .wrapWhenStill .set {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+  }
+
+  .wrapWhenStill .repeat {
+    display: none;
   }
 }
 

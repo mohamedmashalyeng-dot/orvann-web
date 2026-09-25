@@ -19,21 +19,69 @@ export const site = {
   logoPath: "/brand/orvann-mark.png",
 } as const;
 
+export type Partner = {
+  name: string;
+  /** White-on-transparent logo, trimmed to its visible bounds. */
+  src: string;
+  width: number;
+  height: number;
+  /** Full-colour logo with the same bounds, shown on hover. */
+  colorSrc?: string;
+  /** The partner's own website (verified). Without one, the logo links to `project`. */
+  href?: string;
+  /** Slug of the partner's case study on this site. */
+  project: string;
+};
+
 /**
- * Logos shown under "Our Success Stories" on orvann.com. Files are white-on-transparent
- * and trimmed to their visible bounds. Names are read from the logos and matched to the
- * project pages on orvann.com/our-projects (the Arabic mark is Diwanyah Culture).
+ * Logos shown under "Our Success Stories" on orvann.com. Names are read from the logos and
+ * matched to the project pages on orvann.com/our-projects (the Arabic mark is Diwanyah
+ * Culture). Websites and colour logos were checked against each partner's own site on
+ * 25 Sep 2026 (the logo on the site had to match this one); colour files come from those
+ * sites, and Al Marefa Tech's is its mark in the teal of its site. Partners with no
+ * verified website or colour logo yet fall back to their case study and a plain highlight.
  */
-export const partners = [
-  { name: "Eagles Developments", src: "/partners/eagles.png", width: 318, height: 215 },
-  { name: "Tucano", src: "/partners/tucano.png", width: 512, height: 120 },
-  { name: "Al Marefa Tech", src: "/partners/marefa.svg", width: 191, height: 65 },
-  { name: "RGC", src: "/partners/rgc.svg", width: 155, height: 50 },
-  { name: "Alnour Optical", src: "/partners/alnour.png", width: 768, height: 166 },
-  { name: "Plaza Gardens Developments", src: "/partners/plaza.svg", width: 168, height: 65 },
-  { name: "Diwanyah Culture", src: "/partners/moltqa.svg", width: 48, height: 66 },
-  { name: "Modern Fix", src: "/partners/fix.svg", width: 65, height: 65 },
-] as const;
+export const partners: readonly Partner[] = [
+  {
+    name: "Eagles Developments",
+    src: "/partners/eagles.png",
+    width: 318,
+    height: 215,
+    colorSrc: "/partners/eagles-color.png",
+    href: "https://www.eagles-developments.com/",
+    project: "eagles-real-estate-development",
+  },
+  {
+    name: "Tucano",
+    src: "/partners/tucano.png",
+    width: 512,
+    height: 120,
+    colorSrc: "/partners/tucano-color.png",
+    href: "https://tucano.almarefatech.com/",
+    project: "tucano-2",
+  },
+  {
+    name: "Al Marefa Tech",
+    src: "/partners/marefa.svg",
+    width: 191,
+    height: 65,
+    colorSrc: "/partners/marefa-color.svg",
+    href: "https://almarefatech.com/",
+    project: "al-marefah-tech",
+  },
+  { name: "RGC", src: "/partners/rgc.svg", width: 155, height: 50, project: "rgc-brokerage" },
+  { name: "Alnour Optical", src: "/partners/alnour.png", width: 768, height: 166, project: "al-nour-optics" },
+  {
+    name: "Plaza Gardens Developments",
+    src: "/partners/plaza.svg",
+    width: 168,
+    height: 65,
+    href: "https://www.plazagardens.com/",
+    project: "plaza-garden-real-estate-development",
+  },
+  { name: "Diwanyah Culture", src: "/partners/moltqa.svg", width: 48, height: 66, project: "diwanyah-culture" },
+  { name: "Modern Fix", src: "/partners/fix.svg", width: 65, height: 65, project: "modern-fix" },
+];
 
 /**
  * Build-time switches, read on the server only. Every default is the production-safe

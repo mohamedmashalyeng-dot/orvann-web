@@ -109,7 +109,9 @@ test("links that open a new tab are protected with rel=noopener", () => {
 test("every image has alt text and every frame a title", () => {
   eachPage((html) => {
     for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
-      assert.ok(/\salt="[^"]+"/.test(tag), `missing alt: ${tag.slice(0, 120)}`);
+      // Empty alt only for decorative duplicates that are also hidden from assistive technology.
+      const decorative = /\salt=""/.test(tag) && /\saria-hidden="true"/.test(tag);
+      assert.ok(decorative || /\salt="[^"]+"/.test(tag), `missing alt: ${tag.slice(0, 120)}`);
     }
     for (const [tag] of html.matchAll(/<iframe\b[^>]*>/g)) {
       assert.ok(/\stitle="[^"]+"/.test(tag), `missing title: ${tag.slice(0, 120)}`);

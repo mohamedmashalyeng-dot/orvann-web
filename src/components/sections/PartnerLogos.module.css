@@ -1,22 +1,88 @@
-/* An even logo wall (2 × 4 on phones, 4 × 2 from tablets up) — no stragglers. */
-.logos {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: center;
-  gap: var(--space-7) var(--space-6);
+.carousel {
+  min-width: 0;
 }
 
-@media (min-width: 48em) {
-  .logos {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+/* Room above and below so a lifted tile is never clipped by the band. */
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  padding-inline-end: var(--space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list {
+    flex-wrap: wrap;
   }
 }
 
-/* Source logos are white: shown as-is on the dark theme, inverted to ink on the light one. */
+.tile {
+  display: grid;
+  place-items: center;
+  min-width: 11rem;
+  height: 6rem;
+  padding-inline: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-slow) var(--ease-standard),
+    border-color var(--duration-slow) var(--ease-standard),
+    box-shadow var(--duration-slow) var(--ease-standard),
+    translate var(--duration-slow) var(--ease-out-expo);
+}
+
+/* Hover or focus: the tile turns to paper, so every logo shows in its true colours. */
+.tile:hover,
+.tile:focus-visible {
+  border-color: transparent;
+  background-color: var(--color-white);
+  box-shadow: 0 1rem 2rem -1.25rem rgb(10 12 18 / 0.45);
+  translate: 0 -0.2rem;
+}
+
 .logo {
+  position: relative;
+  display: block;
+  width: var(--w);
+  height: var(--h);
+}
+
+.mono,
+.color {
+  object-fit: contain;
+  transition:
+    opacity var(--duration-slow) var(--ease-standard),
+    filter var(--duration-slow) var(--ease-standard);
+}
+
+/* Source logos are white: as-is on the dark theme, inverted to ink on the light one. */
+.mono {
   opacity: 0.78;
 }
 
-:global([data-theme="light"]) .logo {
+:global([data-theme="light"]) .mono {
   filter: invert(1);
+}
+
+.color {
+  opacity: 0;
+}
+
+/* On the paper tile: the colour logo where there is one, otherwise the logo in ink. */
+.tile:hover .mono,
+.tile:focus-visible .mono {
+  opacity: 1;
+  filter: invert(1);
+}
+
+.tile:hover [data-has-color] .mono,
+.tile:focus-visible [data-has-color] .mono {
+  opacity: 0;
+}
+
+.tile:hover .color,
+.tile:focus-visible .color {
+  opacity: 1;
 }

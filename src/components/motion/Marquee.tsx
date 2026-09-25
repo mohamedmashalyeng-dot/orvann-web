@@ -7,9 +7,18 @@ import styles from "./Marquee.module.css";
 
 type Props = {
   children: ReactNode;
+  /**
+   * The repeated copy that makes the loop seamless (defaults to `children`). It is hidden
+   * from assistive technology; pass a copy whose links are out of the tab order.
+   */
+  repeat?: ReactNode;
   /** Seconds per loop at cruising speed. */
   duration?: number;
   reverse?: boolean;
+  /** Stop while the pointer is over the band or focus is inside it. */
+  pauseOnHover?: boolean;
+  /** With reduced motion, show the items wrapped onto rows instead of a still, clipped band. */
+  wrapWhenStill?: boolean;
   className?: string;
 };
 
@@ -26,7 +35,7 @@ const setupMarquee: MotionSetup<HTMLDivElement> = ({ gsap, conditions, driveMarq
  * while off screen and off entirely for reduced motion. The content is decorative
  * repetition — pass aria-hidden content or label the region yourself.
  */
-export function Marquee({ children, duration = 40, reverse, className }: Props) {
+export function Marquee({ children, repeat, duration = 40, reverse, pauseOnHover, wrapWhenStill, className }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   useMotion(rootRef, setupMarquee);
 
@@ -44,13 +53,19 @@ export function Marquee({ children, duration = 40, reverse, className }: Props) 
   return (
     <div
       ref={rootRef}
-      className={cn(styles.marquee, reverse && styles.reverse, className)}
+      className={cn(
+        styles.marquee,
+        reverse && styles.reverse,
+        pauseOnHover && styles.pauseOnHover,
+        wrapWhenStill && styles.wrapWhenStill,
+        className,
+      )}
       style={{ "--marquee-duration": `${duration}s` } as CSSProperties}
     >
       <div className={styles.track} data-marquee-track="">
         <div className={styles.set}>{children}</div>
-        <div className={styles.set} aria-hidden="true">
-          {children}
+        <div className={cn(styles.set, styles.repeat)} aria-hidden="true">
+          {repeat ?? children}
         </div>
       </div>
     </div>
