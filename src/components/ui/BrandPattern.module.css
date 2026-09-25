@@ -1,0 +1,82 @@
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* The tile is a mask, so the lattice takes the section's text colour: paper on dark, ink on
+   light, white on the blue bands. The pattern itself never mirrors in RTL (it is the logo). */
+.tiles {
+  position: absolute;
+  inset: 0;
+  background-color: var(--text);
+  opacity: 0.07;
+  -webkit-mask: url("/brand/ov-pattern.svg") 0 0 / 7.5rem repeat;
+  mask: url("/brand/ov-pattern.svg") 0 0 / 7.5rem repeat;
+}
+
+/* A little stronger on the blue bands, where white reads softer. */
+:global(.tone-accent) .tiles {
+  opacity: 0.11;
+}
+
+/* On phones text runs the full width, so the pattern always sits behind some of it: fainter. */
+@media (max-width: 47.99em) {
+  .tiles {
+    opacity: 0.045;
+  }
+
+  :global(.tone-accent) .tiles {
+    opacity: 0.07;
+  }
+}
+
+/* ---- Fades: strongest at one side or corner, melting out in every direction, so the
+   pattern never ends in a hard edge against a neighbouring section of the same tone ---- */
+
+.end,
+.start,
+.corner {
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.end {
+  -webkit-mask-image: radial-gradient(ellipse 65% 85% at 100% 50%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 65% 85% at 100% 50%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+}
+
+.start {
+  -webkit-mask-image: radial-gradient(ellipse 55% 85% at 0% 50%, #000, rgb(0 0 0 / 0.5) 35%, transparent 70%);
+  mask-image: radial-gradient(ellipse 55% 85% at 0% 50%, #000, rgb(0 0 0 / 0.5) 35%, transparent 70%);
+}
+
+.corner {
+  -webkit-mask-image: radial-gradient(ellipse 45% 65% at 100% 0%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 45% 65% at 100% 0%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+}
+
+/* In RTL the reading side flips, so the fades do too. */
+:global([dir="rtl"]) .end {
+  -webkit-mask-image: radial-gradient(ellipse 65% 85% at 0% 50%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 65% 85% at 0% 50%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+}
+
+:global([dir="rtl"]) .start {
+  -webkit-mask-image: radial-gradient(ellipse 55% 85% at 100% 50%, #000, rgb(0 0 0 / 0.5) 35%, transparent 70%);
+  mask-image: radial-gradient(ellipse 55% 85% at 100% 50%, #000, rgb(0 0 0 / 0.5) 35%, transparent 70%);
+}
+
+:global([dir="rtl"]) .corner {
+  -webkit-mask-image: radial-gradient(ellipse 45% 65% at 0% 0%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 45% 65% at 0% 0%, #000, rgb(0 0 0 / 0.5) 40%, transparent 72%);
+}
+
+/* Printing: no texture behind text. */
+@media print {
+  .pattern {
+    display: none;
+  }
+}

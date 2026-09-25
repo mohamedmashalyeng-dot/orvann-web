@@ -59,7 +59,12 @@ export default async function AboutPage({ params }: LangParams) {
       </section>
 
       <Statement id="why-title" title={page.why.title} text={page.why.text} tone="tone-alt" />
-      <Statement id="achievements-title" title={page.achievements.title} text={page.achievements.text} />
+      <Statement
+        id="achievements-title"
+        title={page.achievements.title}
+        text={page.achievements.text}
+        pattern={false}
+      />
 
       <section className="tone-alt section" aria-labelledby="values-title">
         <div className="container">

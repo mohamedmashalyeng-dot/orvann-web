@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!--
+    ORVANN pattern tile, drawn from the OV monogram (public/brand/orvann-monogram.png) at
+    about 1/8 scale: the V (heavy stroke with its top serif, rising hairline with its own
+    serif) in one corner, the high-contrast O (thick sides, thin top and bottom) in the
+    opposite one. Repeated, the tile reads as an alternating O/V lattice. Used as a CSS mask,
+    so the fill colour here is irrelevant: each section paints it in its own tone.
+  -->
+  <g fill="#000">
+    <path d="M8.9 20.3h10.4l7.2 28.6-3 5.2z" />
+    <rect x="5" y="19.3" width="14.6" height="2.1" />
+    <rect x="32.3" y="5" width="18.5" height="1.7" />
+    <path d="M91.5 68.5a21.5 21.5 0 1 0 0.001 0zm0 2.6a14.5 18.9 0 1 1-0.001 0z" fill-rule="evenodd" />
+  </g>
+  <path d="M23.5 54.1 46.6 5" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="square" />
+</svg>

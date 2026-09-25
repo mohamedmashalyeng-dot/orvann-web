@@ -71,7 +71,8 @@ src/
   styles/tokens.css    design tokens: colour, type scale, spacing, layout, radii, motion, themes, tones
   app/globals.css      base styles, layout/typography utilities, CSS entrance keyframes
   components/
-    ui/                ButtonLink, Logo, SectionLabel, ReviewTag, ThemeToggle, SocialIcon, RichText, Icons
+    ui/                ButtonLink, Logo, BrandPattern, SectionLabel, ReviewTag, ThemeToggle, SocialIcon,
+                       RichText, Icons
     layout/            SiteHeader (nav + mobile menu), SiteFooter, TransitionShell (page transitions),
                        FloatingWhatsApp — all mounted once in the root layout
     hero/              Hero, HeroGraphic (SVG), HeroStage (hero motion)
@@ -99,6 +100,12 @@ without per-section overrides. Brand blues and navy are carried over
 from orvann.com; neutrals and scales are new. Typography roles are global classes
 (`type-display`, `type-mega`, `type-h2`, `type-h3`, `type-lede`, `type-body`, `type-label`,
 `type-accent`). Breakpoints: 40em / 48em / 64em / 80em.
+
+**Brand pattern.** `public/brand/ov-pattern.svg` redraws the monogram's O and V as a tile;
+`<BrandPattern fade="start|end|corner" />` lays it behind a section as a mask in that
+section's text colour, faded out in every direction. It sits on the closing band of the
+inner pages, the homepage Contact band, the first statement on Services and About, and the
+case-study Results — never on two neighbouring sections, and never behind body text.
 
 ## Motion
 

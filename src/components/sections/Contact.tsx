@@ -1,6 +1,7 @@
 import type { SiteContent } from "@/content";
 import { site } from "@/config/site";
 import { cn } from "@/lib/cn";
+import { BrandPattern } from "@/components/ui/BrandPattern";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ReviewTag } from "@/components/ui/ReviewTag";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -16,7 +17,8 @@ type Props = {
 /** No form: there is no verified backend, so every channel here is a direct, working link. */
 export function Contact({ contact, newTabLabel, proposedCopyLabel }: Props) {
   return (
-    <section id="contact" className="tone-accent section" aria-labelledby="contact-title">
+    <section id="contact" className={cn("tone-accent section", styles.section)} aria-labelledby="contact-title">
+      <BrandPattern fade="corner" />
       <div className="container">
         <Reveal as="header">
           <SectionLabel data-reveal="">{contact.label}</SectionLabel>

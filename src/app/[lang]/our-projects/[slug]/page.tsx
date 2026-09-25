@@ -9,6 +9,7 @@ import { partners } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ArrowIcon } from "@/components/ui/Icons";
+import { BrandPattern } from "@/components/ui/BrandPattern";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { MediaFrame } from "@/components/motion/MediaFrame";
@@ -124,7 +125,8 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="tone-alt section" aria-labelledby="results-title">
+      <section className={cn("tone-alt section", styles.resultsSection)} aria-labelledby="results-title">
+        <BrandPattern fade="corner" />
         <div className="container">
           <SectionHead id="results-title" title={copy.results} />
           <Reveal>
