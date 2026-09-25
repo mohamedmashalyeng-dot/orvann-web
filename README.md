@@ -142,7 +142,9 @@ build.
 | --- | --- | --- | --- |
 | Druk (Commercial Type) | English page and section titles | `src/fonts/druk-*-trial.woff2` | **Trial only** — replace with licensed files before launch. The trial maps 74 characters, so `&`, `@`, `+`, `/`, `:` fall back to Archivo. |
 | 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before launch (the copy supplied came from a free-download site). |
-| Archivo, Bodoni Moda, Fragment Mono | English body, the italic verbs, labels | Google Fonts via `next/font` | Open Font License |
+| Archivo, Fragment Mono | English body and mid-level headings, labels | Google Fonts via `next/font` | Open Font License |
+
+One family per line: the two verbs in the headline (build, grow) are set in the same face as the words around them and picked out by colour (`.type-accent`).
 
 To swap in licensed files, keep the file names (or update the paths in `app/[lang]/layout.tsx`).
 

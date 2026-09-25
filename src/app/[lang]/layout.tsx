@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Bodoni_Moda, Fragment_Mono } from "next/font/google";
+import { Archivo, Fragment_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { locales } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
@@ -14,31 +14,12 @@ import "@/styles/tokens.css";
 import "../globals.css";
 
 // Archivo carries body text and mid-level headings (its width axis gives them their stance);
-// Bodoni Moda echoes the serif ORVANN monogram; Fragment Mono sets labels.
+// Fragment Mono sets labels. Titles use Druk (English) or Bukra (Arabic), below.
 const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
   variable: "--font-archivo",
   display: "swap",
-});
-
-// The italic sets "build" and "grow" in the English hero headline, so it is preloaded;
-// the upright cut is only used by the wordmark and loads on demand.
-const bodoniItalic = Bodoni_Moda({
-  subsets: ["latin"],
-  style: "italic",
-  axes: ["opsz"],
-  variable: "--font-bodoni-italic",
-  display: "swap",
-});
-
-const bodoniUpright = Bodoni_Moda({
-  subsets: ["latin"],
-  style: "normal",
-  axes: ["opsz"],
-  variable: "--font-bodoni-upright",
-  display: "swap",
-  preload: false,
 });
 
 // Labels. Small (15 KB) and preloaded: the hero labels wrap on phones, so a late swap
@@ -50,9 +31,10 @@ const fragmentMono = Fragment_Mono({
   display: "swap",
 });
 
-// English display type (page and section titles). TRIAL files from Commercial Type: they
-// map only 74 characters, so &, @, + and similar fall back to Archivo, and they are not
-// licensed for a live site — replace with licensed Druk files before launch.
+// English display type: page and section titles, the hero headline included (so it is
+// preloaded). TRIAL files from Commercial Type: they map only 74 characters, so &, @, +
+// and similar fall back to Archivo, and they are not licensed for a live site — replace
+// with licensed Druk files before launch.
 const druk = localFont({
   src: [
     { path: "../../fonts/druk-medium-trial.woff2", weight: "500", style: "normal" },
@@ -75,7 +57,7 @@ const bukra = localFont({
   preload: false,
 });
 
-const fontVariables = [archivo, bodoniItalic, bodoniUpright, fragmentMono, druk, bukra].map((font) => font.variable).join(" ");
+const fontVariables = [archivo, fragmentMono, druk, bukra].map((font) => font.variable).join(" ");
 
 // Only the two languages exist; anything else under the language segment is a 404.
 export const dynamicParams = false;
