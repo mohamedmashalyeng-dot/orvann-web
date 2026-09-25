@@ -52,6 +52,18 @@
   color: var(--accent-text);
 }
 
+.icon {
+  width: 3rem;
+  height: 3rem;
+  margin-block-end: var(--space-3);
+  color: var(--text);
+  transition: translate var(--duration-slow) var(--ease-out-expo);
+}
+
+.step:hover .icon {
+  translate: 0 -0.25rem;
+}
+
 .index,
 .stepTitle,
 .arrow {

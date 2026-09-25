@@ -1,0 +1,55 @@
+.fan {
+  position: relative;
+  aspect-ratio: 1 / 0.95;
+}
+
+.card {
+  position: absolute;
+  width: 80%;
+  aspect-ratio: var(--ratio, 2 / 1);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  box-shadow: 0 1.5rem 3rem -1.25rem rgb(0 0 0 / 0.6);
+}
+
+.card:nth-child(1) {
+  inset-block-start: 4%;
+  inset-inline-start: 0;
+  rotate: -7deg;
+}
+
+.card:nth-child(2) {
+  inset-block-start: 30%;
+  inset-inline-start: 20%;
+  rotate: 5deg;
+  z-index: 1;
+}
+
+.card:nth-child(3) {
+  inset-block-start: 57%;
+  inset-inline-start: 6%;
+  rotate: -2deg;
+  z-index: 2;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* Each print drops onto the stack in turn; `translate` leaves each card's own `rotate` alone. */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    animation: fan-drop var(--entrance-graphic-duration) var(--ease-out-expo)
+      calc(var(--page-enter-delay) + var(--entrance-graphic) + var(--i, 0) * 140ms) both;
+  }
+}
+
+@keyframes fan-drop {
+  from {
+    opacity: 0;
+    translate: 0 2.5rem;
+    scale: 0.94;
+  }
+}

@@ -8,6 +8,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import { MediaFrame } from "@/components/motion/MediaFrame";
 import { PageIntro } from "@/components/page/PageIntro";
+import { StageGraphic } from "@/components/visuals/IntroGraphics";
 import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
@@ -24,7 +25,7 @@ export default function ExhibitionsPage() {
 
   return (
     <>
-      <PageIntro intro={page.intro}>
+      <PageIntro intro={page.intro} visual={<StageGraphic />}>
         <ButtonLink href={content.pages.cta.primary.href} icon="arrow">
           {content.pages.cta.primary.label}
         </ButtonLink>

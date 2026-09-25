@@ -6,6 +6,8 @@ import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { PartnerLogos } from "@/components/sections/PartnerLogos";
+import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
+import { ImageMarquee } from "@/components/visuals/ImageMarquee";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { Statement } from "@/components/page/Statement";
@@ -25,11 +27,13 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageIntro intro={page.intro}>
+      <PageIntro intro={page.intro} visual={<ValuesOrbit values={values.items} />}>
         <ButtonLink href={content.pages.cta.primary.href} icon="arrow">
           {content.pages.cta.primary.label}
         </ButtonLink>
       </PageIntro>
+
+      <ImageMarquee images={content.projects.map((project) => project.image)} />
 
       <section className="section" aria-labelledby="story-title">
         <div className="container">

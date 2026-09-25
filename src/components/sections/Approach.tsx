@@ -5,6 +5,7 @@ import { ReviewTag } from "@/components/ui/ReviewTag";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import { StepsProgress } from "@/components/motion/StepsProgress";
+import { ApproachIcon } from "./ApproachIcons";
 import styles from "./Approach.module.css";
 
 type Props = {
@@ -36,6 +37,7 @@ export function Approach({ approach, proposedCopyLabel }: Props) {
             <ol className={styles.steps}>
               {approach.steps.map((step, index) => (
                 <li key={step.title} className={styles.step} data-step="" data-reveal="">
+                  <ApproachIcon index={index} className={styles.icon} />
                   <span className={cn("type-label", styles.index)}>{String(index + 1).padStart(2, "0")}</span>
                   <h3 className={styles.stepTitle}>
                     {step.title}

@@ -75,6 +75,8 @@ src/
                        About, Contact; shared SocialLinks and PartnerLogos
     page/              inner-page building blocks: PageIntro, SectionHead, Statement, FaqList,
                        CtaBand, ProjectsIndex (filterable project grid)
+    visuals/           page-intro illustrations (values orbit, reach globe, stage, shield — SVG in
+                       the hero graphic's language), ProjectFan, ImageMarquee (moving project strip)
     motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, FooterSignature, MotionRuntime
   motion/              GSAP runtime (lazy-loaded) and motion builders
 tests/site.test.mjs    release checks over every prerendered page (node:test, no dependencies)

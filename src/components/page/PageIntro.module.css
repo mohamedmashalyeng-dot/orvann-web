@@ -61,6 +61,13 @@
   display: none;
 }
 
+/* Under the intro on phones and tablets, sized so it never dominates the text. */
+.visual {
+  justify-self: center;
+  width: min(100%, 24rem);
+  margin-block-start: var(--space-4);
+}
+
 @media (min-width: 64em) {
   .inner {
     grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
@@ -68,7 +75,7 @@
     align-items: end;
   }
 
-  .inner > :not(.aside) {
+  .inner > :not(.aside, .visual) {
     grid-column: 1 / span 8;
   }
 
@@ -77,5 +84,25 @@
     grid-column: 9 / -1;
     grid-row: 1 / span 3;
     align-self: end;
+  }
+
+  /* contain: size keeps a tall illustration from stretching the text rows; it is centred
+     on the text block instead and may extend into the section's padding. */
+  .visual {
+    grid-column: 9 / -1;
+    grid-row: 1 / span 3;
+    align-self: stretch;
+    justify-self: stretch;
+    contain: size;
+    display: grid;
+    align-content: center;
+    justify-items: end;
+    width: auto;
+    margin-block-start: 0;
+  }
+
+  .visual > * {
+    width: 100%;
+    max-width: 30rem;
   }
 }

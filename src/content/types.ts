@@ -65,6 +65,8 @@ export type ServiceFamily = {
   title: string;
   text: string;
   items: Step[];
+  /** An ORVANN project image that illustrates the family. */
+  image: ImageAsset;
 };
 
 export type ProcessStage = { title: string; points: string[] };

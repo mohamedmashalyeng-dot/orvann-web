@@ -48,6 +48,25 @@
   color: var(--accent-text);
 }
 
+/* One frame shape for every family, whatever the source image's proportions. */
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  margin-block-end: var(--space-7);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+}
+
+.mediaInner {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
 .items {
   display: grid;
   border-block-start: 1px solid var(--line-strong);

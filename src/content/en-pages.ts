@@ -140,6 +140,12 @@ export const enPages: SiteContent["pages"] = {
             text: "Wider reach through influencer collaborations and automated email marketing.",
           },
         ],
+        image: {
+          src: "/work/al-nour-optics.jpg",
+          alt: "Al Nour Optics campaign visual: a customer trying on glasses beside an Al Nour Optical shopping bag in the store.",
+          width: 1344,
+          height: 616,
+        },
       },
       {
         id: "digital",
@@ -160,6 +166,12 @@ export const enPages: SiteContent["pages"] = {
             text: "We stay actively involved after launch, so your site keeps growing and converting.",
           },
         ],
+        image: {
+          src: "/work/sami-alsalmi-law-office-mobile.jpg",
+          alt: "The Sami Al-Salmi Law Office website shown on two phones.",
+          width: 545,
+          height: 577,
+        },
       },
       {
         id: "consulting",
@@ -175,6 +187,12 @@ export const enPages: SiteContent["pages"] = {
           },
           { title: "AI & creative innovation", text: "Advanced technology that future-proofs your business and fosters innovation." },
         ],
+        image: {
+          src: "/work/al-marefah-tech.webp",
+          alt: "Al Marefah Tech cover: two businessmen beside the Al Marefa Tech identity on a dark teal background.",
+          width: 1344,
+          height: 616,
+        },
       },
       {
         id: "production",
@@ -189,6 +207,12 @@ export const enPages: SiteContent["pages"] = {
           },
           { title: "Exhibition & display design", text: "Impactful displays for trade shows, malls and events." },
         ],
+        image: {
+          src: "/work/sami-alsalmi-law-office-stationery.jpg",
+          alt: "Sami Al-Salmi Law Office stationery in black and gold: business cards, letterhead and folder.",
+          width: 655,
+          height: 612,
+        },
       },
       {
         id: "events",
@@ -210,6 +234,12 @@ export const enPages: SiteContent["pages"] = {
           },
           { title: "Luxury private events", text: "High-end private parties and exclusive experiences." },
         ],
+        image: {
+          src: "/media/exhibitions-stage.jpg",
+          alt: "Render of a conference stage with large LED screens, lit steps and a speaker’s podium.",
+          width: 1344,
+          height: 616,
+        },
       },
     ],
     why: {

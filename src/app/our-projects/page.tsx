@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/page/PageIntro";
 import { ProjectsIndex, type ProjectFilter } from "@/components/page/ProjectsIndex";
 import { CtaBand } from "@/components/page/CtaBand";
+import { ProjectFan } from "@/components/visuals/ProjectFan";
 import styles from "./page.module.css";
 
 const content = getContent();
@@ -26,7 +27,10 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <PageIntro intro={page.intro} />
+      <PageIntro
+        intro={page.intro}
+        visual={<ProjectFan images={content.projects.filter((project) => project.featured).map((project) => project.image)} />}
+      />
       <div className={styles.listing}>
         <div className="container">
           <ProjectsIndex

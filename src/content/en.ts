@@ -50,6 +50,7 @@ export const en: SiteContent = {
   header: {
     // [brief] + the live site's Exhibitions page
     nav: [
+      { label: "Home", href: "/" },
       { label: "Services", href: "/services/" },
       { label: "Work", href: "/our-projects/" },
       { label: "Exhibitions", href: "/exhibitions-conferences/" },
@@ -272,6 +273,7 @@ export const en: SiteContent = {
     tagline: "Software development and digital marketing — from Giza, Egypt, for the Middle East and beyond.",
     exploreTitle: "Explore",
     explore: [
+      { label: "Home", href: "/" },
       { label: "Services", href: "/services/" },
       { label: "Work", href: "/our-projects/" },
       { label: "Exhibitions & conferences", href: "/exhibitions-conferences/" },

@@ -8,8 +8,10 @@ type Props = {
   intro: PageIntroContent;
   /** Extra content under the lede (buttons, meta). */
   children?: ReactNode;
-  /** Large decorative element on the right (desktop). */
+  /** Content beside the title on desktop only (e.g. an index of the page). */
   aside?: ReactNode;
+  /** Decorative illustration: beside the title on desktop, under the intro on smaller screens. */
+  visual?: ReactNode;
   className?: string;
 };
 
@@ -17,7 +19,7 @@ type Props = {
  * Opening block for inner pages. The title's words rise out of their own masks with a
  * CSS entrance (it paints on the first frame, and plays as a transition curtain lifts).
  */
-export function PageIntro({ intro, children, aside, className }: Props) {
+export function PageIntro({ intro, children, aside, visual, className }: Props) {
   const words = intro.title.split(" ");
 
   return (
@@ -50,6 +52,11 @@ export function PageIntro({ intro, children, aside, className }: Props) {
           )}
         </div>
         {aside && <div className={styles.aside}>{aside}</div>}
+        {visual && (
+          <div className={styles.visual} aria-hidden="true">
+            {visual}
+          </div>
+        )}
       </div>
     </section>
   );

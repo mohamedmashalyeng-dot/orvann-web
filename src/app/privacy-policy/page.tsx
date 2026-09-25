@@ -2,6 +2,7 @@ import { getContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/page/PageIntro";
+import { ShieldGraphic } from "@/components/visuals/IntroGraphics";
 import styles from "./page.module.css";
 
 const content = getContent();
@@ -15,7 +16,7 @@ const sectionId = (index: number) => `policy-${index + 1}`;
 export default function PrivacyPage() {
   return (
     <>
-      <PageIntro intro={page.intro}>
+      <PageIntro intro={page.intro} visual={<ShieldGraphic />}>
         <p className={cn("type-label", styles.effective)}>{page.effective}</p>
       </PageIntro>
 

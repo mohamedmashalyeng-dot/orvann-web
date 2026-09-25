@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { SocialLinks } from "@/components/sections/SocialLinks";
+import { ReachGlobe } from "@/components/visuals/IntroGraphics";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { FaqList } from "@/components/page/FaqList";
@@ -28,7 +29,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageIntro intro={page.intro}>
+      <PageIntro intro={page.intro} visual={<ReachGlobe place={site.address.locality} />}>
         <ButtonLink href={`mailto:${site.email}`} icon="arrow">
           {contact.emailCta}
         </ButtonLink>

@@ -1,9 +1,11 @@
+import Image from "next/image";
 import { getContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
+import { MediaFrame } from "@/components/motion/MediaFrame";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { Statement } from "@/components/page/Statement";
@@ -64,6 +66,15 @@ export default function ServicesPage() {
               </Reveal>
 
               <Reveal className={styles.itemsWrap}>
+                <MediaFrame className={styles.media} innerClassName={styles.mediaInner}>
+                  <Image
+                    src={family.image.src}
+                    alt={family.image.alt}
+                    fill
+                    sizes="(min-width: 90rem) 760px, (min-width: 64em) 52vw, 92vw"
+                    className={styles.image}
+                  />
+                </MediaFrame>
                 <ul className={styles.items}>
                   {family.items.map((item) => (
                     <li key={item.title} className={styles.item} data-reveal="">
