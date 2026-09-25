@@ -1,7 +1,7 @@
 // Release checks against the production build output. Run after `npm run build`:
 //   npm test
-// They read the prerendered HTML of every page (the whole site is static), so they test
-// exactly what ships.
+// They read the prerendered HTML of every page in both languages (the whole site is static),
+// so they test exactly what ships.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -13,22 +13,32 @@ const read = (name) => {
   return readFileSync(url, "utf8");
 };
 
-/** Every prerendered page, keyed by its URL path ("index.html" → "/", "a/b.html" → "/a/b/"). */
+/**
+ * Every prerendered page, keyed by its public URL. English is built under /en/ and served
+ * at the root by src/proxy.ts ("en/services.html" → "/services/"); Arabic keeps its prefix
+ * ("ar/services.html" → "/ar/services/").
+ */
+const toPath = (file) => {
+  const [locale, ...rest] = file.replace(/\.html$/, "").split("/");
+  const tail = rest.length ? `/${rest.join("/")}/` : "/";
+  return locale === "en" ? tail : `/${locale}${tail === "/" ? "/" : tail}`;
+};
 const pages = new Map(
   readdirSync(APP, { recursive: true })
     .map((file) => file.replaceAll("\\", "/"))
-    .filter((file) => file.endsWith(".html") && !file.startsWith("_"))
-    .map((file) => [file === "index.html" ? "/" : `/${file.replace(/\.html$/, "")}/`, read(file)]),
+    .filter((file) => file.endsWith(".html") && /^(en|ar)(\/|\.html$)/.test(file))
+    .map((file) => [toPath(file), { html: read(file), locale: file.split(/[/.]/)[0] }]),
 );
-const home = pages.get("/");
+const localeOf = (path) => (path === "/ar/" || path.startsWith("/ar/") ? "ar" : "en");
+const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
 const text = (fragment) => fragment.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const decode = (value) => value.replace(/&amp;/g, "&");
 /** Runs `check` on every page, naming the page in any failure. */
 const eachPage = (check) => {
-  for (const [path, html] of pages) {
+  for (const [path, { html, locale }] of pages) {
     try {
-      check(html, path);
+      check(html, path, locale);
     } catch (error) {
       error.message = `${path}: ${error.message}`;
       throw error;
@@ -36,7 +46,7 @@ const eachPage = (check) => {
   }
 };
 
-test("the build contains every page of the site", () => {
+test("the build contains every page of the site, in both languages", () => {
   for (const path of [
     "/",
     "/services/",
@@ -49,14 +59,42 @@ test("the build contains every page of the site", () => {
     "/privacy-policy/",
   ]) {
     assert.ok(pages.has(path), `${path} was not prerendered`);
+    assert.ok(pages.has(otherPath(path)), `${otherPath(path)} was not prerendered`);
   }
-  assert.equal([...pages.keys()].filter((path) => path.startsWith("/our-projects/") && path !== "/our-projects/").length, 16);
+  for (const prefix of ["/our-projects/", "/ar/our-projects/"]) {
+    const studies = [...pages.keys()].filter((path) => path.startsWith(prefix) && path !== prefix);
+    assert.equal(studies.length, 16, `${prefix}: expected 16 case studies`);
+  }
+  const english = [...pages.keys()].filter((path) => localeOf(path) === "en");
+  assert.deepEqual(english.map(otherPath).sort(), [...pages.keys()].filter((path) => localeOf(path) === "ar").sort());
 });
 
-test("every page has exactly one h1; the homepage's is the approved headline", () => {
+test("every page declares its language and direction", () => {
+  eachPage((html, path, locale) => {
+    const tag = html.match(/<html\b[^>]*>/)?.[0] ?? "";
+    assert.equal(locale, localeOf(path));
+    assert.ok(tag.includes(`lang="${locale}"`), `expected lang="${locale}"`);
+    assert.ok(tag.includes(`dir="${locale === "ar" ? "rtl" : "ltr"}"`), "wrong text direction");
+  });
+});
+
+test("every page links to its other-language version and lists hreflang alternates", () => {
+  eachPage((html, path) => {
+    const other = otherPath(path);
+    const switches = [...html.matchAll(/<a\b[^>]*hrefLang="(en|ar)"[^>]*>/g)].map(([tag]) => tag.match(/href="([^"]+)"/)[1]);
+    assert.ok(switches.length > 0, "language switch missing");
+    for (const href of switches) assert.equal(href, other, "language switch points at the wrong page");
+    for (const locale of ["en", "ar"]) {
+      assert.ok(new RegExp(`<link rel="alternate" hrefLang="${locale}" href="[^"]+"`).test(html), `hreflang ${locale} missing`);
+    }
+  });
+});
+
+test("every page has exactly one h1; the homepages carry the approved headline", () => {
   eachPage((html) => assert.equal([...html.matchAll(/<h1\b/g)].length, 1, "expected one h1"));
-  const [, h1] = home.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/);
-  assert.equal(text(h1), "We build digital experiences. We grow ambitious brands.");
+  const headline = (path) => text(pages.get(path).html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)[1]);
+  assert.equal(headline("/"), "We build digital experiences. We grow ambitious brands.");
+  assert.equal(headline("/ar/"), "نحن نبني تجارب رقمية. ونحن نُنمّي علامات طموحة.");
 });
 
 test("heading levels never skip", () => {
@@ -77,20 +115,22 @@ test("every in-page link points at an element that exists", () => {
   });
 });
 
-test("every internal link leads to a page that exists", () => {
+test("every internal link leads to a page that exists, in the page's own language", () => {
   const assets = /\.(png|jpe?g|webp|svg|ico|xml|txt|webmanifest)$/;
-  eachPage((html) => {
-    for (const [, href] of html.matchAll(/<a\b[^>]*\shref="(\/[^"]*)"/g)) {
-      const path = decode(href).split(/[?#]/)[0];
-      if (path.startsWith("/_next/") || assets.test(path)) continue;
-      assert.ok(pages.has(path), `link to ${href} has no page`);
+  eachPage((html, path) => {
+    for (const [tag, href] of html.matchAll(/<a\b[^>]*\shref="(\/[^"]*)"[^>]*>/g)) {
+      const target = decode(href).split(/[?#]/)[0];
+      if (target.startsWith("/_next/") || assets.test(target)) continue;
+      assert.ok(pages.has(target), `link to ${href} has no page`);
+      // Only the language switch may cross languages.
+      if (!/hrefLang=/.test(tag)) assert.equal(localeOf(target), localeOf(path), `link to ${href} leaves the language`);
     }
   });
 });
 
 test("contact channels are real, working link formats", () => {
-  for (const path of ["/", "/contact-us/"]) {
-    const html = pages.get(path);
+  for (const path of ["/", "/contact-us/", "/ar/", "/ar/contact-us/"]) {
+    const { html } = pages.get(path);
     assert.ok(/href="mailto:info@orvann\.com"/.test(html), `${path}: email link missing`);
     assert.ok(/href="tel:\+201080784465"/.test(html), `${path}: phone link missing`);
     assert.ok(/href="https:\/\/wa\.me\/201080784465"/.test(html), `${path}: WhatsApp link missing`);
@@ -121,28 +161,30 @@ test("every image has alt text and every frame a title", () => {
 
 test("review-only content never reaches a default build", () => {
   eachPage((html) => {
-    assert.ok(!/Proposed copy/i.test(html), "review tags leaked into the build");
+    assert.ok(!/Proposed copy|نص مقترح/i.test(html), "review tags leaked into the build");
     assert.ok(!/Concept project/i.test(html), "concept work leaked into the build");
   });
 });
 
 test("structured data is valid JSON with verified facts only", () => {
-  const match = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
-  assert.ok(match, "Organization JSON-LD is missing");
-  const data = JSON.parse(match[1]);
-  assert.equal(data["@type"], "Organization");
-  assert.equal(data.name, "ORVANN");
-  assert.equal(data.email, "info@orvann.com");
-  assert.equal(data.telephone, "+201080784465");
-  assert.equal(data.address.addressLocality, "Giza");
-  assert.equal(data.address.addressCountry, "EG");
-  assert.deepEqual(data.sameAs, [
-    "https://www.linkedin.com/company/orvann/",
-    "https://www.instagram.com/orvann.eg/",
-    "https://www.facebook.com/orvann.eg",
-  ]);
-  for (const key of ["aggregateRating", "review", "award", "numberOfEmployees", "foundingDate"]) {
-    assert.ok(!(key in data), `${key} is not a verified fact`);
+  for (const path of ["/", "/ar/"]) {
+    const match = pages.get(path).html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    assert.ok(match, `${path}: Organization JSON-LD is missing`);
+    const data = JSON.parse(match[1]);
+    assert.equal(data["@type"], "Organization");
+    assert.equal(data.name, "ORVANN");
+    assert.equal(data.email, "info@orvann.com");
+    assert.equal(data.telephone, "+201080784465");
+    assert.equal(data.address.addressLocality, "Giza");
+    assert.equal(data.address.addressCountry, "EG");
+    assert.deepEqual(data.sameAs, [
+      "https://www.linkedin.com/company/orvann/",
+      "https://www.instagram.com/orvann.eg/",
+      "https://www.facebook.com/orvann.eg",
+    ]);
+    for (const key of ["aggregateRating", "review", "award", "numberOfEmployees", "foundingDate"]) {
+      assert.ok(!(key in data), `${key} is not a verified fact`);
+    }
   }
 });
 
@@ -166,7 +208,7 @@ test("every page has its own canonical URL and complete sharing metadata", () =>
     assert.ok(canonical, "canonical link missing");
     // Next writes the root canonical as the bare origin, which is equivalent to "/".
     assert.equal(canonical[1] || "/", path, "canonical points at another page");
-    for (const property of ["og:title", "og:description", "og:site_name", "og:url", "og:image", "og:image:alt"]) {
+    for (const property of ["og:title", "og:description", "og:site_name", "og:url", "og:locale", "og:image", "og:image:alt"]) {
       assert.ok(new RegExp(`<meta property="${property}" content="[^"]+"`).test(html), `${property} missing`);
     }
     assert.ok(/<meta property="og:image" content="[^"]+opengraph-image/.test(html), "og:image is not the share image");

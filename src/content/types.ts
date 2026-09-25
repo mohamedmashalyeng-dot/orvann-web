@@ -3,7 +3,7 @@
  * Arabic later means adding one set of files (see ./index.ts) — components never hold copy.
  */
 
-export type Locale = "en";
+export type Locale = "en" | "ar";
 export type Direction = "ltr" | "rtl";
 
 /** A run of text; `accent` renders in the serif italic reserved for ORVANN's verbs. */
@@ -105,7 +105,14 @@ export type SiteContent = {
     whatsappFloat: string;
   };
   review: { proposedCopy: string };
-  header: { nav: Link[]; cta: Link; menu: string; close: string };
+  header: {
+    nav: Link[];
+    cta: Link;
+    menu: string;
+    close: string;
+    /** Switch to the other language: its name, written in that language, and an accessible label. */
+    language: { label: string; ariaLabel: string };
+  };
   hero: {
     eyebrow: string;
     location: string;
@@ -213,6 +220,8 @@ export type SiteContent = {
       results: string;
       gallery: string;
       next: string;
+      /** Link to the client's own website, on case studies that have one. */
+      visitWebsite: string;
     };
     privacy: { meta: PageMeta; intro: PageIntro; effective: string; sections: PolicySection[] };
     publicationLink: string;

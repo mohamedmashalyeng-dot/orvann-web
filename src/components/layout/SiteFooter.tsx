@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { SiteContent } from "@/content";
+import { localePath, type SiteContent } from "@/content";
 import { site } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { ArrowUpIcon } from "@/components/ui/Icons";
@@ -27,7 +27,7 @@ export function SiteFooter({ content }: Props) {
 
         <div className={styles.columns}>
           <div className={styles.brand}>
-            <Link href="/" className={styles.brandLink} aria-label={a11y.home}>
+            <Link href={localePath(content.locale, "/")} className={styles.brandLink} aria-label={a11y.home}>
               <Logo className={styles.brandLogo} />
             </Link>
             <p className="type-body">{footer.tagline}</p>
@@ -77,7 +77,7 @@ export function SiteFooter({ content }: Props) {
           <p>
             © {year} {site.name}. {footer.rights}
           </p>
-          <Link href={site.privacyPolicyUrl} className={styles.link}>
+          <Link href={localePath(content.locale, site.privacyPolicyUrl)} className={styles.link}>
             {footer.privacy}
           </Link>
           <a href="#top" className={cn(styles.link, styles.toTop)}>

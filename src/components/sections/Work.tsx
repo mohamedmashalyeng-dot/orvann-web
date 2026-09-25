@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import type { Project, SiteContent } from "@/content";
+import { localePath, type Locale, type Project, type SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -11,6 +11,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import styles from "./Work.module.css";
 
 type Props = {
+  locale: Locale;
   work: SiteContent["work"];
   /** The featured projects, in display order. */
   projects: Project[];
@@ -29,7 +30,7 @@ const layouts = [
  * link for pointer users only, so keyboard and screen-reader users meet one link per
  * project and the image's alt text stays readable.
  */
-export function Work({ work, projects }: Props) {
+export function Work({ locale, work, projects }: Props) {
   return (
     <section id="work" className="tone-base section" aria-labelledby="work-title">
       <div className="container">
@@ -48,7 +49,7 @@ export function Work({ work, projects }: Props) {
         <ul className={styles.items}>
           {projects.map((project, index) => {
             const layout = layouts[index % layouts.length];
-            const href = `/our-projects/${project.slug}/`;
+            const href = localePath(locale, `/our-projects/${project.slug}/`);
             return (
               <li key={project.slug} className={cn(styles.item, layout.className)}>
                 <article className={styles.article} aria-labelledby={`work-${project.slug}`}>

@@ -53,7 +53,8 @@ export function TransitionShell() {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const anchor = (event.target as Element | null)?.closest?.("a");
-      if (!anchor || anchor.hasAttribute("download")) return;
+      // data-reload: a full page load on purpose (the language switch changes lang, dir and fonts).
+      if (!anchor || anchor.hasAttribute("download") || anchor.hasAttribute("data-reload")) return;
       if (anchor.target && anchor.target !== "_self") return;
 
       const url = new URL(anchor.href, window.location.href);

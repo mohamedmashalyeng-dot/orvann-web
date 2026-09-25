@@ -1,4 +1,5 @@
-import { getContent } from "@/content";
+import type { Metadata } from "next";
+import { contentFor, type LangParams } from "@/content/server";
 import { site } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
@@ -11,13 +12,15 @@ import { SectionHead } from "@/components/page/SectionHead";
 import { FaqList } from "@/components/page/FaqList";
 import styles from "./page.module.css";
 
-const content = getContent();
-const page = content.pages.contact;
-
-export const metadata = pageMetadata(page.meta, "/contact-us/");
+export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
+  const content = await contentFor(params);
+  return pageMetadata(content, content.pages.contact.meta, "/contact-us/");
+}
 
 /** No form: there is no verified backend, so every channel here is a direct, working link. */
-export default function ContactPage() {
+export default async function ContactPage({ params }: LangParams) {
+  const content = await contentFor(params);
+  const page = content.pages.contact;
   const { contact, social, a11y } = content;
 
   const channels = [

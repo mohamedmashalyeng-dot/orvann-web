@@ -438,6 +438,7 @@ export const enPages: SiteContent["pages"] = {
     results: "Results",
     gallery: "Gallery",
     next: "Next project",
+    visitWebsite: "Visit website",
   },
 
   // orvann.com/privacy-policy/ [site] — legal text restated, not rewritten. Confirm with counsel.

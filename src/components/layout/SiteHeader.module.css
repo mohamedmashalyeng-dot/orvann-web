@@ -103,6 +103,45 @@
   display: none;
 }
 
+/* Language switch: in the bar from desktop up; on smaller screens it sits in the menu. */
+.language,
+.panelLanguage {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.language:hover,
+.language:focus-visible,
+.panelLanguage:hover,
+.panelLanguage:focus-visible {
+  color: var(--text);
+}
+
+.language {
+  display: none;
+}
+
+.panelFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.panelLanguage {
+  font-size: var(--text-lg);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;
@@ -240,6 +279,10 @@
   .nav,
   .cta {
     display: flex;
+  }
+
+  .language {
+    display: inline-flex;
   }
 
   .toggle,

@@ -59,6 +59,7 @@ export const en: SiteContent = {
     cta: { label: "Let’s Talk", href: "/contact-us/" },
     menu: "Menu",
     close: "Close",
+    language: { label: "العربية", ariaLabel: "اقرأ هذه الصفحة بالعربية" },
   },
 
   hero: {

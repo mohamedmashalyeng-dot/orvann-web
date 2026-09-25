@@ -2,13 +2,13 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { partners, type Partner } from "@/config/site";
+import { localePath, type Locale } from "@/content";
 import { cn } from "@/lib/cn";
 import { Marquee } from "@/components/motion/Marquee";
 import styles from "./PartnerLogos.module.css";
 
 type Props = {
-  /** Localized "(opens in a new tab)", read after partners that link to their own site. */
-  newTabLabel: string;
+  locale: Locale;
   className?: string;
 };
 
@@ -19,7 +19,7 @@ function logoSize(width: number, height: number) {
   return { height: displayHeight, width: Math.round(displayHeight * ratio) };
 }
 
-function PartnerTile({ partner, newTabLabel, focusable }: { partner: Partner; newTabLabel: string; focusable: boolean }) {
+function PartnerTile({ partner, locale, focusable }: { partner: Partner; locale: Locale; focusable: boolean }) {
   const size = logoSize(partner.width, partner.height);
   const logo = (
     <span
@@ -34,18 +34,13 @@ function PartnerTile({ partner, newTabLabel, focusable }: { partner: Partner; ne
       )}
     </span>
   );
-  const tabIndex = focusable ? undefined : -1;
-
-  if (partner.href) {
-    return (
-      <a href={partner.href} className={styles.tile} target="_blank" rel="noopener noreferrer" tabIndex={tabIndex}>
-        {logo}
-        <span className="visually-hidden"> {newTabLabel}</span>
-      </a>
-    );
-  }
+  // Every logo opens the partner's case study; its website, where verified, is linked there.
   return (
-    <Link href={`/our-projects/${partner.project}/`} className={styles.tile} tabIndex={tabIndex}>
+    <Link
+      href={localePath(locale, `/our-projects/${partner.project}/`)}
+      className={styles.tile}
+      tabIndex={focusable ? undefined : -1}
+    >
       {logo}
     </Link>
   );
@@ -53,15 +48,15 @@ function PartnerTile({ partner, newTabLabel, focusable }: { partner: Partner; ne
 
 /**
  * The partner logos as a carousel: it runs on its own, stops while hovered or focused,
- * and each logo lights up in its own colours and links to the partner's website (or, where
- * none is verified yet, to the case study). With reduced motion it is a still, wrapped row.
+ * and each logo lights up in its own colours and opens the partner's case study. With reduced
+ * motion it is a still, wrapped row.
  */
-export function PartnerLogos({ newTabLabel, className }: Props) {
+export function PartnerLogos({ locale, className }: Props) {
   const list = (focusable: boolean) => (
     <ul className={styles.list}>
       {partners.map((partner) => (
         <li key={partner.name}>
-          <PartnerTile partner={partner} newTabLabel={newTabLabel} focusable={focusable} />
+          <PartnerTile partner={partner} locale={locale} focusable={focusable} />
         </li>
       ))}
     </ul>

@@ -6,12 +6,14 @@
   container-type: inline-size;
 }
 
+/* A drawing, not text: its coordinates and label anchors stay left-to-right in Arabic too. */
 .graphic {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
   color: var(--text);
+  direction: ltr;
 }
 
 .gridPath {
@@ -118,6 +120,13 @@
   font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+/* Arabic labels: no tracking or capitals, a touch larger for the script. */
+:global([lang="ar"]) .label {
+  font-size: 16px;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Labels become unreadably small once the illustration shrinks. */

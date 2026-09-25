@@ -3,7 +3,9 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getContent } from "@/content";
+import { getContent, localePath } from "@/content";
+import { contentFor } from "@/content/server";
+import { partners } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ArrowIcon } from "@/components/ui/Icons";
@@ -15,23 +17,23 @@ import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
-const content = getContent();
-const copy = content.pages.caseStudy;
-
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ lang: string; slug: string }> };
 
 // Every project is prerendered; any other slug is a 404.
 export const dynamicParams = false;
 
+// The same slugs in both languages (the Arabic projects are built from the English ones).
 export function generateStaticParams() {
-  return content.projects.map((project) => ({ slug: project.slug }));
+  return getContent().projects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const content = await contentFor(params);
   const { slug } = await params;
   const project = content.projects.find((item) => item.slug === slug);
   if (!project) return {};
   return pageMetadata(
+    content,
     { title: `${project.title} — ${content.meta.siteName}`, description: project.summary },
     `/our-projects/${project.slug}/`,
   );
@@ -42,18 +44,27 @@ const ratio = (image: { width: number; height: number }) =>
   ({ "--ratio": `${image.width} / ${image.height}` }) as CSSProperties;
 
 export default async function ProjectPage({ params }: Props) {
+  const content = await contentFor(params);
+  const copy = content.pages.caseStudy;
   const { slug } = await params;
   const index = content.projects.findIndex((item) => item.slug === slug);
   if (index === -1) notFound();
   const project = content.projects[index];
   const next = content.projects[(index + 1) % content.projects.length];
+  // The client's own website, where one has been verified (see partners in config/site.ts).
+  const website = partners.find((partner) => partner.project === project.slug)?.href;
 
   return (
     <>
       <PageIntro intro={{ label: content.pages.work.intro.label, title: project.title, lede: project.tagline }}>
-        <ButtonLink href="/our-projects/" variant="secondary" size="sm">
+        <ButtonLink href={localePath(content.locale, "/our-projects/")} variant="secondary" size="sm">
           {copy.back}
         </ButtonLink>
+        {website && (
+          <ButtonLink href={website} size="sm" icon="external" newTabLabel={content.a11y.newTab}>
+            {copy.visitWebsite}
+          </ButtonLink>
+        )}
       </PageIntro>
 
       <div className="container">
@@ -156,7 +167,7 @@ export default async function ProjectPage({ params }: Props) {
 
       <nav className={cn("tone-base", styles.next)} aria-label={copy.next}>
         <div className="container">
-          <Link href={`/our-projects/${next.slug}/`} className={styles.nextLink}>
+          <Link href={localePath(content.locale, `/our-projects/${next.slug}/`)} className={styles.nextLink}>
             <span className={cn("type-label", styles.nextLabel)}>{copy.next}</span>
             <span className={cn("type-h2", styles.nextTitle)}>
               {next.title}

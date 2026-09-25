@@ -3,7 +3,7 @@
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { Link as NavLink, SiteContent } from "@/content";
+import { localePath, publicPathname, switchLocalePath, type Link as NavLink, type Locale, type SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { loadMotion, whenIdle, type MotionRuntime } from "@/motion/useMotion";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import styles from "./SiteHeader.module.css";
 
 type Props = {
+  locale: Locale;
   header: SiteContent["header"];
   nav: NavLink[];
   a11y: SiteContent["a11y"];
@@ -31,18 +32,45 @@ function setBackgroundLocked(locked: boolean) {
   }
 }
 
-/** "/services/" is current on itself; "/our-projects/" also on every project page. */
-function isCurrent(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
+/** "/services/" is current on itself; "/our-projects/" also on every project page. Home only on itself. */
+function isCurrent(pathname: string, href: string, home: string) {
+  if (href === home) return pathname === home;
   return pathname === href || pathname.startsWith(href);
 }
 
-export function SiteHeader({ header, nav, a11y }: Props) {
+/**
+ * The same page in the other language. A plain link with a full page load (data-reload,
+ * skipped by TransitionShell): the document's language, direction and fonts all change.
+ */
+function LanguageLink({ pathname, locale, language, className }: {
+  pathname: string;
+  locale: Locale;
+  language: SiteContent["header"]["language"];
+  className?: string;
+}) {
+  const other: Locale = locale === "ar" ? "en" : "ar";
+  return (
+    <a
+      href={switchLocalePath(pathname, other)}
+      hrefLang={other}
+      lang={other}
+      aria-label={language.ariaLabel}
+      className={className}
+      data-reload=""
+    >
+      {language.label}
+    </a>
+  );
+}
+
+export function SiteHeader({ locale, header, nav, a11y }: Props) {
+  const home = localePath(locale, "/");
   // `open` is the menu's state; `panelShown` keeps the panel rendered while it animates closed.
   const [open, setOpen] = useState(false);
   const [panelShown, setPanelShown] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  // Public form: prerendered English pages report their internal /en/… path.
+  const pathname = publicPathname(usePathname());
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   // The menu animates once the motion runtime has loaded; before that it opens instantly.
@@ -134,7 +162,7 @@ export function SiteHeader({ header, nav, a11y }: Props) {
     <>
       <header data-site-header="" className={cn("tone-base", styles.header, (scrolled || panelShown) && styles.solid)}>
         <div className={cn("container", styles.bar)}>
-          <Link href="/" className={styles.brand} aria-label={a11y.home} data-enter="header" style={stagger(0)}>
+          <Link href={home} className={styles.brand} aria-label={a11y.home} data-enter="header" style={stagger(0)}>
             <Logo className={styles.logo} />
           </Link>
 
@@ -145,7 +173,7 @@ export function SiteHeader({ header, nav, a11y }: Props) {
                   <Link
                     href={item.href}
                     className={styles.navLink}
-                    aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                    aria-current={isCurrent(pathname, item.href, home) ? "page" : undefined}
                   >
                     {item.label}
                   </Link>
@@ -155,6 +183,7 @@ export function SiteHeader({ header, nav, a11y }: Props) {
           </nav>
 
           <div className={styles.tools} data-enter="header" style={stagger(2)}>
+            <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.language} />
             <ThemeToggle label={a11y.lightMode} />
             <ButtonLink href={header.cta.href} size="sm" className={styles.cta} magnetic>
               {header.cta.label}
@@ -187,7 +216,7 @@ export function SiteHeader({ header, nav, a11y }: Props) {
                 <Link
                   href={item.href}
                   className={cn("type-h2", styles.panelLink)}
-                  aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                  aria-current={isCurrent(pathname, item.href, home) ? "page" : undefined}
                   onClick={() => closeMenu(false)}
                 >
                   <span className={cn("type-label", styles.panelIndex)} aria-hidden="true">
@@ -199,10 +228,11 @@ export function SiteHeader({ header, nav, a11y }: Props) {
             ))}
           </ul>
         </nav>
-        <div data-menu-item="">
+        <div className={styles.panelFoot} data-menu-item="">
           <ButtonLink href={header.cta.href} onClick={() => closeMenu(false)}>
             {header.cta.label}
           </ButtonLink>
+          <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.panelLanguage} />
         </div>
       </div>
     </>

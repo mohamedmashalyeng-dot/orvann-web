@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { getContent } from "@/content";
+import { lang } from "next/root-params";
+import { getContent, isLocale, localePath } from "@/content";
 import { site } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./not-found.module.css";
 
-const content = getContent();
+/** not-found receives no params; the language comes from the root segment instead. */
+async function localizedContent() {
+  const locale = await lang();
+  return getContent(isLocale(locale) ? locale : undefined);
+}
 
-export const metadata: Metadata = {
-  title: `${content.notFound.title} — ${content.meta.siteName}`,
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await localizedContent();
+  return {
+    title: `${content.notFound.title} — ${content.meta.siteName}`,
+    robots: { index: false, follow: true },
+  };
+}
 
 /** Rendered inside the root layout, so the header, footer and navigation stay available. */
-export default function NotFound() {
+export default async function NotFound() {
+  const content = await localizedContent();
   const copy = content.notFound;
 
   return (
@@ -26,7 +35,7 @@ export default function NotFound() {
         </h1>
         <p className="type-lede">{copy.text}</p>
         <div className={styles.actions}>
-          <ButtonLink href="/" icon="arrow">
+          <ButtonLink href={localePath(content.locale, "/")} icon="arrow">
             {copy.home}
           </ButtonLink>
           <ButtonLink href={`mailto:${site.email}`} variant="secondary">

@@ -3,6 +3,40 @@
 Release candidate prepared 23 Sep 2026. Not deployed. Nothing on orvann.com (DNS, hosting,
 WordPress files or content) has been changed.
 
+## Update, 25 Sep 2026 — Arabic version, new type, partner carousel, visuals
+
+- **Arabic site** at `/ar/…`: all 26 pages, right-to-left, set in 29LT Bukra. Copy reuses
+  orvann.com/ar wherever it exists (home, about, services, contact, exhibitions, privacy);
+  the rest — the 16 case studies, new homepage sections, interface labels — is translated and
+  marked `[translation]` for a native copywriter's review. The privacy page keeps the Arabic
+  site's own effective date (21 July 2025; the English page says 14 July 2025).
+- **Language switch** in the header and mobile menu (same page, other language); `hreflang`
+  alternates on every page and in the sitemap (52 URLs). The old WordPress Arabic URLs
+  redirect (308) to the new pages.
+- **Druk** for English page and section titles.
+- **Home** added to the navigation and the footer's Explore list.
+- **Partner carousel:** logos run on their own, stop on hover or focus, and show their own
+  colours on a paper tile. Each opens the partner's case study; the case studies of the four
+  partners with a verified website (Eagles, Tucano, Al Marefa Tech, Plaza Gardens) carry a
+  "Visit website" button.
+- **Visuals:** illustrations in every inner-page intro, a photo per service family, a moving
+  project strip on About, icons for the Approach steps. The full-width footer logo is gone.
+
+**Checks — actual results:** `npm run check` passes: lint, typecheck, build (52 pages), 14/14
+tests, now run over both languages (language and direction, language switch and hreflang,
+links staying in their language, sitemap = pages). Browser QA against the production server:
+0 px overflow on 15 pages × 5 widths (280–1440 px), no page errors, interactions pass in both
+languages (switch both ways, Arabic filters and plural counts, Arabic navigation and menu).
+
+**New launch blockers**
+1. **Font licences.** Druk is a *trial* (not licensed for a live site, 74 characters only),
+   and the 29LT Bukra files have no web licence. Buy both, or choose other faces, before
+   launch.
+2. **Arabic copy review** by a native copywriter (everything marked `[translation]`).
+3. **Partner colour logos and websites.** Colour files exist for Eagles, Tucano and Al Marefa
+   Tech only; the others brighten to ink on hover. No website was verified for RGC, Alnour
+   Optical, Diwanyah Culture or Modern Fix — add `href` and `colorSrc` in `config/site.ts`.
+
 ## Update, 23 Sep 2026 — multi-page site
 
 The single page became a full site. Every page is prerendered and **keeps its current

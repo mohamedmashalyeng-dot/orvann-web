@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Project, ProjectCategory } from "@/content";
+import { localePath, type Locale, type Project, type ProjectCategory } from "@/content";
 import { cn } from "@/lib/cn";
 import { loadMotion, whenIdle, type MotionRuntime } from "@/motion/useMotion";
 import styles from "./ProjectsIndex.module.css";
@@ -11,6 +11,7 @@ import styles from "./ProjectsIndex.module.css";
 export type ProjectFilter = "all" | ProjectCategory;
 
 type Props = {
+  locale: Locale;
   projects: Project[];
   /** Filters to offer, in order; each has a label and its "N projects" count text. */
   filters: { id: ProjectFilter; label: string; count: string }[];
@@ -28,7 +29,7 @@ const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
  * new count is announced politely. Once the motion runtime has loaded, cards glide to their
  * new places (GSAP Flip); before that, or with reduced motion, the grid simply updates.
  */
-export function ProjectsIndex({ projects, filters, filterLabel, empty }: Props) {
+export function ProjectsIndex({ locale, projects, filters, filterLabel, empty }: Props) {
   const [active, setActive] = useState<ProjectFilter>("all");
   const gridRef = useRef<HTMLUListElement>(null);
   const motionRef = useRef<MotionRuntime | null>(null);
@@ -101,7 +102,7 @@ export function ProjectsIndex({ projects, filters, filterLabel, empty }: Props) 
       ) : (
         <ul ref={gridRef} className={styles.grid}>
           {visible.map((project) => {
-            const href = `/our-projects/${project.slug}/`;
+            const href = localePath(locale, `/our-projects/${project.slug}/`);
             return (
               <li key={project.slug} className={styles.card} data-project="">
                 <article className={styles.article} aria-labelledby={`project-${project.slug}`}>

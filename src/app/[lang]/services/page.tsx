@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import { getContent } from "@/content";
+import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -13,14 +14,17 @@ import { FaqList } from "@/components/page/FaqList";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
-const content = getContent();
-const page = content.pages.services;
-
-export const metadata = pageMetadata(page.meta, "/services/");
+export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
+  const content = await contentFor(params);
+  return pageMetadata(content, content.pages.services.meta, "/services/");
+}
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
-export default function ServicesPage() {
+export default async function ServicesPage({ params }: LangParams) {
+  const content = await contentFor(params);
+  const page = content.pages.services;
+
   return (
     <>
       <PageIntro

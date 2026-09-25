@@ -1,4 +1,4 @@
-import type { SiteContent } from "@/content";
+import type { Locale, SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ReviewTag } from "@/components/ui/ReviewTag";
@@ -8,12 +8,12 @@ import { PartnerLogos } from "./PartnerLogos";
 import styles from "./About.module.css";
 
 type Props = {
+  locale: Locale;
   about: SiteContent["about"];
-  newTabLabel: string;
   proposedCopyLabel?: string;
 };
 
-export function About({ about, newTabLabel, proposedCopyLabel }: Props) {
+export function About({ locale, about, proposedCopyLabel }: Props) {
   return (
     <section id="about" className="tone-base section" aria-labelledby="about-title">
       <div className="container">
@@ -54,7 +54,7 @@ export function About({ about, newTabLabel, proposedCopyLabel }: Props) {
           <h3 className={cn("type-label", styles.partnersLabel)} data-reveal="">
             {about.partnersLabel}
           </h3>
-          <PartnerLogos className={styles.logos} newTabLabel={newTabLabel} />
+          <PartnerLogos locale={locale} className={styles.logos} />
         </Reveal>
       </div>
     </section>

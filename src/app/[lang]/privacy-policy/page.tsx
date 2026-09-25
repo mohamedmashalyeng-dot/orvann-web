@@ -1,19 +1,21 @@
-import { getContent } from "@/content";
+import type { Metadata } from "next";
+import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/page/PageIntro";
 import { ShieldGraphic } from "@/components/visuals/IntroGraphics";
 import styles from "./page.module.css";
 
-const content = getContent();
-const page = content.pages.privacy;
-
-export const metadata = pageMetadata(page.meta, "/privacy-policy/");
+export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
+  const content = await contentFor(params);
+  return pageMetadata(content, content.pages.privacy.meta, "/privacy-policy/");
+}
 
 const sectionId = (index: number) => `policy-${index + 1}`;
 
 /** The privacy policy restated from orvann.com, with a table of contents beside it on desktop. */
-export default function PrivacyPage() {
+export default async function PrivacyPage({ params }: LangParams) {
+  const page = (await contentFor(params)).pages.privacy;
   return (
     <>
       <PageIntro intro={page.intro} visual={<ShieldGraphic />}>

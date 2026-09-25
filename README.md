@@ -2,7 +2,8 @@
 
 The ORVANN website (software development and digital marketing) — Next.js 16 (App Router,
 Turbopack), React 19, TypeScript, CSS Modules on a shared token system, GSAP for motion.
-Every page is prerendered as static HTML and keeps the URL it has on orvann.com today.
+Every page is prerendered as static HTML, in English and Arabic. English keeps the URLs it
+has on orvann.com today; Arabic is the same page under `/ar/` (e.g. `/ar/services/`).
 
 | Route | Page |
 | --- | --- |
@@ -57,10 +58,13 @@ These are read at build time (every page is statically prerendered), so rebuild 
 
 ```
 src/
-  app/                 routes (one folder per page, with its page.module.css), layout, not-found,
-                       robots, sitemap, icons, share image
-  content/             every piece of copy — types.ts (shape), en.ts (homepage and shared copy),
-                       en-pages.ts (inner pages), en-projects.ts (the 16 projects), index.ts (locale lookup)
+  proxy.ts             serves English at the root (rewrite to /en/…) and Arabic under /ar/
+  app/[lang]/          routes, one folder per page with its page.module.css; root layout, not-found
+  app/                 robots, sitemap, icons, share image, globals.css
+  content/             every piece of copy — types.ts (shape); en.ts / ar.ts (homepage and shared
+                       copy), en-pages.ts / ar-pages.ts (inner pages), en-projects.ts / ar-projects.ts
+                       (the 16 projects); index.ts (locales, localePath), server.ts (contentFor)
+  fonts/               Druk (English titles) and 29LT Bukra (Arabic), as woff2 — see Fonts
   config/site.ts       verified business facts, partner logos, build-time flags
   lib/metadata.ts      per-page title, canonical URL and sharing metadata
   theme/theme.ts       dark/light theme settings and the pre-paint theme script
@@ -114,14 +118,33 @@ from orvann.com; neutrals and scales are new. Typography roles are global classe
 
 ## Content and languages
 
-Components contain no copy. To add Arabic later: add `"ar"` to `Locale`, create
-`src/content/ar.ts` with `dir: "rtl"` and register it in `src/content/index.ts`, then add
-locale routing. Layout uses logical properties throughout, directional icons flip in RTL and
-motion reads a `--dir` multiplier; Arabic fonts would be added as new `--font-*` tokens.
-No language switch is shown until an Arabic version exists.
+Components contain no copy. Every route lives under `app/[lang]` and reads its language's
+content with `contentFor(params)`; links inside a page stay in its language
+(`localePath(locale, "/services/")`). The header's language switch opens the same page in
+the other language, and every page lists both versions as `hreflang` alternates and in the
+sitemap. The WordPress site's old Arabic URLs (`/ar/home-ar/`, `/ar/services-ar/` …)
+redirect to the new ones (`next.config.ts`).
 
-Copy provenance is marked inline in the content files: `[brief]`, `[site]` (orvann.com) or
-`[proposed]` (needs sign-off).
+Arabic is right-to-left throughout: layout uses logical properties, directional icons flip,
+motion reads a `--dir` multiplier, and drawings keep left-to-right coordinates. Its type
+tokens (`:root[lang="ar"]` in `tokens.css`) set Bukra for every role, no letter-spacing (it
+breaks joined letters) and taller lines.
+
+Copy provenance is marked inline in the content files: `[brief]`, `[site]` (orvann.com or
+orvann.com/ar), `[proposed]` (needs sign-off) or `[translation]` (Arabic translated from the
+English — needs a native copywriter's review). The Arabic project files take only words;
+slugs, images and categories come from the English file, and a missing translation fails the
+build.
+
+## Fonts
+
+| Face | Used for | Files | Licence |
+| --- | --- | --- | --- |
+| Druk (Commercial Type) | English page and section titles | `src/fonts/druk-*-trial.woff2` | **Trial only** — replace with licensed files before launch. The trial maps 74 characters, so `&`, `@`, `+`, `/`, `:` fall back to Archivo. |
+| 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before launch (the copy supplied came from a free-download site). |
+| Archivo, Bodoni Moda, Fragment Mono | English body, the italic verbs, labels | Google Fonts via `next/font` | Open Font License |
+
+To swap in licensed files, keep the file names (or update the paths in `app/[lang]/layout.tsx`).
 
 ## Working in OneDrive
 

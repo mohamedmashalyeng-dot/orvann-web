@@ -34,6 +34,9 @@
   --font-serif-upright: var(--font-bodoni-upright), "Bodoni 72", Didot, Georgia, serif;
   --font-mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --font-display: var(--font-sans);
+  /* Page and section titles. Druk (trial files, 74 characters): &, @, + and the like fall
+     back to Archivo until licensed Druk replaces them. */
+  --font-headline: var(--font-druk), var(--font-archivo), "Arial Narrow", Impact, sans-serif;
 
   /* ---- Type scale ---- */
   --text-xs: 0.75rem;
@@ -69,6 +72,9 @@
   --tracking-heading: -0.03em;
   --tracking-snug: -0.015em;
   --tracking-label: 0.08em;
+  /* Druk is drawn tight already. */
+  --tracking-headline: 0.005em;
+  --leading-headline: 0.88;
 
   /* ---- Spacing ---- */
   --space-1: 0.25rem;
@@ -142,6 +148,31 @@
 
 [dir="rtl"] {
   --dir: -1;
+}
+
+/* ---- Arabic ----
+   29LT Bukra carries every role, display to labels. Arabic takes no tracking (it would
+   break the joined letters) and no capitals, and needs taller lines for its dots and
+   ascenders. Everything else — sizes, spacing, tones — is shared with English. */
+:root[lang="ar"] {
+  --font-sans: var(--font-bukra), var(--font-archivo), Tahoma, Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-headline: var(--font-sans);
+  --font-mono: var(--font-sans);
+  --font-serif: var(--font-sans);
+  --font-serif-upright: var(--font-sans);
+
+  --tracking-display: 0;
+  --tracking-heading: 0;
+  --tracking-snug: 0;
+  --tracking-label: 0;
+  --tracking-headline: 0;
+
+  --leading-display: 1.25;
+  --leading-headline: 1.25;
+  --leading-heading: 1.3;
+  --leading-snug: 1.45;
+  --leading-body: 1.85;
 }
 
 /* ---- Theme palettes ---- */

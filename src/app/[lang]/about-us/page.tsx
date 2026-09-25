@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { getContent } from "@/content";
+import type { Metadata } from "next";
+import { localePath } from "@/content";
+import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ArrowIcon } from "@/components/ui/Icons";
@@ -15,14 +17,16 @@ import { FaqList } from "@/components/page/FaqList";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
-const content = getContent();
-const page = content.pages.about;
-
-export const metadata = pageMetadata(page.meta, "/about-us/");
+export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
+  const content = await contentFor(params);
+  return pageMetadata(content, content.pages.about.meta, "/about-us/");
+}
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
-export default function AboutPage() {
+export default async function AboutPage({ params }: LangParams) {
+  const content = await contentFor(params);
+  const page = content.pages.about;
   const { values, partners } = page;
 
   return (
@@ -89,7 +93,7 @@ export default function AboutPage() {
             </ul>
           </Reveal>
           <Reveal className={styles.logos}>
-            <PartnerLogos newTabLabel={content.a11y.newTab} />
+            <PartnerLogos locale={content.locale} />
           </Reveal>
         </div>
       </section>
@@ -110,7 +114,7 @@ export default function AboutPage() {
             <ul className={styles.publications}>
               {content.pages.publications.map((publication) => (
                 <li key={publication.slug} data-reveal="">
-                  <Link href={`/about-us/${publication.slug}/`} className={styles.publication}>
+                  <Link href={localePath(content.locale, `/about-us/${publication.slug}/`)} className={styles.publication}>
                     <span className={cn("type-h3", styles.publicationTitle)}>{publication.intro.title}</span>
                     <span className={cn("type-body", styles.publicationLede)}>{publication.intro.lede}</span>
                     <ArrowIcon className={styles.publicationIcon} />
