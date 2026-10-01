@@ -1,0 +1,41 @@
+# ORVANN on shared hosting (Hostinger: LiteSpeed, Apache-compatible). The build writes
+# English under /en/ and Arabic under /ar/; these rules do on the server what src/proxy.ts
+# does in development: English is served at the root ("/services/" comes from
+# /en/services/), Arabic stays under /ar/, and /en/… itself redirects to the public URL.
+# Missing Arabic URLs get the Arabic 404 page from ar/.htaccess.
+
+DirectoryIndex index.html
+ErrorDocument 404 /en/404/index.html
+
+RewriteEngine On
+RewriteBase /
+
+# The WordPress site's Arabic pages had their own slugs; send each to its new page.
+RewriteRule ^ar/home-ar/?$ /ar/ [R=301,L]
+RewriteRule ^ar/about-us-ar/?$ /ar/about-us/ [R=301,L]
+RewriteRule ^ar/services-ar/?$ /ar/services/ [R=301,L]
+RewriteRule ^ar/contact-ar/?$ /ar/contact-us/ [R=301,L]
+RewriteRule ^ar/privacy-policy-ar/?$ /ar/privacy-policy/ [R=301,L]
+# المعارض-والمؤتمرات (exhibitions and conferences), matched as browsers send it: percent-encoded.
+RewriteCond %{THE_REQUEST} \s/ar/%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6-%D9%88%D8%A7%D9%84%D9%85%D8%A4%D8%AA%D9%85%D8%B1%D8%A7%D8%AA/?[\s?] [NC]
+RewriteRule ^ /ar/exhibitions-conferences/ [R=301,L]
+
+# /en/… is internal: send it to its public address. Checked on the original request line,
+# so the internal rewrites below never trigger it.
+RewriteCond %{THE_REQUEST} \s/en(/[^\s?]*)?[\s?]
+RewriteRule ^en(?:/(.*))?$ /$1 [R=301,L]
+
+# Page URLs end in a slash, as on orvann.com (paths with a file extension are left alone).
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(/|\.[^/]*)$
+RewriteRule ^(.*)$ /$1/ [R=301,L]
+
+# English: anything outside /ar/ and /_next/ that is not a real file comes from /en/ —
+# pages, and the .txt data files the browser fetches when moving between pages.
+RewriteCond %{REQUEST_URI} !^/(ar|en|_next)(/|$)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^((?:.*/)?)$ /en/$1index.html [L]
+
+RewriteCond %{REQUEST_URI} !^/(ar|en|_next)(/|$)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ /en/$1 [L]

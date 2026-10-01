@@ -88,8 +88,6 @@ export const partners: readonly Partner[] = [
  * state, so a build with no environment variables is a clean public release.
  */
 export const flags = {
-  /** Leave Selected Work off the homepage (the project pages themselves stay). */
-  hideWork: process.env.ORVANN_HIDE_WORK === "true",
   /** Show "Proposed copy" tags on sections whose wording still needs sign-off. */
   reviewMode: process.env.ORVANN_REVIEW_MODE === "true",
   /** Let search engines index the site. Leave unset on staging and previews. */

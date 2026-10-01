@@ -1,60 +1,28 @@
-import type { Locale, SiteContent } from "@/content";
+import type { SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { ReviewTag } from "@/components/ui/ReviewTag";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
-import { PartnerLogos } from "./PartnerLogos";
 import styles from "./About.module.css";
 
-type Props = {
-  locale: Locale;
-  about: SiteContent["about"];
-  proposedCopyLabel?: string;
-};
-
-export function About({ locale, about, proposedCopyLabel }: Props) {
+export function About({ about }: { about: SiteContent["about"] }) {
   return (
     <section id="about" className="tone-base section" aria-labelledby="about-title">
-      <div className="container">
-        <div className={styles.layout}>
-          <Reveal className={styles.main}>
-            <SectionLabel data-reveal="">{about.label}</SectionLabel>
-            <h2 id="about-title" className={cn("type-h2", styles.title)} data-reveal="">
-              {about.title}
-            </h2>
-            <div className={styles.body} data-reveal="">
-              {about.body.map((paragraph) => (
-                <p key={paragraph} className="type-lede">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-            {proposedCopyLabel && <ReviewTag>{proposedCopyLabel}</ReviewTag>}
-            <div data-reveal="">
-              <ButtonLink href={about.link.href} variant="secondary" icon="arrow">
-                {about.link.label}
-              </ButtonLink>
-            </div>
-          </Reveal>
+      <div className={cn("container", styles.layout)}>
+        <Reveal className={styles.head}>
+          <h2 id="about-title" className={cn("type-h2", styles.title)} data-reveal="">
+            {about.title}
+          </h2>
+        </Reveal>
 
-          <Reveal className={styles.factsWrap}>
-            <dl className={styles.facts}>
-              {about.facts.map((fact) => (
-                <div key={fact.term} className={styles.fact} data-reveal="">
-                  <dt className="type-label">{fact.term}</dt>
-                  <dd>{fact.detail}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
-
-        <Reveal className={styles.partners}>
-          <h3 className={cn("type-label", styles.partnersLabel)} data-reveal="">
-            {about.partnersLabel}
-          </h3>
-          <PartnerLogos locale={locale} className={styles.logos} />
+        <Reveal className={styles.main}>
+          <p className="type-lede" data-reveal="">
+            {about.text}
+          </p>
+          <div data-reveal="">
+            <ButtonLink href={about.link.href} variant="secondary" icon="arrow">
+              {about.link.label}
+            </ButtonLink>
+          </div>
         </Reveal>
       </div>
     </section>

@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
  * Both languages are served by app/[lang]. English keeps orvann.com's current URLs
  * ("/services/"), so its requests are rewritten to "/en/…" behind the scenes; Arabic lives
  * under "/ar/". "/en/…" itself redirects to the public URL, so every page has one address.
+ * Runs under `next dev` only: the site ships as static files, and public/.htaccess applies
+ * the same rules on the host.
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

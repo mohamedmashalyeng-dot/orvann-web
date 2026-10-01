@@ -30,11 +30,3 @@ export function ArrowUpRightIcon({ className }: IconProps) {
     </svg>
   );
 }
-
-export function ArrowUpIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M10 16.5v-13M4.5 9L10 3.5 15.5 9" />
-    </svg>
-  );
-}

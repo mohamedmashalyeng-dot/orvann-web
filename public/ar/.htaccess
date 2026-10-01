@@ -1,0 +1,2 @@
+# Missing URLs under /ar/ get the Arabic 404 page. (Everything else: ../.htaccess.)
+ErrorDocument 404 /ar/404/index.html

@@ -2,12 +2,13 @@
 
 The ORVANN website (software development and digital marketing) — Next.js 16 (App Router,
 Turbopack), React 19, TypeScript, CSS Modules on a shared token system, GSAP for motion.
-Every page is prerendered as static HTML, in English and Arabic. English keeps the URLs it
-has on orvann.com today; Arabic is the same page under `/ar/` (e.g. `/ar/services/`).
+Every page is exported as static HTML, in English and Arabic, for shared hosting (Hostinger).
+English keeps the URLs it has on orvann.com today; Arabic is the same page under `/ar/`
+(e.g. `/ar/services/`).
 
 | Route | Page |
 | --- | --- |
-| `/` | Homepage: hero, services, Selected Work, approach, about, contact |
+| `/` | Homepage: hero, client logos, services, about, vision & mission, closing call to action |
 | `/services/` | The five service families, why ORVANN, FAQ |
 | `/our-projects/` | All 16 projects, filterable by category |
 | `/our-projects/<slug>/` | Case study: challenge, solution, results, gallery, next project |
@@ -26,8 +27,8 @@ Requires Node.js 20.9 or newer (developed on Node 24.19, npm 11).
 ```bash
 npm install
 npm run dev          # http://localhost:3000, with hot reload
-npm run build        # production build (needs network access: fonts are fetched at build time)
-npm start            # serve the production build on http://localhost:3000
+npm run build        # static export to out/ (needs network access: fonts are fetched at build time)
+npm start            # serve out/ on http://localhost:3000 the way the host does (scripts/preview.mjs)
 ```
 
 Checks:
@@ -35,9 +36,26 @@ Checks:
 ```bash
 npm run lint         # ESLint (Next.js rules, incl. React Compiler lint rules)
 npm run typecheck    # tsc --noEmit
-npm test             # release checks against the production build — run `npm run build` first
+npm test             # release checks against out/ — run `npm run build` first
 npm run check        # all of the above, in order
 ```
+
+## Deploy (Hostinger shared hosting)
+
+The site is plain files, so any shared plan works; no Node.js on the server.
+
+1. Set the variables below for the target (at least `NEXT_PUBLIC_SITE_URL`), then
+   `npm run build` and `npm test`.
+2. Upload the **contents** of `out/` — including the hidden `.htaccess` and `ar/.htaccess` —
+   to the (sub)domain's folder in hPanel's File Manager or over FTP (e.g.
+   `public_html/<subdomain>/`), replacing what was there.
+3. In hPanel, turn on SSL for the (sub)domain and force HTTPS.
+
+`next build` writes English under `out/en/` and Arabic under `out/ar/`. `public/.htaccess`
+serves English at the root, redirects `/en/…` and the old WordPress Arabic URLs, adds the
+trailing slash, and answers missing URLs with the 404 page in the right language — what
+`src/proxy.ts` does under `npm run dev`. `npm start` mirrors those rules for a local check.
+Images are served as they are in `public/` (static hosting has no image resizing).
 
 ## Configuration
 
@@ -49,16 +67,15 @@ but asks search engines **not** to index it — the right default for previews a
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata, sitemap and structured data (default `https://orvann.com`). |
 | `ORVANN_ALLOW_INDEXING` | `true` on the production deployment only: robots.txt allows crawling, pages carry `index, follow`, the sitemap is listed. |
 | `ORVANN_REVIEW_MODE` | `true` shows dashed “Proposed copy” tags on wording that still needs sign-off. |
-| `ORVANN_HIDE_WORK` | `true` leaves Selected Work off the homepage (the project pages stay). |
 | `GOOGLE_SITE_VERIFICATION` | Search Console token, if ownership is verified by meta tag. |
 
-These are read at build time (every page is statically prerendered), so rebuild after changing them.
+These are read at build time (every page is a static file), so rebuild and upload again after changing them.
 
 ## Where things live
 
 ```
 src/
-  proxy.ts             serves English at the root (rewrite to /en/…) and Arabic under /ar/
+  proxy.ts             npm run dev only: English at the root (rewrite to /en/…), Arabic under /ar/
   app/[lang]/          routes, one folder per page with its page.module.css; root layout, not-found
   app/                 robots, sitemap, icons, share image, globals.css
   content/             every piece of copy — types.ts (shape); en.ts / ar.ts (homepage and shared
@@ -76,16 +93,17 @@ src/
     layout/            SiteHeader (nav + mobile menu), SiteFooter, TransitionShell (page transitions),
                        FloatingWhatsApp — all mounted once in the root layout
     hero/              Hero, HeroGraphic (SVG), HeroStage (hero motion)
-    sections/          homepage sections: MarqueeBand, Services (+ ServiceRows), Work, Approach,
-                       About, Contact; shared SocialLinks and PartnerLogos
+    sections/          homepage sections: Clients, Services, About, VisionMission (the closing band
+                       is the shared CtaBand); shared SocialLinks and PartnerLogos
     page/              inner-page building blocks: PageIntro, SectionHead, Statement, FaqList,
                        CtaBand, ProjectsIndex (filterable project grid)
     visuals/           page-intro illustrations (values orbit, reach globe, stage, shield — SVG in
                        the hero graphic's language), ProjectFan, ImageMarquee (moving project strip)
     motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, MotionRuntime
   motion/              GSAP runtime (lazy-loaded) and motion builders
-tests/site.test.mjs    release checks over every prerendered page (node:test, no dependencies)
-public/                partner logos, project images, brand mark
+tests/site.test.mjs    release checks over every exported page in out/ (node:test, no dependencies)
+scripts/preview.mjs    npm start: serves out/ with the same rules as public/.htaccess
+public/                partner logos, project images, brand mark; .htaccess (host rules)
 prototype/             the earlier static HTML concept — not part of the build; safe to delete
 ```
 
@@ -104,7 +122,7 @@ from orvann.com; neutrals and scales are new. Typography roles are global classe
 **Brand pattern.** `public/brand/ov-pattern.svg` redraws the monogram's O and V as a tile;
 `<BrandPattern fade="start|end|corner" />` lays it behind a section as a mask in that
 section's text colour, faded out in every direction. It sits on the closing band of the
-inner pages, the homepage Contact band, the first statement on Services and About, and the
+inner pages and the homepage, the first statement on Services and About, and the
 case-study Results — never on two neighbouring sections, and never behind body text.
 
 ## Motion
@@ -116,7 +134,7 @@ case-study Results — never on two neighbouring sections, and never behind body
   plays as it lifts. Plain links still work without JavaScript.
 - **Everything else** — GSAP (ScrollTrigger, SplitText, Flip), loaded lazily in idle time
   through `useMotion()` (`src/motion/useMotion.ts`); none of it is on the critical path.
-  Settings: `src/motion/config.ts` (pointer depth, hero → services transition, reveals,
+  Settings: `src/motion/config.ts` (pointer depth, hero → next-section transition, reveals,
   project imagery and filtering, scroll-highlighted text, marquee, magnetic buttons,
   Approach progress line, mobile menu).
 - `prefers-reduced-motion: reduce` turns off the entrance, parallax, pointer depth and scroll
@@ -130,7 +148,7 @@ content with `contentFor(params)`; links inside a page stay in its language
 (`localePath(locale, "/services/")`). The header's language switch opens the same page in
 the other language, and every page lists both versions as `hreflang` alternates and in the
 sitemap. The WordPress site's old Arabic URLs (`/ar/home-ar/`, `/ar/services-ar/` …)
-redirect to the new ones (`next.config.ts`).
+redirect to the new ones (`public/.htaccess`).
 
 Arabic is right-to-left throughout: layout uses logical properties, directional icons flip,
 motion reads a `--dir` multiplier, and drawings keep left-to-right coordinates. Its type
@@ -151,7 +169,7 @@ build.
 | 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before launch (the copy supplied came from a free-download site). |
 | Archivo, Fragment Mono | English body and mid-level headings, labels | Google Fonts via `next/font` | Open Font License |
 
-One family per line: the two verbs in the headline (build, grow) are set in the same face as the words around them and picked out by colour (`.type-accent`).
+One family per line: the accented word in the headline (Growth) is set in the same face as the words around it and picked out by colour (`.type-accent`).
 
 To swap in licensed files, keep the file names (or update the paths in `app/[lang]/layout.tsx`).
 
@@ -159,4 +177,4 @@ To swap in licensed files, keep the file names (or update the paths in `app/[lan
 
 This folder is synced by OneDrive, which can lock or convert files in `.next/` mid-build
 (`EPERM … unlink` errors). If that happens, delete `.next/` and rebuild — or better, move the
-project outside OneDrive or exclude `.next/` and `node_modules/` from sync.
+project outside OneDrive or exclude `.next/`, `out/` and `node_modules/` from sync.

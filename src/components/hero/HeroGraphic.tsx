@@ -3,7 +3,6 @@ import { cn } from "@/lib/cn";
 import styles from "./HeroGraphic.module.css";
 
 type Props = {
-  labels: { build: string; grow: string };
   className?: string;
 };
 
@@ -12,10 +11,10 @@ type Props = {
  * stroke of the V is the foundation, and its hairline stroke keeps rising as a growth line.
  *
  * Motion hooks: outer groups (data-layer) take pointer depth from GSAP; inner groups
- * (data-part) and data-draw / data-node / data-label take the CSS entrance — so the two
+ * (data-part) and data-draw / data-node take the CSS entrance — so the two
  * never animate the same element.
  */
-export function HeroGraphic({ labels, className }: Props) {
+export function HeroGraphic({ className }: Props) {
   return (
     <svg className={cn(styles.graphic, className)} viewBox="0 0 640 640" aria-hidden="true" focusable="false">
       <defs>
@@ -47,9 +46,6 @@ export function HeroGraphic({ labels, className }: Props) {
         <g data-part="foundation">
           <polygon points="104,100 196,100 351,520 322,566" className={styles.foundation} />
           <rect x="78" y="94" width="144" height="4" className={styles.serif} />
-          <text x="78" y="78" className={styles.label} data-label="">
-            {labels.build}
-          </text>
         </g>
       </g>
 
@@ -62,9 +58,6 @@ export function HeroGraphic({ labels, className }: Props) {
           <circle cx="563" cy="112" r="18" className={styles.halo} />
           <circle cx="563" cy="112" r="8" className={styles.nodeActive} />
         </g>
-        <text x="540" y="117" textAnchor="end" className={styles.label} data-label="">
-          {labels.grow}
-        </text>
       </g>
     </svg>
   );

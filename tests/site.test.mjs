@@ -1,33 +1,32 @@
-// Release checks against the production build output. Run after `npm run build`:
+// Release checks against the static export in out/. Run after `npm run build`:
 //   npm test
-// They read the prerendered HTML of every page in both languages (the whole site is static),
-// so they test exactly what ships.
+// They read the exported HTML of every page in both languages — the files that are uploaded
+// to the host — so they test exactly what ships.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 
-const APP = new URL("../.next/server/app/", import.meta.url);
+const OUT = new URL("../out/", import.meta.url);
 const read = (name) => {
-  const url = new URL(name, APP);
+  const url = new URL(name, OUT);
   assert.ok(existsSync(url), `${name} is missing — run "npm run build" first`);
   return readFileSync(url, "utf8");
 };
 
 /**
- * Every prerendered page, keyed by its public URL. English is built under /en/ and served
- * at the root by src/proxy.ts ("en/services.html" → "/services/"); Arabic keeps its prefix
- * ("ar/services.html" → "/ar/services/").
+ * Every exported page, keyed by its public URL. English is built under /en/ and served at
+ * the root by public/.htaccess ("en/services/index.html" → "/services/"); Arabic keeps its
+ * prefix ("ar/services/index.html" → "/ar/services/"). The 404 pages are not site pages.
  */
 const toPath = (file) => {
-  const [locale, ...rest] = file.replace(/\.html$/, "").split("/");
-  const tail = rest.length ? `/${rest.join("/")}/` : "/";
-  return locale === "en" ? tail : `/${locale}${tail === "/" ? "/" : tail}`;
+  const path = `/${file.replace(/index\.html$/, "")}`;
+  return path.startsWith("/en/") ? path.slice("/en".length) : path;
 };
 const pages = new Map(
-  readdirSync(APP, { recursive: true })
+  readdirSync(OUT, { recursive: true })
     .map((file) => file.replaceAll("\\", "/"))
-    .filter((file) => file.endsWith(".html") && /^(en|ar)(\/|\.html$)/.test(file))
-    .map((file) => [toPath(file), { html: read(file), locale: file.split(/[/.]/)[0] }]),
+    .filter((file) => /^(en|ar)\/(.+\/)?index\.html$/.test(file) && !/^(en|ar)\/404\//.test(file))
+    .map((file) => [toPath(file), { html: read(file), locale: file.split("/")[0] }]),
 );
 const localeOf = (path) => (path === "/ar/" || path.startsWith("/ar/") ? "ar" : "en");
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
@@ -93,8 +92,8 @@ test("every page links to its other-language version and lists hreflang alternat
 test("every page has exactly one h1; the homepages carry the approved headline", () => {
   eachPage((html) => assert.equal([...html.matchAll(/<h1\b/g)].length, 1, "expected one h1"));
   const headline = (path) => text(pages.get(path).html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)[1]);
-  assert.equal(headline("/"), "We build digital experiences. We grow ambitious brands.");
-  assert.equal(headline("/ar/"), "نحن نبني تجارب رقمية. ونحن نُنمّي علامات طموحة.");
+  assert.equal(headline("/"), "Your Growth Partner.");
+  assert.equal(headline("/ar/"), "شريكك في النمو.");
 });
 
 test("heading levels never skip", () => {
@@ -189,7 +188,7 @@ test("structured data is valid JSON with verified facts only", () => {
 });
 
 test("indexing settings agree across robots.txt, every page's robots meta and the sitemap", () => {
-  const robots = read("robots.txt.body");
+  const robots = read("robots.txt");
   const blocked = /Disallow: \/\s*$/m.test(robots);
   eachPage((html) => {
     const noindex = /<meta name="robots" content="noindex/.test(html);
@@ -197,7 +196,7 @@ test("indexing settings agree across robots.txt, every page's robots meta and th
   });
   if (!blocked) assert.ok(/Sitemap: https?:\/\/\S+\/sitemap\.xml/.test(robots), "robots.txt should list the sitemap");
 
-  const sitemap = read("sitemap.xml.body");
+  const sitemap = read("sitemap.xml");
   const listed = [...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map((m) => m[1]);
   assert.deepEqual([...listed].sort(), [...pages.keys()].sort(), "the sitemap should list every page, and only pages");
 });
@@ -215,4 +214,14 @@ test("every page has its own canonical URL and complete sharing metadata", () =>
     assert.ok(/<meta name="twitter:card" content="summary_large_image"/.test(html), "twitter card missing");
     assert.ok(/<meta name="twitter:image" content="[^"]+"/.test(html), "twitter:image missing");
   });
+});
+
+test("the export carries the host's rewrite rules and a 404 page per language", () => {
+  assert.ok(/^RewriteEngine On$/m.test(read(".htaccess")), ".htaccess (English at the root) is missing");
+  assert.ok(read("ar/.htaccess").includes("ErrorDocument 404 /ar/404/index.html"), "Arabic 404 rule is missing");
+  for (const locale of ["en", "ar"]) {
+    const html = read(`${locale}/404/index.html`);
+    assert.ok(html.includes(`lang="${locale}"`), `${locale} 404 page is in the wrong language`);
+    assert.ok(/<meta name="robots" content="noindex/.test(html), `${locale} 404 page must not be indexed`);
+  }
 });

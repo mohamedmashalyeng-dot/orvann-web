@@ -67,28 +67,6 @@
   stroke-width: 1;
 }
 
-.label {
-  fill: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-/* Arabic labels: no tracking or capitals, a touch larger for the script. */
-:global([lang="ar"]) .label {
-  font-size: 16px;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-/* The labels are unreadably small once the graphic shrinks. */
-@media (max-width: 47.99em) {
-  .label {
-    display: none;
-  }
-}
-
 /* ---- Entrance: starts after the CTAs (timings in tokens.css) ---- */
 @media (prefers-reduced-motion: no-preference) {
   .graphic [data-part="grid"] {
@@ -114,10 +92,6 @@
     transform-box: fill-box;
     transform-origin: center;
     animation: graphic-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--entrance-graphic) + 550ms + var(--i, 0) * 120ms) both;
-  }
-
-  .graphic [data-label] {
-    animation: graphic-fade 600ms var(--ease-standard) calc(var(--entrance-graphic) + 800ms) both;
   }
 }
 

@@ -23,24 +23,12 @@
   height: 100%;
 }
 
+/* The composition sits at the foot of the screen, below the graphic on small screens. */
 .inner {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-9);
-}
-
-/* Small screens: labels hold a narrow left column so the graphic owns the right. */
-.meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  max-width: 55%;
-}
-
-.location {
-  color: var(--text-muted);
+  justify-content: flex-end;
 }
 
 .composition {
@@ -74,20 +62,12 @@
 }
 
 @media (min-width: 64em) {
-  .meta {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-3) var(--space-6);
-    max-width: none;
-  }
-
   .graphicWrap {
     inset-inline-end: calc(var(--gutter) - 3vw);
     width: min(46vw, 42rem);
   }
 
-  /* Editorial composition: headline lines step in and out on a 12-column subgrid. */
+  /* Editorial composition: the second headline line steps in on a 12-column subgrid. */
   .composition {
     grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
     column-gap: var(--grid-gap);
@@ -96,7 +76,7 @@
 
   .title {
     grid-column: 1 / -1;
-    grid-row: 1 / span 4;
+    grid-row: 1 / span 2;
     display: grid;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
@@ -108,31 +88,21 @@
   }
 
   .line:nth-child(2) {
-    grid-column: 1 / -1;
+    grid-column: 3 / -1;
     grid-row: 2;
-  }
-
-  .line:nth-child(3) {
-    grid-column: 3 / span 6;
-    grid-row: 3;
-  }
-
-  .line:nth-child(4) {
-    grid-column: 1 / -1;
-    grid-row: 4;
   }
 
   /* Lede and actions share the closing row, clear of the graphic. */
   .lede {
     grid-column: 8 / -1;
-    grid-row: 5;
+    grid-row: 3;
     align-self: end;
     margin-block-start: var(--space-8);
   }
 
   .actions {
     grid-column: 1 / span 7;
-    grid-row: 5;
+    grid-row: 3;
     align-self: end;
     margin-block-start: var(--space-8);
   }

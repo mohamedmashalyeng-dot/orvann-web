@@ -1,9 +1,13 @@
-import { notFound } from "next/navigation";
-
 /**
- * Any URL no page matches, in either language. Sending it to notFound() here renders
- * app/[lang]/not-found.tsx inside that language's layout, with header, footer and dir.
+ * The 404 page, written once per language as /404/ (/ar/404/) and rendered in full, for
+ * public/.htaccess to serve for any missing URL on the host. (notFound() would export an
+ * empty shell. Static export needs dynamicParams off, so under `next dev` other unknown URLs
+ * get Next's plain 404 instead.)
  */
-export default function Missing() {
-  notFound();
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [{ missing: ["404"] }];
 }
+
+export { default, generateMetadata } from "../not-found";

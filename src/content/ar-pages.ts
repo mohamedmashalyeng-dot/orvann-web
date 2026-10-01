@@ -429,6 +429,7 @@ export const arPages: SiteContent["pages"] = {
     },
     countLabel: projectCount,
     empty: "لا توجد مشروعات في هذه الفئة بعد.",
+    servicesLink: { label: "استكشف جميع الخدمات", href: "/ar/services/" },
   },
 
   caseStudy: {

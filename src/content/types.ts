@@ -14,24 +14,7 @@ export type Link = { label: string; href: string };
 
 export type ImageAsset = { src: string; alt: string; width: number; height: number };
 
-export type ServiceItem = {
-  title: string;
-  text: string;
-  /** Specific inclusions, all sourced from orvann.com. */
-  details: string[];
-};
-
-export type ServiceGroup = {
-  id: string;
-  verb: string;
-  title: string;
-  summary: string;
-  items: ServiceItem[];
-  cta: Link;
-};
-
 export type Step = { title: string; text: string };
-export type Fact = { term: string; detail: string };
 export type Faq = { question: string; answer: string };
 export type PageMeta = { title: string; description: string };
 export type PageIntro = { label: string; title: string; lede: string };
@@ -114,55 +97,29 @@ export type SiteContent = {
     language: { label: string; ariaLabel: string };
   };
   hero: {
-    eyebrow: string;
-    location: string;
     headline: RichLine[];
     lede: string;
-    primaryCta: Link;
-    secondaryCta: Link;
-    graphicLabels: { build: string; grow: string };
+    cta: Link;
   };
-  marquee: string[];
-  services: {
-    label: string;
-    title: string;
-    intro: string;
-    groups: ServiceGroup[];
-    detailsLabel: string;
-    more: { title: string; items: Step[] };
-    link: Link;
-  };
-  work: { label: string; title: string; intro: string; viewProject: string; link: Link };
-  approach: { label: string; title: string; intro: string; steps: Step[] };
-  about: {
-    label: string;
-    title: string;
-    body: string[];
-    facts: Fact[];
-    partnersLabel: string;
-    link: Link;
-  };
+  clients: { title: string };
+  /** Each service links to the family on the services page that covers it. */
+  services: { title: string; items: Link[] };
+  about: { title: string; text: string; link: Link };
+  vision: Step;
+  mission: Step;
+  finalCta: { title: string; text: string; primary: Link };
   social: { label: string; title: string; profiles: SocialProfile[] };
   contact: {
-    label: string;
-    title: string;
-    lede: string;
     emailCta: string;
     whatsappCta: string;
-    labels: { email: string; phone: string; whatsapp: string; headquarters: string; follow: string };
+    labels: { email: string; phone: string; whatsapp: string; headquarters: string };
     address: string;
   };
   footer: {
     tagline: string;
-    exploreTitle: string;
     explore: Link[];
-    followTitle: string;
-    contactTitle: string;
-    moreTitle: string;
-    more: Link[];
     rights: string;
     privacy: string;
-    backToTop: string;
   };
   pages: {
     about: {
@@ -211,6 +168,8 @@ export type SiteContent = {
       filters: Record<"all" | ProjectCategory, string>;
       countLabel: (count: number) => string;
       empty: string;
+      /** The closing band's second action: this page is the work index, so it points on to Services. */
+      servicesLink: Link;
     };
     caseStudy: {
       back: string;

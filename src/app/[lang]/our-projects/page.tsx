@@ -27,7 +27,7 @@ export default async function ProjectsPage({ params }: LangParams) {
   const content = await contentFor(params);
   const page = content.pages.work;
   // This page is the work index, so the closing band points on to Services instead.
-  const cta = { ...content.pages.cta, secondary: content.services.link };
+  const cta = { ...content.pages.cta, secondary: page.servicesLink };
 
   return (
     <>

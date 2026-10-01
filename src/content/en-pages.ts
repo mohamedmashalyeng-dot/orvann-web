@@ -428,6 +428,7 @@ export const enPages: SiteContent["pages"] = {
     },
     countLabel: (count) => `${count} ${count === 1 ? "project" : "projects"}`,
     empty: "No projects in this category yet.",
+    servicesLink: { label: "Explore all services", href: "/services/" },
   },
 
   caseStudy: {

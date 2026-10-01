@@ -1,5 +1,5 @@
 /**
- * ORVANN motion settings for everything GSAP drives: pointer depth, the hero → Services
+ * ORVANN motion settings for everything GSAP drives: pointer depth, the hero → next-section
  * scroll transition, section and heading reveals, scroll-highlighted text, marquees,
  * magnetic buttons, project imagery and filtering, the Approach progress line and the mobile
  * menu. (Page transitions: TransitionShell. Entrances: tokens.css.)
@@ -30,7 +30,7 @@ export const motion = {
     depths: { grid: 0.2, ring: 0.45, foundation: 0.75, growth: 1 },
   },
 
-  /** Hero → Services scroll transition (scrubbed to scroll position, never pinned). */
+  /** Hero → next-section scroll transition (scrubbed to scroll position, never pinned). */
   heroExit: {
     /** Graphic drift, in % of its own height. */
     graphicY: -18,

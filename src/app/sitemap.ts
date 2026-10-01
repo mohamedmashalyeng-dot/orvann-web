@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { getContent, localePath, locales } from "@/content";
 import { siteUrl } from "@/config/site";
 
+// Written to a file at build time (static export).
+export const dynamic = "force-static";
+
 /**
  * Every real, indexable route in both languages (with trailing slashes, as next.config.ts
  * serves them). Each entry lists its other-language versions as hreflang alternates.

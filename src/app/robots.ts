@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { flags, siteUrl } from "@/config/site";
 
+// Written to a file at build time (static export).
+export const dynamic = "force-static";
+
 /**
  * Crawling is blocked unless ORVANN_ALLOW_INDEXING=true, so previews and staging never
  * get indexed by accident. Set it on the production deployment only.
