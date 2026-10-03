@@ -1,7 +1,7 @@
-import type { SocialProfile } from "@/content";
+type Network = "linkedin" | "instagram" | "facebook" | "whatsapp";
 
 /** Simple, recognisable glyphs for each network (decorative; links carry the name). */
-export function SocialIcon({ id, className }: { id: SocialProfile["id"]; className?: string }) {
+export function SocialIcon({ id, className }: { id: Network; className?: string }) {
   const common = {
     className,
     viewBox: "0 0 24 24",

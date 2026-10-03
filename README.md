@@ -8,15 +8,18 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 
 | Route | Page |
 | --- | --- |
-| `/` | Homepage: hero, client logos, services, about, vision & mission, closing call to action |
-| `/services/` | The five service families, why ORVANN, FAQ |
-| `/our-projects/` | All 16 projects, filterable by category |
-| `/our-projects/<slug>/` | Case study: challenge, solution, results, gallery, next project |
-| `/exhibitions-conferences/` | Exhibitions & conferences process, news |
-| `/about-us/` | Story, values, partners, FAQ, publications |
+| `/` | Homepage: hero, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
+| `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), how they work together, FAQ |
+| `/our-projects/` | All 16 projects, filterable by the five services |
+| `/our-projects/<slug>/` | Case study: services, context, what we delivered, results, execution, next project |
+| `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
-| `/contact-us/` | Contact channels, social profiles, FAQ |
+| `/contact-us/` | Start a Project form (`#project-form`), direct contact (`#direct-contact`), FAQ |
 | `/privacy-policy/` | Privacy policy |
+
+The five service areas are the single list of services everywhere (`serviceIds` and each
+language's `serviceNames`): homepage, services page, project categories and footer. The old
+`/exhibitions-conferences/` page redirects to `/services/#events`.
 
 See **RELEASE_NOTES.md** for what was built, what was verified and what is still open before launch.
 
@@ -51,6 +54,12 @@ The site is plain files, so any shared plan works; no Node.js on the server.
    `public_html/<subdomain>/`), replacing what was there.
 3. In hPanel, turn on SSL for the (sub)domain and force HTTPS.
 
+**Start a Project form.** `public/api/project.php` (exported as `out/api/project.php`) is the
+only server code: the host runs it with PHP and emails the form to info@orvann.com, sent from
+that address through Hostinger's mail (orvann.com's mail and SPF are there), with Reply-To set
+to the visitor. It works on the host only: under `npm run dev` and `npm start` the form
+cannot send.
+
 `next build` writes English under `out/en/` and Arabic under `out/ar/`. `public/.htaccess`
 serves English at the root, redirects `/en/…` and the old WordPress Arabic URLs, adds the
 trailing slash, and answers missing URLs with the 404 page in the right language — what
@@ -66,6 +75,8 @@ but asks search engines **not** to index it — the right default for previews a
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata, sitemap and structured data (default `https://orvann.com`). |
 | `ORVANN_ALLOW_INDEXING` | `true` on the production deployment only: robots.txt allows crawling, pages carry `index, follow`, the sitemap is listed. |
+| `ORVANN_SHOW_WORK` | `true` publishes Our Work (`/our-projects/` and the case studies). Hidden by default for now: not built, not linked, its URLs redirect (302) to the homepage. |
+| `ORVANN_SHOW_ARABIC` | `true` publishes the Arabic site under `/ar/`. Hidden by default for now: not built, no language switch, `/ar/…` redirects (302) to the same English page. |
 | `ORVANN_REVIEW_MODE` | `true` shows dashed “Proposed copy” tags on wording that still needs sign-off. |
 | `GOOGLE_SITE_VERIFICATION` | Search Console token, if ownership is verified by meta tag. |
 
@@ -93,11 +104,11 @@ src/
     layout/            SiteHeader (nav + mobile menu), SiteFooter, TransitionShell (page transitions),
                        FloatingWhatsApp — all mounted once in the root layout
     hero/              Hero, HeroGraphic (SVG), HeroStage (hero motion)
-    sections/          homepage sections: Clients, Services, About, VisionMission (the closing band
-                       is the shared CtaBand); shared SocialLinks and PartnerLogos
-    page/              inner-page building blocks: PageIntro, SectionHead, Statement, FaqList,
-                       CtaBand, ProjectsIndex (filterable project grid)
-    visuals/           page-intro illustrations (values orbit, reach globe, stage, shield — SVG in
+    sections/          homepage sections: Clients, Services, Integrated, Work, Deliverables, Why,
+                       VisionMission (the closing band is the shared CtaBand); PartnerLogos
+    page/              page building blocks: PageIntro, SectionHead, FaqList, FaqSection,
+                       CtaBand, ProjectsIndex (filterable project grid), ProjectForm
+    visuals/           page-intro illustrations (values orbit, reach globe, shield — SVG in
                        the hero graphic's language), ProjectFan, ImageMarquee (moving project strip)
     motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, MotionRuntime
   motion/              GSAP runtime (lazy-loaded) and motion builders
@@ -121,9 +132,9 @@ from orvann.com; neutrals and scales are new. Typography roles are global classe
 
 **Brand pattern.** `public/brand/ov-pattern.svg` redraws the monogram's O and V as a tile;
 `<BrandPattern fade="start|end|corner" />` lays it behind a section as a mask in that
-section's text colour, faded out in every direction. It sits on the closing band of the
-inner pages and the homepage, the first statement on Services and About, and the
-case-study Results — never on two neighbouring sections, and never behind body text.
+section's text colour, faded out in every direction. It sits on the closing band of every
+page and on the case-study Results — never on two neighbouring sections, and never behind
+body text.
 
 ## Motion
 
@@ -165,9 +176,8 @@ build.
 
 | Face | Used for | Files | Licence |
 | --- | --- | --- | --- |
-| Druk (Commercial Type) | English page and section titles | `src/fonts/druk-*-trial.woff2` | **Trial only** — replace with licensed files before launch. The trial maps 74 characters, so `&`, `@`, `+`, `/`, `:` fall back to Archivo. |
-| 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before launch (the copy supplied came from a free-download site). |
-| Archivo, Fragment Mono | English body and mid-level headings, labels | Google Fonts via `next/font` | Open Font License |
+| Poppins | All English text: titles, body and labels | Google Fonts via `next/font` | Open Font License |
+| 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before the Arabic site is published (the copy supplied came from a free-download site). |
 
 One family per line: the accented word in the headline (Growth) is set in the same face as the words around it and picked out by colour (`.type-accent`).
 

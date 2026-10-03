@@ -1,20 +1,19 @@
 import type { Project } from "./types";
 
 /**
- * [site] All 16 projects from orvann.com/our-projects (inspected 23 Sep 2026). Taglines,
- * challenges, solutions and results restate each project page, with grammar lightly
- * tidied — no facts added. Slugs match the live URLs, so /our-projects/<slug>/ keeps working.
- * `featured` projects also appear in Selected Work on the homepage.
+ * All 16 projects. Names, services and summaries are [copy] (the project card copy supplied by
+ * ORVANN, 3 Oct 2026); challenges, solutions and results are [site], restated from each
+ * project page on orvann.com/our-projects (inspected 23 Sep 2026), grammar lightly tidied.
+ * Slugs match the live URLs, so /our-projects/<slug>/ keeps working. `featured` projects
+ * also appear in Selected Work on the homepage.
  */
 export const enProjects: Project[] = [
   {
     slug: "al-nour-optics",
     title: "Al Nour Optics",
-    tagline: "Transforming a traditional brand into a digital leader.",
-    disciplines: ["Brand identity", "Website", "SEO", "Content", "Social media"],
-    categories: ["branding", "websites", "social"],
+    categories: ["branding", "marketing", "digital"],
     summary:
-      "An integrated visual identity, a website whose design and development ORVANN directed, SEO, targeted content and ongoing social media management.",
+      "Building a more consistent brand and digital presence across identity, website, SEO, content and social media.",
     challenge:
       "The company needed a modern digital identity and a professional user experience to stand out and attract diverse customers in a competitive market.",
     solution: [
@@ -40,11 +39,9 @@ export const enProjects: Project[] = [
   {
     slug: "sami-alsalmi-law-office",
     title: "Sami Al-Salmi Law Office",
-    tagline: "A website competing in the Saudi market.",
-    disciplines: ["Website", "Booking system", "Visual identity"],
-    categories: ["websites", "branding"],
+    categories: ["branding", "digital"],
     summary:
-      "A professional website for the Saudi market with simple consultation booking. ORVANN directed its development, created the visual identity and tested it across devices.",
+      "Creating a professional visual and digital presence through identity, website and appointment-booking requirements.",
     challenge:
       "Create a website that conveys credibility and professionalism, clearly showcases the lawyer’s expertise and simplifies consultation booking for potential clients.",
     solution: [
@@ -83,11 +80,9 @@ export const enProjects: Project[] = [
   {
     slug: "rgc-brokerage",
     title: "RGC Brokerage",
-    tagline: "Enhancing the digital presence of a real estate brokerage.",
-    disciplines: ["Visual identity", "Website", "Social content", "Paid ads", "Company profile"],
-    categories: ["branding", "websites", "social", "campaigns"],
+    categories: ["branding", "marketing", "digital"],
     summary:
-      "A visual identity, a property website whose development ORVANN supervised, a social media content strategy, paid ad campaigns and a company profile.",
+      "Connecting identity, website, social content, paid campaigns and company communication for a real estate brokerage.",
     challenge:
       "Develop a strong, credible brand identity that appeals to diverse audiences across two key markets, with a digital presence that conveys professionalism, trust and competitiveness in real estate.",
     solution: [
@@ -113,11 +108,9 @@ export const enProjects: Project[] = [
   {
     slug: "tucano-2",
     title: "Tucano",
-    tagline: "Strengthening the global presence of a private airline.",
-    disciplines: ["Luxury identity", "Company profile", "Website", "Social & LinkedIn", "Campaigns", "Events"],
-    categories: ["branding", "websites", "social", "campaigns", "events"],
+    categories: ["branding", "marketing", "digital", "events"],
     summary:
-      "Support for a private airline’s launch in Egypt and expansion into Dubai: a luxury identity, company profile, website, social media, digital campaigns and the first Egypt Aviation Expo.",
+      "Creating a cohesive premium brand presence across identity, company profile, digital channels, campaigns and event-related execution.",
     challenge:
       "Tucano, offering high-end services, needed an upscale digital identity reflecting excellence and precision, along with marketing tools to support regional expansion.",
     solution: [
@@ -144,12 +137,10 @@ export const enProjects: Project[] = [
   },
   {
     slug: "plaza-garden-real-estate-development",
-    title: "Plaza Garden Real Estate Development",
-    tagline: "Enhancing the digital presence of a real estate company.",
-    disciplines: ["Visual identity", "Bilingual website"],
-    categories: ["branding", "websites"],
+    title: "Plaza Gardens",
+    categories: ["branding", "digital"],
     summary:
-      "A visual identity built for both digital and print, and a bilingual Arabic/English website whose design and development ORVANN directed.",
+      "Bringing the real estate brand and its bilingual digital presence into one consistent visual direction.",
     challenge:
       "The company needed a strong, consistent visual identity for online and offline use, and a bilingual (Arabic/English) website that highlights its real estate expertise and appeals to its audience.",
     solution: [
@@ -172,11 +163,9 @@ export const enProjects: Project[] = [
   {
     slug: "al-marefah-tech",
     title: "Al Marefah Tech",
-    tagline: "Driving innovation, empowering growth.",
-    disciplines: ["Strategy", "Visual identity", "Website", "Content strategy"],
-    categories: ["strategy", "branding", "websites", "social"],
+    categories: ["strategy", "branding", "digital"],
     summary:
-      "Business and marketing guidance, a new visual identity, a website whose development ORVANN supervised, and a social media content strategy.",
+      "Connecting strategy, visual identity, website and content direction for a technology business.",
     challenge:
       "The company needed a modern, strong digital identity that appeals to business owners and decision-makers, with a marketing strategy to support its diverse services and expansion goals.",
     solution: [
@@ -202,11 +191,9 @@ export const enProjects: Project[] = [
   {
     slug: "azdan-dental-center",
     title: "Azdan Dental Center",
-    tagline: "A modern dental brand with a professional identity and an integrated digital presence.",
-    disciplines: ["Brand identity", "Landing page", "Social media", "Ad campaigns", "Print & signage"],
-    categories: ["branding", "websites", "social", "campaigns"],
+    categories: ["branding", "marketing", "digital", "events"],
     summary:
-      "A dental brand built from the ground up: identity, domain and landing page, social media, content strategy, ad campaigns, marketing materials and signage.",
+      "Building a consistent healthcare brand across identity, landing experience, campaigns, social communication and physical brand applications.",
     challenge:
       "Build a trusted dental brand from the ground up that can compete in the healthcare market, with a professional identity and digital presence that inspire confidence from the first interaction.",
     solution: [
@@ -233,13 +220,11 @@ export const enProjects: Project[] = [
   {
     slug: "domivento",
     title: "Domivento",
-    tagline: "A refined interior design brand with a cohesive, elegant identity.",
-    disciplines: ["Brand identity", "Landing page", "Social media", "Portfolio"],
-    categories: ["branding", "websites", "social"],
+    categories: ["branding", "marketing", "digital"],
     summary:
-      "A complete identity for an interior design studio, with a landing page, strategic social media, targeted content and a professional portfolio.",
+      "Creating a more cohesive presence for an interior design brand across identity, digital experience, social content and portfolio presentation.",
     challenge:
-      "Create a strong brand identity that reflects sophistication and professionalism for clients who value quality and detail — for a studio whose work lacked a matching visual identity and digital presence.",
+      "Create a strong brand identity that reflects sophistication and professionalism for clients who value quality and detail, for a studio whose work lacked a matching visual identity and digital presence.",
     solution: [
       "Developed a complete visual identity that reflects the brand’s design philosophy, including the logo.",
       "Registered the domain and created a landing page to establish the brand message and slogan.",
@@ -263,11 +248,9 @@ export const enProjects: Project[] = [
   {
     slug: "akam",
     title: "AKAM",
-    tagline: "Building your brand’s identity — like a foundation.",
-    disciplines: ["Digital assets", "Operations", "Unified identity"],
-    categories: ["strategy", "branding"],
+    categories: ["branding", "digital"],
     summary:
-      "An integrated management approach that organized official accounts, secured digital assets and built a unified digital and administrative identity.",
+      "Developing digital brand assets and a more consistent identity system across the required touchpoints.",
     challenge:
       "AKAM serves major brands, but its internal digital and administrative systems didn’t match the scale of its clients. Technical issues, disorganized digital assets and fragile infrastructure risked disrupting the entire operation.",
     solution: [
@@ -293,13 +276,11 @@ export const enProjects: Project[] = [
   {
     slug: "suncrete",
     title: "Suncrete",
-    tagline: "Establishing an industrial presence — like concrete foundations.",
-    disciplines: ["Positioning", "Communication tone", "Identity system"],
     categories: ["strategy", "branding"],
     summary:
-      "A positioning, communication tone and complete identity system for a ready-mix concrete company in a highly competitive industrial market.",
+      "Defining positioning, communication direction and the identity system for an industrial brand.",
     challenge:
-      "Ready-mix concrete is one of the toughest, most competitive industrial sectors. Suncrete needed more than a logo — a solid industrial identity able to stand strong in a market built on trust, quality and professional presence.",
+      "Ready-mix concrete is one of the toughest, most competitive industrial sectors. Suncrete needed more than a logo: a solid industrial identity able to stand strong in a market built on trust, quality and professional presence.",
     solution: [
       "Started by understanding the industry, the behavior of its clients and the language of competition.",
       "Developed a communication tone tailored to contractors and large construction companies.",
@@ -321,11 +302,9 @@ export const enProjects: Project[] = [
   {
     slug: "alkholy-lights",
     title: "Alkholy Lights",
-    tagline: "A distinctive identity for luxury lighting.",
-    disciplines: ["Visual identity", "Social media", "Product photography", "Brand voice"],
-    categories: ["branding", "social"],
+    categories: ["branding", "marketing"],
     summary:
-      "A sophisticated identity for a luxury lighting brand, a social media content plan, professional product photography and a consistent brand voice.",
+      "Building a consistent visual and communication system across identity, social media, product imagery and brand voice.",
     challenge:
       "Design a visual identity that embodies quality, elegance and craftsmanship to support the brand’s growth, together with a structured digital presence and high-quality product visuals.",
     solution: [
@@ -348,12 +327,10 @@ export const enProjects: Project[] = [
   },
   {
     slug: "eagles-real-estate-development",
-    title: "Eagles Real Estate Development",
-    tagline: "A real estate brand leading the competitive landscape.",
-    disciplines: ["Strategic consulting", "Rebranding", "Company profile", "Website", "Campaigns"],
-    categories: ["strategy", "branding", "websites", "campaigns"],
+    title: "Eagles Developments",
+    categories: ["strategy", "branding", "marketing", "digital"],
     summary:
-      "Strategic consulting and a rebrand, a company profile, a long-term content strategy, a website whose design and development ORVANN supervised, and targeted campaigns.",
+      "Supporting a real estate brand across strategic direction, rebranding, company communication, website and campaigns.",
     challenge:
       "Create a modern, professional image for upper- and middle-class clients, and a marketing strategy to support expansion inside and outside Egypt.",
     solution: [
@@ -378,15 +355,13 @@ export const enProjects: Project[] = [
   {
     slug: "diwanyah-culture",
     title: "Diwanyah Culture",
-    tagline: "A bridge between heritage and modernity.",
-    disciplines: ["Market research", "Visual identity", "Social content"],
-    categories: ["strategy", "branding", "social"],
+    categories: ["strategy", "branding", "marketing"],
     summary:
-      "Market research for an 18–35 audience, a visual identity with an artistic spirit, and a social content plan built around visual art and community.",
+      "Connecting market understanding, visual identity and social communication for a culture-focused brand.",
     challenge:
       "Create a visual identity that reflects the brand’s artistic and cultural essence, and content that engages a diverse audience of art lovers and creators.",
     solution: [
-      "Carried out market research to target the 18–35 age group.",
+      "Carried out market research to target the 18 to 35 age group.",
       "Developed a visual identity that embodies the brand’s artistic spirit and unique positioning.",
       "Created and executed a social media content plan focused on visual art, engagement and community building.",
     ],
@@ -404,10 +379,9 @@ export const enProjects: Project[] = [
   {
     slug: "modern-fix",
     title: "Modern Fix",
-    tagline: "Creating trust through seamless solutions.",
-    disciplines: ["Logo", "Social media launch", "Content plan"],
-    categories: ["branding", "social"],
-    summary: "A custom logo, social media accounts set up for the audience, and a content plan for a professional launch.",
+    categories: ["branding", "marketing"],
+    summary:
+      "Preparing the brand for launch through logo development, social presence and content planning.",
     challenge:
       "The company lacked a strong online presence and needed a compelling visual identity, with a professional launch on social media to showcase its services and attract new clients.",
     solution: [
@@ -429,17 +403,15 @@ export const enProjects: Project[] = [
   },
   {
     slug: "iconic",
-    title: "Iconic",
-    tagline: "Elevating standards, defining excellence.",
-    disciplines: ["Brand identity", "Brand foundations"],
+    title: "Iconic Construction & Real Estate",
     categories: ["branding"],
     summary:
-      "A comprehensive identity for a high-end contracting and finishing company: palette, typography, logo and visual applications.",
+      "Establishing the visual foundations and core identity system for a construction and real estate brand.",
     challenge:
       "Iconic, a high-end contracting and finishing company, needed a strong brand identity to appeal to clients who prioritize quality in residential and commercial projects.",
     solution: [
       "Developed a comprehensive brand identity that reflects strength and precision.",
-      "Established the brand foundations — color palette, typography, logo and visual applications — for consistency across every platform.",
+      "Established the brand foundations (color palette, typography, logo and visual applications) for consistency across every platform.",
     ],
     results: [
       "Stronger brand recognition in a competitive market.",
@@ -456,11 +428,9 @@ export const enProjects: Project[] = [
   {
     slug: "geocell-keystone",
     title: "Geocell & Keystone",
-    tagline: "Engineering solutions, shaping the future.",
-    disciplines: ["Ad campaigns", "Brand awareness"],
-    categories: ["campaigns"],
+    categories: ["marketing"],
     summary:
-      "Targeted campaigns for two sister engineering brands in soil stabilization and canal lining, reaching real estate and infrastructure decision-makers.",
+      "Developing advertising communication focused on brand awareness for engineering solutions.",
     challenge:
       "Keystone and Geocell, sister brands providing specialized engineering solutions in soil stabilization and canal lining, needed to strengthen their presence and attract the real estate development and infrastructure sectors.",
     solution: [

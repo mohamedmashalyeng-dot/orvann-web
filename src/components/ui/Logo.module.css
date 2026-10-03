@@ -1,34 +1,40 @@
 .logo {
   display: inline-block;
   flex: none;
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
 }
 
-/* Source: public/brand/orvann-logo.png (1544 × 411, trimmed from orvann.com) */
+/* The full logo, stacked: monogram, ORVANN and YOUR GROWTH PARTNER. ORVANN's own files,
+   black on the light theme and white on the dark (public/brand/orvann-logo-black.png and
+   orvann-logo-white.png: "orvann final logo-05/06" cropped to the drawing, full resolution,
+   1364 × 865). */
 .full {
-  aspect-ratio: 1544 / 411;
-  height: 2.5rem;
-  -webkit-mask-image: url("/brand/orvann-logo.png");
-  mask-image: url("/brand/orvann-logo.png");
+  aspect-ratio: 1364 / 865;
+  height: 3rem;
+  background: url("/brand/orvann-logo-white.png") center / contain no-repeat;
 }
 
-/* Source: public/brand/orvann-monogram.png (479 × 411, cut from the same logo) */
+:global(:root[data-theme="light"]) .full {
+  background-image: url("/brand/orvann-logo-black.png");
+}
+
+/* The monogram alone, drawn as a CSS mask so it takes the current text colour.
+   Source: public/brand/orvann-monogram.png (479 × 411). */
 .mark {
   aspect-ratio: 479 / 411;
   height: 2.5rem;
-  -webkit-mask-image: url("/brand/orvann-monogram.png");
-  mask-image: url("/brand/orvann-monogram.png");
+  background-color: currentColor;
+  -webkit-mask: url("/brand/orvann-monogram.png") center / contain no-repeat;
+  mask: url("/brand/orvann-monogram.png") center / contain no-repeat;
 }
 
-/* Printers often drop backgrounds; keep the logo visible on paper. */
+/* Printers often drop backgrounds; keep the logo visible, in black, on paper. */
 @media print {
-  .logo {
+  .full {
+    background-image: url("/brand/orvann-logo-black.png");
+    print-color-adjust: exact;
+  }
+
+  .mark {
     background-color: #000;
     print-color-adjust: exact;
   }

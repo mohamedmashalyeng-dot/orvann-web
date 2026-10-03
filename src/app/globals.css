@@ -123,12 +123,13 @@ html.menu-open {
   text-wrap: balance;
 }
 
-/* Page and section titles take the headline face (Druk in English, Bukra in Arabic), with
-   enough room between letters, words and lines that nothing touches. */
+/* Page and section titles take the headline face (Poppins in English, Bukra in Arabic) at
+   the headline weight. */
 .type-display,
 .type-mega,
 .type-h2 {
   font-family: var(--font-headline);
+  font-weight: var(--weight-headline);
   letter-spacing: var(--tracking-headline);
   word-spacing: var(--word-spacing-headline);
   font-variation-settings: normal;
@@ -194,22 +195,9 @@ html.menu-open {
   font-size: var(--text-sm);
 }
 
-/* Bukra is far wider than Druk: the same sizes would push Arabic intros below the fold. */
-[lang="ar"] :is(.type-display, .type-mega, .type-h2) {
-  font-weight: var(--weight-semibold);
-}
-
-[lang="ar"] .type-display {
-  font-size: calc(var(--text-display) * 0.74);
-}
-
+/* Bukra is about as wide as Poppins, so it shares the sizes; it needs taller lines. */
 [lang="ar"] .type-mega {
-  font-size: calc(var(--text-mega) * 0.72);
   line-height: 1.1;
-}
-
-[lang="ar"] .type-h2 {
-  font-size: calc(var(--text-3xl) * 0.84);
 }
 
 /* A phrase in the other language (the language switch): its own script's typeface. */
@@ -218,7 +206,7 @@ html.menu-open {
 }
 
 :root[lang="ar"] [lang="en"] {
-  font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
 }
 
 /* ---------- Accessibility utilities ---------- */

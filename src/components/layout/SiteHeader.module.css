@@ -37,8 +37,10 @@
   opacity: 0.75;
 }
 
+/* The logo is stacked (monogram over ORVANN over its tagline), so it takes most of the
+   bar's height to stay readable; it is narrow, so it still fits beside the controls. */
 .brand .logo {
-  height: 2.25rem;
+  height: 3rem;
 }
 
 .nav {
@@ -99,7 +101,8 @@
   margin-inline-start: auto;
 }
 
-.cta {
+.cta,
+.secondaryCta {
   display: none;
 }
 
@@ -259,7 +262,7 @@
   }
 
   .brand .logo {
-    height: 1.75rem;
+    height: 2.5rem;
   }
 }
 
@@ -271,7 +274,7 @@
   }
 
   .brand .logo {
-    height: 1.5rem;
+    height: 2.25rem;
   }
 }
 
@@ -279,6 +282,13 @@
   .nav,
   .cta {
     display: flex;
+  }
+
+  /* Book a Meeting joins Start a Project once the bar has room for both. */
+  @media (min-width: 80em) {
+    .secondaryCta {
+      display: flex;
+    }
   }
 
   .language {

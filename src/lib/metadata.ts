@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
-import { getContent, localePath, locales, type PageMeta, type SiteContent } from "@/content";
+import { getContent, localePath, type PageMeta, type SiteContent } from "@/content";
+import { publishedLocales } from "@/config/site";
 
 /**
  * The shared sharing image. The opengraph-image / twitter-image files in src/app only
@@ -19,8 +20,8 @@ const shareImage = (url: string) => ({ url, width: 1200, height: 630, alt: share
  */
 export function pageMetadata(content: SiteContent, meta: PageMeta, path: string): Metadata {
   const url = localePath(content.locale, path);
-  const languages = Object.fromEntries(locales.map((locale) => [locale, localePath(locale, path)]));
-  const otherLocales = locales.filter((locale) => locale !== content.locale).map((locale) => getContent(locale).meta.ogLocale);
+  const languages = Object.fromEntries(publishedLocales.map((locale) => [locale, localePath(locale, path)]));
+  const otherLocales = publishedLocales.filter((locale) => locale !== content.locale).map((locale) => getContent(locale).meta.ogLocale);
 
   return {
     title: meta.title,

@@ -1,0 +1,188 @@
+.form {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 56rem;
+}
+
+/* Bots see and fill this; people and assistive technology never meet it. */
+.honeypot {
+  position: absolute;
+  inset-inline-start: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.label {
+  font-weight: var(--weight-medium);
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+
+/* Typed addresses and numbers read left to right, but line up with the page's own side. */
+.input[dir="ltr"] {
+  text-align: start;
+}
+
+:global([dir="rtl"]) .input[dir="ltr"] {
+  text-align: right;
+}
+
+.input:hover {
+  border-color: var(--text-muted);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-color: var(--accent-text);
+}
+
+.textarea {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: var(--leading-body);
+}
+
+/* ---------- What do you need? ---------- */
+
+.choices {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-raised);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+/* The radio stays in the accessibility tree and takes keyboard focus; the pill shows it. */
+.radio {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: var(--text-muted);
+}
+
+.option:has(.radio:checked) {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.option:has(.radio:focus-visible) {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* ---------- Submit ---------- */
+
+.footer {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding-inline: var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+  color: var(--on-accent);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.submit:hover {
+  opacity: 0.88;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.status:empty {
+  display: none;
+}
+
+.status {
+  max-width: var(--measure);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-strong);
+}
+
+.status[data-status="sent"] {
+  border-color: var(--accent-text);
+}
+
+@media (min-width: 48em) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

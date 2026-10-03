@@ -45,6 +45,11 @@ export function PageIntro({ intro, children, aside, visual, className }: Props) 
           <p className="type-lede" data-enter="lede">
             {intro.lede}
           </p>
+          {intro.body?.map((paragraph) => (
+            <p key={paragraph} className="type-lede" data-enter="lede">
+              {paragraph}
+            </p>
+          ))}
           {children && (
             <div className={styles.extra} data-enter="action">
               {children}

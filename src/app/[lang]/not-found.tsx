@@ -16,7 +16,7 @@ async function localizedContent() {
 export async function generateMetadata(): Promise<Metadata> {
   const content = await localizedContent();
   return {
-    title: `${content.notFound.title} — ${content.meta.siteName}`,
+    title: `${content.notFound.title} | ${content.meta.siteName}`,
     robots: { index: false, follow: true },
   };
 }

@@ -51,8 +51,12 @@
   display: block;
 }
 
+.subheadline {
+  color: var(--accent-text);
+}
+
 .lede {
-  max-width: 28rem;
+  max-width: 34rem;
 }
 
 .actions {
@@ -92,18 +96,23 @@
     grid-row: 2;
   }
 
-  /* Lede and actions share the closing row, clear of the graphic. */
-  .lede {
-    grid-column: 8 / -1;
+  /* Subheadline and lede right under the headline, then the calls to action; all clear of
+     the graphic. */
+  .subheadline {
+    grid-column: 1 / span 7;
     grid-row: 3;
-    align-self: end;
-    margin-block-start: var(--space-8);
+    margin-block-start: var(--space-5);
+  }
+
+  .lede {
+    grid-column: 1 / span 6;
+    grid-row: 4;
+    margin-block-start: var(--space-4);
   }
 
   .actions {
     grid-column: 1 / span 7;
-    grid-row: 3;
-    align-self: end;
-    margin-block-start: var(--space-8);
+    grid-row: 5;
+    margin-block-start: var(--space-6);
   }
 }

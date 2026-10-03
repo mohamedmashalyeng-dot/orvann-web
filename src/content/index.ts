@@ -1,9 +1,12 @@
 import { ar } from "./ar";
 import { en } from "./en";
-import type { Locale, SiteContent } from "./types";
+import type { Locale, ServiceId, SiteContent } from "./types";
 
 export const locales = ["en", "ar"] as const satisfies readonly Locale[];
 export const defaultLocale: Locale = "en";
+
+/** ORVANN's five service areas, in the order they appear everywhere. */
+export const serviceIds = ["strategy", "branding", "marketing", "digital", "events"] as const satisfies readonly ServiceId[];
 
 const dictionaries: Record<Locale, SiteContent> = { en, ar };
 

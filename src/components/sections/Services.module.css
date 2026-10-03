@@ -4,6 +4,13 @@
   gap: var(--space-7);
 }
 
+.head {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+  align-content: start;
+}
+
 /* ---------- Numbered rows ---------- */
 
 .list {
@@ -14,16 +21,13 @@
 .row {
   position: relative;
   display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr) 2.75rem;
-  align-items: center;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
   column-gap: var(--space-3);
-  padding-block: var(--space-5);
+  padding-block: var(--space-6);
   border-block-start: 1px solid var(--line);
-  color: inherit;
-  text-decoration: none;
 }
 
-/* Accent hairline that draws along the row's top edge on hover or focus. */
+/* Accent hairline that draws along the row's top edge while its link is hovered or focused. */
 .row::before {
   content: "";
   position: absolute;
@@ -40,55 +44,57 @@
   transform-origin: right center;
 }
 
+.row:has(.link:hover, .link:focus-visible)::before {
+  transform: scaleX(1);
+}
+
 .number {
+  padding-block-start: 0.7em;
   color: var(--text-muted);
-  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.body {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
 }
 
 /* Specific enough to size up .type-h3 whatever order the stylesheets load in. */
 .row .title {
   font-size: var(--text-2xl);
-  transition: translate var(--duration-slow) var(--ease-standard);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  font-weight: var(--weight-medium);
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
 
 .arrow {
-  justify-self: end;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0.8rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  transition:
-    background-color var(--duration-base) var(--ease-standard),
-    border-color var(--duration-base) var(--ease-standard),
-    color var(--duration-base) var(--ease-standard);
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  transition: translate var(--duration-base) var(--ease-standard);
 }
 
-.row:hover::before,
-.row:focus-visible::before {
-  transform: scaleX(1);
-}
-
-.row:hover .number,
-.row:focus-visible .number {
-  color: var(--accent-text);
-}
-
-.row:hover .title,
-.row:focus-visible .title {
+.link:hover .arrow,
+.link:focus-visible .arrow {
   translate: calc(0.25em * var(--dir)) 0;
 }
 
-.row:hover .arrow,
-.row:focus-visible .arrow {
-  border-color: var(--text);
-  background-color: var(--text);
-  color: var(--surface);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .row:hover .title,
-  .row:focus-visible .title {
+  .link:hover .arrow,
+  .link:focus-visible .arrow {
     translate: none;
   }
 }
@@ -111,8 +117,7 @@
   }
 
   .row {
-    grid-template-columns: 3rem minmax(0, 1fr) 2.75rem;
+    grid-template-columns: 3rem minmax(0, 1fr);
     column-gap: var(--grid-gap);
-    padding-block: var(--space-6);
   }
 }

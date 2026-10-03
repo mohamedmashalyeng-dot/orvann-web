@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Fragment_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { locales } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
-import { flags, googleSiteVerification, site, siteUrl } from "@/config/site";
+import { flags, googleSiteVerification, isPublishedHref, publishedLocales, site, siteUrl } from "@/config/site";
 import { DEFAULT_THEME, THEME_COLORS, themeScript } from "@/theme/theme";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -13,34 +12,11 @@ import { MotionRuntime } from "@/components/motion/MotionRuntime";
 import "@/styles/tokens.css";
 import "../globals.css";
 
-// Archivo carries body text and mid-level headings (its width axis gives them their stance);
-// Fragment Mono sets labels. Titles use Druk (English) or Bukra (Arabic), below.
-const archivo = Archivo({
+// Poppins sets every English text, from the hero headline to labels (preloaded).
+const poppins = Poppins({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-// Labels. Small (15 KB) and preloaded: the hero labels wrap on phones, so a late swap
-// would nudge the headline (measured as layout shift).
-const fragmentMono = Fragment_Mono({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-fragment-mono",
-  display: "swap",
-});
-
-// English display type: page and section titles, the hero headline included (so it is
-// preloaded). TRIAL files from Commercial Type: they map only 74 characters, so &, @, +
-// and similar fall back to Archivo, and they are not licensed for a live site — replace
-// with licensed Druk files before launch.
-const druk = localFont({
-  src: [
-    { path: "../../fonts/druk-medium-trial.woff2", weight: "500", style: "normal" },
-    { path: "../../fonts/druk-bold-trial.woff2", weight: "700", style: "normal" },
-  ],
-  variable: "--font-druk",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -57,13 +33,13 @@ const bukra = localFont({
   preload: false,
 });
 
-const fontVariables = [archivo, fragmentMono, druk, bukra].map((font) => font.variable).join(" ");
+const fontVariables = [poppins, bukra].map((font) => font.variable).join(" ");
 
-// Only the two languages exist; anything else under the language segment is a 404.
+// Only the published languages are built; anything else under the language segment is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
+  return publishedLocales.map((lang) => ({ lang }));
 }
 
 // Shared metadata. Each page sets its own title, canonical URL and sharing tags
@@ -90,6 +66,8 @@ export const viewport: Viewport = {
 // suppressHydrationWarning: the theme script may change data-theme before React hydrates.
 export default async function RootLayout({ children, params }: Readonly<{ children: React.ReactNode }> & LangParams) {
   const content = await contentFor(params);
+  // Links into hidden parts never reach the page, not even in the header's client data.
+  const header = { ...content.header, nav: content.header.nav.filter((item) => isPublishedHref(item.href)) };
 
   return (
     <html
@@ -107,7 +85,14 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
         <a id="skip-link" className="skip-link" href="#main">
           {content.a11y.skipToContent}
         </a>
-        <SiteHeader locale={content.locale} header={content.header} nav={content.header.nav} a11y={content.a11y} />
+        <SiteHeader
+          locale={content.locale}
+          header={header}
+          actions={content.actions}
+          nav={header.nav}
+          languageSwitch={flags.showArabic}
+          a11y={content.a11y}
+        />
         <main id="main" tabIndex={-1}>
           {children}
         </main>

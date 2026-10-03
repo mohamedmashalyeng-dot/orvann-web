@@ -71,30 +71,10 @@
   fill: var(--color-blue-500);
 }
 
-.accentDeep {
-  fill: var(--color-blue-700);
-}
-
 .surface {
   fill: var(--surface-raised);
   stroke: var(--color-blue-400);
   stroke-width: 1.5;
-}
-
-.solid {
-  fill: currentColor;
-  fill-opacity: 0.85;
-}
-
-.onAccent {
-  fill: none;
-  stroke: var(--color-white);
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-.onAccentFill {
-  fill: var(--color-white);
 }
 
 .node {

@@ -35,11 +35,25 @@
   gap: var(--space-2);
 }
 
-.disciplines li {
+/* Each service is a pill that opens its section on the services page. */
+.serviceLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
   padding: var(--space-1) var(--space-4);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
+  text-decoration: none;
+  transition:
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.serviceLink:hover,
+.serviceLink:focus-visible {
+  border-color: var(--accent-text);
+  color: var(--accent-text);
 }
 
 .narrative {

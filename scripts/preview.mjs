@@ -37,9 +37,12 @@ const isFile = (urlPath) => {
 createServer((request, response) => {
   const url = new URL(request.url, "http://localhost");
   let path = url.pathname;
-  const redirect = (to) => response.writeHead(301, { Location: to + url.search }).end();
+  const redirect = (to, status = 301) => response.writeHead(status, { Location: to + url.search }).end();
 
   if (/^\/en(\/|$)/.test(path)) return redirect(path.slice("/en".length) || "/");
+  // Hidden parts (not built) go on as public/.htaccess sends them: Arabic to English, Our Work home.
+  if (/^\/ar(\/|$)/.test(path) && !isFile("/ar/index.html")) return redirect(path.slice("/ar".length) || "/", 302);
+  if (/^\/our-projects(\/|$)/.test(path) && !isFile("/en/our-projects/index.html")) return redirect("/", 302);
   if (!isFile(path) && !/(\/|\.[^/]*)$/.test(path)) return redirect(`${path}/`);
   if (!/^\/(ar|_next)(\/|$)/.test(path) && !isFile(path)) path = `/en${path}`;
   if (path.endsWith("/")) path += "index.html";

@@ -6,7 +6,7 @@
 export type Locale = "en" | "ar";
 export type Direction = "ltr" | "rtl";
 
-/** A run of text; `accent` renders in the serif italic reserved for ORVANN's verbs. */
+/** A run of text; `accent` sets it apart in the accent colour. */
 export type Segment = { text: string; accent?: boolean };
 export type RichLine = Segment[];
 
@@ -17,21 +17,25 @@ export type ImageAsset = { src: string; alt: string; width: number; height: numb
 export type Step = { title: string; text: string };
 export type Faq = { question: string; answer: string };
 export type PageMeta = { title: string; description: string };
-export type PageIntro = { label: string; title: string; lede: string };
-
-export type ProjectCategory = "branding" | "websites" | "social" | "campaigns" | "strategy" | "events";
+/** Opening of an inner page; `body` adds paragraphs under the lede. */
+export type PageIntro = { label: string; title: string; lede: string; body?: string[] };
 
 /**
- * A verified ORVANN project (source: orvann.com/our-projects). Every field restates the
- * project's own page; nothing is invented.
+ * ORVANN's five service areas, in their fixed order (see `serviceIds` in ./index.ts). They
+ * are the services everywhere: homepage, services page, project categories and footer.
+ */
+export type ServiceId = "strategy" | "branding" | "marketing" | "digital" | "events";
+export type ProjectCategory = ServiceId;
+
+/**
+ * An ORVANN project (source: orvann.com/our-projects). The services come from the five
+ * service areas only.
  */
 export type Project = {
   slug: string;
   title: string;
-  tagline: string;
-  disciplines: string[];
-  categories: ProjectCategory[];
-  /** One sentence for cards. */
+  categories: ServiceId[];
+  /** The scope delivered, in one sentence: cards and the case study's opening. */
   summary: string;
   challenge: string;
   solution: string[];
@@ -43,16 +47,12 @@ export type Project = {
 };
 
 export type ServiceFamily = {
-  id: string;
-  eyebrow: string;
+  id: ServiceId;
   title: string;
   text: string;
   items: Step[];
-  /** An ORVANN project image that illustrates the family. */
-  image: ImageAsset;
+  bestFor: string;
 };
-
-export type ProcessStage = { title: string; points: string[] };
 
 export type PolicySection = { heading: string; paragraphs?: string[]; list?: string[] };
 
@@ -64,12 +64,8 @@ export type Publication = {
   frameTitle: string;
 };
 
-export type SocialProfile = {
-  id: "linkedin" | "instagram" | "facebook" | "whatsapp";
-  label: string;
-  handle: string;
-  href: string;
-};
+/** The closing band: an invitation and one or two next steps. */
+export type Cta = { label?: string; title: string; text: string; primary: Link; secondary?: Link };
 
 export type SiteContent = {
   locale: Locale;
@@ -81,6 +77,7 @@ export type SiteContent = {
     home: string;
     primaryNav: string;
     footerNav: string;
+    footerServices: string;
     openMenu: string;
     closeMenu: string;
     newTab: string;
@@ -88,35 +85,41 @@ export type SiteContent = {
     whatsappFloat: string;
   };
   review: { proposedCopy: string };
+  /** The five service names, by id. */
+  serviceNames: Record<ServiceId, string>;
+  /** Shared links: Start a Project (the form) and Book a Meeting (direct contact). */
+  actions: { startProject: Link; bookMeeting: Link };
   header: {
     nav: Link[];
-    cta: Link;
     menu: string;
     close: string;
     /** Switch to the other language: its name, written in that language, and an accessible label. */
     language: { label: string; ariaLabel: string };
   };
+  // ---- Homepage ----
   hero: {
     headline: RichLine[];
+    subheadline: string;
     lede: string;
-    cta: Link;
+    secondaryCta: Link;
   };
-  clients: { title: string };
-  /** Each service links to the family on the services page that covers it. */
-  services: { title: string; items: Link[] };
-  about: { title: string; text: string; link: Link };
+  clients: { title: string; text: string };
+  services: {
+    label: string;
+    title: string;
+    intro: string;
+    items: { id: ServiceId; text: string; link: string }[];
+  };
+  integrated: { title: string; subtitle: string; paragraphs: string[]; options: string[] };
+  work: { label: string; title: string; paragraphs: string[]; viewProject: string; link: Link };
+  deliverables: { title: string; intro: string; items: string[] };
+  why: { label: string; title: string; subtitle: string; paragraphs: string[]; points: Step[] };
   vision: Step;
   mission: Step;
-  finalCta: { title: string; text: string; primary: Link };
-  social: { label: string; title: string; profiles: SocialProfile[] };
-  contact: {
-    emailCta: string;
-    whatsappCta: string;
-    labels: { email: string; phone: string; whatsapp: string; headquarters: string };
-    address: string;
-  };
+  faq: { title: string; items: Faq[] };
   footer: {
     tagline: string;
+    description: string;
     explore: Link[];
     rights: string;
     privacy: string;
@@ -125,39 +128,49 @@ export type SiteContent = {
     about: {
       meta: PageMeta;
       intro: PageIntro;
-      storyLabel: string;
-      storyTitle: string;
-      chapters: Step[];
-      why: { title: string; text: string };
-      achievements: { title: string; text: string };
-      values: { label: string; title: string; text: string; items: string[] };
-      partners: { label: string; title: string; text: string; benefits: Step[] };
+      cta: Link;
+      who: { title: string; intro: string; paragraphs: string[] };
+      story: { title: string; paragraphs: string[]; sequence: string[]; closing: string };
+      capabilities: { title: string; items: { id: ServiceId; text: string }[] };
+      process: { title: string; steps: Step[] };
+      model: { title: string; paragraphs: string[] };
+      values: { title: string; items: Step[] };
       faqTitle: string;
       faqs: Faq[];
-      publicationsTitle: string;
     };
     services: {
       meta: PageMeta;
       intro: PageIntro;
       families: ServiceFamily[];
-      why: { title: string; text: string };
+      bestForLabel: string;
+      together: { title: string; paragraphs: string[]; exampleLabel: string; sequence: ServiceId[]; closing: string };
       faqTitle: string;
       faqs: Faq[];
-    };
-    exhibitions: {
-      meta: PageMeta;
-      intro: PageIntro;
-      text: string;
-      image: ImageAsset;
-      processLabel: string;
-      processTitle: string;
-      stages: ProcessStage[];
-      news: { label: string; title: string; text: string; link: Link };
     };
     contact: {
       meta: PageMeta;
       intro: PageIntro;
-      channelsTitle: string;
+      form: {
+        title: string;
+        name: string;
+        company: string;
+        email: string;
+        phone: string;
+        need: string;
+        /** Choices after the five services. */
+        multiple: string;
+        unsure: string;
+        goal: string;
+        goalHint: string;
+        start: string;
+        budget: string;
+        optional: string;
+        submit: string;
+        sending: string;
+        sent: string;
+        failed: string;
+      };
+      direct: { title: string; email: string; phone: string; headquarters: string; address: string };
       faqTitle: string;
       faqs: Faq[];
     };
@@ -165,19 +178,18 @@ export type SiteContent = {
       meta: PageMeta;
       intro: PageIntro;
       filterLabel: string;
-      filters: Record<"all" | ProjectCategory, string>;
+      /** "All"; the other filters are the five service names. */
+      all: string;
       countLabel: (count: number) => string;
       empty: string;
-      /** The closing band's second action: this page is the work index, so it points on to Services. */
-      servicesLink: Link;
     };
     caseStudy: {
       back: string;
-      disciplines: string;
-      challenge: string;
-      solution: string;
+      services: string;
+      context: string;
+      delivered: string;
       results: string;
-      gallery: string;
+      execution: string;
       next: string;
       /** Link to the client's own website, on case studies that have one. */
       visitWebsite: string;
@@ -185,7 +197,8 @@ export type SiteContent = {
     privacy: { meta: PageMeta; intro: PageIntro; effective: string; sections: PolicySection[] };
     publicationLink: string;
     publications: Publication[];
-    cta: { label: string; title: string; text: string; primary: Link; secondary: Link };
+    /** The closing band on every page but Contact. */
+    cta: Cta;
   };
   projects: Project[];
 };

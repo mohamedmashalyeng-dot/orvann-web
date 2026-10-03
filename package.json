@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/hide-unpublished.mjs",
     "start": "node scripts/preview.mjs",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",

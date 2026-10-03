@@ -71,7 +71,11 @@
   display: grid;
   gap: var(--space-4);
   justify-items: start;
-  max-width: 24rem;
+  max-width: 26rem;
+}
+
+.tagline {
+  font-weight: var(--weight-medium);
 }
 
 .brandLink {
@@ -81,7 +85,7 @@
 }
 
 .brandLink .brandLogo {
-  height: 2.75rem;
+  height: 5rem;
 }
 
 .column {
@@ -126,6 +130,10 @@
   }
 
   .brand {
+    grid-column: 1 / -1;
+  }
+
+  .services {
     grid-column: 1 / span 6;
   }
 
@@ -136,10 +144,14 @@
 
 @media (min-width: 64em) {
   .brand {
-    grid-column: 1 / span 4;
+    grid-column: 1 / span 5;
+  }
+
+  .services {
+    grid-column: 7 / span 3;
   }
 
   .explore {
-    grid-column: 10 / -1;
+    grid-column: 11 / -1;
   }
 }

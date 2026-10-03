@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
+import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
-import { MediaFrame } from "@/components/motion/MediaFrame";
 import { PageIntro } from "@/components/page/PageIntro";
-import { SectionHead } from "@/components/page/SectionHead";
-import { Statement } from "@/components/page/Statement";
-import { FaqList } from "@/components/page/FaqList";
+import { FaqSection } from "@/components/page/FaqSection";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
@@ -24,6 +21,7 @@ const pad = (value: number) => String(value).padStart(2, "0");
 export default async function ServicesPage({ params }: LangParams) {
   const content = await contentFor(params);
   const page = content.pages.services;
+  const { serviceNames } = content;
 
   return (
     <>
@@ -35,18 +33,19 @@ export default async function ServicesPage({ params }: LangParams) {
               <li key={family.id}>
                 <a href={`#${family.id}`} className={styles.indexLink}>
                   <span className="type-label">{pad(index + 1)}</span>
-                  {family.title}
+                  {serviceNames[family.id]}
                 </a>
               </li>
             ))}
           </ol>
         }
       >
-        <ButtonLink href={content.pages.cta.primary.href} icon="arrow">
-          {content.pages.cta.primary.label}
+        <ButtonLink href={content.actions.startProject.href} icon="arrow">
+          {content.actions.startProject.label}
         </ButtonLink>
       </PageIntro>
 
+      {/* Each family's id is the service id, the anchor every "Explore" link points at. */}
       <div className="tone-alt">
         {page.families.map((family, index) => (
           <section
@@ -60,25 +59,19 @@ export default async function ServicesPage({ params }: LangParams) {
                 <p className={cn("type-label", styles.familyNumber)} data-reveal="">
                   {pad(index + 1)} / {pad(page.families.length)}
                 </p>
-                <SectionLabel data-reveal="">{family.eyebrow}</SectionLabel>
+                <SectionLabel data-reveal="">{serviceNames[family.id]}</SectionLabel>
                 <h2 id={`${family.id}-title`} className="type-h2" data-reveal="">
                   {family.title}
                 </h2>
                 <p className="type-lede" data-reveal="">
                   {family.text}
                 </p>
+                <p className={styles.bestFor} data-reveal="">
+                  <span className={cn("type-label", styles.bestForLabel)}>{page.bestForLabel}</span> {family.bestFor}
+                </p>
               </Reveal>
 
               <Reveal className={styles.itemsWrap}>
-                <MediaFrame className={styles.media} innerClassName={styles.mediaInner}>
-                  <Image
-                    src={family.image.src}
-                    alt={family.image.alt}
-                    fill
-                    sizes="(min-width: 90rem) 760px, (min-width: 64em) 52vw, 92vw"
-                    className={styles.image}
-                  />
-                </MediaFrame>
                 <ul className={styles.items}>
                   {family.items.map((item) => (
                     <li key={item.title} className={styles.item} data-reveal="">
@@ -93,16 +86,41 @@ export default async function ServicesPage({ params }: LangParams) {
         ))}
       </div>
 
-      <Statement id="why-title" title={page.why.title} text={page.why.text} />
-
-      <section className="tone-base section" aria-labelledby="faq-title">
-        <div className="container">
-          <SectionHead id="faq-title" title={page.faqTitle} />
-          <Reveal>
-            <FaqList faqs={page.faqs} />
+      {/* How the services work together: one example sequence, which changes per project. */}
+      <section className="tone-base section" aria-labelledby="together-title">
+        <div className={cn("container", styles.together)}>
+          <Reveal className={styles.togetherHead}>
+            <h2 id="together-title" className="type-h2" data-reveal="">
+              {page.together.title}
+            </h2>
+            {page.together.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+          <Reveal className={styles.togetherFlow}>
+            <p className={cn("type-label", styles.exampleLabel)} data-reveal="">
+              {page.together.exampleLabel}
+            </p>
+            <ol className={styles.flow}>
+              {page.together.sequence.map((id, index) => (
+                <li key={id} className={styles.flowStep} data-reveal="">
+                  <a href={`#${id}`} className={styles.flowLink}>
+                    {serviceNames[id]}
+                  </a>
+                  {index < page.together.sequence.length - 1 && <ArrowIcon className={styles.flowArrow} />}
+                </li>
+              ))}
+            </ol>
+            <p className="type-body" data-reveal="">
+              {page.together.closing}
+            </p>
           </Reveal>
         </div>
       </section>
+
+      <FaqSection title={page.faqTitle} faqs={page.faqs} tone="tone-alt" />
 
       <CtaBand cta={content.pages.cta} />
     </>

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { partners, type Partner } from "@/config/site";
+import { flags, partners, type Partner } from "@/config/site";
 import { localePath, type Locale } from "@/content";
 import { cn } from "@/lib/cn";
 import { Marquee } from "@/components/motion/Marquee";
@@ -34,6 +34,8 @@ function PartnerTile({ partner, locale, focusable }: { partner: Partner; locale:
       )}
     </span>
   );
+  // While Our Work is hidden there is no case study to open: the logo stands on its own.
+  if (!flags.showWork) return <span className={styles.tile}>{logo}</span>;
   // Every logo opens the partner's case study; its website, where verified, is linked there.
   return (
     <Link

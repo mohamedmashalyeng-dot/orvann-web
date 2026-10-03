@@ -1,6 +1,6 @@
 // Release checks against the static export in out/. Run after `npm run build`:
 //   npm test
-// They read the exported HTML of every page in both languages — the files that are uploaded
+// They read the exported HTML of every page in each built language — the files that are uploaded
 // to the host — so they test exactly what ships.
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -29,6 +29,12 @@ const pages = new Map(
     .map((file) => [toPath(file), { html: read(file), locale: file.split("/")[0] }]),
 );
 const localeOf = (path) => (path === "/ar/" || path.startsWith("/ar/") ? "ar" : "en");
+// Arabic and Our Work can be switched off (flags in src/config/site.ts): the checks follow
+// what was built, and make sure a hidden part leaves nothing behind.
+const arabic = pages.has("/ar/");
+const work = pages.has("/our-projects/");
+const builtLocales = arabic ? ["en", "ar"] : ["en"];
+const inBuiltLocales = (paths) => paths.filter((path) => arabic || localeOf(path) === "en");
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
 const text = (fragment) => fragment.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
@@ -45,27 +51,28 @@ const eachPage = (check) => {
   }
 };
 
-test("the build contains every page of the site, in both languages", () => {
-  for (const path of [
-    "/",
-    "/services/",
-    "/our-projects/",
-    "/our-projects/tucano-2/",
-    "/exhibitions-conferences/",
-    "/about-us/",
-    "/about-us/company-profile/",
-    "/contact-us/",
-    "/privacy-policy/",
-  ]) {
+test("the build contains every published page, in every published language", () => {
+  const published = ["/", "/services/", "/about-us/", "/about-us/company-profile/", "/contact-us/", "/privacy-policy/"];
+  if (work) published.push("/our-projects/", "/our-projects/tucano-2/");
+  for (const path of published) {
     assert.ok(pages.has(path), `${path} was not prerendered`);
-    assert.ok(pages.has(otherPath(path)), `${otherPath(path)} was not prerendered`);
+    if (arabic) assert.ok(pages.has(otherPath(path)), `${otherPath(path)} was not prerendered`);
   }
-  for (const prefix of ["/our-projects/", "/ar/our-projects/"]) {
+  for (const prefix of inBuiltLocales(["/our-projects/", "/ar/our-projects/"])) {
     const studies = [...pages.keys()].filter((path) => path.startsWith(prefix) && path !== prefix);
-    assert.equal(studies.length, 16, `${prefix}: expected 16 case studies`);
+    assert.equal(studies.length, work ? 16 : 0, `${prefix}: expected ${work ? 16 : "no"} case studies`);
   }
   const english = [...pages.keys()].filter((path) => localeOf(path) === "en");
-  assert.deepEqual(english.map(otherPath).sort(), [...pages.keys()].filter((path) => localeOf(path) === "ar").sort());
+  const arabicPages = [...pages.keys()].filter((path) => localeOf(path) === "ar");
+  assert.deepEqual(arabic ? english.map(otherPath).sort() : [], arabicPages.sort());
+});
+
+test("a hidden part leaves no links behind", () => {
+  eachPage((html) => {
+    // Anywhere in the page, the data for client components included, not only in links.
+    if (!work) assert.ok(!/(\/ar)?\/our-projects\//.test(html), "links into the hidden Our Work pages");
+    if (!arabic) assert.ok(!/hrefLang="ar"/.test(html), "links to the hidden Arabic site");
+  });
 });
 
 test("every page declares its language and direction", () => {
@@ -81,9 +88,10 @@ test("every page links to its other-language version and lists hreflang alternat
   eachPage((html, path) => {
     const other = otherPath(path);
     const switches = [...html.matchAll(/<a\b[^>]*hrefLang="(en|ar)"[^>]*>/g)].map(([tag]) => tag.match(/href="([^"]+)"/)[1]);
-    assert.ok(switches.length > 0, "language switch missing");
+    if (arabic) assert.ok(switches.length > 0, "language switch missing");
+    else assert.equal(switches.length, 0, "language switch to a hidden language");
     for (const href of switches) assert.equal(href, other, "language switch points at the wrong page");
-    for (const locale of ["en", "ar"]) {
+    for (const locale of builtLocales) {
       assert.ok(new RegExp(`<link rel="alternate" hrefLang="${locale}" href="[^"]+"`).test(html), `hreflang ${locale} missing`);
     }
   });
@@ -93,7 +101,7 @@ test("every page has exactly one h1; the homepages carry the approved headline",
   eachPage((html) => assert.equal([...html.matchAll(/<h1\b/g)].length, 1, "expected one h1"));
   const headline = (path) => text(pages.get(path).html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)[1]);
   assert.equal(headline("/"), "Your Growth Partner.");
-  assert.equal(headline("/ar/"), "شريكك في النمو.");
+  if (arabic) assert.equal(headline("/ar/"), "شريكك في النمو.");
 });
 
 test("heading levels never skip", () => {
@@ -114,6 +122,16 @@ test("every in-page link points at an element that exists", () => {
   });
 });
 
+test("every link to a section of another page lands on an element that exists", () => {
+  eachPage((html) => {
+    for (const [, path, id] of html.matchAll(/\shref="(\/[^"#]*)#([^"]+)"/g)) {
+      const target = pages.get(decode(path));
+      assert.ok(target, `link to ${path}#${id} has no page`);
+      assert.ok(target.html.includes(` id="${id}"`), `${path} has no #${id}`);
+    }
+  });
+});
+
 test("every internal link leads to a page that exists, in the page's own language", () => {
   const assets = /\.(png|jpe?g|webp|svg|ico|xml|txt|webmanifest)$/;
   eachPage((html, path) => {
@@ -128,13 +146,26 @@ test("every internal link leads to a page that exists, in the page's own languag
 });
 
 test("contact channels are real, working link formats", () => {
-  for (const path of ["/", "/contact-us/", "/ar/", "/ar/contact-us/"]) {
+  for (const path of inBuiltLocales(["/", "/contact-us/", "/ar/", "/ar/contact-us/"])) {
     const { html } = pages.get(path);
     assert.ok(/href="mailto:info@orvann\.com"/.test(html), `${path}: email link missing`);
     assert.ok(/href="tel:\+201080784465"/.test(html), `${path}: phone link missing`);
     assert.ok(/href="https:\/\/wa\.me\/201080784465"/.test(html), `${path}: WhatsApp link missing`);
   }
-  eachPage((html) => assert.ok(!/<form\b/.test(html), "a form needs a real backend before it can ship"));
+});
+
+test("the only form is the project form, and it posts to the handler that ships with it", () => {
+  assert.ok(existsSync(new URL("api/project.php", OUT)), "api/project.php is missing from the export");
+  let forms = 0;
+  eachPage((html, path) => {
+    for (const [tag] of html.matchAll(/<form\b[^>]*>/g)) {
+      forms += 1;
+      assert.ok(/\saction="\/api\/project\.php"/.test(tag), `form without the project handler: ${tag}`);
+      assert.ok(/\smethod="post"/i.test(tag), `form does not post: ${tag}`);
+      assert.ok(path.endsWith("/contact-us/"), "the project form belongs on the contact page");
+    }
+  });
+  assert.equal(forms, builtLocales.length, "expected the project form on each contact page");
 });
 
 test("links that open a new tab are protected with rel=noopener", () => {
@@ -166,7 +197,7 @@ test("review-only content never reaches a default build", () => {
 });
 
 test("structured data is valid JSON with verified facts only", () => {
-  for (const path of ["/", "/ar/"]) {
+  for (const path of inBuiltLocales(["/", "/ar/"])) {
     const match = pages.get(path).html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     assert.ok(match, `${path}: Organization JSON-LD is missing`);
     const data = JSON.parse(match[1]);
@@ -219,7 +250,7 @@ test("every page has its own canonical URL and complete sharing metadata", () =>
 test("the export carries the host's rewrite rules and a 404 page per language", () => {
   assert.ok(/^RewriteEngine On$/m.test(read(".htaccess")), ".htaccess (English at the root) is missing");
   assert.ok(read("ar/.htaccess").includes("ErrorDocument 404 /ar/404/index.html"), "Arabic 404 rule is missing");
-  for (const locale of ["en", "ar"]) {
+  for (const locale of builtLocales) {
     const html = read(`${locale}/404/index.html`);
     assert.ok(html.includes(`lang="${locale}"`), `${locale} 404 page is in the wrong language`);
     assert.ok(/<meta name="robots" content="noindex/.test(html), `${locale} 404 page must not be indexed`);

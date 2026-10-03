@@ -1,3 +1,5 @@
+import type { Locale } from "@/content";
+
 /**
  * Business facts that do not change between languages.
  * Source: orvann.com home, contact and about pages (inspected 22 Sep 2026). The Facebook
@@ -88,6 +90,14 @@ export const partners: readonly Partner[] = [
  * state, so a build with no environment variables is a clean public release.
  */
 export const flags = {
+  /**
+   * Temporarily hidden parts of the site, off unless switched on. Their code and content
+   * stay; hidden, they are neither published nor linked (Arabic is not built; Our Work is
+   * built, as Next requires, and scripts/hide-unpublished.mjs takes it out of out/), and
+   * public/.htaccess sends their URLs on (Our Work to the homepage, Arabic to English).
+   */
+  showWork: process.env.ORVANN_SHOW_WORK === "true",
+  showArabic: process.env.ORVANN_SHOW_ARABIC === "true",
   /** Show "Proposed copy" tags on sections whose wording still needs sign-off. */
   reviewMode: process.env.ORVANN_REVIEW_MODE === "true",
   /** Let search engines index the site. Leave unset on staging and previews. */
@@ -98,6 +108,12 @@ export const flags = {
  * Google Search Console verification token. The live site carries one in a meta tag;
  * set it here at cut-over if Search Console ownership relies on that tag (not DNS).
  */
+/** The languages that are built and linked: English, plus Arabic when it is switched on. */
+export const publishedLocales: readonly Locale[] = flags.showArabic ? ["en", "ar"] : ["en"];
+
+/** Whether a link may be shown: links into Our Work disappear while it is hidden. */
+export const isPublishedHref = (href: string) => flags.showWork || !/^(\/ar)?\/our-projects\//.test(href);
+
 export const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION || undefined;
 
 /** Canonical origin for metadata, sitemap and structured data. */

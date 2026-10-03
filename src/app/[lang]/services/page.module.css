@@ -27,6 +27,11 @@
 
 /* ---------- Service families ---------- */
 
+/* "Explore …" links land on a family: keep its heading clear of the fixed header. */
+.family {
+  scroll-margin-block-start: var(--header-height);
+}
+
 .family + .family {
   border-block-start: 1px solid var(--line);
 }
@@ -48,23 +53,15 @@
   color: var(--accent-text);
 }
 
-/* One frame shape for every family, whatever the source image's proportions. */
-.media {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  margin-block-end: var(--space-7);
-  border-radius: var(--radius-md);
-  background-color: var(--surface-raised);
+.bestFor {
+  max-width: var(--measure);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--line);
+  line-height: var(--leading-body);
 }
 
-.mediaInner {
-  position: absolute;
-  inset: 0;
-}
-
-.image {
-  object-fit: cover;
+.bestForLabel {
+  color: var(--accent-text);
 }
 
 .items {
@@ -81,6 +78,92 @@
 
 .item p {
   max-width: var(--measure);
+}
+
+/* ---------- How the services work together ---------- */
+
+.together {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+}
+
+.togetherHead,
+.togetherFlow {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+  justify-items: start;
+}
+
+.togetherHead h2 {
+  max-width: 18ch;
+}
+
+.exampleLabel {
+  color: var(--accent-text);
+}
+
+/* The example sequence: one service after another, each linking to its section above. */
+.flow {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.flowStep {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.flowLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-raised);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition:
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+.flowLink:hover,
+.flowLink:focus-visible {
+  border-color: var(--accent-text);
+  color: var(--accent-text);
+}
+
+/* Down the page between steps (the arrow points along the reading direction, turned down). */
+.flowArrow {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-inline-start: var(--space-5);
+  color: var(--accent-text);
+  rotate: 90deg;
+}
+
+[dir="rtl"] .flowArrow {
+  rotate: -90deg;
+}
+
+@media (min-width: 64em) {
+  .together {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .togetherHead {
+    grid-column: 1 / span 6;
+  }
+
+  .togetherFlow {
+    grid-column: 8 / -1;
+  }
 }
 
 @media (min-width: 64em) {

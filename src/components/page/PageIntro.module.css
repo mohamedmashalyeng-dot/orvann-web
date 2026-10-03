@@ -46,12 +46,13 @@
 
 .foot {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-4);
   justify-items: start;
   max-width: var(--measure);
 }
 
 .extra {
+  margin-block-start: var(--space-3);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);

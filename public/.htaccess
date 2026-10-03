@@ -18,7 +18,24 @@ RewriteRule ^ar/contact-ar/?$ /ar/contact-us/ [R=301,L]
 RewriteRule ^ar/privacy-policy-ar/?$ /ar/privacy-policy/ [R=301,L]
 # المعارض-والمؤتمرات (exhibitions and conferences), matched as browsers send it: percent-encoded.
 RewriteCond %{THE_REQUEST} \s/ar/%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6-%D9%88%D8%A7%D9%84%D9%85%D8%A4%D8%AA%D9%85%D8%B1%D8%A7%D8%AA/?[\s?] [NC]
-RewriteRule ^ /ar/exhibitions-conferences/ [R=301,L]
+RewriteRule ^ /ar/services/#events [R=301,NE,L]
+
+# The exhibitions & conferences page is now part of Events, Outdoor & Production on Services.
+RewriteRule ^exhibitions-conferences/?$ /services/#events [R=301,NE,L]
+RewriteRule ^ar/exhibitions-conferences/?$ /ar/services/#events [R=301,NE,L]
+
+# Temporarily hidden parts (flags.showWork and flags.showArabic in src/config/site.ts). A
+# hidden part is not built, so these rules test for its files: they only act while it is
+# hidden, and need no change when it comes back. The redirects are temporary (302).
+# Our Work: to the homepage.
+RewriteCond %{DOCUMENT_ROOT}/en/our-projects/index.html !-f
+RewriteRule ^our-projects(/.*)?$ / [R=302,L]
+RewriteCond %{DOCUMENT_ROOT}/ar/index.html -f
+RewriteCond %{DOCUMENT_ROOT}/ar/our-projects/index.html !-f
+RewriteRule ^ar/our-projects(/.*)?$ /ar/ [R=302,L]
+# Arabic: to the same page in English.
+RewriteCond %{DOCUMENT_ROOT}/ar/index.html !-f
+RewriteRule ^ar(?:/(.*))?$ /$1 [R=302,L]
 
 # /en/… is internal: send it to its public address. Checked on the original request line,
 # so the internal rewrites below never trigger it.

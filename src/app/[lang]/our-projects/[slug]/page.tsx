@@ -24,6 +24,7 @@ type Props = { params: Promise<{ lang: string; slug: string }> };
 export const dynamicParams = false;
 
 // The same slugs in both languages (the Arabic projects are built from the English ones).
+// (While Our Work is hidden, scripts/hide-unpublished.mjs takes these pages out of the export.)
 export function generateStaticParams() {
   return getContent().projects.map((project) => ({ slug: project.slug }));
 }
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return {};
   return pageMetadata(
     content,
-    { title: `${project.title} — ${content.meta.siteName}`, description: project.summary },
+    { title: `${project.title} | ${content.meta.siteName}`, description: project.summary },
     `/our-projects/${project.slug}/`,
   );
 }
@@ -57,7 +58,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <PageIntro intro={{ label: content.pages.work.intro.label, title: project.title, lede: project.tagline }}>
+      <PageIntro intro={{ label: content.pages.work.intro.label, title: project.title, lede: project.summary }}>
         <ButtonLink href={localePath(content.locale, "/our-projects/")} variant="secondary" size="sm">
           {copy.back}
         </ButtonLink>
@@ -81,16 +82,18 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </div>
 
-      <section className="section" aria-labelledby="challenge-title">
+      <section className="section" aria-labelledby="context-title">
         <div className={cn("container", styles.story)}>
-          <Reveal as="aside" className={styles.meta} aria-labelledby="disciplines-title">
-            <h2 id="disciplines-title" className={cn("type-label", styles.metaTitle)} data-reveal="">
-              {copy.disciplines}
+          <Reveal as="aside" className={styles.meta} aria-labelledby="services-title">
+            <h2 id="services-title" className={cn("type-label", styles.metaTitle)} data-reveal="">
+              {copy.services}
             </h2>
             <ul className={styles.disciplines}>
-              {project.disciplines.map((discipline) => (
-                <li key={discipline} data-reveal="">
-                  {discipline}
+              {project.categories.map((id) => (
+                <li key={id} data-reveal="">
+                  <Link href={localePath(content.locale, `/services/#${id}`)} className={styles.serviceLink}>
+                    {content.serviceNames[id]}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -98,8 +101,8 @@ export default async function ProjectPage({ params }: Props) {
 
           <div className={styles.narrative}>
             <Reveal className={styles.block}>
-              <h2 id="challenge-title" className="type-h3" data-reveal="">
-                {copy.challenge}
+              <h2 id="context-title" className="type-h3" data-reveal="">
+                {copy.context}
               </h2>
               <p className={cn("type-lede", styles.challenge)} data-reveal="">
                 {project.challenge}
@@ -108,7 +111,7 @@ export default async function ProjectPage({ params }: Props) {
 
             <Reveal className={styles.block}>
               <h2 className="type-h3" data-reveal="">
-                {copy.solution}
+                {copy.delivered}
               </h2>
               <ol className={styles.steps}>
                 {project.solution.map((step, stepIndex) => (
@@ -147,7 +150,7 @@ export default async function ProjectPage({ params }: Props) {
       {project.gallery && project.gallery.length > 0 && (
         <section className="section" aria-labelledby="gallery-title">
           <div className="container">
-            <SectionHead id="gallery-title" title={copy.gallery} />
+            <SectionHead id="gallery-title" title={copy.execution} />
             <ul className={styles.gallery}>
               {project.gallery.map((image) => (
                 <li key={image.src}>

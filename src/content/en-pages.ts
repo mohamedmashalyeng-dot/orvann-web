@@ -1,443 +1,458 @@
 import type { SiteContent } from "./types";
 
 /**
- * Inner pages. [site] = restated from the matching orvann.com page (inspected 22–23 Sep
- * 2026), grammar lightly tidied; [proposed] = new wording that needs sign-off.
+ * Inner pages. [copy] = the site copy supplied by ORVANN (3 Oct 2026); [site] = restated
+ * from the matching orvann.com page (inspected 22–23 Sep 2026), grammar lightly tidied;
+ * [proposed] = new wording that needs sign-off.
  */
 export const enPages: SiteContent["pages"] = {
-  // orvann.com/about-us/ [site]
+  // [copy]
   about: {
     meta: {
-      title: "About ORVANN",
+      title: "About ORVANN | Growth & Execution Partner in Egypt",
       description:
-        "How ORVANN grew from a creative studio into an agency for digital marketing and business consulting — our story, model, values and partners.",
+        "Learn about ORVANN, an Egypt-based growth partner connecting strategy, branding, marketing, digital experiences, events and production.",
     },
     intro: {
-      label: "About us",
-      title: "Building futures together.",
-      lede: "Have you ever wondered what it takes to turn a small idea into a big success? At ORVANN, dreams and strategy come together to create something truly extraordinary.",
-    },
-    storyLabel: "Our story",
-    storyTitle: "Who are we, really?",
-    chapters: [
-      {
-        title: "Creativity",
-        text: "We started out as a humble creative studio with a wide-reaching ambition: to help brands across the Middle East and beyond grow, innovate and stand out in an increasingly crowded market.",
-      },
-      {
-        title: "Over time",
-        text: "Our passion for innovation, strategic thinking and long-term relationships evolved into a specialized agency in digital marketing and business consulting, offering integrated solutions grounded in deep market insight.",
-      },
-      {
-        title: "Identity",
-        text: "We’re not just a service provider. We’re a true partner — genuinely invested in our clients’ success and fully committed to helping them achieve their vision and goals.",
-      },
-      {
-        title: "Our model",
-        text: "A flexible model: a core in-house team working from our dedicated office, with a wider network of talented professionals working remotely. It’s not a coincidence — it’s the result of clear planning and purpose.",
-      },
-      {
-        title: "Flexibility",
-        text: "It lets us reach top-tier expertise wherever it is, respond quickly to market shifts, and deliver carefully tailored solutions for every market we work in.",
-      },
-    ],
-    why: {
-      title: "Why do we do what we do?",
-      text: "Because we’re passionate about building futures. Every project we take on is like planting a seed: with the right nurturing, it grows into something strong and impactful. We’re driven by a simple belief — your success fuels our purpose.",
-    },
-    achievements: {
-      title: "Our achievements so far",
-      text: "We’ve helped startups get off the ground and supported established brands to reach new heights — from memorable brand stories to high-impact marketing strategies.",
-    },
-    values: {
-      label: "Our secret sauce",
-      title: "Core values",
-      text: "Think of us as your growth GPS, guiding you through the twists and turns of the digital landscape.",
-      items: ["Integrity", "Collaboration", "Excellence", "Sustainability"],
-    },
-    partners: {
-      label: "Our partners",
-      title: "Building success together.",
-      text: "We believe collaboration is the key to innovation and sustainable growth. Strategic partnerships with industry leaders, technology providers and creative experts help us deliver comprehensive solutions that produce real results.",
-      benefits: [
-        { title: "Access to top-tier resources", text: "Cutting-edge technology, innovative tools and industry insight." },
-        { title: "Enhanced service offerings", text: "End-to-end solutions tailored to your needs." },
-        {
-          title: "Regional & global reach",
-          text: "Capabilities across the Middle East and beyond, with local relevance and international standards.",
-        },
-        { title: "Shared expertise", text: "Our strategic thinking, combined with our partners’ specialized skills." },
+      label: "About ORVANN",
+      title: "We connect the thinking with the doing.",
+      lede: "ORVANN works with businesses that need more than disconnected deliverables.",
+      body: [
+        "We connect strategy, branding, marketing, digital experiences and physical execution so each part of the project supports the same objective.",
       ],
     },
-    faqTitle: "Questions, answered",
+    cta: { label: "See Our Work", href: "/our-projects/" },
+    who: {
+      title: "Who is ORVANN?",
+      intro: "ORVANN is an Egypt-based growth and execution partner working across five connected capabilities:",
+      paragraphs: [
+        "Our role is not to force every client into the same package.",
+        "We identify what the project actually needs, build the right scope and connect the specialists involved around one direction.",
+      ],
+    },
+    story: {
+      title: "From creative work to connected execution.",
+      paragraphs: [
+        "ORVANN began with a strong focus on creative work and developed into a broader model built around the needs we continued to see across client projects.",
+      ],
+      sequence: [
+        "A new identity often needed content.",
+        "Content needed campaigns.",
+        "Campaigns needed a strong website.",
+        "A launch could also require print, outdoor, exhibitions or on-ground production.",
+      ],
+      closing:
+        "Instead of treating each deliverable as a separate project, our model connects them when the business needs them to work together.",
+    },
+    capabilities: {
+      title: "Five capabilities. One operating direction.",
+      items: [
+        { id: "strategy", text: "Research, positioning and planning that help define what should happen next." },
+        { id: "branding", text: "Identity and creative systems that make the brand recognizable and consistent." },
+        { id: "marketing", text: "Content and campaigns that take the brand to its intended audience." },
+        { id: "digital", text: "Websites and digital journeys that help people understand, evaluate and act." },
+        {
+          id: "events",
+          text: "Physical brand experiences and production that carry the same identity into the real world.",
+        },
+      ],
+    },
+    process: {
+      title: "How we work",
+      steps: [
+        {
+          title: "Understand",
+          text: "We begin with the business, the audience, the objective, the current situation and the constraints around the project.",
+        },
+        {
+          title: "Define",
+          text: "We identify priorities, scope, responsibilities, deliverables and what success should be measured against.",
+        },
+        { title: "Build", text: "Strategy becomes identity, content, campaigns, digital experiences or production requirements." },
+        { title: "Execute", text: "The approved direction moves into delivery across the required channels." },
+        {
+          title: "Review & Improve",
+          text: "Where ongoing support is part of the scope, we review performance, feedback and new requirements to guide the next decisions.",
+        },
+      ],
+    },
+    model: {
+      title: "The right expertise for the work.",
+      paragraphs: [
+        "ORVANN operates with a core team supported by specialized talent and trusted resources according to the needs of each project.",
+        "This model allows the scope to expand or narrow depending on whether a client needs strategy, creative, media, digital, production or a combination of them.",
+      ],
+    },
+    values: {
+      title: "Values",
+      items: [
+        { title: "Integrity", text: "Clear communication, realistic commitments and no claims we cannot support." },
+        {
+          title: "Collaboration",
+          text: "Good work depends on clear communication between our team, our clients and everyone responsible for delivery.",
+        },
+        { title: "Excellence", text: "We care about the quality of the thinking as much as the quality of the final execution." },
+        {
+          title: "Sustainability",
+          text: "We build systems and relationships that can continue to work beyond one campaign or deliverable.",
+        },
+      ],
+    },
+    faqTitle: "Frequently asked questions",
     faqs: [
       {
-        question: "Why should I choose ORVANN over other agencies?",
+        question: "What type of company is ORVANN?",
         answer:
-          "Because we don’t do cookie-cutter solutions. We dive deep into your needs and craft strategies that truly resonate with your audience — and we’re committed to long-term partnerships, because your success is our success.",
+          "ORVANN is a growth and execution partner providing connected strategy, branding, marketing, digital, event, outdoor and production services.",
       },
       {
-        question: "How does your team help my business?",
-        answer:
-          "We make your digital transformation seamless, innovative and future-proof, using AI, scalable software and modern tools to keep you ahead.",
+        question: "Where is ORVANN based?",
+        answer: "ORVANN is based in Egypt and has worked on projects for businesses in Egypt and Gulf markets.",
       },
       {
-        question: "Can you help my startup grow?",
+        question: "What types of businesses does ORVANN work with?",
         answer:
-          "Absolutely. We love working with startups, guiding them through market research, branding, marketing and digital development to give them the best shot at success.",
+          "Our portfolio includes businesses across sectors such as real estate, aviation, technology, healthcare, professional services and retail. Scope is defined according to each business rather than by a fixed industry package.",
       },
       {
-        question: "What makes your digital solutions stand out?",
-        answer:
-          "They’re tailored, scalable and designed around your growth. Whether it’s a website, an app or a marketing campaign, we use current technology to help you stay ahead.",
+        question: "Do you only work on full-service projects?",
+        answer: "No. ORVANN can handle a single defined service or coordinate a wider scope involving several capabilities.",
       },
       {
-        question: "How long does it take to see results?",
+        question: "How long does an ORVANN project take?",
         answer:
-          "It depends on your goals, but we’re committed to transparency and quick wins. Usually you’ll start seeing measurable results within 3–6 months.",
+          "There is no single timeline for every project. Timing depends on scope, approvals, production requirements and dependencies. A project schedule is defined after the required work is clear.",
       },
     ],
-    publicationsTitle: "Publications",
   },
 
-  // orvann.com/services/ [site]
+  // [copy]
   services: {
     meta: {
-      title: "Services — ORVANN",
+      title: "ORVANN Services | Strategy, Branding, Marketing, Digital & Events",
       description:
-        "Marketing and brand development, digital solutions, business consulting, marketing production and event management — integrated solutions from ORVANN.",
+        "Explore ORVANN services across strategy, branding, marketing, websites and digital experiences, events, outdoor advertising and production.",
     },
     intro: {
       label: "Services",
-      title: "Our integrated solutions.",
-      lede: "Standing out today takes more than a good product. It takes the right strategy, the right branding and the right digital tools — and a partner who brings them together.",
+      title: "Integrated services built around what the project needs.",
+      lede: "ORVANN provides five connected service areas. Use one independently or combine several under one project direction.",
     },
     families: [
       {
-        id: "marketing",
-        eyebrow: "Make your mark",
-        title: "Marketing & Brand Development",
-        text: "Your brand is more than a logo: it’s your story, your personality, your voice. We help you craft a compelling identity and connect authentically with your audience.",
+        id: "strategy",
+        title: "Clear decisions start with a clearer view of the business.",
+        text: "Strategy & Consulting helps define where a business stands, what it should prioritize and how the next stage of growth or launch should be approached.",
         items: [
           {
-            title: "Brand strategy & identity",
-            text: "Logo design, visual branding, brand voice and comprehensive guidelines that keep every touchpoint consistent.",
+            title: "Market Research & Competitive Analysis",
+            text: "Research into customers, competitors, categories and market conditions to support better decisions.",
           },
           {
-            title: "Digital marketing campaigns",
-            text: "From Google Ads to social media advertising, campaigns designed to increase reach and engagement.",
+            title: "Growth & Marketing Strategy",
+            text: "A practical direction connecting business objectives with audiences, channels, priorities and measurable goals.",
           },
           {
-            title: "Content creation",
-            text: "Professional designs, videos, reels, articles and ads tailored to your audience and brand voice.",
+            title: "Brand Positioning",
+            text: "Defining who the brand is for, where it fits in the market and how it should be understood against alternatives.",
           },
           {
-            title: "Social media management",
-            text: "Content, posting, audience engagement and analytics across LinkedIn, Facebook, Instagram, TikTok and more.",
+            title: "Go-to-Market & Launch Planning",
+            text: "Planning the sequence, messaging, channels and assets needed to bring a business, brand, service or project to market.",
           },
           {
-            title: "Influencer marketing & email campaigns",
-            text: "Wider reach through influencer collaborations and automated email marketing.",
+            title: "Business & Project Advisory",
+            text: "Strategic support for businesses that need an outside perspective on opportunities, priorities, marketing direction or project planning.",
           },
         ],
-        image: {
-          src: "/work/al-nour-optics.jpg",
-          alt: "Al Nour Optics campaign visual: a customer trying on glasses beside an Al Nour Optical shopping bag in the store.",
-          width: 1344,
-          height: 616,
-        },
+        bestFor:
+          "businesses launching, repositioning, entering a new market, reviewing growth opportunities or preparing a larger project.",
+      },
+      {
+        id: "branding",
+        title: "Build a brand people can recognize across every touchpoint.",
+        text: "Branding & Creative translates business strategy into a visual and verbal system that can work consistently across digital and physical channels.",
+        items: [
+          { title: "Brand Identity", text: "Logo systems, visual language, typography, colour direction and supporting brand elements." },
+          { title: "Brand Guidelines", text: "Practical rules that help internal and external teams apply the identity consistently." },
+          {
+            title: "Creative Direction",
+            text: "The visual and conceptual direction behind campaigns, launches, content and brand communication.",
+          },
+          {
+            title: "Campaign Concepts",
+            text: "Creative ideas and visual directions developed around a specific campaign objective or audience.",
+          },
+          {
+            title: "Company Profiles & Brand Collateral",
+            text: "Profiles, presentations, brochures, sales materials and other business communication assets.",
+          },
+          { title: "Content Design", text: "Design systems for social media, campaigns and recurring brand communication." },
+        ],
+        bestFor:
+          "new brands, rebrands, businesses with inconsistent communication, launches and brands preparing to scale their content or marketing.",
+      },
+      {
+        id: "marketing",
+        title: "Put the right message in front of the right audience and learn from what happens next.",
+        text: "Marketing & Media connects planning, content, distribution, paid advertising and performance review.",
+        items: [
+          {
+            title: "Marketing & Campaign Strategy",
+            text: "Campaign objectives, audience definition, messaging, channel selection and execution planning.",
+          },
+          {
+            title: "Content Strategy",
+            text: "Content pillars, formats, topics and communication directions built around the brand and audience.",
+          },
+          {
+            title: "Social Media Management",
+            text: "Planning, content coordination, publishing requirements and performance review across relevant social platforms.",
+          },
+          {
+            title: "Paid Media & Media Buying",
+            text: "Paid campaign planning, setup, budget allocation, testing, optimization and reporting across suitable advertising platforms.",
+          },
+          {
+            title: "Creative Coordination",
+            text: "Connecting the media plan with the creatives, formats and messages required for each campaign.",
+          },
+          {
+            title: "Influencer & Partnership Campaigns",
+            text: "Planning and coordinating suitable collaborations when they support the campaign objective.",
+          },
+          {
+            title: "Reporting & Optimization",
+            text: "Using campaign and channel data to understand performance and guide the next decision.",
+          },
+        ],
+        bestFor:
+          "businesses seeking awareness, leads, sales, launches, stronger content systems or structured paid acquisition.",
       },
       {
         id: "digital",
-        eyebrow: "Be found, be remembered",
-        title: "Digital Solutions & Online Presence",
-        text: "We oversee every detail of your site: strategy, content, design and branding. Developers implement the plan exactly as designed.",
+        title: "Make it easier for people to understand your business and take the next step.",
+        text: "Digital Experiences focuses on how users discover, navigate and interact with your business online.",
         items: [
           {
-            title: "Search engine optimization",
-            text: "Data-driven strategies planned by our team to improve rankings and attract targeted organic traffic.",
+            title: "Website Strategy",
+            text: "Defining the website’s purpose, audiences, content priorities and required user journeys before design begins.",
           },
           {
-            title: "Website & e-commerce strategy",
-            text: "We shape your site’s structure, content and experience; specialists execute the technical build under our direction.",
+            title: "Information Architecture",
+            text: "Organizing pages and information so users and search engines can understand what the website offers.",
+          },
+          { title: "UX/UI Design", text: "Designing clear, responsive interfaces around user needs and business objectives." },
+          {
+            title: "Website & E-commerce Delivery",
+            text: "Managing the project from planning and content through design, technical implementation, review and launch according to the agreed scope.",
           },
           {
-            title: "Ongoing marketing support & optimization",
-            text: "We stay actively involved after launch, so your site keeps growing and converting.",
+            title: "SEO & Search Content Structure",
+            text: "Building search intent, page hierarchy, metadata, internal linking and content clarity into the website from the beginning.",
+          },
+          {
+            title: "Analytics & Conversion-Focused Optimization",
+            text: "Reviewing how people move through the digital experience and identifying opportunities to reduce friction and improve action completion.",
+          },
+          {
+            title: "Ongoing Digital Support",
+            text: "Post-launch updates, content improvements and performance reviews can be included according to the project scope.",
           },
         ],
-        image: {
-          src: "/work/sami-alsalmi-law-office-mobile.jpg",
-          alt: "The Sami Al-Salmi Law Office website shown on two phones.",
-          width: 545,
-          height: 577,
-        },
-      },
-      {
-        id: "consulting",
-        eyebrow: "Navigate the market maze",
-        title: "Business Consulting & Advisory",
-        text: "Starting a new venture or expanding an existing one can feel like navigating a maze blindfolded. Market research, feasibility studies and startup advisory light the way.",
-        items: [
-          { title: "Market research & feasibility studies", text: "Data-backed insights to inform your strategic decisions." },
-          { title: "Startup & entrepreneurship advisory", text: "Business model development, branding and marketing planning." },
-          {
-            title: "Idea development & investor presentations",
-            text: "Early-stage ideas turned into actionable plans and compelling presentations for investors.",
-          },
-          { title: "AI & creative innovation", text: "Advanced technology that future-proofs your business and fosters innovation." },
-        ],
-        image: {
-          src: "/work/al-marefah-tech.webp",
-          alt: "Al Marefah Tech cover: two businessmen beside the Al Marefa Tech identity on a dark teal background.",
-          width: 1344,
-          height: 616,
-        },
-      },
-      {
-        id: "production",
-        eyebrow: "Leave a lasting impression",
-        title: "Marketing Production & Supply",
-        text: "From eye-catching brochures and banners to trade-show displays, we make sure your brand stands out in every setting, online or offline.",
-        items: [
-          { title: "Printing & production", text: "Brochures, banners, packaging and corporate stationery with premium finishes." },
-          {
-            title: "Corporate gifts & uniforms",
-            text: "Customized branded gifts, uniforms and accessories that reinforce your brand image.",
-          },
-          { title: "Exhibition & display design", text: "Impactful displays for trade shows, malls and events." },
-        ],
-        image: {
-          src: "/work/sami-alsalmi-law-office-stationery.jpg",
-          alt: "Sami Al-Salmi Law Office stationery in black and gold: business cards, letterhead and folder.",
-          width: 655,
-          height: 612,
-        },
+        bestFor:
+          "new websites, redesigns, e-commerce projects, landing pages and businesses whose digital presence no longer reflects their brand or objectives.",
       },
       {
         id: "events",
-        eyebrow: "Make every event memorable",
-        title: "Event Planning & Management",
-        text: "Professional planning and execution for events people remember.",
+        title: "Take the brand beyond the screen.",
+        text: "Events, Outdoor & Production turns brand and campaign direction into physical experiences and materials.",
         items: [
           {
-            title: "Event design & execution",
-            text: "From décor and lighting to hospitality, every detail handled for flawless delivery.",
+            title: "Events & Exhibitions",
+            text: "Planning and coordinating brand presence for conferences, exhibitions, corporate events and launches.",
           },
           {
-            title: "Corporate events",
-            text: "Conferences, product launches, employee recognition events and networking gatherings.",
+            title: "Booth & Experience Design",
+            text: "Developing the creative and visual requirements for exhibition booths and branded spaces.",
           },
           {
-            title: "Brand activations & product launches",
-            text: "Unique concepts and immersive experiences that create lasting impressions.",
+            title: "Brand Activations",
+            text: "On-ground experiences designed around a campaign, product, launch or audience interaction.",
           },
-          { title: "Luxury private events", text: "High-end private parties and exclusive experiences." },
+          {
+            title: "Outdoor Advertising",
+            text: "Creative adaptation and production coordination for billboards, LED screens and other outdoor formats.",
+          },
+          {
+            title: "Printing & Production",
+            text: "Brochures, company profiles, folders, cards, packaging, banners and other branded printed materials.",
+          },
+          {
+            title: "Signage & Branded Materials",
+            text: "Physical brand applications for offices, locations, events and temporary installations.",
+          },
+          {
+            title: "Corporate Gifts",
+            text: "Branded gifting and supporting materials developed according to the campaign or corporate requirement.",
+          },
+          {
+            title: "On-Ground Execution",
+            text: "Production follow-up, supplier coordination and execution support according to the project scope.",
+          },
         ],
-        image: {
-          src: "/media/exhibitions-stage.jpg",
-          alt: "Render of a conference stage with large LED screens, lit steps and a speaker’s podium.",
-          width: 1344,
-          height: 616,
-        },
+        bestFor:
+          "exhibitions, launches, campaigns, real estate projects, corporate events and brands requiring coordinated physical production.",
       },
     ],
-    why: {
-      title: "Why choose ORVANN",
-      text: "Because we’re not just about delivering services — we’re about building partnerships. We listen, understand, and then craft strategies that align with your vision, focused on sustainable growth rather than quick wins.",
+    bestForLabel: "Best suited for:",
+    together: {
+      title: "You do not need all five services to work with ORVANN.",
+      paragraphs: [
+        "A client may need only a website, campaign, identity or event.",
+        "But when several services are required, they can be managed under the same strategic and creative direction.",
+      ],
+      exampleLabel: "For example:",
+      sequence: ["strategy", "branding", "digital", "marketing", "events"],
+      closing: "The sequence changes according to the project.",
     },
-    faqTitle: "Questions, answered",
+    faqTitle: "Frequently asked questions",
     faqs: [
       {
-        question: "Who leads my website’s strategy and design?",
+        question: "What services does ORVANN provide?",
         answer:
-          "We take full ownership of your website’s concept, branding, content, design and overall strategy. Developers implement the plan exactly as designed.",
+          "ORVANN provides Strategy & Consulting, Branding & Creative, Marketing & Media, Digital Experiences, and Events, Outdoor & Production.",
       },
       {
-        question: "Can I use my own developer?",
-        answer: "Yes. You can choose your preferred developer or our trusted partners; they follow our precise specifications.",
-      },
-      {
-        question: "When does SEO begin?",
-        answer: "SEO is integrated from day one. Data-driven strategies are built into the whole process to drive higher rankings and targeted traffic.",
-      },
-      {
-        question: "What is included in strategy consultation?",
+        question: "Can ORVANN manage a full brand launch?",
         answer:
-          "We blueprint your site’s structure, user experience, content and conversion flow. Specialists then execute the technical build under our guidance.",
+          "Yes, when the project requires it. A launch may combine strategy, identity, website, content, campaigns, print, outdoor and event execution under one project plan.",
       },
       {
-        question: "What support do you provide after launch?",
-        answer: "We continuously monitor, analyze and optimize your site so it evolves with your business and keeps delivering results.",
+        question: "Can I request only branding or media buying?",
+        answer: "Yes. Services can be commissioned independently without purchasing an integrated package.",
+      },
+      {
+        question: "Do you manage website development?",
+        answer:
+          "ORVANN manages the digital project and agreed deliverables from strategy and UX/UI through implementation coordination, QA and launch. Technical execution is structured according to the requirements of each project.",
+      },
+      {
+        question: "Is SEO included in every website?",
+        answer:
+          "Search-friendly structure should be considered from the planning stage, but the depth of ongoing SEO work depends on the agreed project scope.",
+      },
+      {
+        question: "Do you handle printing and physical production?",
+        answer:
+          "Yes. Events, Outdoor & Production includes selected print, signage, display, outdoor and branded production requirements based on the project.",
       },
     ],
   },
 
-  // orvann.com/exhibitions-conferences/ [site]
-  exhibitions: {
-    meta: {
-      title: "Exhibitions & Conferences — ORVANN",
-      description:
-        "Strategic planning, booth design, gifts, digital campaigns, on-site execution and post-event analysis — ORVANN makes your presence at every exhibition and conference count.",
-    },
-    intro: {
-      label: "Exhibitions & conferences",
-      title: "Your presence speaks for you.",
-      lede: "Every appearance delivers a message, and we make sure yours is clear, powerful and unforgettable.",
-    },
-    text: "At ORVANN, we don’t just take part in exhibitions and conferences — we create a complete brand experience. Your presence at any event becomes a cohesive story, full of value and professionalism, from strategic planning to every detail on the ground.",
-    image: {
-      src: "/media/exhibitions-stage.jpg",
-      alt: "Render of a conference stage with large LED screens, lit steps and a speaker’s podium.",
-      width: 1344,
-      height: 616,
-    },
-    processLabel: "How we work",
-    processTitle: "Our detailed process",
-    stages: [
-      {
-        title: "Strategic event planning",
-        points: [
-          "Research into the target exhibition or conference.",
-          "Clear brand objectives and a precisely defined audience.",
-          "Competitor analysis, and the points that will make you stand out.",
-          "An integrated plan to get the most from taking part.",
-        ],
-      },
-      {
-        title: "Booth & marketing collateral design",
-        points: [
-          "A booth designed around your brand identity and values.",
-          "Promotional materials prepared professionally and attractively.",
-          "Colors, fonts and materials chosen to reinforce your brand image.",
-          "Every visual detail speaking clearly to the intended audience.",
-        ],
-      },
-      {
-        title: "Gifts & promotional materials",
-        points: [
-          "Professional gifts and promotional materials aligned with your identity.",
-          "Interactive samples that draw visitors into your products and services.",
-          "Every element designed to leave a lasting impression.",
-        ],
-      },
-      {
-        title: "Digital preparation, before & during",
-        points: [
-          "Digital campaigns that build awareness before the exhibition.",
-          "Social media content managed in sync with the event.",
-          "Booths and digital materials supervised during the exhibition.",
-          "Your audience engaged with every brand element.",
-        ],
-      },
-      {
-        title: "On-site supervision & execution",
-        points: [
-          "On the ground at the event to keep everything running smoothly.",
-          "Visitor interactions with products and services organized and managed.",
-          "Every detail of the booth and materials monitored.",
-          "Every element reflecting your professional image.",
-        ],
-      },
-      {
-        title: "Post-event analysis & evaluation",
-        points: [
-          "Performance measured against the goals set at the start.",
-          "The best moments turned into more marketing content.",
-          "Recommendations to maximize impact at future events.",
-          "Your digital presence strengthened and linked to market updates.",
-        ],
-      },
-    ],
-    news: {
-      label: "News",
-      title: "Techne Summit 2026",
-      text: "ORVANN is proud to join Techne Summit, one of the region’s leading platforms for entrepreneurship, innovation, technology and business networking — bringing businesses, founders, investors and industry leaders together.",
-      link: { label: "Visit Techne Summit", href: "https://technesummit.com/2026" },
-    },
-  },
-
-  // orvann.com/contact-us/ [site]
+  // [copy]; the form's status messages are [proposed]
   contact: {
     meta: {
-      title: "Contact ORVANN",
-      description: "Talk to ORVANN by email, phone or WhatsApp, or visit us on Al-Haram St., Giza, Egypt.",
+      title: "Contact ORVANN | Start a Strategy, Marketing or Brand Project",
+      description:
+        "Contact ORVANN to discuss strategy, branding, marketing, websites, events, outdoor or production projects in Egypt and the region.",
     },
     intro: {
-      label: "Contact us",
-      title: "Let’s build your future together.",
-      lede: "Whether you’re ready to start a project, want strategic advice or simply want to learn more about our integrated solutions, we’re here to help.",
+      label: "Contact ORVANN",
+      title: "Tell us what you’re building.",
+      lede: "Whether you have a defined brief or only know the business problem you need to solve, start by telling us where you are and what you need next.",
+      body: ["We’ll help identify the right scope before the work begins."],
     },
-    channelsTitle: "How to reach us",
-    faqTitle: "Questions, answered",
+    form: {
+      title: "Start with the essentials.",
+      name: "Name",
+      company: "Company",
+      email: "Work Email",
+      phone: "Phone / WhatsApp",
+      need: "What do you need?",
+      multiple: "Multiple Services",
+      unsure: "Not Sure Yet",
+      goal: "What are you trying to achieve?",
+      goalHint: "Short project description.",
+      start: "When do you need to start?",
+      budget: "Estimated Budget Range",
+      optional: "Optional.",
+      submit: "Send Project Details",
+      sending: "Sending…",
+      sent: "Thank you. Your project details have been sent, and we’ll be in touch soon.",
+      failed: "Your details could not be sent. Please try again, or email info@orvann.com.",
+    },
+    direct: {
+      title: "Prefer to talk directly?",
+      email: "Email",
+      phone: "Phone / WhatsApp",
+      headquarters: "Headquarters",
+      address: "Al-Haram St., Giza, Egypt",
+    },
+    faqTitle: "Frequently asked questions",
     faqs: [
       {
-        question: "How can ORVANN help my business grow?",
+        question: "What should I send when contacting ORVANN?",
         answer:
-          "We offer a full range of services — market research and analysis, branding, digital marketing, project management and events — designed to boost your visibility, optimize your operations and foster sustainable growth.",
+          "Share your business name, what you are trying to achieve, the service you think you need and any relevant timeline or existing materials.",
       },
       {
-        question: "What industries do you serve?",
+        question: "What if I do not know which service I need?",
+        answer: "That is fine. Tell us the business problem or objective and we can help define the relevant scope.",
+      },
+      {
+        question: "Can ORVANN handle several parts of one project?",
         answer:
-          "We work with many sectors, including defense and aviation, real estate, technology, retail and hospitality. Our solutions are tailored to your industry.",
+          "Yes. Projects can combine Strategy & Consulting, Branding & Creative, Marketing & Media, Digital Experiences, and Events, Outdoor & Production.",
       },
       {
-        question: "How long does a typical project take?",
-        answer: "Timelines depend on scope and complexity. We provide clear schedules and keep you updated throughout, so delivery stays on time.",
+        question: "Do you work with startups?",
+        answer:
+          "Yes. The scope depends on what the startup already has and what it needs next, such as research, positioning, identity, launch planning, website or marketing.",
       },
       {
-        question: "Can you support startups?",
-        answer: "Yes. Our startup advisory, market research and AI integrations are designed to help new businesses succeed from the ground up.",
+        question: "What is the project timeline?",
+        answer:
+          "Timing depends on the agreed scope, approval cycles and production requirements. A realistic schedule should be confirmed once the deliverables are defined.",
       },
       {
-        question: "What is your pricing model?",
-        answer: "Pricing depends on the size and requirements of your project. We provide a detailed quote once we fully understand your needs.",
-      },
-      {
-        question: "Can you support my business after the project is complete?",
-        answer: "Yes. We believe in long-term relationships and offer ongoing support, training and maintenance so your solutions keep delivering value.",
-      },
-      {
-        question: "How do I stay updated on ORVANN’s services and news?",
-        answer: "Follow us on social media for new solutions, success stories and industry insights.",
+        question: "How is pricing calculated?",
+        answer:
+          "Pricing depends on the project scope, required resources, deliverables, timeline and production requirements. A quotation is prepared after the project requirements are clear.",
       },
     ],
   },
 
-  // New index for orvann.com/our-projects/<slug>/ pages.
+  // [copy]
   work: {
     meta: {
-      title: "Our Projects — ORVANN",
+      title: "ORVANN Work | Branding, Marketing, Websites & Events",
       description:
-        "Brand identity, website, social media, campaign and event projects by ORVANN for clients in Egypt and the Gulf.",
+        "Explore selected ORVANN projects across branding, strategy, marketing, websites, paid campaigns, events, outdoor and production.",
     },
     intro: {
-      label: "Our projects",
-      title: "Work we’re proud of.", // [proposed]
-      lede: "Identity, website, campaign and event projects for clients in Egypt and the Gulf.",
+      label: "Our Work",
+      title: "Work across brand, marketing, digital and on-ground execution.",
+      lede: "Every project starts from a different point.",
+      body: [
+        "Some clients come to ORVANN for one specific need. Others require several services to work together under one direction.",
+        "Explore selected projects and the scope delivered for each one.",
+      ],
     },
     filterLabel: "Filter projects",
-    filters: {
-      all: "All",
-      branding: "Branding",
-      websites: "Websites",
-      social: "Social & content",
-      campaigns: "Campaigns",
-      strategy: "Strategy",
-      events: "Events",
-    },
+    all: "All",
     countLabel: (count) => `${count} ${count === 1 ? "project" : "projects"}`,
     empty: "No projects in this category yet.",
-    servicesLink: { label: "Explore all services", href: "/services/" },
   },
 
+  // [copy] section names from the case study template
   caseStudy: {
     back: "All projects",
-    disciplines: "What we did",
-    challenge: "The challenge",
-    solution: "The solution",
+    services: "Services",
+    context: "The Context",
+    delivered: "What We Delivered",
     results: "Results",
-    gallery: "Gallery",
+    execution: "Execution",
     next: "Next project",
     visitWebsite: "Visit website",
   },
@@ -445,7 +460,7 @@ export const enPages: SiteContent["pages"] = {
   // orvann.com/privacy-policy/ [site] — legal text restated, not rewritten. Confirm with counsel.
   privacy: {
     meta: {
-      title: "Privacy Policy — ORVANN",
+      title: "Privacy Policy | ORVANN",
       description: "How ORVANN collects, uses and shares personal information on its website and social media channels.",
     },
     intro: {
@@ -466,10 +481,10 @@ export const enPages: SiteContent["pages"] = {
         heading: "Information we collect",
         paragraphs: ["We may collect the following types of personal information:"],
         list: [
-          "Personal identifiers — such as your name, email address, phone number and address, when you submit inquiries or sign up for services.",
-          "Usage data — details of your interactions with our website and social media pages, including pages visited, clicks and other interaction data.",
-          "Device information — information about the devices you use to access our website, including IP address, browser type and operating system.",
-          "Social media data — when you interact with us on social media platforms, we may collect publicly available information based on your privacy settings.",
+          "Personal identifiers, such as your name, email address, phone number and address, when you submit inquiries or sign up for services.",
+          "Usage data: details of your interactions with our website and social media pages, including pages visited, clicks and other interaction data.",
+          "Device information: information about the devices you use to access our website, including IP address, browser type and operating system.",
+          "Social media data: when you interact with us on social media platforms, we may collect publicly available information based on your privacy settings.",
         ],
       },
       {
@@ -487,9 +502,9 @@ export const enPages: SiteContent["pages"] = {
         heading: "Sharing your information",
         paragraphs: ["We may share your information with:"],
         list: [
-          "Service providers — third parties who help us operate our website and conduct our business (for example email marketing, analytics and advertising).",
-          "Social media platforms — we may use social media advertising and analytics tools (for example Snapchat Ads Manager and Instagram Insights) to display ads and track performance.",
-          "Legal obligations — we may disclose your information if required by law or to respond to legal requests from authorities.",
+          "Service providers: third parties who help us operate our website and conduct our business (for example email marketing, analytics and advertising).",
+          "Social media platforms: we may use social media advertising and analytics tools (for example Snapchat Ads Manager and Instagram Insights) to display ads and track performance.",
+          "Legal obligations: we may disclose your information if required by law or to respond to legal requests from authorities.",
         ],
       },
       {
@@ -548,33 +563,33 @@ export const enPages: SiteContent["pages"] = {
   publications: [
     {
       slug: "company-profile",
-      meta: { title: "Company Profile — ORVANN", description: "The ORVANN company profile, as a flipbook." },
+      meta: { title: "Company Profile | ORVANN", description: "The ORVANN company profile, as a flipbook." },
       intro: { label: "Publication", title: "Company profile", lede: "Who we are and what we do, in one document." },
       flipbookUrl: "https://heyzine.com/flip-book/729a5ed198.html",
       frameTitle: "ORVANN Company Profile (flipbook)",
     },
     {
       slug: "summer-giveaway",
-      meta: { title: "Summer Giveaway — ORVANN", description: "The ORVANN summer giveaway, as a flipbook." },
+      meta: { title: "Summer Giveaway | ORVANN", description: "The ORVANN summer giveaway, as a flipbook." },
       intro: { label: "Publication", title: "Summer giveaway", lede: "Our summer giveaway collection." },
       flipbookUrl: "https://heyzine.com/flip-book/b7caeca1ee.html",
       frameTitle: "ORVANN summer giveaway (flipbook)",
     },
     {
       slug: "vip-gifts",
-      meta: { title: "VIP Gifts — ORVANN", description: "The ORVANN VIP gifts collection, as a flipbook." },
+      meta: { title: "VIP Gifts | ORVANN", description: "The ORVANN VIP gifts collection, as a flipbook." },
       intro: { label: "Publication", title: "VIP gifts", lede: "Corporate and VIP gift ideas from ORVANN." },
       flipbookUrl: "https://heyzine.com/flip-book/a3b8db03b0.html",
       frameTitle: "ORVANN gifts (flipbook)",
     },
   ],
 
-  // Shared closing band [proposed]
+  // [copy] the homepage's final call to action closes every page
   cta: {
-    label: "Start a project",
-    title: "Ready to build the future?",
-    text: "Tell us what you want to build or where you want to grow. We’ll take it from there.",
-    primary: { label: "Let’s talk", href: "/contact-us/" },
-    secondary: { label: "See our work", href: "/our-projects/" },
+    label: "Have a project in mind?",
+    title: "Tell us what you’re building.",
+    text: "Share the business, the objective and what you need delivered. We’ll help define the right scope before the work begins.",
+    primary: { label: "Start a Project", href: "/contact-us/#project-form" },
+    secondary: { label: "Book a Meeting", href: "/contact-us/#direct-contact" },
   },
 };

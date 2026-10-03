@@ -14,7 +14,10 @@ import styles from "./SiteHeader.module.css";
 type Props = {
   locale: Locale;
   header: SiteContent["header"];
+  actions: SiteContent["actions"];
   nav: NavLink[];
+  /** Whether the other language is published (false while Arabic is hidden). */
+  languageSwitch: boolean;
   a11y: SiteContent["a11y"];
 };
 
@@ -63,7 +66,7 @@ function LanguageLink({ pathname, locale, language, className }: {
   );
 }
 
-export function SiteHeader({ locale, header, nav, a11y }: Props) {
+export function SiteHeader({ locale, header, actions, nav, languageSwitch, a11y }: Props) {
   const home = localePath(locale, "/");
   // `open` is the menu's state; `panelShown` keeps the panel rendered while it animates closed.
   const [open, setOpen] = useState(false);
@@ -183,10 +186,15 @@ export function SiteHeader({ locale, header, nav, a11y }: Props) {
           </nav>
 
           <div className={styles.tools} data-enter="header" style={stagger(2)}>
-            <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.language} />
+            {languageSwitch && (
+              <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.language} />
+            )}
             <ThemeToggle label={a11y.lightMode} />
-            <ButtonLink href={header.cta.href} size="sm" className={styles.cta} magnetic>
-              {header.cta.label}
+            <ButtonLink href={actions.bookMeeting.href} size="sm" variant="secondary" className={styles.secondaryCta}>
+              {actions.bookMeeting.label}
+            </ButtonLink>
+            <ButtonLink href={actions.startProject.href} size="sm" className={styles.cta} magnetic>
+              {actions.startProject.label}
             </ButtonLink>
             <button
               ref={toggleRef}
@@ -229,10 +237,20 @@ export function SiteHeader({ locale, header, nav, a11y }: Props) {
           </ul>
         </nav>
         <div className={styles.panelFoot} data-menu-item="">
-          <ButtonLink href={header.cta.href} onClick={() => closeMenu(false)}>
-            {header.cta.label}
+          <ButtonLink href={actions.startProject.href} onClick={() => closeMenu(false)}>
+            {actions.startProject.label}
           </ButtonLink>
-          <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.panelLanguage} />
+          <ButtonLink href={actions.bookMeeting.href} variant="secondary" onClick={() => closeMenu(false)}>
+            {actions.bookMeeting.label}
+          </ButtonLink>
+          {languageSwitch && (
+            <LanguageLink
+              pathname={pathname}
+              locale={locale}
+              language={header.language}
+              className={styles.panelLanguage}
+            />
+          )}
         </div>
       </div>
     </>

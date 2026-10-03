@@ -29,7 +29,7 @@
   line-height: 1.1;
   letter-spacing: var(--tracking-heading);
   font-variation-settings: "wdth" var(--wdth-heading);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .channelLink {
@@ -44,4 +44,21 @@
 .channelLink:hover,
 .channelLink:focus-visible {
   background-size: 100% 0.06em;
+}
+
+/* Start a Project and Book a Meeting jump here: keep the heading clear of the fixed header. */
+.formSection {
+  scroll-margin-block-start: var(--header-height);
+}
+
+/* Three columns on desktop: a step smaller, so an email address or phone number keeps to
+   one line in both scripts. */
+@media (min-width: 64em) {
+  .channels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .channelValue {
+    font-size: var(--text-xl);
+  }
 }

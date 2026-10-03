@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { localePath, type Locale, type Project, type ProjectCategory } from "@/content";
+import { localePath, type Locale, type Project, type ProjectCategory, type ServiceId } from "@/content";
 import { cn } from "@/lib/cn";
 import { loadMotion, whenIdle, type MotionRuntime } from "@/motion/useMotion";
 import styles from "./ProjectsIndex.module.css";
@@ -13,6 +13,7 @@ export type ProjectFilter = "all" | ProjectCategory;
 type Props = {
   locale: Locale;
   projects: Project[];
+  serviceNames: Record<ServiceId, string>;
   /** Filters to offer, in order; each has a label and its "N projects" count text. */
   filters: { id: ProjectFilter; label: string; count: string }[];
   filterLabel: string;
@@ -29,7 +30,7 @@ const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
  * new count is announced politely. Once the motion runtime has loaded, cards glide to their
  * new places (GSAP Flip); before that, or with reduced motion, the grid simply updates.
  */
-export function ProjectsIndex({ locale, projects, filters, filterLabel, empty }: Props) {
+export function ProjectsIndex({ locale, projects, serviceNames, filters, filterLabel, empty }: Props) {
   const [active, setActive] = useState<ProjectFilter>("all");
   const gridRef = useRef<HTMLUListElement>(null);
   const motionRef = useRef<MotionRuntime | null>(null);
@@ -125,8 +126,10 @@ export function ProjectsIndex({ locale, projects, filters, filterLabel, empty }:
                       {project.title}
                     </Link>
                   </h2>
-                  <p className={cn("type-label", styles.disciplines)}>{project.disciplines.join(" · ")}</p>
-                  <p className="type-body">{project.tagline}</p>
+                  <p className={cn("type-label", styles.disciplines)}>
+                    {project.categories.map((id) => serviceNames[id]).join(" · ")}
+                  </p>
+                  <p className="type-body">{project.summary}</p>
                 </article>
               </li>
             );

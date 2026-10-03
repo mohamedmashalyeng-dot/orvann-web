@@ -1,4 +1,4 @@
-import type { Link } from "@/content";
+import type { Cta } from "@/content";
 import { cn } from "@/lib/cn";
 import { BrandPattern } from "@/components/ui/BrandPattern";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -6,12 +6,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./CtaBand.module.css";
 
-type Props = {
-  cta: { label?: string; title: string; text: string; primary: Link; secondary?: Link };
-};
-
-/** The closing band on every page: one big invitation and a clear next step or two. */
-export function CtaBand({ cta }: Props) {
+/** The closing band: one big invitation and a clear next step or two. */
+export function CtaBand({ cta }: { cta: Cta }) {
   return (
     <section className={cn("tone-accent section", styles.band)} aria-labelledby="cta-title">
       <BrandPattern fade="end" />

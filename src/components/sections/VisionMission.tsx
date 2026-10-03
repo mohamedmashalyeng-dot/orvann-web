@@ -6,17 +6,18 @@ import styles from "./VisionMission.module.css";
 type Props = {
   vision: Step;
   mission: Step;
+  tone?: "tone-base" | "tone-alt";
 };
 
 /** Vision and mission side by side: a short label over one large sentence each. */
-export function VisionMission({ vision, mission }: Props) {
+export function VisionMission({ vision, mission, tone = "tone-alt" }: Props) {
   const statements = [
     { id: "vision", ...vision },
     { id: "mission", ...mission },
   ];
 
   return (
-    <section className="tone-alt section" aria-labelledby="vision-title mission-title">
+    <section className={cn(tone, "section")} aria-labelledby="vision-title mission-title">
       <div className={cn("container", styles.layout)}>
         {statements.map((statement) => (
           <Reveal key={statement.id} className={styles.statement}>

@@ -29,12 +29,12 @@
   --color-white: #ffffff;
 
   /* ---- Type families (next/font sets the --font-* source variables on <html>) ---- */
-  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, system-ui, sans-serif;
-  --font-mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  /* Poppins carries every role in English (labels too, set apart by size, capitals and
+     tracking); Arabic switches all roles to Bukra (see :root[lang="ar"]). */
+  --font-sans: var(--font-poppins), "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: var(--font-sans);
   --font-display: var(--font-sans);
-  /* Page and section titles. Druk (trial files, 74 characters): &, @, + and the like fall
-     back to Archivo until licensed Druk replaces them. */
-  --font-headline: var(--font-druk), var(--font-archivo), "Arial Narrow", Impact, sans-serif;
+  --font-headline: var(--font-sans);
 
   /* ---- Type scale ---- */
   --text-xs: 0.75rem;
@@ -45,18 +45,19 @@
   --text-2xl: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
   /* Large sizes are capped by viewport width (min) so enlarged text settings can never
      push a heading wider than a phone screen. At default text size the cap never binds. */
-  --text-3xl: min(clamp(2.375rem, 1.3rem + 4.3vw, 5.5rem), 12vw);
+  --text-3xl: min(clamp(2rem, 1.25rem + 2.6vw, 3.5rem), 11vw);
   /* Display steps up by breakpoint (see the media queries below :root): large on phones,
      where the headline wraps anyway, and capped on wide screens so the four-line desktop
      composition never breaks. */
-  --text-display: min(clamp(2rem, 0.6rem + 9.4vw, 4.25rem), 12vw);
-  --text-mega: min(clamp(4rem, 0.5rem + 15vw, 16rem), 18vw);
+  --text-display: min(clamp(2.25rem, 1rem + 6vw, 3.5rem), 11vw);
+  --text-mega: min(clamp(3rem, 1rem + 8vw, 8rem), 14vw);
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-headline: 600;
 
-  /* Archivo width axis (wdth 62–125) */
+  /* Width-axis settings, for a variable font with a wdth axis (Poppins has none: no effect). */
   --wdth-body: 100;
   --wdth-heading: 106;
   --wdth-display: 112;
@@ -70,10 +71,10 @@
   --tracking-heading: -0.03em;
   --tracking-snug: -0.015em;
   --tracking-label: 0.08em;
-  /* Druk is drawn tight: open it up a little so letters, words and lines never touch. */
-  --tracking-headline: 0.015em;
-  --word-spacing-headline: 0.06em;
-  --leading-headline: 1;
+  /* Poppins is wide and round: draw headlines in a little, with room between lines. */
+  --tracking-headline: -0.02em;
+  --word-spacing-headline: normal;
+  --leading-headline: 1.1;
 
   /* ---- Spacing ---- */
   --space-1: 0.25rem;
@@ -135,13 +136,13 @@
 
 @media (min-width: 48em) {
   :root {
-    --text-display: min(clamp(3.5rem, 0.5rem + 7.2vw, 5.5rem), 7.6vw);
+    --text-display: min(clamp(3rem, 1rem + 4.5vw, 4.25rem), 7vw);
   }
 }
 
 @media (min-width: 64em) {
   :root {
-    --text-display: min(clamp(3.5rem, 0.8rem + 6.4vw, 7.5rem), 7.2vw);
+    --text-display: min(clamp(3.5rem, 1rem + 4vw, 5rem), 6vw);
   }
 }
 
@@ -154,7 +155,7 @@
    break the joined letters) and no capitals, and needs taller lines for its dots and
    ascenders. Everything else — sizes, spacing, tones — is shared with English. */
 :root[lang="ar"] {
-  --font-sans: var(--font-bukra), var(--font-archivo), Tahoma, Arial, sans-serif;
+  --font-sans: var(--font-bukra), var(--font-poppins), Tahoma, Arial, sans-serif;
   --font-display: var(--font-sans);
   --font-headline: var(--font-sans);
   --font-mono: var(--font-sans);

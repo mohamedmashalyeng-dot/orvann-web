@@ -10,6 +10,12 @@
   border-block-start: 1px solid var(--line-strong);
 }
 
+.head {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
 .title {
   color: var(--text-muted);
 }
@@ -20,7 +26,7 @@
     column-gap: var(--grid-gap);
   }
 
-  .title {
+  .head {
     grid-column: 1 / span 3;
     padding-block-start: var(--space-3);
   }

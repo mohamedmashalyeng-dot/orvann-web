@@ -1,19 +1,18 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { localePath } from "@/content";
+import { localePath, serviceIds } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
+import { flags } from "@/config/site";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
-import { PartnerLogos } from "@/components/sections/PartnerLogos";
+import { VisionMission } from "@/components/sections/VisionMission";
 import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
-import { ImageMarquee } from "@/components/visuals/ImageMarquee";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
-import { Statement } from "@/components/page/Statement";
-import { FaqList } from "@/components/page/FaqList";
+import { FaqSection } from "@/components/page/FaqSection";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
@@ -27,30 +26,106 @@ const pad = (value: number) => String(value).padStart(2, "0");
 export default async function AboutPage({ params }: LangParams) {
   const content = await contentFor(params);
   const page = content.pages.about;
-  const { values, partners } = page;
+  const { serviceNames } = content;
 
   return (
     <>
-      <PageIntro intro={page.intro} visual={<ValuesOrbit values={values.items} />}>
-        <ButtonLink href={content.pages.cta.primary.href} icon="arrow">
-          {content.pages.cta.primary.label}
-        </ButtonLink>
+      <PageIntro intro={page.intro} visual={<ValuesOrbit values={page.values.items.map((value) => value.title)} />}>
+        {flags.showWork && (
+          <ButtonLink href={page.cta.href} icon="arrow">
+            {page.cta.label}
+          </ButtonLink>
+        )}
       </PageIntro>
 
-      <ImageMarquee images={content.projects.map((project) => project.image)} />
-
-      <section className="section" aria-labelledby="story-title">
+      {/* Who is ORVANN: the five capabilities, each linking to its services section. */}
+      <section className="section" aria-labelledby="who-title">
         <div className="container">
-          <SectionHead id="story-title" label={page.storyLabel} title={page.storyTitle} />
+          <SectionHead id="who-title" title={page.who.title} intro={page.who.intro} />
+          <Reveal className={styles.who}>
+            <ol className={styles.capabilityLinks}>
+              {serviceIds.map((id, index) => (
+                <li key={id} data-reveal="">
+                  <Link href={localePath(content.locale, `/services/#${id}`)} className={styles.capabilityLink}>
+                    <span className={cn("type-label", styles.number)} aria-hidden="true">
+                      {pad(index + 1)}
+                    </span>
+                    <span className={styles.capabilityName}>{serviceNames[id]}</span>
+                    <ArrowIcon className={styles.capabilityIcon} />
+                  </Link>
+                </li>
+              ))}
+            </ol>
+            <div className={styles.paragraphs} data-reveal="">
+              {page.who.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="type-lede">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Our story: how one deliverable kept leading to the next. */}
+      <section className="tone-alt section" aria-labelledby="story-title">
+        <div className={cn("container", styles.split)}>
+          <Reveal className={styles.splitHead}>
+            <h2 id="story-title" className="type-h2" data-reveal="">
+              {page.story.title}
+            </h2>
+          </Reveal>
+          <Reveal className={styles.splitBody}>
+            {page.story.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+            <ol className={styles.sequence}>
+              {page.story.sequence.map((line) => (
+                <li key={line} className={styles.sequenceLine} data-reveal="">
+                  {line}
+                </li>
+              ))}
+            </ol>
+            <p className="type-lede" data-reveal="">
+              {page.story.closing}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="capabilities-title">
+        <div className="container">
+          <SectionHead id="capabilities-title" title={page.capabilities.title} />
           <Reveal>
-            <ol className={styles.chapters}>
-              {page.chapters.map((chapter, index) => (
-                <li key={chapter.title} className={styles.chapter} data-reveal="">
+            <ul className={styles.capabilities}>
+              {page.capabilities.items.map((item, index) => (
+                <li key={item.id} className={styles.capability} data-reveal="">
                   <span className={cn("type-label", styles.number)} aria-hidden="true">
                     {pad(index + 1)}
                   </span>
-                  <h3 className={cn("type-h3", styles.chapterTitle)}>{chapter.title}</h3>
-                  <p className="type-lede">{chapter.text}</p>
+                  <h3 className="type-h3">{serviceNames[item.id]}</h3>
+                  <p className="type-body">{item.text}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="tone-alt section" aria-labelledby="process-title">
+        <div className="container">
+          <SectionHead id="process-title" title={page.process.title} />
+          <Reveal>
+            <ol className={styles.steps}>
+              {page.process.steps.map((step, index) => (
+                <li key={step.title} className={styles.step} data-reveal="">
+                  <span className={cn("type-label", styles.number)} aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <h3 className="type-h3">{step.title}</h3>
+                  <p className="type-body">{step.text}</p>
                 </li>
               ))}
             </ol>
@@ -58,25 +133,35 @@ export default async function AboutPage({ params }: LangParams) {
         </div>
       </section>
 
-      <Statement id="why-title" title={page.why.title} text={page.why.text} tone="tone-alt" />
-      <Statement
-        id="achievements-title"
-        title={page.achievements.title}
-        text={page.achievements.text}
-        pattern={false}
-      />
+      <section className="section" aria-labelledby="model-title">
+        <div className={cn("container", styles.split)}>
+          <Reveal className={styles.splitHead}>
+            <h2 id="model-title" className="type-h2" data-reveal="">
+              {page.model.title}
+            </h2>
+          </Reveal>
+          <Reveal className={styles.splitBody}>
+            {page.model.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+        </div>
+      </section>
 
       <section className="tone-alt section" aria-labelledby="values-title">
         <div className="container">
-          <SectionHead id="values-title" label={values.label} title={values.title} intro={values.text} />
+          <SectionHead id="values-title" title={page.values.title} />
           <Reveal>
             <ul className={styles.values}>
-              {values.items.map((value, index) => (
-                <li key={value} className={styles.value} data-reveal="">
+              {page.values.items.map((value, index) => (
+                <li key={value.title} className={styles.value} data-reveal="">
                   <span className={cn("type-label", styles.number)} aria-hidden="true">
                     {pad(index + 1)}
                   </span>
-                  <span className={styles.valueText}>{value}</span>
+                  <h3 className={styles.valueTitle}>{value.title}</h3>
+                  <p className="type-lede">{value.text}</p>
                 </li>
               ))}
             </ul>
@@ -84,52 +169,9 @@ export default async function AboutPage({ params }: LangParams) {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="partners-title">
-        <div className="container">
-          <SectionHead id="partners-title" label={partners.label} title={partners.title} intro={partners.text} />
-          <Reveal>
-            <ul className={styles.benefits}>
-              {partners.benefits.map((benefit) => (
-                <li key={benefit.title} className={styles.benefit} data-reveal="">
-                  <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-                  <p className="type-body">{benefit.text}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <Reveal className={styles.logos}>
-            <PartnerLogos locale={content.locale} />
-          </Reveal>
-        </div>
-      </section>
+      <VisionMission vision={content.vision} mission={content.mission} tone="tone-base" />
 
-      <section className="tone-alt section" aria-labelledby="faq-title">
-        <div className="container">
-          <SectionHead id="faq-title" title={page.faqTitle} />
-          <Reveal>
-            <FaqList faqs={page.faqs} />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="publications-title">
-        <div className="container">
-          <SectionHead id="publications-title" title={page.publicationsTitle} />
-          <Reveal>
-            <ul className={styles.publications}>
-              {content.pages.publications.map((publication) => (
-                <li key={publication.slug} data-reveal="">
-                  <Link href={localePath(content.locale, `/about-us/${publication.slug}/`)} className={styles.publication}>
-                    <span className={cn("type-h3", styles.publicationTitle)}>{publication.intro.title}</span>
-                    <span className={cn("type-body", styles.publicationLede)}>{publication.intro.lede}</span>
-                    <ArrowIcon className={styles.publicationIcon} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
+      <FaqSection title={page.faqTitle} faqs={page.faqs} tone="tone-alt" />
 
       <CtaBand cta={content.pages.cta} />
     </>
