@@ -10,7 +10,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 | --- | --- |
 | `/` | Homepage: hero, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
 | `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), how they work together, FAQ |
-| `/our-projects/` | All 16 projects, filterable by the five services |
+| `/our-projects/` | All 18 projects, filterable by the five services |
 | `/our-projects/<slug>/` | Case study: services, context, what we delivered, results, execution, next project |
 | `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
@@ -75,8 +75,8 @@ but asks search engines **not** to index it — the right default for previews a
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata, sitemap and structured data (default `https://orvann.com`). |
 | `ORVANN_ALLOW_INDEXING` | `true` on the production deployment only: robots.txt allows crawling, pages carry `index, follow`, the sitemap is listed. |
-| `ORVANN_SHOW_WORK` | `true` publishes Our Work (`/our-projects/` and the case studies). Hidden by default for now: not built, not linked, its URLs redirect (302) to the homepage. |
-| `ORVANN_SHOW_ARABIC` | `true` publishes the Arabic site under `/ar/`. Hidden by default for now: not built, no language switch, `/ar/…` redirects (302) to the same English page. |
+| `ORVANN_SHOW_WORK` | `false` hides Our Work (`/our-projects/` and the case studies): not published, not linked, its URLs redirect (302) to the homepage. Published by default. |
+| `ORVANN_SHOW_ARABIC` | `false` hides the Arabic site under `/ar/`: not built, no language switch, `/ar/…` redirects (302) to the same English page. Published by default. |
 | `ORVANN_REVIEW_MODE` | `true` shows dashed “Proposed copy” tags on wording that still needs sign-off. |
 | `GOOGLE_SITE_VERIFICATION` | Search Console token, if ownership is verified by meta tag. |
 
@@ -91,7 +91,7 @@ src/
   app/                 robots, sitemap, icons, share image, globals.css
   content/             every piece of copy — types.ts (shape); en.ts / ar.ts (homepage and shared
                        copy), en-pages.ts / ar-pages.ts (inner pages), en-projects.ts / ar-projects.ts
-                       (the 16 projects); index.ts (locales, localePath), server.ts (contentFor)
+                       (the 18 projects); index.ts (locales, localePath), server.ts (contentFor)
   fonts/               Druk (English titles) and 29LT Bukra (Arabic), as woff2 — see Fonts
   config/site.ts       verified business facts, partner logos, build-time flags
   lib/metadata.ts      per-page title, canonical URL and sharing metadata
@@ -103,13 +103,13 @@ src/
                        RichText, Icons
     layout/            SiteHeader (nav + mobile menu), SiteFooter, TransitionShell (page transitions),
                        FloatingWhatsApp — all mounted once in the root layout
-    hero/              Hero, HeroGraphic (SVG), HeroStage (hero motion)
+    hero/              Hero (with the first three project covers), HeroStage (hero motion)
     sections/          homepage sections: Clients, Services, Integrated, Work, Deliverables, Why,
                        VisionMission (the closing band is the shared CtaBand); PartnerLogos
     page/              page building blocks: PageIntro, SectionHead, FaqList, FaqSection,
                        CtaBand, ProjectsIndex (filterable project grid), ProjectForm
     visuals/           page-intro illustrations (values orbit, reach globe, shield — SVG in
-                       the hero graphic's language), ProjectFan, ImageMarquee (moving project strip)
+                       the brand's line language), ProjectFan, ImageMarquee (moving project strip)
     motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, MotionRuntime
   motion/              GSAP runtime (lazy-loaded) and motion builders
 tests/site.test.mjs    release checks over every exported page in out/ (node:test, no dependencies)

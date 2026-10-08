@@ -1,6 +1,7 @@
+/* Spaced for the wide case-study covers (1600 × 583): each print overlaps the next a little. */
 .fan {
   position: relative;
-  aspect-ratio: 1 / 0.95;
+  aspect-ratio: 1 / 0.85;
 }
 
 .card {
@@ -15,20 +16,20 @@
 }
 
 .card:nth-child(1) {
-  inset-block-start: 4%;
+  inset-block-start: 3%;
   inset-inline-start: 0;
   rotate: -7deg;
 }
 
 .card:nth-child(2) {
-  inset-block-start: 30%;
+  inset-block-start: 32%;
   inset-inline-start: 20%;
   rotate: 5deg;
   z-index: 1;
 }
 
 .card:nth-child(3) {
-  inset-block-start: 57%;
+  inset-block-start: 61%;
   inset-inline-start: 6%;
   rotate: -2deg;
   z-index: 2;

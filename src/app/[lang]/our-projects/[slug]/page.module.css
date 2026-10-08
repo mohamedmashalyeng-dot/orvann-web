@@ -157,9 +157,18 @@
   align-items: start;
 }
 
+/* Two large images to a row, or three small ones (see smallImage in page.tsx). */
 @media (min-width: 48em) {
   .gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .galleryLarge {
+    grid-column: span 3;
+  }
+
+  .gallerySmall {
+    grid-column: span 2;
   }
 }
 

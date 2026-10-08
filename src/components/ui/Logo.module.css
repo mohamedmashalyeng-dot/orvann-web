@@ -5,10 +5,10 @@
 
 /* The full logo, stacked: monogram, ORVANN and YOUR GROWTH PARTNER. ORVANN's own files,
    black on the light theme and white on the dark (public/brand/orvann-logo-black.png and
-   orvann-logo-white.png: "orvann final logo-05/06" cropped to the drawing, full resolution,
-   1364 × 865). */
+   orvann-logo-white.png: "orvann final logo-05/06" from ORVANN's media library, Oct 2026,
+   cropped to the drawing, 884 × 563). */
 .full {
-  aspect-ratio: 1364 / 865;
+  aspect-ratio: 884 / 563;
   height: 3rem;
   background: url("/brand/orvann-logo-white.png") center / contain no-repeat;
 }

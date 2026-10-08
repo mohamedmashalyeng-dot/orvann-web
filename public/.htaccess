@@ -24,7 +24,7 @@ RewriteRule ^ /ar/services/#events [R=301,NE,L]
 RewriteRule ^exhibitions-conferences/?$ /services/#events [R=301,NE,L]
 RewriteRule ^ar/exhibitions-conferences/?$ /ar/services/#events [R=301,NE,L]
 
-# Temporarily hidden parts (flags.showWork and flags.showArabic in src/config/site.ts). A
+# Parts that can be hidden (flags.showWork and flags.showArabic in src/config/site.ts). A
 # hidden part is not built, so these rules test for its files: they only act while it is
 # hidden, and need no change when it comes back. The redirects are temporary (302).
 # Our Work: to the homepage.

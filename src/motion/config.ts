@@ -18,16 +18,13 @@ export const motion = {
   // The hero entrance is CSS (it must start at first paint, before any script runs):
   // its timings are the --entrance-* tokens in src/styles/tokens.css.
 
-  /** Pointer-responsive depth on the hero graphic (fine pointers only). */
+  /** Pointer-responsive depth on the hero's project covers (fine pointers only). */
   pointer: {
-    /** Layer shift at depth 1, in SVG units (the graphic is 640 units wide). */
-    shift: 22,
-    /** Maximum tilt of the whole graphic, in degrees. */
+    /** Maximum tilt of the covers, in degrees. */
     tilt: 7,
     /** Follow time; longer feels heavier. Also used for the return to rest. */
     duration: 1.1,
     perspective: 1100,
-    depths: { grid: 0.2, ring: 0.45, foundation: 0.75, growth: 1 },
   },
 
   /** Hero → next-section scroll transition (scrubbed to scroll position, never pinned). */
@@ -36,8 +33,6 @@ export const motion = {
     graphicY: -18,
     graphicScale: 0.9,
     graphicOpacity: 0.3,
-    /** Extra drift of the grid layer, in SVG units, for parallax depth. */
-    gridY: -60,
     /** Smoothing between scroll position and the animation (seconds). */
     scrub: 0.6,
   },

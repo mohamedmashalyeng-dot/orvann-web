@@ -84,6 +84,7 @@ export const en: SiteContent = {
     subheadline: "From strategy to delivery.",
     lede: "ORVANN brings strategy, branding, marketing, digital and on-ground execution together so your business can move with one direction, one consistent identity and a clearer path from idea to delivery.",
     secondaryCta: { label: "Explore Our Work", href: "/our-projects/" },
+    projectsLabel: "Featured projects",
   },
 
   clients: {

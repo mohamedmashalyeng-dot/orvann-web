@@ -42,6 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const pad = (value: number) => String(value).padStart(2, "0");
+// Gallery images narrower than this (in px) are shown three to a row instead of two, so they
+// are not stretched far past their own size.
+const smallImage = 800;
 const ratio = (image: { width: number; height: number }) =>
   ({ "--ratio": `${image.width} / ${image.height}` }) as CSSProperties;
 
@@ -82,7 +85,7 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </div>
 
-      <section className="section" aria-labelledby="context-title">
+      <section className="section" aria-labelledby={project.challenge ? "context-title" : "delivered-title"}>
         <div className={cn("container", styles.story)}>
           <Reveal as="aside" className={styles.meta} aria-labelledby="services-title">
             <h2 id="services-title" className={cn("type-label", styles.metaTitle)} data-reveal="">
@@ -100,17 +103,19 @@ export default async function ProjectPage({ params }: Props) {
           </Reveal>
 
           <div className={styles.narrative}>
-            <Reveal className={styles.block}>
-              <h2 id="context-title" className="type-h3" data-reveal="">
-                {copy.context}
-              </h2>
-              <p className={cn("type-lede", styles.challenge)} data-reveal="">
-                {project.challenge}
-              </p>
-            </Reveal>
+            {project.challenge && (
+              <Reveal className={styles.block}>
+                <h2 id="context-title" className="type-h3" data-reveal="">
+                  {copy.context}
+                </h2>
+                <p className={cn("type-lede", styles.challenge)} data-reveal="">
+                  {project.challenge}
+                </p>
+              </Reveal>
+            )}
 
             <Reveal className={styles.block}>
-              <h2 className="type-h3" data-reveal="">
+              <h2 id="delivered-title" className="type-h3" data-reveal="">
                 {copy.delivered}
               </h2>
               <ol className={styles.steps}>
@@ -128,24 +133,26 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className={cn("tone-alt section", styles.resultsSection)} aria-labelledby="results-title">
-        <BrandPattern fade="corner" />
-        <div className="container">
-          <SectionHead id="results-title" title={copy.results} />
-          <Reveal>
-            <ul className={styles.results}>
-              {project.results.map((result, resultIndex) => (
-                <li key={result} className={styles.result} data-reveal="">
-                  <span className={cn("type-label", styles.resultNumber)} aria-hidden="true">
-                    {pad(resultIndex + 1)}
-                  </span>
-                  <p>{result}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
+      {project.results && project.results.length > 0 && (
+        <section className={cn("tone-alt section", styles.resultsSection)} aria-labelledby="results-title">
+          <BrandPattern fade="corner" />
+          <div className="container">
+            <SectionHead id="results-title" title={copy.results} />
+            <Reveal>
+              <ul className={styles.results}>
+                {project.results.map((result, resultIndex) => (
+                  <li key={result} className={styles.result} data-reveal="">
+                    <span className={cn("type-label", styles.resultNumber)} aria-hidden="true">
+                      {pad(resultIndex + 1)}
+                    </span>
+                    <p>{result}</p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {project.gallery && project.gallery.length > 0 && (
         <section className="section" aria-labelledby="gallery-title">
@@ -153,13 +160,13 @@ export default async function ProjectPage({ params }: Props) {
             <SectionHead id="gallery-title" title={copy.execution} />
             <ul className={styles.gallery}>
               {project.gallery.map((image) => (
-                <li key={image.src}>
+                <li key={image.src} className={image.width < smallImage ? styles.gallerySmall : styles.galleryLarge}>
                   <MediaFrame className={styles.galleryFrame} innerClassName={styles.galleryInner} style={ratio(image)}>
                     <Image
                       src={image.src}
                       alt={image.alt}
                       fill
-                      sizes="(min-width: 48em) 46vw, 92vw"
+                      sizes={image.width < smallImage ? "(min-width: 48em) 30vw, 92vw" : "(min-width: 48em) 46vw, 92vw"}
                       className={styles.galleryImage}
                     />
                   </MediaFrame>

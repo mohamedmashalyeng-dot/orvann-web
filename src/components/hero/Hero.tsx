@@ -1,9 +1,9 @@
 import { Fragment, type CSSProperties } from "react";
-import type { Link, SiteContent } from "@/content";
+import type { ImageAsset, Link, SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { RichText } from "@/components/ui/RichText";
-import { HeroGraphic } from "./HeroGraphic";
+import { ProjectFan } from "@/components/visuals/ProjectFan";
 import { HeroStage } from "./HeroStage";
 import styles from "./Hero.module.css";
 
@@ -16,16 +16,14 @@ type Props = {
   primary: Link;
   /** Explore Our Work; left out while Our Work is hidden. */
   secondary?: Link;
+  /** Covers of ORVANN's three most important projects, shown beside the headline. */
+  projects: ImageAsset[];
 };
 
 /** data-enter marks the CSS entrance sequence; pointer depth and scroll live in HeroStage. */
-export function Hero({ hero, primary, secondary }: Props) {
+export function Hero({ hero, primary, secondary, projects }: Props) {
   return (
     <HeroStage className={cn("tone-base", styles.hero)} aria-labelledby="hero-title">
-      <div className={styles.graphicWrap} data-hero-graphic="">
-        <HeroGraphic className={styles.graphic} />
-      </div>
-
       <div className={cn("container", styles.inner)}>
         <div className={styles.composition}>
           <h1 id="hero-title" className={cn("type-display", styles.title)}>
@@ -58,6 +56,10 @@ export function Hero({ hero, primary, secondary }: Props) {
               </ButtonLink>
             )}
           </div>
+        </div>
+
+        <div className={styles.projects} data-hero-graphic="">
+          <ProjectFan images={projects} label={hero.projectsLabel} />
         </div>
       </div>
     </HeroStage>

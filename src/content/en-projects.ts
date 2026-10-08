@@ -1,13 +1,215 @@
 import type { Project } from "./types";
 
 /**
- * All 16 projects. Names, services and summaries are [copy] (the project card copy supplied by
+ * All 18 projects. Names, services and summaries are [copy] (the project card copy supplied by
  * ORVANN, 3 Oct 2026); challenges, solutions and results are [site], restated from each
  * project page on orvann.com/our-projects (inspected 23 Sep 2026), grammar lightly tidied.
  * Slugs match the live URLs, so /our-projects/<slug>/ keeps working. `featured` projects
  * also appear in Selected Work on the homepage.
+ *
+ * The order is ORVANN's: Tucano, Eagles Developments and Intro are its most important
+ * projects, so they come first and their covers open the homepage hero. Their images, and
+ * Roshan Masr's, come from ORVANN's media library (upload.orvann.com, Oct 2026). Intro and
+ * Roshan Masr are [draft]: their summaries and deliverables are read from those images, and
+ * their challenge and results wait for ORVANN's copy.
  */
 export const enProjects: Project[] = [
+  {
+    slug: "tucano-2",
+    title: "Tucano",
+    categories: ["branding", "marketing", "digital", "events"],
+    summary:
+      "Creating a cohesive premium brand presence across identity, company profile, digital channels, campaigns and event-related execution.",
+    challenge:
+      "Tucano, offering high-end services, needed an upscale digital identity reflecting excellence and precision, along with marketing tools to support regional expansion.",
+    solution: [
+      "Supported the launch in Egypt and the expansion into Dubai.",
+      "Designed a luxury visual identity and developed a premium company profile.",
+      "Directed the creation of a seamless, luxury website.",
+      "Managed social media and LinkedIn profiles, and launched targeted digital campaigns.",
+      "Organized the first edition of the Egypt Aviation Expo.",
+      "Prepared for EDEX 2025 in Egypt and the UAE to strengthen market leadership.",
+    ],
+    results: [
+      "A complete, upscale digital identity.",
+      "Increased digital engagement from the target audience.",
+      "Real business expansion and partnership opportunities.",
+      "A corporate presence that matches the premium services offered.",
+    ],
+    image: {
+      src: "/work/tucano-2.webp",
+      alt: "Tucano Aviation cover: a private jet on the runway with a crew member at its door, and “From digital foundations to industry presence”.",
+      width: 1600,
+      height: 583,
+    },
+    gallery: [
+      {
+        src: "/work/tucano-2-company-profile.webp",
+        alt: "Tucano company profiles open at its values and cargo service pages, beside blue covers with private jets.",
+        width: 1600,
+        height: 903,
+      },
+      {
+        src: "/work/tucano-2-luggage-tags.webp",
+        alt: "Tucano luggage tags on a blue suitcase, printed for a Paris to Los Angeles flight.",
+        width: 1600,
+        height: 873,
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "eagles-real-estate-development",
+    title: "Eagles Developments",
+    categories: ["strategy", "branding", "marketing", "digital"],
+    summary:
+      "Supporting a real estate brand across strategic direction, rebranding, company communication, website and campaigns.",
+    challenge:
+      "Create a modern, professional image for upper- and middle-class clients, and a marketing strategy to support expansion inside and outside Egypt.",
+    solution: [
+      "Integrated strategic consulting and rebranding.",
+      "Created a professional company profile.",
+      "Developed a long-term content strategy and managed digital content across channels.",
+      "Supervised the website’s design and development for a smooth user experience.",
+      "Launched targeted advertising campaigns to increase awareness and engagement.",
+    ],
+    results: [
+      "A strong digital identity that reflects professionalism and strengthens market presence.",
+      "A noticeable increase in engagement and sales across channels.",
+      "New opportunities with potential clients, and real growth in the client base.",
+    ],
+    image: {
+      src: "/work/eagles-real-estate-development.webp",
+      alt: "Eagles Developments cover: an eagle soaring through orange clouds beside “From one project to a full marketing partnership” and the VIA, Riza and Riza 2 logos.",
+      width: 1600,
+      height: 583,
+    },
+    gallery: [
+      {
+        src: "/work/eagles-real-estate-development-website.webp",
+        alt: "The Eagles Developments website on a laptop, its red home page carrying the Eagles logo.",
+        width: 1600,
+        height: 872,
+      },
+      {
+        src: "/work/eagles-real-estate-development-instagram.webp",
+        alt: "The Eagles Developments Instagram profile on a phone, with its story highlights and project posts.",
+        width: 1600,
+        height: 873,
+      },
+      {
+        src: "/work/eagles-real-estate-development-riza-2.webp",
+        alt: "The Riza 2 logo embossed on red card.",
+        width: 330,
+        height: 180,
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "intro",
+    title: "Intro",
+    categories: ["branding", "marketing", "digital"],
+    summary:
+      "Launching Intro, Roshan Masr’s new destination in west Cairo, across identity, print, website and outdoor campaigns.",
+    solution: [
+      "Created the Intro identity and its “A Gateway To More” message, built around the idea of a gateway.",
+      "Designed the project brochure, presenting its nine buildings as one connected plan.",
+      "Designed the launch page announcing the new destination in west Cairo.",
+      "Created the outdoor billboards and lifestyle visuals for the campaign.",
+    ],
+    image: {
+      src: "/work/intro.webp",
+      alt: "Intro cover: a red arch gateway opening onto new buildings and palm trees, under the Intro logo and “A Gateway To More”.",
+      width: 1600,
+      height: 583,
+    },
+    gallery: [
+      {
+        src: "/work/intro-billboard.webp",
+        alt: "An Intro billboard against a blue sky: “A Gateway To More”, the Roshan Masr logo and the 15541 hotline beside the project seen through its arch.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/intro-brochure.webp",
+        alt: "The Intro brochure open on a café table, presenting nine buildings as one connected plan.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/intro-website.webp",
+        alt: "The Roshan Masr website on a laptop, announcing a new destination coming to west Cairo.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/intro-book.webp",
+        alt: "A burgundy hardcover book embossed with the Intro logo.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/intro-lifestyle.webp",
+        alt: "Intro campaign visual: a woman in burgundy drinking from an Intro cup on a café terrace.",
+        width: 330,
+        height: 180,
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "roshan-masr",
+    title: "Roshan Masr",
+    categories: ["branding", "marketing", "digital"],
+    summary:
+      "Building a real estate brand made to be recognized at a glance, across identity, company profile, website and outdoor campaigns.",
+    solution: [
+      "Shaped the brand around one idea: to be recognized before it is read.",
+      "Designed the company profile, with the brand’s vision and mission.",
+      "Designed the website in the brand’s visual language.",
+      "Created the outdoor campaigns, from rooftop billboards to the “+25 projects” campaign.",
+    ],
+    image: {
+      src: "/work/roshan-masr.webp",
+      alt: "Roshan Masr cover: a woman in a flowing gown against the city at night, with “Built to be recognized before it’s read” and the Roshan Masr logo.",
+      width: 1600,
+      height: 583,
+    },
+    gallery: [
+      {
+        src: "/work/roshan-masr-billboard.webp",
+        alt: "A tall Roshan Masr billboard against the clouds, announcing more than 25 projects.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/roshan-masr-rooftop-billboard.webp",
+        alt: "A Roshan Masr billboard on a rooftop in the evening sun, carrying the 15541 hotline.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/roshan-masr-website.webp",
+        alt: "The Roshan Masr website on a laptop resting on a red classic car.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/roshan-masr-company-profile.webp",
+        alt: "The Roshan Masr company profile open at its vision and mission pages.",
+        width: 330,
+        height: 180,
+      },
+      {
+        src: "/work/roshan-masr-book.webp",
+        alt: "A hand holding a burgundy book embossed with the Roshan Masr logo.",
+        width: 330,
+        height: 180,
+      },
+    ],
+    featured: true,
+  },
   {
     slug: "al-nour-optics",
     title: "Al Nour Optics",
@@ -100,36 +302,6 @@ export const enProjects: Project[] = [
     image: {
       src: "/work/rgc-brokerage.jpg",
       alt: "RGC Brokerage cover: a city skyline presented on a platter beside RGC branding, listing branding, website design, content strategy and social media campaigns.",
-      width: 1344,
-      height: 616,
-    },
-    featured: true,
-  },
-  {
-    slug: "tucano-2",
-    title: "Tucano",
-    categories: ["branding", "marketing", "digital", "events"],
-    summary:
-      "Creating a cohesive premium brand presence across identity, company profile, digital channels, campaigns and event-related execution.",
-    challenge:
-      "Tucano, offering high-end services, needed an upscale digital identity reflecting excellence and precision, along with marketing tools to support regional expansion.",
-    solution: [
-      "Supported the launch in Egypt and the expansion into Dubai.",
-      "Designed a luxury visual identity and developed a premium company profile.",
-      "Directed the creation of a seamless, luxury website.",
-      "Managed social media and LinkedIn profiles, and launched targeted digital campaigns.",
-      "Organized the first edition of the Egypt Aviation Expo.",
-      "Prepared for EDEX 2025 in Egypt and the UAE to strengthen market leadership.",
-    ],
-    results: [
-      "A complete, upscale digital identity.",
-      "Increased digital engagement from the target audience.",
-      "Real business expansion and partnership opportunities.",
-      "A corporate presence that matches the premium services offered.",
-    ],
-    image: {
-      src: "/work/tucano-2.jpg",
-      alt: "Tucano cover: private jets over a coastal city, a traveller at a cabin window and the Tucano logo.",
       width: 1344,
       height: 616,
     },
@@ -321,33 +493,6 @@ export const enProjects: Project[] = [
     image: {
       src: "/work/alkholy-lights.jpg",
       alt: "Alkholy Lights cover: a girl reading beneath a designer floor lamp, with a glowing light bulb and the Alkholy Light logo.",
-      width: 1344,
-      height: 616,
-    },
-  },
-  {
-    slug: "eagles-real-estate-development",
-    title: "Eagles Developments",
-    categories: ["strategy", "branding", "marketing", "digital"],
-    summary:
-      "Supporting a real estate brand across strategic direction, rebranding, company communication, website and campaigns.",
-    challenge:
-      "Create a modern, professional image for upper- and middle-class clients, and a marketing strategy to support expansion inside and outside Egypt.",
-    solution: [
-      "Integrated strategic consulting and rebranding.",
-      "Created a professional company profile.",
-      "Developed a long-term content strategy and managed digital content across channels.",
-      "Supervised the website’s design and development for a smooth user experience.",
-      "Launched targeted advertising campaigns to increase awareness and engagement.",
-    ],
-    results: [
-      "A strong digital identity that reflects professionalism and strengthens market presence.",
-      "A noticeable increase in engagement and sales across channels.",
-      "New opportunities with potential clients, and real growth in the client base.",
-    ],
-    image: {
-      src: "/work/eagles-real-estate-development.jpg",
-      alt: "Eagles Developments cover: a construction worker and new residential buildings beside the Eagles logo.",
       width: 1344,
       height: 616,
     },

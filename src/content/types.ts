@@ -37,9 +37,11 @@ export type Project = {
   categories: ServiceId[];
   /** The scope delivered, in one sentence: cards and the case study's opening. */
   summary: string;
-  challenge: string;
+  /** Left out until ORVANN supplies it; the case study then skips that part. */
+  challenge?: string;
   solution: string[];
-  results: string[];
+  /** Left out until ORVANN supplies them; the case study then skips that part. */
+  results?: string[];
   image: ImageAsset;
   gallery?: ImageAsset[];
   /** Shown in Selected Work on the homepage. */
@@ -102,6 +104,8 @@ export type SiteContent = {
     subheadline: string;
     lede: string;
     secondaryCta: Link;
+    /** Accessible name of the three project covers beside the headline. */
+    projectsLabel: string;
   };
   clients: { title: string; text: string };
   services: {

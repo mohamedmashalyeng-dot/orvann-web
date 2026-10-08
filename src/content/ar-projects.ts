@@ -2,7 +2,7 @@ import { enProjects } from "./en-projects";
 import type { Project } from "./types";
 
 /**
- * [translation] The 16 projects in Arabic, translated from en-projects.ts — review with a
+ * [translation] The 18 projects in Arabic, translated from en-projects.ts — review with a
  * native copywriter. Only the words live here: slugs, names, services, images and `featured`
  * come from the English file, so the two languages can never disagree about the work itself.
  * Client names stay in Latin script.
@@ -93,7 +93,11 @@ const text: Record<string, ProjectText> = {
       "فرص حقيقية للتوسع التجاري والشراكات.",
       "حضور مؤسسي يليق بالخدمات الفاخرة المقدمة.",
     ],
-    imageAlt: "غلاف Tucano: طائرات خاصة فوق مدينة ساحلية، ومسافر عند نافذة المقصورة، وشعار Tucano.",
+    imageAlt: "غلاف Tucano Aviation: طائرة خاصة على المدرج وأحد أفراد الطاقم عند بابها، مع عبارة «From digital foundations to industry presence».",
+    galleryAlts: [
+      "ملفات Tucano التعريفية مفتوحة على صفحتي القيم وخدمة الشحن، بجوار أغلفة زرقاء عليها طائرات خاصة.",
+      "بطاقات أمتعة Tucano على حقيبة سفر زرقاء، مطبوعة لرحلة من باريس إلى لوس أنجلوس.",
+    ],
   },
   "plaza-garden-real-estate-development": {
     summary:
@@ -244,7 +248,13 @@ const text: Record<string, ProjectText> = {
       "زيادة ملحوظة في التفاعل والمبيعات عبر القنوات.",
       "فرص جديدة مع عملاء محتملين ونمو حقيقي في قاعدة العملاء.",
     ],
-    imageAlt: "غلاف Eagles Developments: عامل إنشاءات ومبانٍ سكنية جديدة بجوار شعار Eagles.",
+    imageAlt:
+      "غلاف Eagles Developments: نسر يحلّق وسط سحب برتقالية بجوار عبارة «From one project to a full marketing partnership» وشعارات VIA وRiza وRiza 2.",
+    galleryAlts: [
+      "موقع Eagles Developments على شاشة لابتوب، وصفحته الرئيسية الحمراء تحمل شعار Eagles.",
+      "حساب Eagles Developments على إنستجرام معروضًا على هاتف، مع القصص المميزة ومنشورات المشروعات.",
+      "شعار Riza 2 بارزًا على ورق أحمر.",
+    ],
   },
   "diwanyah-culture": {
     summary:
@@ -310,6 +320,42 @@ const text: Record<string, ProjectText> = {
       "عززت العلامتان حضورهما الرقمي، ما أدى إلى استفسارات وفرص مشروعات جديدة.",
     ],
     imageAlt: "غلاف Geocell وKeystone: عامل بناء يرصّ كتل جدار استنادي، مع شعار الحملة.",
+  },
+  intro: {
+    summary:
+      "إطلاق Intro، الوجهة الجديدة لـ Roshan Masr في غرب القاهرة، عبر الهوية والمطبوعات والموقع الإلكتروني وحملات الطرق.",
+    solution: [
+      "صممنا هوية Intro ورسالتها «A Gateway To More» حول فكرة البوابة.",
+      "صممنا كتيّب المشروع الذي يقدّم مبانيه التسعة كمخطط واحد مترابط.",
+      "صممنا صفحة الإطلاق التي تعلن عن الوجهة الجديدة في غرب القاهرة.",
+      "أنشأنا لوحات الطرق وصور أسلوب الحياة للحملة.",
+    ],
+    imageAlt: "غلاف Intro: بوابة على شكل قوس أحمر تنفتح على مبانٍ جديدة وأشجار نخيل، تحت شعار Intro وعبارة «A Gateway To More».",
+    galleryAlts: [
+      "لوحة إعلانية لـ Intro أمام سماء زرقاء: عبارة «A Gateway To More» وشعار Roshan Masr والخط الساخن 15541 بجوار المشروع كما يظهر من خلال قوسه.",
+      "كتيّب Intro مفتوحًا على طاولة مقهى، يقدّم تسعة مبانٍ كمخطط واحد مترابط.",
+      "موقع Roshan Masr على شاشة لابتوب، يعلن عن وجهة جديدة قادمة إلى غرب القاهرة.",
+      "كتاب بغلاف عنابي صلب يحمل شعار Intro بارزًا.",
+      "صورة من حملة Intro: امرأة بملابس عنابية تشرب من كوب يحمل شعار Intro في تراس مقهى.",
+    ],
+  },
+  "roshan-masr": {
+    summary:
+      "بناء علامة عقارية تُعرف من النظرة الأولى، عبر الهوية، وملف الشركة، والموقع الإلكتروني، وحملات الطرق.",
+    solution: [
+      "بنينا العلامة حول فكرة واحدة: أن تُعرف قبل أن تُقرأ.",
+      "صممنا ملف الشركة التعريفي، برؤية العلامة ورسالتها.",
+      "صممنا الموقع الإلكتروني بلغة العلامة البصرية.",
+      "أنشأنا حملات الطرق، من لوحات أسطح المباني إلى حملة «+25 مشروعًا».",
+    ],
+    imageAlt: "غلاف Roshan Masr: امرأة بفستان منسدل أمام المدينة ليلًا، مع عبارة «Built to be recognized before it’s read» وشعار Roshan Masr.",
+    galleryAlts: [
+      "لوحة إعلانية عالية لـ Roshan Masr أمام السحب، تعلن عن أكثر من 25 مشروعًا.",
+      "لوحة إعلانية لـ Roshan Masr فوق سطح مبنى في شمس المساء، تحمل الخط الساخن 15541.",
+      "موقع Roshan Masr على شاشة لابتوب فوق سيارة كلاسيكية حمراء.",
+      "ملف Roshan Masr التعريفي مفتوحًا على صفحتي الرؤية والرسالة.",
+      "يد تمسك كتابًا عنابيًا يحمل شعار Roshan Masr بارزًا.",
+    ],
   },
 };
 

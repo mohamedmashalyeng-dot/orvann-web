@@ -60,7 +60,7 @@ test("the build contains every published page, in every published language", () 
   }
   for (const prefix of inBuiltLocales(["/our-projects/", "/ar/our-projects/"])) {
     const studies = [...pages.keys()].filter((path) => path.startsWith(prefix) && path !== prefix);
-    assert.equal(studies.length, work ? 16 : 0, `${prefix}: expected ${work ? 16 : "no"} case studies`);
+    assert.equal(studies.length, work ? 18 : 0, `${prefix}: expected ${work ? 18 : "no"} case studies`);
   }
   const english = [...pages.keys()].filter((path) => localeOf(path) === "en");
   const arabicPages = [...pages.keys()].filter((path) => localeOf(path) === "ar");

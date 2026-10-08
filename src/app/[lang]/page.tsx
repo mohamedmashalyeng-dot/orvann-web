@@ -51,6 +51,7 @@ export default async function HomePage({ params }: LangParams) {
         hero={content.hero}
         primary={content.actions.startProject}
         secondary={flags.showWork ? content.hero.secondaryCta : undefined}
+        projects={content.projects.slice(0, 3).map((project) => project.image)}
       />
       <Clients locale={content.locale} clients={content.clients} />
       <Services locale={content.locale} services={content.services} serviceNames={content.serviceNames} />

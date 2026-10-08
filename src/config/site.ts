@@ -91,13 +91,14 @@ export const partners: readonly Partner[] = [
  */
 export const flags = {
   /**
-   * Temporarily hidden parts of the site, off unless switched on. Their code and content
-   * stay; hidden, they are neither published nor linked (Arabic is not built; Our Work is
-   * built, as Next requires, and scripts/hide-unpublished.mjs takes it out of out/), and
-   * public/.htaccess sends their URLs on (Our Work to the homepage, Arabic to English).
+   * Parts of the site that can be hidden for a while: published unless switched off with
+   * "false" (both published again on 8 Oct 2026). Their code and content stay; hidden, they
+   * are neither published nor linked (Arabic is not built; Our Work is built, as Next
+   * requires, and scripts/hide-unpublished.mjs takes it out of out/), and public/.htaccess
+   * sends their URLs on (Our Work to the homepage, Arabic to English).
    */
-  showWork: process.env.ORVANN_SHOW_WORK === "true",
-  showArabic: process.env.ORVANN_SHOW_ARABIC === "true",
+  showWork: process.env.ORVANN_SHOW_WORK !== "false",
+  showArabic: process.env.ORVANN_SHOW_ARABIC !== "false",
   /** Show "Proposed copy" tags on sections whose wording still needs sign-off. */
   reviewMode: process.env.ORVANN_REVIEW_MODE === "true",
   /** Let search engines index the site. Leave unset on staging and previews. */
