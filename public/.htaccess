@@ -10,6 +10,9 @@ ErrorDocument 404 /en/404/index.html
 RewriteEngine On
 RewriteBase /
 
+# The project form's CRM settings are read by api/project.php only, never served.
+RewriteRule ^api/crm-config\.php$ - [F,L]
+
 # The WordPress site's Arabic pages had their own slugs; send each to its new page.
 RewriteRule ^ar/home-ar/?$ /ar/ [R=301,L]
 RewriteRule ^ar/about-us-ar/?$ /ar/about-us/ [R=301,L]

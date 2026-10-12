@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 
 /**
  * Start a Project (#project-form) and Book a Meeting (#direct-contact) both land here.
- * The form posts to a small PHP handler on the host that emails ORVANN.
+ * The form posts to a small PHP handler on the host that records the lead in the CRM and
+ * emails ORVANN.
  */
 export default async function ContactPage({ params }: LangParams) {
   const content = await contentFor(params);

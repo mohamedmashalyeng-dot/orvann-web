@@ -3,6 +3,8 @@
  * Arabic later means adding one set of files (see ./index.ts) — components never hold copy.
  */
 
+import type { BudgetId, JobTitleId, RegionId, RegionZoneId, TimelineId } from "./lead-options";
+
 export type Locale = "en" | "ar";
 export type Direction = "ltr" | "rtl";
 
@@ -157,9 +159,16 @@ export type SiteContent = {
       form: {
         title: string;
         name: string;
+        jobTitle: string;
+        jobTitles: Record<JobTitleId, string>;
         company: string;
         email: string;
         phone: string;
+        region: string;
+        /** Headings that group the regions in their list. */
+        zones: Record<RegionZoneId, string>;
+        regions: Record<RegionId, string>;
+        city: string;
         need: string;
         /** Choices after the five services. */
         multiple: string;
@@ -167,7 +176,11 @@ export type SiteContent = {
         goal: string;
         goalHint: string;
         start: string;
+        timelines: Record<TimelineId, string>;
         budget: string;
+        budgets: Record<BudgetId, string>;
+        /** The empty first line of each list. */
+        select: string;
         optional: string;
         submit: string;
         sending: string;

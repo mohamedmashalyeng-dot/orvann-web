@@ -60,6 +60,20 @@ that address through Hostinger's mail (orvann.com's mail and SPF are there), wit
 to the visitor. It works on the host only: under `npm run dev` and `npm start` the form
 cannot send.
 
+**CRM.** The same handler records each enquiry as a lead in ORVANN's CRM (`POST /api/leads`
+there), and the form asks what the CRM sorts leads by: job title, governorate or country,
+city, service, timeline and budget. Those lists send the CRM's own ids. They are written in
+three places that must agree — `src/content/lead-options.ts` (with each language's names in
+`contact.form`), `public/api/project.php` (named for the email; `npm test` checks the form
+against it) and the CRM's `config.js`. The source is recorded as `orvann.com (en)` or `(ar)`.
+
+To connect it, copy `crm-config.example.php` to `public/api/crm-config.php`, fill in the
+CRM's address and its `INTEGRATION_KEY`, then build and upload. That file is not committed
+(the key is a secret), so it has to exist on whichever machine builds the release; without
+it the form only emails. Every email carries a `CRM:` line — recorded, not recorded, or not
+connected — and the visitor is told the form was sent if either the CRM or the email took
+it, so a CRM that is down costs nothing but a lead to add by hand.
+
 `next build` writes English under `out/en/` and Arabic under `out/ar/`. `public/.htaccess`
 serves English at the root, redirects `/en/…` and the old WordPress Arabic URLs, adds the
 trailing slash, and answers missing URLs with the 404 page in the right language — what

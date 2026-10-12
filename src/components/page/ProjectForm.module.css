@@ -71,6 +71,33 @@
   line-height: var(--leading-body);
 }
 
+/* ---------- Lists ---------- */
+
+.select {
+  position: relative;
+  display: block;
+}
+
+.select .input {
+  appearance: none;
+  padding-inline-end: var(--space-7);
+  cursor: pointer;
+}
+
+/* The arrow: two sides of a small turned square, in the text colour. */
+.select::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-4);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
 /* ---------- What do you need? ---------- */
 
 .choices {

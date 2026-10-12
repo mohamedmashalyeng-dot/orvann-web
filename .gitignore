@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# the CRM's address and key for the project form (see crm-config.example.php)
+/public/api/crm-config.php
+
 # vercel
 .vercel
 

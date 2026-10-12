@@ -39,4 +39,5 @@ export function switchLocalePath(pathname: string, to: Locale): string {
   return localePath(to, bare);
 }
 
+export * from "./lead-options";
 export type * from "./types";

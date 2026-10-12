@@ -1,11 +1,20 @@
 "use client";
 
-import { useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
-import { serviceIds, type Locale, type ServiceId, type SiteContent } from "@/content";
+import { useState, useSyncExternalStore, type ComponentProps, type FormEvent, type ReactNode } from "react";
+import {
+  budgetIds,
+  jobTitleIds,
+  regionZones,
+  serviceIds,
+  timelineIds,
+  type Locale,
+  type ServiceId,
+  type SiteContent,
+} from "@/content";
 import { cn } from "@/lib/cn";
 import styles from "./ProjectForm.module.css";
 
-/** The handler on the host (public/api/project.php); it emails the details to ORVANN. */
+/** The handler on the host (public/api/project.php); it sends the details to ORVANN's CRM and inbox. */
 export const PROJECT_FORM_ACTION = "/api/project.php";
 
 type Status = "idle" | "sending" | "sent" | "failed";
@@ -28,6 +37,9 @@ type Props = {
  * Start a Project. With JavaScript it posts in the background and reports the result in a
  * live region; without it, the handler redirects back here with ?sent=1 or ?failed=1. The
  * "website" field is a honeypot: hidden from people, filled in by bots, and ignored.
+ *
+ * The fields are the CRM's: its lists (job title, region, timeline, budget) send the CRM's
+ * own ids (content/lead-options.ts), so each lead arrives there already sorted.
  */
 export function ProjectForm({ locale, copy, serviceNames }: Props) {
   const [submitted, setStatus] = useState<Status>("idle");
@@ -73,10 +85,20 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
         <Field label={copy.name} required>
           <input type="text" name="name" required maxLength={120} autoComplete="name" className={styles.input} />
         </Field>
-        <Field label={copy.company}>
-          <input type="text" name="company" maxLength={160} autoComplete="organization" className={styles.input} />
+        <Field label={copy.jobTitle} required>
+          <Select name="job_title" required placeholder={copy.select}>
+            {jobTitleIds.map((id) => (
+              <option key={id} value={id}>
+                {copy.jobTitles[id]}
+              </option>
+            ))}
+          </Select>
         </Field>
       </div>
+
+      <Field label={copy.company}>
+        <input type="text" name="company" maxLength={160} autoComplete="organization" className={styles.input} />
+      </Field>
 
       <div className={styles.row}>
         <Field label={copy.email} required>
@@ -90,8 +112,35 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
             className={styles.input}
           />
         </Field>
-        <Field label={copy.phone}>
-          <input type="tel" name="phone" maxLength={60} autoComplete="tel" dir="ltr" className={styles.input} />
+        <Field label={copy.phone} required>
+          <input
+            type="tel"
+            name="phone"
+            required
+            maxLength={60}
+            autoComplete="tel"
+            dir="ltr"
+            className={styles.input}
+          />
+        </Field>
+      </div>
+
+      <div className={styles.row}>
+        <Field label={copy.region} required>
+          <Select name="region" required placeholder={copy.select}>
+            {regionZones.map((zone) => (
+              <optgroup key={zone.id} label={copy.zones[zone.id]}>
+                {zone.regions.map((id) => (
+                  <option key={id} value={id}>
+                    {copy.regions[id]}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </Select>
+        </Field>
+        <Field label={copy.city}>
+          <input type="text" name="city" maxLength={120} autoComplete="address-level2" className={styles.input} />
         </Field>
       </div>
 
@@ -116,10 +165,22 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
 
       <div className={styles.row}>
         <Field label={copy.start}>
-          <input type="text" name="start" maxLength={200} className={styles.input} />
+          <Select name="timeline" placeholder={copy.select}>
+            {timelineIds.map((id) => (
+              <option key={id} value={id}>
+                {copy.timelines[id]}
+              </option>
+            ))}
+          </Select>
         </Field>
         <Field label={copy.budget} hint={copy.optional}>
-          <input type="text" name="budget" maxLength={200} className={styles.input} />
+          <Select name="budget" placeholder={copy.select}>
+            {budgetIds.map((id) => (
+              <option key={id} value={id}>
+                {copy.budgets[id]}
+              </option>
+            ))}
+          </Select>
         </Field>
       </div>
 
@@ -155,5 +216,17 @@ function Field({
       {hint && <span className={styles.hint}>{hint}</span>}
       {children}
     </label>
+  );
+}
+
+/** A list that starts on an empty line, so nothing is chosen for the visitor. */
+function Select({ placeholder, children, ...props }: ComponentProps<"select"> & { placeholder: string }) {
+  return (
+    <span className={styles.select}>
+      <select defaultValue="" className={styles.input} {...props}>
+        <option value="">{placeholder}</option>
+        {children}
+      </select>
+    </span>
   );
 }

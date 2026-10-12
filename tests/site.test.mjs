@@ -168,6 +168,19 @@ test("the only form is the project form, and it posts to the handler that ships 
   assert.equal(forms, builtLocales.length, "expected the project form on each contact page");
 });
 
+test("every choice the project form offers is one its handler names", () => {
+  const handler = read("api/project.php");
+  for (const path of inBuiltLocales(["/contact-us/", "/ar/contact-us/"])) {
+    const [form] = /<form\b[\s\S]*?<\/form>/.exec(pages.get(path).html);
+    const radios = [...form.matchAll(/<input\b[^>]*>/g)].map(([tag]) => tag).filter((tag) => /\stype="radio"/.test(tag));
+    const options = [...form.matchAll(/<option\b[^>]*>/g)].map(([tag]) => tag);
+    const ids = [...radios, ...options].map((tag) => /\svalue="([^"]*)"/.exec(tag)?.[1]).filter(Boolean);
+    // Services, job titles, regions, timelines and budgets: the CRM's lists.
+    assert.equal(ids.length, 7 + 8 + 34 + 4 + 5, `${path}: the form's lists have changed size`);
+    for (const id of ids) assert.ok(handler.includes(`'${id}' =>`), `${path}: project.php does not name "${id}"`);
+  }
+});
+
 test("links that open a new tab are protected with rel=noopener", () => {
   eachPage((html) => {
     for (const [tag] of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) {
