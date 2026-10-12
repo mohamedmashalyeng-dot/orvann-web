@@ -21,7 +21,7 @@ const SENDER = 'info@orvann.com';
 const CRM_CONFIG = __DIR__ . '/crm-config.php';
 
 // The form's lists, by the id it sends (the CRM's own ids) and named for the email. Keep
-// them in step with src/content/lead-options.ts and the CRM's config.js.
+// them in step with src/content/lead-options.ts and the CRM's app/config.php.
 $services = [
     'strategy' => 'Strategy & Consulting',
     'branding' => 'Branding & Creative',

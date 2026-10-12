@@ -1,6 +1,6 @@
 /**
  * The lists the Start a Project form shares with ORVANN's CRM. The ids are the CRM's own
- * (config.js there) and are what the form sends, so the CRM can sort each lead by job
+ * (app/config.php there) and are what the form sends, so the CRM can sort each lead by job
  * title, region, timeline and budget. A list changed in the CRM must change here, in each
  * language's names (contact.form in en-pages.ts / ar-pages.ts) and in
  * public/api/project.php, which names each id in the email.

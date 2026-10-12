@@ -5,6 +5,6 @@
 return [
     // The CRM's lead endpoint.
     'url' => 'https://crm.orvann.com/api/leads',
-    // INTEGRATION_KEY from the CRM's .env on its server.
+    // integration_key from the CRM's app/settings.php.
     'key' => '',
 ];

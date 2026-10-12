@@ -65,10 +65,12 @@ there), and the form asks what the CRM sorts leads by: job title, governorate or
 city, service, timeline and budget. Those lists send the CRM's own ids. They are written in
 three places that must agree — `src/content/lead-options.ts` (with each language's names in
 `contact.form`), `public/api/project.php` (named for the email; `npm test` checks the form
-against it) and the CRM's `config.js`. The source is recorded as `orvann.com (en)` or `(ar)`.
+against it) and the CRM's `app/config.php`. The source is recorded as `orvann.com (en)` or
+`(ar)`.
 
 To connect it, copy `crm-config.example.php` to `public/api/crm-config.php`, fill in the
-CRM's address and its `INTEGRATION_KEY`, then build and upload. That file is not committed
+CRM's address and its `integration_key` (`app/settings.php` there), then build and upload.
+That file is not committed
 (the key is a secret), so it has to exist on whichever machine builds the release; without
 it the form only emails. Every email carries a `CRM:` line — recorded, not recorded, or not
 connected — and the visitor is told the form was sent if either the CRM or the email took
