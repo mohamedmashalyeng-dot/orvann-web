@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getContent, localePath } from "@/content";
+import { getContent, localePath, serviceIds, servicePath } from "@/content";
 import { flags, publishedLocales, siteUrl } from "@/config/site";
 
 // Written to a file at build time (static export).
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages: [path: string, priority: number][] = [
     ["/", 1],
     ["/services/", 0.9],
+    ...serviceIds.map((id): [string, number] => [servicePath(id), 0.8]),
     ...(flags.showWork
       ? [
           ["/our-projects/", 0.9] as [string, number],

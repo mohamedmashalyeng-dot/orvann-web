@@ -37,6 +37,15 @@ const builtLocales = arabic ? ["en", "ar"] : ["en"];
 const inBuiltLocales = (paths) => paths.filter((path) => arabic || localeOf(path) === "en");
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
+// Each service area's own page (serviceSlugs in src/content/index.ts), by service id.
+const servicePages = {
+  strategy: "/services/strategy-consulting/",
+  branding: "/services/branding-creative/",
+  marketing: "/services/marketing-media/",
+  digital: "/services/digital-experiences/",
+  events: "/services/events-outdoor-production/",
+};
+
 const text = (fragment) => fragment.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const decode = (value) => value.replace(/&amp;/g, "&");
 /** Runs `check` on every page, naming the page in any failure. */
@@ -52,7 +61,7 @@ const eachPage = (check) => {
 };
 
 test("the build contains every published page, in every published language", () => {
-  const published = ["/", "/services/", "/about-us/", "/about-us/company-profile/", "/contact-us/", "/privacy-policy/"];
+  const published = ["/", "/services/", ...Object.values(servicePages), "/about-us/", "/about-us/company-profile/", "/contact-us/", "/privacy-policy/"];
   if (work) published.push("/our-projects/", "/our-projects/tucano-2/");
   for (const path of published) {
     assert.ok(pages.has(path), `${path} was not prerendered`);
@@ -125,7 +134,7 @@ test("every in-page link points at an element that exists", () => {
 test("every link to a section of another page lands on an element that exists", () => {
   eachPage((html) => {
     for (const [, path, id] of html.matchAll(/\shref="(\/[^"#]*)#([^"]+)"/g)) {
-      const target = pages.get(decode(path));
+      const target = pages.get(decode(path).split("?")[0]);
       assert.ok(target, `link to ${path}#${id} has no page`);
       assert.ok(target.html.includes(` id="${id}"`), `${path} has no #${id}`);
     }
@@ -234,6 +243,11 @@ test("structured data is valid JSON with verified facts only", () => {
 test("indexing settings agree across robots.txt, every page's robots meta and the sitemap", () => {
   const robots = read("robots.txt");
   const blocked = /Disallow: \/\s*$/m.test(robots);
+  // Only a build made with ORVANN_ALLOW_INDEXING=false (staging, previews) may block search engines.
+  assert.equal(blocked, process.env.ORVANN_ALLOW_INDEXING === "false", "robots.txt does not follow ORVANN_ALLOW_INDEXING");
+  eachPage((html) => {
+    if (!blocked) assert.ok(/<meta name="robots" content="index, follow"/.test(html), "the page is not open to indexing");
+  });
   eachPage((html) => {
     const noindex = /<meta name="robots" content="noindex/.test(html);
     assert.equal(noindex, blocked, "robots.txt and the page's robots meta disagree");
@@ -243,6 +257,49 @@ test("indexing settings agree across robots.txt, every page's robots meta and th
   const sitemap = read("sitemap.xml");
   const listed = [...sitemap.matchAll(/<loc>https?:\/\/[^/<]+([^<]*)<\/loc>/g)].map((m) => m[1]);
   assert.deepEqual([...listed].sort(), [...pages.keys()].sort(), "the sitemap should list every page, and only pages");
+});
+
+test("the homepage figures are counted from the site, and read once by screen readers", () => {
+  for (const path of inBuiltLocales(["/", "/ar/"])) {
+    const { html } = pages.get(path);
+    const figures = [...html.matchAll(/<span[^>]*data-to="(\d+)"[^>]*>(\d+)<\/span><span class="visually-hidden">(\d+)<\/span>/g)];
+    const studies = [...pages.keys()].filter((page) => /^\/our-projects\/[^/]+\/$/.test(page)).length;
+    const expected = [...(work ? [studies] : []), Object.keys(servicePages).length];
+    assert.deepEqual(figures.slice(0, expected.length).map((m) => Number(m[1])), expected, `${path}: wrong figures`);
+    assert.equal(figures.length, expected.length + 1, `${path}: expected the partner brands figure last`);
+    for (const [tag, to, shown, spoken] of figures) {
+      assert.ok(/aria-hidden="true"/.test(tag), `${path}: the counting digits must be hidden from screen readers`);
+      assert.ok(to === shown && shown === spoken, `${path}: the HTML must carry the final figure`);
+    }
+  }
+});
+
+test("every page has its own title and description", () => {
+  const seen = { title: new Map(), description: new Map() };
+  eachPage((html, path) => {
+    const values = {
+      title: html.match(/<title>([^<]+)<\/title>/)?.[1],
+      description: html.match(/<meta name="description" content="([^"]+)"/)?.[1],
+    };
+    for (const [kind, value] of Object.entries(values)) {
+      assert.ok(value, `${kind} missing`);
+      assert.ok(!seen[kind].has(value), `same ${kind} as ${seen[kind].get(value)}`);
+      seen[kind].set(value, path);
+    }
+  });
+});
+
+test("every service page leads to the form with its service ticked, and to work that included it", () => {
+  const form = pages.get("/contact-us/").html;
+  for (const [id, servicePath] of Object.entries(servicePages)) {
+    assert.ok(new RegExp(`<input[^>]*name="need"[^>]*value="${id}"`).test(form), `the form has no "${id}" choice`);
+    for (const path of inBuiltLocales([servicePath, `/ar${servicePath}`])) {
+      const { html } = pages.get(path);
+      const contact = localeOf(path) === "ar" ? "/ar/contact-us/" : "/contact-us/";
+      assert.ok(html.includes(`href="${contact}?need=${id}#project-form"`), `${path}: no Start a Project link for ${id}`);
+      if (work) assert.ok(/href="(\/ar)?\/our-projects\/[^"]+\/"/.test(html), `${path}: no related case study`);
+    }
+  }
 });
 
 test("every page has its own canonical URL and complete sharing metadata", () => {
@@ -261,7 +318,12 @@ test("every page has its own canonical URL and complete sharing metadata", () =>
 });
 
 test("the export carries the host's rewrite rules and a 404 page per language", () => {
-  assert.ok(/^RewriteEngine On$/m.test(read(".htaccess")), ".htaccess (English at the root) is missing");
+  const htaccess = read(".htaccess");
+  assert.ok(/^RewriteEngine On$/m.test(htaccess), ".htaccess (English at the root) is missing");
+  // www.orvann.com reaches its page on https://orvann.com in one redirect: the first rule.
+  const rules = htaccess.split(/\r?\n/).filter((line) => /^Rewrite(Cond|Rule)\s/.test(line));
+  assert.equal(rules[0], "RewriteCond %{HTTP_HOST} ^www\\.orvann\\.com$ [NC]", "the www redirect must come first");
+  assert.equal(rules[1], "RewriteRule ^ https://orvann.com%{REQUEST_URI} [R=301,L]");
   assert.ok(read("ar/.htaccess").includes("ErrorDocument 404 /ar/404/index.html"), "Arabic 404 rule is missing");
   for (const locale of builtLocales) {
     const html = read(`${locale}/404/index.html`);

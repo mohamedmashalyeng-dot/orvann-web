@@ -2,11 +2,12 @@ import type { Cta } from "@/content";
 import { cn } from "@/lib/cn";
 import { BrandPattern } from "@/components/ui/BrandPattern";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { StarButton } from "@/components/ui/StarButton";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./CtaBand.module.css";
 
-/** The closing band: one big invitation and a clear next step or two. */
+/** The closing band: one big invitation and a clear next step or two (the first with its star). */
 export function CtaBand({ cta }: { cta: Cta }) {
   return (
     <section className={cn("tone-accent section", styles.band)} aria-labelledby="cta-title">
@@ -21,9 +22,11 @@ export function CtaBand({ cta }: { cta: Cta }) {
           {cta.text}
         </p>
         <div className={styles.actions} data-reveal="">
-          <ButtonLink href={cta.primary.href} icon="arrow" magnetic>
-            {cta.primary.label}
-          </ButtonLink>
+          <StarButton tone="accent">
+            <ButtonLink href={cta.primary.href} icon="arrow" magnetic>
+              {cta.primary.label}
+            </ButtonLink>
+          </StarButton>
           {cta.secondary && (
             <ButtonLink href={cta.secondary.href} variant="secondary">
               {cta.secondary.label}

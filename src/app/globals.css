@@ -277,6 +277,14 @@ html.menu-open {
     animation-delay: calc(var(--page-enter-delay) + var(--entrance-headline) + var(--i, 0) * 45ms);
   }
 
+  /* The homepage headline (Blur Text): each word comes into focus, settling from just above. */
+  [data-enter="blur"] {
+    animation-name: enter-blur;
+    animation-duration: var(--entrance-blur-duration);
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+    animation-delay: calc(var(--page-enter-delay) + var(--entrance-headline) + var(--i, 0) * var(--entrance-blur-stagger));
+  }
+
   [data-enter="lede"] {
     animation-delay: calc(var(--page-enter-delay) + var(--entrance-lede));
   }
@@ -312,6 +320,33 @@ html.menu-open {
   from {
     transform: translateY(58%);
   }
+}
+
+/* React Bits' Blur Text steps (blurred and above → half sharp, a touch below → in place),
+   with a shorter drop than its default so the headline settles quietly. */
+@keyframes enter-blur {
+  0% {
+    opacity: 0;
+    filter: blur(var(--entrance-blur-amount));
+    transform: translateY(calc(-1 * var(--entrance-blur-distance)));
+  }
+
+  50% {
+    opacity: 0.5;
+    filter: blur(calc(var(--entrance-blur-amount) / 2));
+    transform: translateY(calc(var(--entrance-blur-distance) / 10));
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* Words animate as boxes of their own; the spaces between them stay ordinary text. */
+.blur-word {
+  display: inline-block;
 }
 
 /* Directional icons mirror in RTL. */

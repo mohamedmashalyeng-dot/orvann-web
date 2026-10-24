@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { localePath, type SiteContent } from "@/content";
+import { localePath, serviceIds, type SiteContent } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
-import { flags, site, siteUrl } from "@/config/site";
+import { flags, partners, site, siteUrl } from "@/config/site";
 import { pageMetadata } from "@/lib/metadata";
 import { Hero } from "@/components/hero/Hero";
 import { Clients } from "@/components/sections/Clients";
+import { Stats } from "@/components/sections/Stats";
 import { Services } from "@/components/sections/Services";
 import { Integrated } from "@/components/sections/Integrated";
 import { Work } from "@/components/sections/Work";
@@ -44,6 +45,12 @@ function organizationJsonLd(content: SiteContent) {
 export default async function HomePage({ params }: LangParams) {
   const content = await contentFor(params);
   const featured = content.projects.filter((project) => project.featured);
+  // Counted from the site itself, so the strip stays true as projects and partners change.
+  const stats = [
+    ...(flags.showWork ? [{ key: "projects" as const, value: content.projects.length }] : []),
+    { key: "services" as const, value: serviceIds.length },
+    { key: "brands" as const, value: partners.length },
+  ];
 
   return (
     <>
@@ -54,6 +61,7 @@ export default async function HomePage({ params }: LangParams) {
         projects={content.projects.slice(0, 3).map((project) => project.image)}
       />
       <Clients locale={content.locale} clients={content.clients} />
+      <Stats stats={content.stats} values={stats} />
       <Services locale={content.locale} services={content.services} serviceNames={content.serviceNames} />
       <Integrated integrated={content.integrated} />
       {flags.showWork && (

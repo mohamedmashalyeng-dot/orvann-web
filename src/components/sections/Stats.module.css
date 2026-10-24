@@ -1,0 +1,36 @@
+/* Follows the client logos on the same ground, so it reads as part of that strip. */
+.section {
+  padding-block: 0 var(--space-9);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6) var(--grid-gap);
+}
+
+.item {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line);
+}
+
+/* Even digit widths, so the strip does not jitter while the numbers count. */
+.number {
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  max-width: 22ch;
+}
+
+@media (min-width: 40em) {
+  .list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

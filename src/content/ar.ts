@@ -60,7 +60,7 @@ export const ar: SiteContent = {
 
   actions: {
     startProject: { label: "ابدأ مشروعك", href: "/ar/contact-us/#project-form" },
-    bookMeeting: { label: "احجز اجتماعًا", href: "/ar/contact-us/#direct-contact" },
+    talkToUs: { label: "تحدّث معنا", href: "/ar/contact-us/#direct-contact" },
   },
 
   header: {
@@ -88,6 +88,14 @@ export const ar: SiteContent = {
   clients: {
     title: "علامات تجارية عملنا معها",
     text: "أعمال مختلفة. تحديات مختلفة. وتركيز واحد: عمل واضح ومتسق ومبني على ما يحتاجه المشروع فعلًا.",
+  },
+
+  // [translation] of the [proposed] numbers strip; each label follows its number
+  stats: {
+    label: "أورفان بالأرقام",
+    projects: "مشروعًا في أعمالنا",
+    services: "مجالات خدمة مترابطة",
+    brands: "علامات شريكة",
   },
 
   services: {

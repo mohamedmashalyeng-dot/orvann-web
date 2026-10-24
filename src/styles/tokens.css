@@ -124,6 +124,11 @@
   --entrance-graphic: 520ms;
   --entrance-duration: 800ms;
   --entrance-headline-duration: 1050ms;
+  /* Homepage headline (Blur Text): per word. */
+  --entrance-blur-duration: 1000ms;
+  --entrance-blur-stagger: 140ms;
+  --entrance-blur-amount: 10px;
+  --entrance-blur-distance: 0.22em;
   --entrance-graphic-duration: 1300ms;
 
   /* Multiplier for directional nudges; flips for RTL. */

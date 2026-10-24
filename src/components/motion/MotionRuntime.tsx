@@ -5,6 +5,7 @@ import { loadMotion, whenIdle } from "@/motion/useMotion";
 
 /**
  * Site-wide motion housekeeping, mounted once in the root layout:
+ * - smooth wheel scrolling (Lenis on GSAP's ticker; motion allowed);
  * - magnetic buttons (one delegated listener; fine pointers, motion allowed);
  * - every ScrollTrigger re-measures once web fonts have swapped in.
  */
@@ -19,6 +20,7 @@ export function MotionRuntime() {
           if (!active) return;
           motion.ScrollTrigger.refresh();
           const mm = motion.gsap.matchMedia();
+          mm.add(motion.conditions.motion, () => motion.startSmoothScroll());
           mm.add(`${motion.conditions.motion} and ${motion.conditions.finePointer}`, () => motion.attachMagnetic());
           cleanup = () => mm.revert();
         })

@@ -190,8 +190,8 @@ export function SiteHeader({ locale, header, actions, nav, languageSwitch, a11y 
               <LanguageLink pathname={pathname} locale={locale} language={header.language} className={styles.language} />
             )}
             <ThemeToggle label={a11y.lightMode} />
-            <ButtonLink href={actions.bookMeeting.href} size="sm" variant="secondary" className={styles.secondaryCta}>
-              {actions.bookMeeting.label}
+            <ButtonLink href={actions.talkToUs.href} size="sm" variant="secondary" className={styles.secondaryCta}>
+              {actions.talkToUs.label}
             </ButtonLink>
             <ButtonLink href={actions.startProject.href} size="sm" className={styles.cta} magnetic>
               {actions.startProject.label}
@@ -240,8 +240,8 @@ export function SiteHeader({ locale, header, actions, nav, languageSwitch, a11y 
           <ButtonLink href={actions.startProject.href} onClick={() => closeMenu(false)}>
             {actions.startProject.label}
           </ButtonLink>
-          <ButtonLink href={actions.bookMeeting.href} variant="secondary" onClick={() => closeMenu(false)}>
-            {actions.bookMeeting.label}
+          <ButtonLink href={actions.talkToUs.href} variant="secondary" onClick={() => closeMenu(false)}>
+            {actions.talkToUs.label}
           </ButtonLink>
           {languageSwitch && (
             <LanguageLink

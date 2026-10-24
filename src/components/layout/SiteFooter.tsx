@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { localePath, serviceIds, type SiteContent } from "@/content";
+import { localePath, serviceIds, servicePath, type SiteContent } from "@/content";
 import { isPublishedHref, site } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -41,7 +41,7 @@ export function SiteFooter({ content }: Props) {
             <ul className={styles.list}>
               {serviceIds.map((id) => (
                 <li key={id}>
-                  <Link href={localePath(content.locale, `/services/#${id}`)} className={styles.link}>
+                  <Link href={localePath(content.locale, servicePath(id))} className={styles.link}>
                     {serviceNames[id]}
                   </Link>
                 </li>

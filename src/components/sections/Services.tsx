@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { localePath, type Locale, type ServiceId, type SiteContent } from "@/content";
+import { localePath, servicePath, type Locale, type ServiceId, type SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -12,7 +12,7 @@ type Props = {
   serviceNames: Record<ServiceId, string>;
 };
 
-/** The five services as numbered rows; each links to its section on the services page. */
+/** The five services as numbered rows; each links to its own page. */
 export function Services({ locale, services, serviceNames }: Props) {
   return (
     <section id="services" className="tone-alt section" aria-labelledby="services-title">
@@ -37,7 +37,7 @@ export function Services({ locale, services, serviceNames }: Props) {
                 <div className={styles.body}>
                   <h3 className={cn("type-h3", styles.title)}>{serviceNames[item.id]}</h3>
                   <p className="type-body">{item.text}</p>
-                  <Link href={localePath(locale, `/services/#${item.id}`)} className={styles.link}>
+                  <Link href={localePath(locale, servicePath(item.id))} className={styles.link}>
                     {item.link}
                     <ArrowIcon className={styles.arrow} />
                   </Link>

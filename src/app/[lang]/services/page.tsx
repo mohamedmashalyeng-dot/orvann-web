@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { localePath, servicePath } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
@@ -45,7 +47,8 @@ export default async function ServicesPage({ params }: LangParams) {
         </ButtonLink>
       </PageIntro>
 
-      {/* Each family's id is the service id, the anchor every "Explore" link points at. */}
+      {/* Each family's id is the service id (the anchor older links point at). The deliverables
+          are listed by name; each service's own page describes them and links its work. */}
       <div className="tone-alt">
         {page.families.map((family, index) => (
           <section
@@ -74,12 +77,17 @@ export default async function ServicesPage({ params }: LangParams) {
               <Reveal className={styles.itemsWrap}>
                 <ul className={styles.items}>
                   {family.items.map((item) => (
-                    <li key={item.title} className={styles.item} data-reveal="">
-                      <h3 className="type-h3">{item.title}</h3>
-                      <p className="type-body">{item.text}</p>
+                    <li key={item.title} className={cn("type-h3", styles.item)} data-reveal="">
+                      {item.title}
                     </li>
                   ))}
                 </ul>
+                <div className={styles.explore} data-reveal="">
+                  <Link href={localePath(content.locale, servicePath(family.id))} className={styles.exploreLink}>
+                    {page.explore(serviceNames[family.id])}
+                    <ArrowIcon className={styles.exploreIcon} />
+                  </Link>
+                </div>
               </Reveal>
             </div>
           </section>
@@ -106,9 +114,9 @@ export default async function ServicesPage({ params }: LangParams) {
             <ol className={styles.flow}>
               {page.together.sequence.map((id, index) => (
                 <li key={id} className={styles.flowStep} data-reveal="">
-                  <a href={`#${id}`} className={styles.flowLink}>
+                  <Link href={localePath(content.locale, servicePath(id))} className={styles.flowLink}>
                     {serviceNames[id]}
-                  </a>
+                  </Link>
                   {index < page.together.sequence.length - 1 && <ArrowIcon className={styles.flowArrow} />}
                 </li>
               ))}

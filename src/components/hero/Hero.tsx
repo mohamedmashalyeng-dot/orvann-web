@@ -2,8 +2,10 @@ import { Fragment, type CSSProperties } from "react";
 import type { ImageAsset, Link, SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { RichText } from "@/components/ui/RichText";
+import { StarButton } from "@/components/ui/StarButton";
+import { BlurText, wordCount } from "@/components/motion/BlurText";
 import { ProjectFan } from "@/components/visuals/ProjectFan";
+import { HeroRays } from "./HeroRays";
 import { HeroStage } from "./HeroStage";
 import styles from "./Hero.module.css";
 
@@ -20,19 +22,27 @@ type Props = {
   projects: ImageAsset[];
 };
 
-/** data-enter marks the CSS entrance sequence; pointer depth and scroll live in HeroStage. */
+/**
+ * data-enter marks the CSS entrance sequence: the headline's words come into focus one
+ * after another (Blur Text), then the rest follows. Behind it, Light Rays; around the
+ * primary call to action, Star Border. Pointer depth and scroll live in HeroStage.
+ */
 export function Hero({ hero, primary, secondary, projects }: Props) {
+  // Each line's words continue the stagger from the line before.
+  const starts = hero.headline.map((_, index) =>
+    hero.headline.slice(0, index).reduce((total, line) => total + wordCount(line), 0),
+  );
+
   return (
     <HeroStage className={cn("tone-base", styles.hero)} aria-labelledby="hero-title">
+      <HeroRays className={styles.rays} />
       <div className={cn("container", styles.inner)}>
         <div className={styles.composition}>
           <h1 id="hero-title" className={cn("type-display", styles.title)}>
             {hero.headline.map((line, index) => (
               <Fragment key={index}>
                 <span className={styles.line}>
-                  <span className={styles.lineInner} data-enter="line" style={stagger(index)}>
-                    <RichText line={line} />
-                  </span>
+                  <BlurText line={line} start={starts[index]} />
                 </span>{" "}
               </Fragment>
             ))}
@@ -47,9 +57,11 @@ export function Hero({ hero, primary, secondary, projects }: Props) {
           </p>
 
           <div className={styles.actions}>
-            <ButtonLink href={primary.href} icon="arrow" data-enter="action" style={stagger(0)}>
-              {primary.label}
-            </ButtonLink>
+            <StarButton data-enter="action" style={stagger(0)}>
+              <ButtonLink href={primary.href} icon="arrow">
+                {primary.label}
+              </ButtonLink>
+            </StarButton>
             {secondary && (
               <ButtonLink href={secondary.href} variant="secondary" data-enter="action" style={stagger(1)}>
                 {secondary.label}

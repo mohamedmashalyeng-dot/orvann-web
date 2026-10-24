@@ -167,6 +167,45 @@ export const enPages: SiteContent["pages"] = {
         ],
         bestFor:
           "businesses launching, repositioning, entering a new market, reviewing growth opportunities or preparing a larger project.",
+        // [proposed] the service's own page
+        page: {
+          meta: {
+            title: "Strategy & Consulting Services in Egypt | ORVANN",
+            description:
+              "Market research, growth and marketing strategy, brand positioning and launch planning for businesses in Egypt and the region that need a clear next step.",
+          },
+          title: "Strategy & consulting for a clearer next move.",
+          lede: "Before money goes into a brand, a campaign or a website, ORVANN helps you see where the business stands, what to prioritize and how to approach the next stage of growth or launch.",
+          audience: [
+            "You are launching a business, project or service and need a plan before spending on it.",
+            "You are repositioning, or the market no longer sees you the way you want to be seen.",
+            "You are entering a new market and need to understand its customers and competitors.",
+            "You are preparing a larger project and want an outside view of the priorities and the direction.",
+          ],
+          process: [
+            { title: "Listen and review", text: "We start with the business, the objective, the audience and what already exists: past work, data, materials and constraints." },
+            { title: "Research", text: "Customers, competitors and market conditions are studied to the depth the decision needs." },
+            { title: "Set the direction", text: "Positioning, priorities, audiences, channels and goals are brought together in one practical plan." },
+            { title: "Plan the next step", text: "The plan becomes a sequence of actions, responsibilities and deliverables, ready for the brand, marketing or launch work that follows." },
+          ],
+          faqs: [
+            {
+              question: "What do I get from a strategy project?",
+              answer:
+                "A written direction you can act on: the findings, the positioning, the priorities and a plan for the next stage. The exact deliverables are agreed with you at the start.",
+            },
+            {
+              question: "Can strategy come before branding or marketing?",
+              answer:
+                "Yes. Many projects start here, so that the identity, website and campaigns that follow are built on the same direction. Strategy can also be commissioned on its own.",
+            },
+            {
+              question: "How long does a strategy project take?",
+              answer:
+                "It depends on the scope: the research needed, the number of markets and the approvals involved. A realistic schedule is agreed once the deliverables are defined.",
+            },
+          ],
+        },
       },
       {
         id: "branding",
@@ -191,6 +230,45 @@ export const enPages: SiteContent["pages"] = {
         ],
         bestFor:
           "new brands, rebrands, businesses with inconsistent communication, launches and brands preparing to scale their content or marketing.",
+        // [proposed] the service's own page
+        page: {
+          meta: {
+            title: "Brand Identity & Creative Services in Egypt | ORVANN",
+            description:
+              "Brand identity, guidelines, creative direction, campaign concepts, company profiles and content design that keep a business consistent wherever people meet it.",
+          },
+          title: "Branding & creative that people recognize everywhere.",
+          lede: "ORVANN translates business strategy into a visual and verbal system, from the identity and its guidelines to the company profile and content design, that stays consistent across digital and physical channels.",
+          audience: [
+            "You are a new brand and need an identity built for how and where you will communicate.",
+            "You are rebranding, or your current identity no longer reflects the business.",
+            "Your communication looks different from one channel, or one team, to the next.",
+            "You are preparing a launch or scaling your content and marketing, and need a system that holds.",
+          ],
+          process: [
+            { title: "Brief and direction", text: "We agree what the brand must say, to whom and where it will appear, starting from the strategy if there is one." },
+            { title: "Concepts", text: "Creative routes are developed and presented with their reasoning, so the choice is made against the brief." },
+            { title: "Build the system", text: "The chosen route becomes the full identity: logo system, colour, typography, visual language and supporting elements." },
+            { title: "Apply and hand over", text: "The identity is applied to the agreed materials, such as the company profile and social media templates, and documented in brand guidelines." },
+          ],
+          faqs: [
+            {
+              question: "What does a brand identity project include?",
+              answer:
+                "Typically a logo system, colour direction, typography, visual language and supporting brand elements, with guidelines for applying them. The exact list is agreed in the scope.",
+            },
+            {
+              question: "Can you design only a company profile or campaign materials?",
+              answer:
+                "Yes. Company profiles, presentations, brochures and campaign concepts can be commissioned without a full rebrand.",
+            },
+            {
+              question: "Will we receive brand guidelines?",
+              answer:
+                "Where they are part of the scope, yes: practical rules that help internal and external teams apply the identity consistently.",
+            },
+          ],
+        },
       },
       {
         id: "marketing",
@@ -228,6 +306,45 @@ export const enPages: SiteContent["pages"] = {
         ],
         bestFor:
           "businesses seeking awareness, leads, sales, launches, stronger content systems or structured paid acquisition.",
+        // [proposed] the service's own page
+        page: {
+          meta: {
+            title: "Marketing, Social Media & Paid Ads in Egypt | ORVANN",
+            description:
+              "Campaign and content strategy, social media management, paid media buying, influencer campaigns and reporting, planned around your audience and objectives.",
+          },
+          title: "Marketing & media built around the audience and the objective.",
+          lede: "ORVANN connects planning, content, distribution, paid advertising and performance review, so every campaign starts from a defined objective and the next decision is based on what actually happened.",
+          audience: [
+            "You need awareness, leads or sales, and a plan for the channels and messages that will get you there.",
+            "You are launching a product, project or brand and need a campaign around it.",
+            "Your social media runs without a content system or a clear objective.",
+            "You spend on advertising and want structured planning, testing and reporting.",
+          ],
+          process: [
+            { title: "Objective and audience", text: "We define what the campaign must achieve, who it is for and how success will be measured." },
+            { title: "Plan", text: "Messages, content pillars, channels, budget split and timeline are set out in one plan." },
+            { title: "Create and launch", text: "Creatives and formats are produced for each channel, then the campaigns are set up and published." },
+            { title: "Measure and optimize", text: "Results are reviewed against the objective, and budgets, audiences and creatives are adjusted for the next round." },
+          ],
+          faqs: [
+            {
+              question: "Which platforms do you advertise on?",
+              answer:
+                "Platforms are chosen for each campaign according to its audience and objective, from the social and digital advertising platforms that suit them.",
+            },
+            {
+              question: "Do you provide performance reports?",
+              answer:
+                "Yes. Reporting and optimization are part of the service: campaign and channel data are reviewed to understand performance and guide the next decision. How often is agreed in the scope.",
+            },
+            {
+              question: "Can you manage our social media every month?",
+              answer:
+                "Yes, where it is part of the scope: planning, content coordination, publishing requirements and performance review across the relevant platforms.",
+            },
+          ],
+        },
       },
       {
         id: "digital",
@@ -262,6 +379,45 @@ export const enPages: SiteContent["pages"] = {
         ],
         bestFor:
           "new websites, redesigns, e-commerce projects, landing pages and businesses whose digital presence no longer reflects their brand or objectives.",
+        // [proposed] the service's own page
+        page: {
+          meta: {
+            title: "Website Design & Digital Experiences in Egypt | ORVANN",
+            description:
+              "Website strategy, information architecture, UX/UI design, website and e-commerce delivery, SEO structure and conversion-focused improvement, from planning to launch.",
+          },
+          title: "Websites and digital experiences that make the next step easy.",
+          lede: "ORVANN plans and manages websites, online stores and landing pages around what users need to understand and do: from the site’s purpose and structure to design, delivery, search and launch.",
+          audience: [
+            "You need a new website, or your current one no longer reflects the brand or the business.",
+            "You are opening an online store or building landing pages for a campaign.",
+            "Visitors reach your site but do not find what they need or take the next step.",
+            "You want the site built for search from the start, not fixed after launch.",
+          ],
+          process: [
+            { title: "Purpose and structure", text: "We define the site’s goals, audiences, user journeys and page hierarchy before any design begins." },
+            { title: "Content and design", text: "Content is organized and the interface is designed around the user’s needs, for every screen size." },
+            { title: "Build and test", text: "The agreed scope is implemented, then reviewed for content, responsiveness, speed and search basics." },
+            { title: "Launch and improve", text: "The site goes live, and where support is in scope, updates and performance reviews guide the next improvements." },
+          ],
+          faqs: [
+            {
+              question: "Do you manage website development?",
+              answer:
+                "ORVANN manages the digital project and agreed deliverables from strategy and UX/UI through implementation coordination, QA and launch. Technical execution is structured according to the requirements of each project.",
+            },
+            {
+              question: "Is SEO included in every website?",
+              answer:
+                "Search-friendly structure should be considered from the planning stage, but the depth of ongoing SEO work depends on the agreed project scope.",
+            },
+            {
+              question: "Can you build an online store?",
+              answer:
+                "Yes. Website and e-commerce delivery is managed from planning and content through design, technical implementation, review and launch, according to the agreed scope.",
+            },
+          ],
+        },
       },
       {
         id: "events",
@@ -303,9 +459,65 @@ export const enPages: SiteContent["pages"] = {
         ],
         bestFor:
           "exhibitions, launches, campaigns, real estate projects, corporate events and brands requiring coordinated physical production.",
+        // [proposed] the service's own page
+        page: {
+          meta: {
+            title: "Events, Exhibitions, Outdoor & Print Production | ORVANN",
+            description:
+              "Exhibition booths, events, brand activations, billboards and outdoor advertising, printing, signage and corporate gifts, coordinated from design to on-ground execution.",
+          },
+          title: "Events, outdoor & production that take the brand beyond the screen.",
+          lede: "ORVANN turns brand and campaign direction into physical experiences and materials, from exhibitions and activations to billboards, print and signage, and follows production through to execution on the ground.",
+          audience: [
+            "You are taking part in an exhibition or conference and need a booth and a presence that fit the brand.",
+            "You are launching a project or product and want an event or activation around it.",
+            "You need outdoor campaigns, such as billboards or LED screens, adapted and produced.",
+            "You need printed and branded materials produced to one consistent standard.",
+          ],
+          process: [
+            { title: "Brief and requirements", text: "We confirm the objective, the venue or locations, the dates, the audience and the brand requirements." },
+            { title: "Design and plan", text: "Booths, spaces, outdoor formats and printed materials are designed, and production is planned with suppliers." },
+            { title: "Produce", text: "Production is followed up with suppliers, and samples and proofs are checked against the approved designs." },
+            { title: "Execute on the ground", text: "Installation and execution are supported on site, according to the project scope." },
+          ],
+          faqs: [
+            {
+              question: "Do you handle printing and physical production?",
+              answer:
+                "Yes. Events, Outdoor & Production includes selected print, signage, display, outdoor and branded production requirements based on the project.",
+            },
+            {
+              question: "Can you design and build an exhibition booth?",
+              answer:
+                "ORVANN develops the creative and visual requirements for exhibition booths and branded spaces, and coordinates their production and execution according to the project scope.",
+            },
+            {
+              question: "Do you produce corporate gifts?",
+              answer:
+                "Yes. Branded gifts and supporting materials are developed according to the campaign or corporate requirement.",
+            },
+          ],
+        },
       },
     ],
     bestForLabel: "Best suited for:",
+    explore: (service) => `Explore ${service}`,
+    // [proposed] section names on each service's own page
+    servicePage: {
+      back: "All services",
+      audience: "Who it’s for",
+      deliverables: "What you get",
+      process: "How it works",
+      work: "Related work",
+      workIntro: (service) => `Projects that included ${service}.`,
+      allWork: "See all projects",
+      faq: "Frequently asked questions",
+      cta: {
+        label: "Have a project in mind?",
+        title: (service) => `Start your ${service} project.`,
+        text: "Tell us about the business, the objective and the timeline. We’ll help define the right scope before the work begins.",
+      },
+    },
     together: {
       title: "You do not need all five services to work with ORVANN.",
       paragraphs: [
@@ -331,21 +543,6 @@ export const enPages: SiteContent["pages"] = {
       {
         question: "Can I request only branding or media buying?",
         answer: "Yes. Services can be commissioned independently without purchasing an integrated package.",
-      },
-      {
-        question: "Do you manage website development?",
-        answer:
-          "ORVANN manages the digital project and agreed deliverables from strategy and UX/UI through implementation coordination, QA and launch. Technical execution is structured according to the requirements of each project.",
-      },
-      {
-        question: "Is SEO included in every website?",
-        answer:
-          "Search-friendly structure should be considered from the planning stage, but the depth of ongoing SEO work depends on the agreed project scope.",
-      },
-      {
-        question: "Do you handle printing and physical production?",
-        answer:
-          "Yes. Events, Outdoor & Production includes selected print, signage, display, outdoor and branded production requirements based on the project.",
       },
     ],
   },
@@ -524,10 +721,13 @@ export const enPages: SiteContent["pages"] = {
   caseStudy: {
     back: "All projects",
     services: "Services",
-    context: "The Context",
-    delivered: "What We Delivered",
-    results: "Results",
+    // [proposed] challenge → role → execution → outcome (24 Oct 2026)
+    challenge: "The Challenge",
+    role: "ORVANN’s Role",
     execution: "Execution",
+    outcome: "Outcome",
+    gallery: "From the Work",
+    metaTitle: (project) => `${project} Case Study`,
     next: "Next project",
     visitWebsite: "Visit website",
   },
@@ -665,6 +865,6 @@ export const enPages: SiteContent["pages"] = {
     title: "Tell us what you’re building.",
     text: "Share the business, the objective and what you need delivered. We’ll help define the right scope before the work begins.",
     primary: { label: "Start a Project", href: "/contact-us/#project-form" },
-    secondary: { label: "Book a Meeting", href: "/contact-us/#direct-contact" },
+    secondary: { label: "Talk to Us", href: "/contact-us/#direct-contact" },
   },
 };

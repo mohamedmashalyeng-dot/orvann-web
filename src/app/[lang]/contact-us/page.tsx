@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 }
 
 /**
- * Start a Project (#project-form) and Book a Meeting (#direct-contact) both land here.
+ * Start a Project (#project-form) and Talk to Us (#direct-contact) both land here.
  * The form posts to a small PHP handler on the host that records the lead in the CRM and
  * emails ORVANN.
  */

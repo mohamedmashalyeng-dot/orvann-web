@@ -11,7 +11,12 @@ import type { Project } from "./types";
  * projects, so they come first and their covers open the homepage hero. Their images, and
  * Roshan Masr's, come from ORVANN's media library (upload.orvann.com, Oct 2026). Intro and
  * Roshan Masr are [draft]: their summaries and deliverables are read from those images, and
- * their challenge and results wait for ORVANN's copy.
+ * Roshan Masr's challenge and results wait for ORVANN's copy.
+ *
+ * Those three case studies follow the structure challenge → ORVANN's role → execution →
+ * outcome (24 Oct 2026). Their roles and outcomes are [proposed], written only from the work
+ * itself (the deliverables and the images); performance claims with no figure, source or
+ * period behind them were taken out until ORVANN supplies the data (see each project).
  */
 export const enProjects: Project[] = [
   {
@@ -22,6 +27,7 @@ export const enProjects: Project[] = [
       "Creating a cohesive premium brand presence across identity, company profile, digital channels, campaigns and event-related execution.",
     challenge:
       "Tucano, offering high-end services, needed an upscale digital identity reflecting excellence and precision, along with marketing tools to support regional expansion.",
+    role: "ORVANN was Tucano’s brand, marketing and digital partner through its launch in Egypt and its expansion into Dubai: from the identity and company profile to the website, social channels, campaigns and industry events.",
     solution: [
       "Supported the launch in Egypt and the expansion into Dubai.",
       "Designed a luxury visual identity and developed a premium company profile.",
@@ -30,11 +36,12 @@ export const enProjects: Project[] = [
       "Organized the first edition of the Egypt Aviation Expo.",
       "Prepared for EDEX 2025 in Egypt and the UAE to strengthen market leadership.",
     ],
+    // Taken out until there are figures with a source and period: "Increased digital engagement
+    // from the target audience" and "Real business expansion and partnership opportunities".
     results: [
-      "A complete, upscale digital identity.",
-      "Increased digital engagement from the target audience.",
-      "Real business expansion and partnership opportunities.",
-      "A corporate presence that matches the premium services offered.",
+      "A complete premium identity, applied from the company profile to printed details such as luggage tags.",
+      "One brand presence across the website, social media and LinkedIn, in place for the Egypt launch and the Dubai expansion.",
+      "An industry presence built through the first Egypt Aviation Expo and the preparation for EDEX 2025.",
     ],
     image: {
       src: "/work/tucano-2.webp",
@@ -66,6 +73,7 @@ export const enProjects: Project[] = [
       "Supporting a real estate brand across strategic direction, rebranding, company communication, website and campaigns.",
     challenge:
       "Create a modern, professional image for upper- and middle-class clients, and a marketing strategy to support expansion inside and outside Egypt.",
+    role: "ORVANN started with one project and became Eagles Developments’ strategy, brand, content and digital partner, working across the company and its projects VIA, Riza and Riza 2.",
     solution: [
       "Integrated strategic consulting and rebranding.",
       "Created a professional company profile.",
@@ -73,10 +81,13 @@ export const enProjects: Project[] = [
       "Supervised the website’s design and development for a smooth user experience.",
       "Launched targeted advertising campaigns to increase awareness and engagement.",
     ],
+    // Taken out until the figures are documented (the measure, its source and the period):
+    // "A noticeable increase in engagement and sales across channels" and "New opportunities
+    // with potential clients, and real growth in the client base".
     results: [
-      "A strong digital identity that reflects professionalism and strengthens market presence.",
-      "A noticeable increase in engagement and sales across channels.",
-      "New opportunities with potential clients, and real growth in the client base.",
+      "A refreshed identity carried across the company, its company profile and its projects, Riza 2 among them.",
+      "A website and an Instagram presence that speak in the same brand language.",
+      "A partnership that grew from one project into the company’s full marketing.",
     ],
     image: {
       src: "/work/eagles-real-estate-development.webp",
@@ -112,11 +123,19 @@ export const enProjects: Project[] = [
     categories: ["branding", "marketing", "digital"],
     summary:
       "Launching Intro, Roshan Masr’s new destination in west Cairo, across identity, print, website and outdoor campaigns.",
+    // [proposed] read from the work; to be confirmed by ORVANN.
+    challenge:
+      "Roshan Masr needed to introduce Intro, a new destination in west Cairo, as one connected place rather than a group of buildings, and make it recognizable from its first appearance.",
+    role: "ORVANN created Intro’s launch brand and carried it through print, the launch page and the outdoor campaign.",
     solution: [
       "Created the Intro identity and its “A Gateway To More” message, built around the idea of a gateway.",
       "Designed the project brochure, presenting its nine buildings as one connected plan.",
       "Designed the launch page announcing the new destination in west Cairo.",
       "Created the outdoor billboards and lifestyle visuals for the campaign.",
+    ],
+    results: [
+      "An identity and a message, “A Gateway To More”, shared by every launch material.",
+      "One launch campaign, from the brochure and the launch page to the billboards and lifestyle visuals.",
     ],
     image: {
       src: "/work/intro.webp",

@@ -7,7 +7,7 @@ import type { Project } from "./types";
  * come from the English file, so the two languages can never disagree about the work itself.
  * Client names stay in Latin script.
  */
-type ProjectText = Pick<Project, "summary" | "challenge" | "solution" | "results"> & {
+type ProjectText = Pick<Project, "summary" | "challenge" | "role" | "solution" | "results"> & {
   imageAlt: string;
   galleryAlts?: string[];
 };
@@ -79,6 +79,7 @@ const text: Record<string, ProjectText> = {
       "بناء حضور متماسك لعلامة فاخرة عبر الهوية، وملف الشركة، والقنوات الرقمية، والحملات، والتنفيذ المرتبط بالفعاليات.",
     challenge:
       "احتاجت Tucano، التي تقدم خدمات راقية، إلى هوية رقمية فاخرة تعكس التميز والدقة، مع أدوات تسويقية تدعم توسعها الإقليمي.",
+    role: "كانت أورفان شريك Tucano في العلامة والتسويق والتحول الرقمي خلال إطلاقها في مصر وتوسعها في دبي: من الهوية والملف التعريفي إلى الموقع الإلكتروني وقنوات التواصل والحملات وفعاليات القطاع.",
     solution: [
       "دعمنا الإطلاق في مصر والتوسع في دبي.",
       "صممنا هوية بصرية فاخرة وطوّرنا ملفًا تعريفيًا راقيًا.",
@@ -88,10 +89,9 @@ const text: Record<string, ProjectText> = {
       "جهّزنا للمشاركة في EDEX 2025 في مصر والإمارات لتعزيز الريادة في السوق.",
     ],
     results: [
-      "هوية رقمية متكاملة وراقية.",
-      "زيادة تفاعل الجمهور المستهدف رقميًا.",
-      "فرص حقيقية للتوسع التجاري والشراكات.",
-      "حضور مؤسسي يليق بالخدمات الفاخرة المقدمة.",
+      "هوية فاخرة متكاملة، مطبّقة من الملف التعريفي حتى التفاصيل المطبوعة مثل بطاقات الأمتعة.",
+      "حضور واحد للعلامة عبر الموقع الإلكتروني ووسائل التواصل ولينكدإن، جاهز لإطلاق مصر والتوسع في دبي.",
+      "حضور في القطاع بُني من خلال النسخة الأولى من معرض مصر للطيران والتجهيز لـ EDEX 2025.",
     ],
     imageAlt: "غلاف Tucano Aviation: طائرة خاصة على المدرج وأحد أفراد الطاقم عند بابها، مع عبارة «From digital foundations to industry presence».",
     galleryAlts: [
@@ -236,6 +236,7 @@ const text: Record<string, ProjectText> = {
       "دعم علامة عقارية عبر التوجه الاستراتيجي، وإعادة بناء العلامة، وتواصل الشركة، والموقع الإلكتروني، والحملات.",
     challenge:
       "بناء صورة عصرية واحترافية لعملاء الطبقتين العليا والمتوسطة، واستراتيجية تسويقية تدعم التوسع داخل مصر وخارجها.",
+    role: "بدأت أورفان بمشروع واحد، ثم أصبحت شريك Eagles Developments في الاستراتيجية والعلامة والمحتوى والتحول الرقمي، عبر الشركة ومشروعاتها VIA وRiza وRiza 2.",
     solution: [
       "استشارات استراتيجية متكاملة وإعادة بناء للعلامة.",
       "أعددنا ملفًا تعريفيًا احترافيًا للشركة.",
@@ -244,9 +245,9 @@ const text: Record<string, ProjectText> = {
       "أطلقنا حملات إعلانية موجّهة لزيادة الوعي والتفاعل.",
     ],
     results: [
-      "هوية رقمية قوية تعكس الاحترافية وتعزز الحضور في السوق.",
-      "زيادة ملحوظة في التفاعل والمبيعات عبر القنوات.",
-      "فرص جديدة مع عملاء محتملين ونمو حقيقي في قاعدة العملاء.",
+      "هوية متجددة تمتد عبر الشركة وملفها التعريفي ومشروعاتها، ومنها Riza 2.",
+      "موقع إلكتروني وحساب على إنستجرام يتحدثان بلغة العلامة نفسها.",
+      "شراكة نمت من مشروع واحد إلى تسويق الشركة بالكامل.",
     ],
     imageAlt:
       "غلاف Eagles Developments: نسر يحلّق وسط سحب برتقالية بجوار عبارة «From one project to a full marketing partnership» وشعارات VIA وRiza وRiza 2.",
@@ -324,11 +325,18 @@ const text: Record<string, ProjectText> = {
   intro: {
     summary:
       "إطلاق Intro، الوجهة الجديدة لـ Roshan Masr في غرب القاهرة، عبر الهوية والمطبوعات والموقع الإلكتروني وحملات الطرق.",
+    challenge:
+      "احتاجت Roshan Masr إلى تقديم Intro، الوجهة الجديدة في غرب القاهرة، كمكان واحد مترابط لا كمجموعة من المباني، وأن تُعرَف من أول ظهور لها.",
+    role: "صممت أورفان علامة إطلاق Intro، وحملتها عبر المطبوعات وصفحة الإطلاق وحملة الطرق.",
     solution: [
       "صممنا هوية Intro ورسالتها «A Gateway To More» حول فكرة البوابة.",
       "صممنا كتيّب المشروع الذي يقدّم مبانيه التسعة كمخطط واحد مترابط.",
       "صممنا صفحة الإطلاق التي تعلن عن الوجهة الجديدة في غرب القاهرة.",
       "أنشأنا لوحات الطرق وصور أسلوب الحياة للحملة.",
+    ],
+    results: [
+      "هوية ورسالة، «A Gateway To More»، تجمع كل مواد الإطلاق.",
+      "حملة إطلاق واحدة، من الكتيّب وصفحة الإطلاق إلى لوحات الطرق وصور أسلوب الحياة.",
     ],
     imageAlt: "غلاف Intro: بوابة على شكل قوس أحمر تنفتح على مبانٍ جديدة وأشجار نخيل، تحت شعار Intro وعبارة «A Gateway To More».",
     galleryAlts: [
@@ -363,6 +371,9 @@ export const arProjects: Project[] = enProjects.map((project) => {
   const words = text[project.slug];
   // A new English project without its Arabic text fails the build instead of shipping English.
   if (!words) throw new Error(`Missing Arabic text for project "${project.slug}" in ar-projects.ts`);
+  for (const part of ["challenge", "role", "results"] as const) {
+    if (project[part] && !words[part]) throw new Error(`Missing Arabic ${part} for project "${project.slug}"`);
+  }
   const { imageAlt, galleryAlts, ...fields } = words;
   return {
     ...project,

@@ -1,14 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { contentFor, type LangParams } from "@/content/server";
-import { flags, googleSiteVerification, isPublishedHref, publishedLocales, site, siteUrl } from "@/config/site";
+import { analyticsId, flags, googleSiteVerification, isPublishedHref, publishedLocales, site, siteUrl } from "@/config/site";
+import { analyticsScript } from "@/lib/analytics";
 import { DEFAULT_THEME, THEME_COLORS, themeScript } from "@/theme/theme";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 import { TransitionShell } from "@/components/layout/TransitionShell";
 import { MotionRuntime } from "@/components/motion/MotionRuntime";
+import "lenis/dist/lenis.css";
 import "@/styles/tokens.css";
 import "../globals.css";
 
@@ -51,7 +54,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
     title: content.meta.title,
     description: content.meta.description,
     applicationName: content.meta.siteName,
-    // Staging and previews stay out of search results unless indexing is switched on.
+    // Staging and previews (ORVANN_ALLOW_INDEXING=false) stay out of search results.
     robots: flags.allowIndexing ? { index: true, follow: true } : { index: false, follow: false },
     verification: googleSiteVerification ? { google: googleSiteVerification } : undefined,
   };
@@ -104,6 +107,12 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
         />
         <TransitionShell />
         <MotionRuntime />
+        {analyticsId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
+            <Script id="analytics" dangerouslySetInnerHTML={{ __html: analyticsScript(analyticsId) }} />
+          </>
+        )}
       </body>
     </html>
   );

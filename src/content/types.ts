@@ -41,8 +41,14 @@ export type Project = {
   summary: string;
   /** Left out until ORVANN supplies it; the case study then skips that part. */
   challenge?: string;
+  /** ORVANN's part in the project, in a sentence or two; skipped where not written yet. */
+  role?: string;
+  /** The work, step by step (the case study's Execution). */
   solution: string[];
-  /** Left out until ORVANN supplies them; the case study then skips that part. */
+  /**
+   * The outcome. Only what can be shown or what ORVANN has approved: a figure needs its
+   * source and period. Left out until ORVANN supplies it; the case study then skips that part.
+   */
   results?: string[];
   image: ImageAsset;
   gallery?: ImageAsset[];
@@ -54,8 +60,21 @@ export type ServiceFamily = {
   id: ServiceId;
   title: string;
   text: string;
+  /** What the service delivers: titles on the services page, in full on the service's own page. */
   items: Step[];
   bestFor: string;
+  /** The service's own page, /services/<slug>/ (see serviceSlugs in ./index.ts). */
+  page: {
+    meta: PageMeta;
+    /** The h1 and its lede; the label above it is the service name. */
+    title: string;
+    lede: string;
+    /** Who the service is for: the situations clients come to it in. */
+    audience: string[];
+    /** How the work runs, step by step. */
+    process: Step[];
+    faqs: Faq[];
+  };
 };
 
 export type PolicySection = { heading: string; paragraphs?: string[]; list?: string[] };
@@ -91,8 +110,8 @@ export type SiteContent = {
   review: { proposedCopy: string };
   /** The five service names, by id. */
   serviceNames: Record<ServiceId, string>;
-  /** Shared links: Start a Project (the form) and Book a Meeting (direct contact). */
-  actions: { startProject: Link; bookMeeting: Link };
+  /** Shared links: Start a Project (the form) and Talk to Us (direct contact). */
+  actions: { startProject: Link; talkToUs: Link };
   header: {
     nav: Link[];
     menu: string;
@@ -110,6 +129,11 @@ export type SiteContent = {
     projectsLabel: string;
   };
   clients: { title: string; text: string };
+  /**
+   * The numbers strip under the client logos. Only the words live here: each figure is
+   * counted from the site itself (projects, service areas, partner logos).
+   */
+  stats: { label: string; projects: string; services: string; brands: string };
   services: {
     label: string;
     title: string;
@@ -149,6 +173,21 @@ export type SiteContent = {
       intro: PageIntro;
       families: ServiceFamily[];
       bestForLabel: string;
+      /** Link from each service on the services page to its own page, e.g. "Explore Strategy & Consulting". */
+      explore: (service: string) => string;
+      /** Section names on a service's own page. */
+      servicePage: {
+        back: string;
+        audience: string;
+        deliverables: string;
+        process: string;
+        work: string;
+        workIntro: (service: string) => string;
+        allWork: string;
+        faq: string;
+        /** The closing band: its title names the service; Start a Project ticks it in the form. */
+        cta: { label: string; title: (service: string) => string; text: string };
+      };
       together: { title: string; paragraphs: string[]; exampleLabel: string; sequence: ServiceId[]; closing: string };
       faqTitle: string;
       faqs: Faq[];
@@ -203,10 +242,14 @@ export type SiteContent = {
     caseStudy: {
       back: string;
       services: string;
-      context: string;
-      delivered: string;
-      results: string;
+      /** Section names, in page order: the challenge, ORVANN's role, the work, the outcome, the gallery. */
+      challenge: string;
+      role: string;
       execution: string;
+      outcome: string;
+      gallery: string;
+      /** Page title: "<project> Case Study". */
+      metaTitle: (project: string) => string;
       next: string;
       /** Link to the client's own website, on case studies that have one. */
       visitWebsite: string;

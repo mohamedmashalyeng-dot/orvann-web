@@ -8,17 +8,19 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 
 | Route | Page |
 | --- | --- |
-| `/` | Homepage: hero, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
-| `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), how they work together, FAQ |
+| `/` | Homepage: hero, client logos and numbers, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
+| `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), each with its deliverables and a link to its page, how they work together, FAQ |
+| `/services/<service>/` | One page per service (`strategy-consulting`, `branding-creative`, `marketing-media`, `digital-experiences`, `events-outdoor-production`): who it is for, what you get, how it works, related work, FAQ, and Start a Project with the service ticked (`/contact-us/?need=<id>#project-form`) |
 | `/our-projects/` | All 18 projects, filterable by the five services |
-| `/our-projects/<slug>/` | Case study: services, context, what we delivered, results, execution, next project |
+| `/our-projects/<slug>/` | Case study: services, the challenge, ORVANN's role, execution, outcome, images from the work, next project |
 | `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
 | `/contact-us/` | Start a Project form (`#project-form`), direct contact (`#direct-contact`), FAQ |
 | `/privacy-policy/` | Privacy policy |
 
 The five service areas are the single list of services everywhere (`serviceIds` and each
-language's `serviceNames`): homepage, services page, project categories and footer. The old
+language's `serviceNames`; their page slugs are `serviceSlugs`): homepage, services page,
+service pages, project categories and footer. Links to a service open its own page. The old
 `/exhibitions-conferences/` page redirects to `/services/#events`.
 
 See **RELEASE_NOTES.md** for what was built, what was verified and what is still open before launch.
@@ -52,7 +54,8 @@ The site is plain files, so any shared plan works; no Node.js on the server.
 2. Upload the **contents** of `out/` — including the hidden `.htaccess` and `ar/.htaccess` —
    to the (sub)domain's folder in hPanel's File Manager or over FTP (e.g.
    `public_html/<subdomain>/`), replacing what was there.
-3. In hPanel, turn on SSL for the (sub)domain and force HTTPS.
+3. In hPanel, turn on SSL for the (sub)domain and force HTTPS. `public/.htaccess` sends
+   `www.orvann.com` to `https://orvann.com` (same path) in one permanent redirect.
 
 **Start a Project form.** `public/api/project.php` (exported as `out/api/project.php`) is the
 only server code: the host runs it with PHP and emails the form to info@orvann.com, sent from
@@ -84,17 +87,19 @@ Images are served as they are in `public/` (static hosting has no image resizing
 
 ## Configuration
 
-All variables are optional; see `.env.example`. With none set, a build is production-safe
-but asks search engines **not** to index it — the right default for previews and staging.
+All variables are optional; see `.env.example`. With none set, a build is the public release
+for orvann.com, open to search engines. **Staging and preview builds must set
+`ORVANN_ALLOW_INDEXING=false`.**
 
 | Variable | Effect |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata, sitemap and structured data (default `https://orvann.com`). |
-| `ORVANN_ALLOW_INDEXING` | `true` on the production deployment only: robots.txt allows crawling, pages carry `index, follow`, the sitemap is listed. |
+| `ORVANN_ALLOW_INDEXING` | `false` on staging and previews: robots.txt blocks crawling and pages carry `noindex, nofollow`. Otherwise (the default, since 24 Oct 2026) robots.txt allows crawling and lists the sitemap, and pages carry `index, follow`. |
 | `ORVANN_SHOW_WORK` | `false` hides Our Work (`/our-projects/` and the case studies): not published, not linked, its URLs redirect (302) to the homepage. Published by default. |
 | `ORVANN_SHOW_ARABIC` | `false` hides the Arabic site under `/ar/`: not built, no language switch, `/ar/…` redirects (302) to the same English page. Published by default. |
 | `ORVANN_REVIEW_MODE` | `true` shows dashed “Proposed copy” tags on wording that still needs sign-off. |
 | `GOOGLE_SITE_VERIFICATION` | Search Console token, if ownership is verified by meta tag. |
+| `ORVANN_GA_ID` | Google Analytics 4 measurement ID (`G-…`). Loads analytics on every page; a project form that reaches ORVANN is recorded as `generate_lead` (service and language as parameters), apart from clicks. Without it, no analytics code ships. |
 
 These are read at build time (every page is a static file), so rebuild and upload again after changing them.
 
@@ -163,10 +168,23 @@ body text.
   through `useMotion()` (`src/motion/useMotion.ts`); none of it is on the critical path.
   Settings: `src/motion/config.ts` (pointer depth, hero → next-section transition, reveals,
   project imagery and filtering, scroll-highlighted text, marquee, magnetic buttons,
-  Approach progress line, mobile menu).
-- `prefers-reduced-motion: reduce` turns off the entrance, parallax, pointer depth and scroll
-  movement; content is visible immediately. If motion code fails to load, the page stays static
-  and fully visible. Printing always shows everything.
+  Approach progress line, mobile menu, smooth scrolling, counting numbers).
+- **Smooth scrolling** — Lenis (`src/motion/smooth.ts`), started with the motion runtime and
+  driven by GSAP's ticker, so it and every ScrollTrigger move on the same frame. Wheel only:
+  touch keeps the device's own scrolling. Same-page links jump natively (focus moves with
+  them); the mobile menu pauses it.
+- **From React Bits** (reactbits.dev, MIT + Commons Clause): *Light Rays* behind the hero
+  (`components/visuals/LightRays.tsx`, raw WebGL, loaded only where it runs, paused off
+  screen) and *Star Border* round the primary Start a Project buttons (`components/ui/
+  StarBorder.tsx`, through `StarButton`) are its own code, adapted to CSS Modules. *Blur Text*
+  on the homepage headline (`components/motion/BlurText.tsx`) and *Count Up* on the numbers
+  strip (`components/motion/CountUp.tsx`) follow its components' effects but run in CSS and
+  GSAP: React Bits' versions need the `motion` library and render the headline hidden until
+  scripts load.
+- `prefers-reduced-motion: reduce` turns off the entrance, parallax, pointer depth, scroll
+  movement, smooth scrolling, the hero's light rays and the buttons' star; numbers show their
+  final value. Content is visible immediately. If motion code fails to load, the page stays
+  static and fully visible. Printing always shows everything.
 
 ## Content and languages
 

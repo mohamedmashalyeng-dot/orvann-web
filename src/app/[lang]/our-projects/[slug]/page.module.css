@@ -35,7 +35,7 @@
   gap: var(--space-2);
 }
 
-/* Each service is a pill that opens its section on the services page. */
+/* Each service is a pill that opens its own page. */
 .serviceLink {
   display: inline-flex;
   align-items: center;

@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { PageIntro } from "@/components/page/PageIntro";
 import { ProjectsIndex, type ProjectFilter } from "@/components/page/ProjectsIndex";
 import { CtaBand } from "@/components/page/CtaBand";
+import { Reveal } from "@/components/motion/Reveal";
 import { ProjectFan } from "@/components/visuals/ProjectFan";
 import styles from "./page.module.css";
 
@@ -35,7 +36,7 @@ export default async function ProjectsPage({ params }: LangParams) {
         visual={<ProjectFan images={content.projects.filter((project) => project.featured).map((project) => project.image)} />}
       />
       <div className={styles.listing}>
-        <div className="container">
+        <Reveal className="container">
           <ProjectsIndex
             locale={content.locale}
             projects={content.projects}
@@ -44,7 +45,7 @@ export default async function ProjectsPage({ params }: LangParams) {
             filterLabel={page.filterLabel}
             empty={page.empty}
           />
-        </div>
+        </Reveal>
       </div>
       <CtaBand cta={content.pages.cta} />
     </>

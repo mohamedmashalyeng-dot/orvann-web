@@ -59,7 +59,8 @@ export const partners: readonly Partner[] = [
     width: 512,
     height: 120,
     colorSrc: "/partners/tucano-color.png",
-    href: "https://tucano.almarefatech.com/",
+    // No website link for now: tucano.almarefatech.com answered every request with WordPress's
+    // "critical error" page (HTTP 500) on 24 Oct 2026. Add it back once that site works again.
     project: "tucano-2",
   },
   {
@@ -86,8 +87,8 @@ export const partners: readonly Partner[] = [
 ];
 
 /**
- * Build-time switches, read on the server only. Every default is the production-safe
- * state, so a build with no environment variables is a clean public release.
+ * Build-time switches, read on the server only. Every default is the production state
+ * (orvann.com), so a build with no environment variables is the public release.
  */
 export const flags = {
   /**
@@ -101,8 +102,12 @@ export const flags = {
   showArabic: process.env.ORVANN_SHOW_ARABIC !== "false",
   /** Show "Proposed copy" tags on sections whose wording still needs sign-off. */
   reviewMode: process.env.ORVANN_REVIEW_MODE === "true",
-  /** Let search engines index the site. Leave unset on staging and previews. */
-  allowIndexing: process.env.ORVANN_ALLOW_INDEXING === "true",
+  /**
+   * Let search engines index the site: on unless switched off with "false", which staging
+   * and preview builds must do. (It was off by default until 24 Oct 2026, and a production
+   * build without the variable kept orvann.com out of search results.)
+   */
+  allowIndexing: process.env.ORVANN_ALLOW_INDEXING !== "false",
 } as const;
 
 /**
@@ -116,6 +121,13 @@ export const publishedLocales: readonly Locale[] = flags.showArabic ? ["en", "ar
 export const isPublishedHref = (href: string) => flags.showWork || !/^(\/ar)?\/our-projects\//.test(href);
 
 export const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION || undefined;
+
+/**
+ * Google Analytics 4 measurement ID ("G-…"). Without one, no analytics code is loaded. A
+ * project form that reaches ORVANN is recorded as its own event (generate_lead), apart from
+ * clicks on the button.
+ */
+export const analyticsId = /^G-[A-Z0-9]+$/.test(process.env.ORVANN_GA_ID ?? "") ? process.env.ORVANN_GA_ID : undefined;
 
 /** Canonical origin for metadata, sitemap and structured data. */
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://orvann.com").replace(/\/$/, "");

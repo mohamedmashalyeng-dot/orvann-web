@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getContent, localePath } from "@/content";
+import { getContent, localePath, servicePath } from "@/content";
 import { contentFor } from "@/content/server";
 import { partners } from "@/config/site";
 import { cn } from "@/lib/cn";
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return {};
   return pageMetadata(
     content,
-    { title: `${project.title} | ${content.meta.siteName}`, description: project.summary },
+    { title: `${content.pages.caseStudy.metaTitle(project.title)} | ${content.meta.siteName}`, description: project.summary },
     `/our-projects/${project.slug}/`,
   );
 }
@@ -48,6 +48,10 @@ const smallImage = 800;
 const ratio = (image: { width: number; height: number }) =>
   ({ "--ratio": `${image.width} / ${image.height}` }) as CSSProperties;
 
+/**
+ * A case study, in the order the story runs: the challenge, ORVANN's role, the execution step
+ * by step, the outcome, then images from the work. A part not written yet is skipped.
+ */
 export default async function ProjectPage({ params }: Props) {
   const content = await contentFor(params);
   const copy = content.pages.caseStudy;
@@ -85,7 +89,7 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </div>
 
-      <section className="section" aria-labelledby={project.challenge ? "context-title" : "delivered-title"}>
+      <section className="section" aria-labelledby={project.challenge ? "challenge-title" : "execution-title"}>
         <div className={cn("container", styles.story)}>
           <Reveal as="aside" className={styles.meta} aria-labelledby="services-title">
             <h2 id="services-title" className={cn("type-label", styles.metaTitle)} data-reveal="">
@@ -94,7 +98,7 @@ export default async function ProjectPage({ params }: Props) {
             <ul className={styles.disciplines}>
               {project.categories.map((id) => (
                 <li key={id} data-reveal="">
-                  <Link href={localePath(content.locale, `/services/#${id}`)} className={styles.serviceLink}>
+                  <Link href={localePath(content.locale, servicePath(id))} className={styles.serviceLink}>
                     {content.serviceNames[id]}
                   </Link>
                 </li>
@@ -105,8 +109,8 @@ export default async function ProjectPage({ params }: Props) {
           <div className={styles.narrative}>
             {project.challenge && (
               <Reveal className={styles.block}>
-                <h2 id="context-title" className="type-h3" data-reveal="">
-                  {copy.context}
+                <h2 id="challenge-title" className="type-h3" data-reveal="">
+                  {copy.challenge}
                 </h2>
                 <p className={cn("type-lede", styles.challenge)} data-reveal="">
                   {project.challenge}
@@ -114,9 +118,20 @@ export default async function ProjectPage({ params }: Props) {
               </Reveal>
             )}
 
+            {project.role && (
+              <Reveal className={styles.block}>
+                <h2 id="role-title" className="type-h3" data-reveal="">
+                  {copy.role}
+                </h2>
+                <p className="type-lede" data-reveal="">
+                  {project.role}
+                </p>
+              </Reveal>
+            )}
+
             <Reveal className={styles.block}>
-              <h2 id="delivered-title" className="type-h3" data-reveal="">
-                {copy.delivered}
+              <h2 id="execution-title" className="type-h3" data-reveal="">
+                {copy.execution}
               </h2>
               <ol className={styles.steps}>
                 {project.solution.map((step, stepIndex) => (
@@ -134,10 +149,10 @@ export default async function ProjectPage({ params }: Props) {
       </section>
 
       {project.results && project.results.length > 0 && (
-        <section className={cn("tone-alt section", styles.resultsSection)} aria-labelledby="results-title">
+        <section className={cn("tone-alt section", styles.resultsSection)} aria-labelledby="outcome-title">
           <BrandPattern fade="corner" />
           <div className="container">
-            <SectionHead id="results-title" title={copy.results} />
+            <SectionHead id="outcome-title" title={copy.outcome} />
             <Reveal>
               <ul className={styles.results}>
                 {project.results.map((result, resultIndex) => (
@@ -157,7 +172,7 @@ export default async function ProjectPage({ params }: Props) {
       {project.gallery && project.gallery.length > 0 && (
         <section className="section" aria-labelledby="gallery-title">
           <div className="container">
-            <SectionHead id="gallery-title" title={copy.execution} />
+            <SectionHead id="gallery-title" title={copy.gallery} />
             <ul className={styles.gallery}>
               {project.gallery.map((image) => (
                 <li key={image.src} className={image.width < smallImage ? styles.gallerySmall : styles.galleryLarge}>

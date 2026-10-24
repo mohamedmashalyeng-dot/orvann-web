@@ -5,8 +5,8 @@ import { flags, siteUrl } from "@/config/site";
 export const dynamic = "force-static";
 
 /**
- * Crawling is blocked unless ORVANN_ALLOW_INDEXING=true, so previews and staging never
- * get indexed by accident. Set it on the production deployment only.
+ * Crawling is allowed and the sitemap listed, unless ORVANN_ALLOW_INDEXING=false (staging and
+ * previews), which blocks the whole site.
  */
 export default function robots(): MetadataRoute.Robots {
   if (!flags.allowIndexing) {

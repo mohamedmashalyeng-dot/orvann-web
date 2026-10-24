@@ -1,6 +1,17 @@
 "use client";
 
-import { useState, useSyncExternalStore, type ComponentProps, type FormEvent, type ReactNode } from "react";
+import {
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ComponentProps,
+  type FormEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
+import { useSearchParams } from "next/navigation";
 import {
   budgetIds,
   jobTitleIds,
@@ -11,6 +22,7 @@ import {
   type ServiceId,
   type SiteContent,
 } from "@/content";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import styles from "./ProjectForm.module.css";
 
@@ -40,8 +52,11 @@ type Props = {
  *
  * The fields are the CRM's: its lists (job title, region, timeline, budget) send the CRM's
  * own ids (content/lead-options.ts), so each lead arrives there already sorted.
+ * A service page's link (?need=<service>) ticks that service. Analytics records a form the
+ * handler accepted as generate_lead: a click on the button alone is not a lead.
  */
 export function ProjectForm({ locale, copy, serviceNames }: Props) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setStatus] = useState<Status>("idle");
   const redirected = useSyncExternalStore(noSubscription, redirectResult, noRedirectResult);
   const status = submitted === "idle" ? redirected : submitted;
@@ -49,17 +64,19 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
+    const data = new FormData(form);
     setStatus("sending");
     try {
       const response = await fetch(PROJECT_FORM_ACTION, {
         method: "POST",
-        body: new FormData(form),
+        body: data,
         headers: { Accept: "application/json" },
       });
       const result = (await response.json().catch(() => ({ ok: false }))) as { ok?: boolean };
       if (!response.ok || !result.ok) throw new Error("Not sent");
       form.reset();
       setStatus("sent");
+      trackEvent("generate_lead", { form: "start_project", service: String(data.get("need") ?? ""), language: locale });
     } catch {
       setStatus("failed");
     }
@@ -72,7 +89,10 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
   ];
 
   return (
-    <form action={PROJECT_FORM_ACTION} method="post" className={styles.form} onSubmit={submit}>
+    <form ref={formRef} action={PROJECT_FORM_ACTION} method="post" className={styles.form} onSubmit={submit}>
+      <Suspense fallback={null}>
+        <NeedFromLink form={formRef} values={needs.map((need) => need.value)} />
+      </Suspense>
       <input type="hidden" name="lang" value={locale} />
       <div className={styles.honeypot} aria-hidden="true">
         <label>
@@ -194,6 +214,18 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
       </div>
     </form>
   );
+}
+
+/** Ticks the service named in the link that opened the form (?need=strategy), if it is one. */
+function NeedFromLink({ form, values }: { form: RefObject<HTMLFormElement | null>; values: string[] }) {
+  const need = useSearchParams().get("need");
+  const known = need !== null && values.includes(need) ? need : null;
+  useEffect(() => {
+    if (!known) return;
+    const radio = form.current?.querySelector<HTMLInputElement>(`input[name="need"][value="${known}"]`);
+    if (radio) radio.checked = true;
+  }, [form, known]);
+  return null;
 }
 
 function Field({

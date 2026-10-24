@@ -30,19 +30,21 @@
   padding-block-end: var(--space-6);
 }
 
-/* Each headline line is its own clip box for the entrance (lines rise from below).
-   Padding keeps ascenders, descenders and italic overhang visible; the matching
-   negative block margin keeps the line spacing exactly as set. */
+/* Each headline line is its own block (the desktop layout steps the second one in). Its
+   words come into focus with Blur Text (see BlurText): nothing is clipped, so their blur
+   and the short drop from above stay visible. */
 .line {
   display: block;
-  overflow: clip;
-  padding-block: 0.2em 0.3em;
-  margin-block: -0.2em -0.3em;
-  padding-inline-end: 0.15em;
 }
 
-.lineInner {
-  display: block;
+/* Light Rays behind everything in the hero, fading out before the headline at the foot of
+   the screen so the text always sits on the plain background. */
+.rays {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 85%);
 }
 
 .subheadline {
@@ -56,6 +58,7 @@
 .actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-3);
 }
 

@@ -1,5 +1,5 @@
 /**
- * The motion runtime: GSAP, ScrollTrigger and every ORVANN motion builder.
+ * The motion runtime: GSAP, ScrollTrigger, Lenis and every ORVANN motion builder.
  * Only ever loaded through loadMotion() (a dynamic import), so none of it is on the
  * critical path — first paint, the CSS hero entrance and hydration never wait for it.
  */
@@ -10,3 +10,5 @@ export { attachPointerDepth, createHeroExit } from "./hero";
 export { revealOnScroll } from "./reveal";
 export { animateMediaFrame, trackStepProgress } from "./scroll";
 export { animateMenuClose, animateMenuOpen } from "./menu";
+export { startSmoothScroll } from "./smooth";
+export { countUp } from "./count";

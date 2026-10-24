@@ -58,10 +58,11 @@ export const en: SiteContent = {
     events: "Events, Outdoor & Production",
   },
 
-  // [copy] primary and secondary calls to action
+  // [copy] primary and secondary calls to action. The second is [proposed]: it was "Book a
+  // Meeting", but it opens the direct contact details, not a booking calendar (24 Oct 2026).
   actions: {
     startProject: { label: "Start a Project", href: "/contact-us/#project-form" },
-    bookMeeting: { label: "Book a Meeting", href: "/contact-us/#direct-contact" },
+    talkToUs: { label: "Talk to Us", href: "/contact-us/#direct-contact" },
   },
 
   // [copy]
@@ -90,6 +91,14 @@ export const en: SiteContent = {
   clients: {
     title: "Brands We’ve Worked With",
     text: "Different businesses. Different challenges. One focus: work that is clear, consistent and built around what the project actually needs.",
+  },
+
+  // [proposed] 24 Oct 2026: each label follows its number
+  stats: {
+    label: "ORVANN in numbers",
+    projects: "Projects in our portfolio",
+    services: "Connected service areas",
+    brands: "Partner brands",
   },
 
   services: {

@@ -1,0 +1,252 @@
+/* ---------- The five services beside the intro (desktop) ---------- */
+
+.index {
+  display: grid;
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.indexLink {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--line);
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.indexLink span {
+  color: var(--text-muted);
+}
+
+.indexLink:hover,
+.indexLink:focus-visible,
+.indexLink[aria-current="page"] {
+  color: var(--accent-text);
+}
+
+.indexLink[aria-current="page"] span {
+  color: inherit;
+}
+
+.number {
+  color: var(--accent-text);
+}
+
+/* ---------- Who it's for ---------- */
+
+.audience {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap);
+}
+
+.situation {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+@media (min-width: 48em) {
+  .audience {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80em) {
+  .audience {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- What you get ---------- */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.splitHead {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.splitHead p {
+  max-width: 32ch;
+}
+
+.items {
+  display: grid;
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.item {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-block-end: 1px solid var(--line);
+}
+
+.item p {
+  max-width: var(--measure);
+}
+
+@media (min-width: 64em) {
+  .split {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  /* The heading stays in view while the deliverables scroll past. */
+  .splitHead {
+    grid-column: 1 / span 5;
+    position: sticky;
+    inset-block-start: calc(var(--header-height) + var(--space-6));
+    align-self: start;
+  }
+
+  .splitBody {
+    grid-column: 7 / -1;
+  }
+}
+
+/* ---------- How it works ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7) var(--grid-gap);
+}
+
+.step {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.step p {
+  max-width: var(--measure);
+}
+
+@media (min-width: 48em) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80em) {
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Related work ---------- */
+
+.work {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8) var(--grid-gap);
+  align-items: start;
+}
+
+@media (min-width: 48em) {
+  .work {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* The frame takes the image's own proportions, so every project is shown whole. */
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 2 / 1);
+  margin-block-end: var(--space-2);
+  background-color: var(--surface-raised);
+}
+
+.image {
+  object-fit: cover;
+  transition: scale 900ms var(--ease-out-expo);
+}
+
+.media:hover .image {
+  scale: 1.03;
+}
+
+.mediaLink {
+  position: absolute;
+  inset: 0;
+}
+
+.cardLink {
+  text-decoration: none;
+}
+
+.cardLink:hover,
+.cardLink:focus-visible {
+  text-decoration: underline;
+}
+
+.disciplines {
+  color: var(--accent-text);
+}
+
+.more {
+  margin-block-start: var(--space-8);
+}
+
+.moreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  font-weight: var(--weight-medium);
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.moreLink:hover,
+.moreLink:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.arrow {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  transition: translate var(--duration-base) var(--ease-standard);
+}
+
+.moreLink:hover .arrow,
+.moreLink:focus-visible .arrow {
+  translate: calc(0.25em * var(--dir)) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .arrow {
+    transition: none;
+  }
+
+  .media:hover .image {
+    scale: none;
+  }
+
+  .moreLink:hover .arrow,
+  .moreLink:focus-visible .arrow {
+    translate: none;
+  }
+}

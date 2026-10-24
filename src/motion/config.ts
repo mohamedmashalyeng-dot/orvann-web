@@ -2,7 +2,8 @@
  * ORVANN motion settings for everything GSAP drives: pointer depth, the hero → next-section
  * scroll transition, section and heading reveals, scroll-highlighted text, marquees,
  * magnetic buttons, project imagery and filtering, the Approach progress line and the mobile
- * menu. (Page transitions: TransitionShell. Entrances: tokens.css.)
+ * menu, smooth scrolling and counting numbers. (Page transitions: TransitionShell. Entrances,
+ * the homepage headline's Blur Text among them: tokens.css.)
  * Durations are in seconds. Distances are px unless noted.
  */
 export const motion = {
@@ -73,4 +74,13 @@ export const motion = {
   flip: { duration: 0.7, stagger: 0.04 },
 
   menu: { open: 0.5, close: 0.28, stagger: 0.05, distance: 28 },
+
+  /**
+   * Smooth wheel scrolling (Lenis). lerp: share of the remaining distance covered each frame
+   * (higher is snappier; Lenis's default is 0.1).
+   */
+  smooth: { lerp: 0.12, wheelMultiplier: 1 },
+
+  /** Numbers that count up from 0 when they scroll into view (Stats). */
+  count: { duration: 2, ease: "power3.out", start: "top 90%" },
 } as const;

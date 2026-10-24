@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { localePath, serviceIds } from "@/content";
+import { localePath, serviceIds, servicePath } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
@@ -38,7 +38,7 @@ export default async function AboutPage({ params }: LangParams) {
         )}
       </PageIntro>
 
-      {/* Who is ORVANN: the five capabilities, each linking to its services section. */}
+      {/* Who is ORVANN: the five capabilities, each linking to its service page. */}
       <section className="section" aria-labelledby="who-title">
         <div className="container">
           <SectionHead id="who-title" title={page.who.title} intro={page.who.intro} />
@@ -46,7 +46,7 @@ export default async function AboutPage({ params }: LangParams) {
             <ol className={styles.capabilityLinks}>
               {serviceIds.map((id, index) => (
                 <li key={id} data-reveal="">
-                  <Link href={localePath(content.locale, `/services/#${id}`)} className={styles.capabilityLink}>
+                  <Link href={localePath(content.locale, servicePath(id))} className={styles.capabilityLink}>
                     <span className={cn("type-label", styles.number)} aria-hidden="true">
                       {pad(index + 1)}
                     </span>

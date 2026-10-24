@@ -105,7 +105,7 @@ export function ProjectsIndex({ locale, projects, serviceNames, filters, filterL
           {visible.map((project) => {
             const href = localePath(locale, `/our-projects/${project.slug}/`);
             return (
-              <li key={project.slug} className={styles.card} data-project="">
+              <li key={project.slug} className={styles.card} data-project="" data-reveal="">
                 <article className={styles.article} aria-labelledby={`project-${project.slug}`}>
                   <div
                     className={styles.media}

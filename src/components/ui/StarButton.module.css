@@ -1,0 +1,17 @@
+/* The ring sits just outside the button: Star Border's own padding and type are replaced
+   (span.ring outranks its .root), so the button inside is laid out exactly as before. */
+span.ring {
+  padding: 2px;
+  gap: 0;
+  font: inherit;
+  line-height: inherit;
+  vertical-align: middle;
+}
+
+/* The same box before the light joins (server render) or without it (reduced motion). */
+.plain {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}

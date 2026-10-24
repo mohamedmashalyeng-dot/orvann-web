@@ -8,6 +8,18 @@ export const defaultLocale: Locale = "en";
 /** ORVANN's five service areas, in the order they appear everywhere. */
 export const serviceIds = ["strategy", "branding", "marketing", "digital", "events"] as const satisfies readonly ServiceId[];
 
+/** Each service's own page, /services/<slug>/ in every language. */
+export const serviceSlugs: Record<ServiceId, string> = {
+  strategy: "strategy-consulting",
+  branding: "branding-creative",
+  marketing: "marketing-media",
+  digital: "digital-experiences",
+  events: "events-outdoor-production",
+};
+
+/** The English path of a service's page ("/services/strategy-consulting/"); see localePath. */
+export const servicePath = (id: ServiceId) => `/services/${serviceSlugs[id]}/`;
+
 const dictionaries: Record<Locale, SiteContent> = { en, ar };
 
 export const isLocale = (value: string): value is Locale => (locales as readonly string[]).includes(value);
