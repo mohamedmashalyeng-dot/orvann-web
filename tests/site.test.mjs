@@ -259,18 +259,9 @@ test("indexing settings agree across robots.txt, every page's robots meta and th
   assert.deepEqual([...listed].sort(), [...pages.keys()].sort(), "the sitemap should list every page, and only pages");
 });
 
-test("the homepage figures are counted from the site, and read once by screen readers", () => {
+test("the homepage no longer shows the numbers strip", () => {
   for (const path of inBuiltLocales(["/", "/ar/"])) {
-    const { html } = pages.get(path);
-    const figures = [...html.matchAll(/<span[^>]*data-to="(\d+)"[^>]*>(\d+)<\/span><span class="visually-hidden">(\d+)<\/span>/g)];
-    const studies = [...pages.keys()].filter((page) => /^\/our-projects\/[^/]+\/$/.test(page)).length;
-    const expected = [...(work ? [studies] : []), Object.keys(servicePages).length];
-    assert.deepEqual(figures.slice(0, expected.length).map((m) => Number(m[1])), expected, `${path}: wrong figures`);
-    assert.equal(figures.length, expected.length + 1, `${path}: expected the partner brands figure last`);
-    for (const [tag, to, shown, spoken] of figures) {
-      assert.ok(/aria-hidden="true"/.test(tag), `${path}: the counting digits must be hidden from screen readers`);
-      assert.ok(to === shown && shown === spoken, `${path}: the HTML must carry the final figure`);
-    }
+    assert.ok(!/data-to="\d+"/.test(pages.get(path).html), `${path}: the numbers strip should be gone`);
   }
 });
 
