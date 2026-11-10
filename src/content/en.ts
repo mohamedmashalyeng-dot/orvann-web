@@ -93,14 +93,6 @@ export const en: SiteContent = {
     text: "Different businesses. Different challenges. One focus: work that is clear, consistent and built around what the project actually needs.",
   },
 
-  // [proposed] 24 Oct 2026: each label follows its number
-  stats: {
-    label: "ORVANN in numbers",
-    projects: "Projects in our portfolio",
-    services: "Connected service areas",
-    brands: "Partner brands",
-  },
-
   services: {
     label: "What we do",
     title: "Five connected capabilities. One partner.",

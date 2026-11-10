@@ -129,11 +129,6 @@ export type SiteContent = {
     projectsLabel: string;
   };
   clients: { title: string; text: string };
-  /**
-   * The numbers strip under the client logos. Only the words live here: each figure is
-   * counted from the site itself (projects, service areas, partner logos).
-   */
-  stats: { label: string; projects: string; services: string; brands: string };
   services: {
     label: string;
     title: string;

@@ -90,14 +90,6 @@ export const ar: SiteContent = {
     text: "أعمال مختلفة. تحديات مختلفة. وتركيز واحد: عمل واضح ومتسق ومبني على ما يحتاجه المشروع فعلًا.",
   },
 
-  // [translation] of the [proposed] numbers strip; each label follows its number
-  stats: {
-    label: "أورفان بالأرقام",
-    projects: "مشروعًا في أعمالنا",
-    services: "مجالات خدمة مترابطة",
-    brands: "علامات شريكة",
-  },
-
   services: {
     label: "ماذا نقدّم",
     title: "خمس قدرات مترابطة. شريك واحد.",

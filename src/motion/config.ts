@@ -81,6 +81,6 @@ export const motion = {
    */
   smooth: { lerp: 0.12, wheelMultiplier: 1 },
 
-  /** Numbers that count up from 0 when they scroll into view (Stats). */
+  /** Numbers that count up from 0 when they scroll into view. */
   count: { duration: 2, ease: "power3.out", start: "top 90%" },
 } as const;
