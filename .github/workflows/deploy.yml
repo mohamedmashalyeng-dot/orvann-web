@@ -1,0 +1,59 @@
+name: Deploy to Hostinger
+
+# Builds the static site and uploads out/ to Hostinger over FTP on every push to main.
+# Needs repository secrets FTP_SERVER, FTP_USERNAME and FTP_PASSWORD
+# (Settings → Secrets and variables → Actions). Without them the build and tests still
+# run, and the upload is skipped.
+#
+# The upload only adds and replaces files: it never deletes files it did not upload,
+# so api/crm-config.php (kept on the server, not in the repository) is left alone.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://orvann.com' }}
+      GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+      ORVANN_GA_ID: ${{ vars.ORVANN_GA_ID }}
+      HAS_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+
+      - name: Upload to Hostinger
+        if: env.HAS_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftp' }}
+          local-dir: ./out/
+          server-dir: ${{ vars.FTP_SERVER_DIR || 'public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            api/crm-config.php
+
+      - name: Upload skipped
+        if: env.HAS_FTP != 'true'
+        run: echo "::warning::FTP secrets are not set, so the site was built and tested but not uploaded."
