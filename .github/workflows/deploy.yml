@@ -52,8 +52,13 @@ jobs:
           LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || 'public_html' }}
         run: |
-          server="${FTP_SERVER#ftp://}"
+          # Secrets pasted into GitHub often carry a trailing newline or spaces.
+          server="$(printf '%s' "$FTP_SERVER" | tr -d '[:space:]')"
+          server="${server#ftp://}"
           server="${server%/}"
+          FTP_USERNAME="$(printf '%s' "$FTP_USERNAME" | tr -d '[:space:]')"
+          LFTP_PASSWORD="$(printf '%s' "$LFTP_PASSWORD" | tr -d '\r\n')"
+          export LFTP_PASSWORD
           lftp -c "
             set net:max-retries 5
             set net:reconnect-interval-base 5
