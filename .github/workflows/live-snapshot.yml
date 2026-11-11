@@ -1,0 +1,22 @@
+name: Snapshot live site
+
+# Read-only: saves orvann.com's homepage and the files it loads, as a run artifact.
+on:
+  workflow_dispatch:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          mkdir live && cd live
+          wget -q -e robots=off -p -H -D orvann.com -nH -E https://orvann.com/ https://orvann.com/ar/ || true
+          for f in $(grep -rhoE '/_next/static/[^"'"'"' )]+' index.html ar/index.html 2>/dev/null | sort -u); do
+            mkdir -p ".$(dirname "$f")"; curl -sS -o ".$f" "https://orvann.com$f" || true
+          done
+          find . -type f | head -200
+      - uses: actions/upload-artifact@v4
+        with:
+          name: live-site
+          path: live/
+          include-hidden-files: true
