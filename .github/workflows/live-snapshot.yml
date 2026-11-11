@@ -14,9 +14,9 @@ jobs:
           for f in $(grep -rhoE '/_next/static/[^"'"'"' )]+' index.html ar/index.html 2>/dev/null | sort -u); do
             mkdir -p ".$(dirname "$f")"; curl -sS -o ".$f" "https://orvann.com$f" || true
           done
-          find . -type f | head -200
+          find . -name '*[?:*"<>|]*' -delete
+          tar czf ../live.tgz .
       - uses: actions/upload-artifact@v4
         with:
           name: live-site
-          path: live/
-          include-hidden-files: true
+          path: live.tgz
