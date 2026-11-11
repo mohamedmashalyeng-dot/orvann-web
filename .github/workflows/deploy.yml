@@ -69,6 +69,42 @@ jobs:
             mirror --reverse --verbose --parallel=4 --exclude-glob api/crm-config.php ./out/ \"$FTP_SERVER_DIR/\"
           "
 
+      # Shows where the files landed and what orvann.com actually serves afterwards.
+      - name: Check the live site
+        if: env.HAS_FTP == 'true'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || 'public_html' }}
+        run: |
+          server="$(printf '%s' "$FTP_SERVER" | tr -d '[:space:]')"
+          server="${server#ftp://}"
+          server="${server%/}"
+          FTP_USERNAME="$(printf '%s' "$FTP_USERNAME" | tr -d '[:space:]')"
+          LFTP_PASSWORD="$(printf '%s' "$LFTP_PASSWORD" | tr -d '\r\n')"
+          export LFTP_PASSWORD
+          lftp -c "
+            set ftp:ssl-allow ${{ vars.FTP_TLS || 'no' }}
+            open -u \"$FTP_USERNAME\" --env-password \"$server\"
+            echo '--- FTP root:'
+            pwd
+            cls -la
+            echo '--- upload folder:'
+            cls -la \"$FTP_SERVER_DIR/\"
+          " || true
+          echo "--- uploaded en/index.html contains the numbers strip?"
+          grep -c 'data-to=' out/en/index.html || true
+          for url in "https://orvann.com/" "https://orvann.com/?v=$GITHUB_RUN_ID"; do
+            echo "--- $url"
+            curl -sS -D headers.txt -o live.html "$url" || true
+            grep -iE '^(server|last-modified|age|x-.*cache.*|cache-control|platform|panel):' headers.txt || true
+            echo "numbers strip: $(grep -c 'Partner brands' live.html || true)"
+            echo "UAE banner: $(grep -ci 'coming soon to the uae' live.html || true)"
+            echo "built by Next (has /_next/): $(grep -c '/_next/' live.html || true)"
+            head -c 400 live.html; echo
+          done
+
       - name: Upload skipped
         if: env.HAS_FTP != 'true'
         run: echo "::warning::FTP secrets are not set, so the site was built and tested but not uploaded."
