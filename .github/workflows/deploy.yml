@@ -5,7 +5,7 @@ name: Deploy to Hostinger
 # (Settings → Secrets and variables → Actions). Without them the build and tests still
 # run, and the upload is skipped.
 #
-# The upload only adds and replaces files: it never deletes files it did not upload,
+# The upload only adds and replaces files: it never deletes anything on the server,
 # so api/crm-config.php (kept on the server, not in the repository) is left alone.
 
 on:
@@ -39,20 +39,30 @@ jobs:
       - run: npm run build
       - run: npm test
 
+      - name: Install lftp
+        if: env.HAS_FTP == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      # mirror -R without --delete only adds and replaces files.
       - name: Upload to Hostinger
         if: env.HAS_FTP == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ${{ vars.FTP_PROTOCOL || 'ftp' }}
-          local-dir: ./out/
-          server-dir: ${{ vars.FTP_SERVER_DIR || 'public_html/' }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            api/crm-config.php
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || 'public_html' }}
+        run: |
+          server="${FTP_SERVER#ftp://}"
+          server="${server%/}"
+          lftp -c "
+            set net:max-retries 5
+            set net:reconnect-interval-base 5
+            set net:timeout 30
+            set ftp:passive-mode on
+            set ftp:ssl-allow ${{ vars.FTP_TLS || 'no' }}
+            open -u \"$FTP_USERNAME\" --env-password \"$server\"
+            mirror --reverse --verbose --parallel=4 --exclude-glob api/crm-config.php ./out/ \"$FTP_SERVER_DIR/\"
+          "
 
       - name: Upload skipped
         if: env.HAS_FTP != 'true'
