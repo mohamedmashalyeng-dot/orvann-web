@@ -45,6 +45,17 @@ export const ar: SiteContent = {
     whatsappFloat: "تحدّث مع أورفان عبر واتساب",
   },
 
+  launch: {
+    announce: "قريبًا في الإمارات",
+    intro: {
+      skip: "تخطَّ المقدمة",
+      from: "القاهرة",
+      to: "الإمارات",
+      eyebrow: "وجهتنا القادمة",
+      title: "قريبًا",
+      place: "أورفان في الإمارات العربية المتحدة",
+    },
+  },
   review: {
     proposedCopy: "نص مقترح",
   },

@@ -45,6 +45,17 @@ export const en: SiteContent = {
     whatsappFloat: "Chat with ORVANN on WhatsApp",
   },
 
+  launch: {
+    announce: "Coming soon to the UAE",
+    intro: {
+      skip: "Skip intro",
+      from: "Cairo",
+      to: "UAE",
+      eyebrow: "Next destination",
+      title: "Coming soon",
+      place: "ORVANN in the United Arab Emirates",
+    },
+  },
   review: {
     proposedCopy: "Proposed copy",
   },

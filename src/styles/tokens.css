@@ -96,6 +96,9 @@
   --grid-columns: 12;
   --grid-gap: clamp(1rem, 0.5rem + 1.6vw, 2rem);
   --header-height: 4.5rem;
+  /* The UAE launch bar sits above the header (AnnouncementBar); content clears both. */
+  --announce-height: 2.75rem;
+  --header-offset: calc(var(--announce-height) + var(--header-height));
 
   /* ---- Radii ---- */
   --radius-0: 0;
@@ -137,6 +140,7 @@
   --z-header: 50;
   --z-float: 40;
   --z-curtain: 100;
+  --z-intro: 110;
 }
 
 @media (min-width: 48em) {

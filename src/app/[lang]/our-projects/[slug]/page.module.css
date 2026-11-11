@@ -101,7 +101,7 @@
   .meta {
     grid-column: 1 / span 3;
     position: sticky;
-    inset-block-start: calc(var(--header-height) + var(--space-6));
+    inset-block-start: calc(var(--header-offset) + var(--space-6));
     align-self: start;
   }
 

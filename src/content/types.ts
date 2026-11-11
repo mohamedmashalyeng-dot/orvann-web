@@ -108,6 +108,11 @@ export type SiteContent = {
     whatsappFloat: string;
   };
   review: { proposedCopy: string };
+  /** The UAE launch: the bar above the header and the opening intro. */
+  launch: {
+    announce: string;
+    intro: { skip: string; from: string; to: string; eyebrow: string; title: string; place: string };
+  };
   /** The five service names, by id. */
   serviceNames: Record<ServiceId, string>;
   /** Shared links: Start a Project (the form) and Talk to Us (direct contact). */

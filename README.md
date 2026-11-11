@@ -8,7 +8,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 
 | Route | Page |
 | --- | --- |
-| `/` | Homepage: hero, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
+| `/` | Homepage: hero, UAE launch bar and intro, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
 | `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), each with its deliverables and a link to its page, how they work together, FAQ |
 | `/services/<service>/` | One page per service (`strategy-consulting`, `branding-creative`, `marketing-media`, `digital-experiences`, `events-outdoor-production`): who it is for, what you get, how it works, related work, FAQ, and Start a Project with the service ticked (`/contact-us/?need=<id>#project-form`) |
 | `/our-projects/` | All 18 projects, filterable by the five services |

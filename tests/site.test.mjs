@@ -265,6 +265,14 @@ test("the homepage no longer shows the numbers strip", () => {
   }
 });
 
+test("every page carries the UAE launch bar and intro", () => {
+  eachPage((html, path) => {
+    assert.ok(/data-launch-intro/.test(html), `${path}: launch intro missing`);
+    assert.ok(/orvann-intro/.test(html), `${path}: launch intro script missing`);
+    assert.ok(/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: launch bar missing`);
+  });
+});
+
 test("every page has its own title and description", () => {
   const seen = { title: new Map(), description: new Map() };
   eachPage((html, path) => {

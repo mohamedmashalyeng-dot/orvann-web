@@ -48,7 +48,7 @@
 
 /* Start a Project and Talk to Us jump here: keep the heading clear of the fixed header. */
 .formSection {
-  scroll-margin-block-start: var(--header-height);
+  scroll-margin-block-start: var(--header-offset);
 }
 
 /* Three columns on desktop: a step smaller, so an email address or phone number keeps to

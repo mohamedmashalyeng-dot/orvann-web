@@ -9,7 +9,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+  scroll-padding-top: calc(var(--header-offset) + var(--space-4));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -89,8 +89,15 @@ main:focus {
   outline: none;
 }
 
-html.menu-open {
+html.menu-open,
+html[data-intro="play"] {
   overflow: hidden;
+}
+
+/* While the launch intro plays, the page underneath holds its entrance animations. */
+html[data-intro="play"] body > :not([data-launch-intro]),
+html[data-intro="play"] body > :not([data-launch-intro]) * {
+  animation-play-state: paused !important;
 }
 
 /* ---------- Layout utilities ---------- */

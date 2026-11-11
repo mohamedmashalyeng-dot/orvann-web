@@ -1,0 +1,243 @@
+/*
+ * UAE launch bar: a fixed strip above the header where a small plane tows a waving
+ * "Coming soon to the UAE" banner across the screen.
+ */
+
+.announce {
+  --pass: 16s;
+  --cross-ease: cubic-bezier(0.15, 0.55, 0.85, 0.45);
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--z-header);
+  height: var(--announce-height);
+  overflow: hidden;
+  background:
+    radial-gradient(60% 140% at 50% -20%, #3c69f140, transparent 70%),
+    linear-gradient(var(--color-navy-900), var(--color-ink));
+  color: var(--color-white);
+  border-block-end: 1px solid #ffffff14;
+}
+
+/* A few stars. */
+.announce::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 6% 30%, #ffffff8c 0.8px, #0000 1.4px),
+    radial-gradient(circle at 19% 70%, #fff6 0.8px, #0000 1.4px),
+    radial-gradient(circle at 33% 25%, #ffffff80 0.8px, #0000 1.4px),
+    radial-gradient(circle at 52% 75%, #ffffff59 0.8px, #0000 1.4px),
+    radial-gradient(circle at 68% 35%, #ffffff80 0.8px, #0000 1.4px),
+    radial-gradient(circle at 84% 65%, #fff6 0.8px, #0000 1.4px),
+    radial-gradient(circle at 95% 28%, #ffffff8c 0.8px, #0000 1.4px);
+  background-repeat: no-repeat;
+}
+
+.flight {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  translate: 0 -50%;
+  animation: announce-cross var(--pass) var(--cross-ease) infinite;
+}
+
+.bob {
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  animation: announce-bob 2.4s ease-in-out infinite alternate;
+}
+
+.plane {
+  flex: none;
+  width: 4.5rem;
+  fill: var(--color-white);
+  overflow: visible;
+}
+
+.prop {
+  fill: #ffffff4d;
+  transform-box: fill-box;
+  transform-origin: 50%;
+  animation: announce-spin 90ms linear infinite alternate;
+}
+
+.strut {
+  fill: none;
+  stroke: var(--color-white);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+}
+
+.stripe {
+  fill: var(--color-blue-500);
+}
+
+.window {
+  fill: var(--color-blue-700);
+}
+
+.wheel {
+  fill: var(--color-ink);
+  stroke: var(--color-white);
+  stroke-width: 2px;
+}
+
+.light {
+  fill: #ff5a5a;
+  animation: announce-blink 0.9s step-end infinite;
+}
+
+.rope {
+  flex: none;
+  width: 1.75rem;
+  height: 1.25rem;
+  overflow: visible;
+}
+
+.rope path {
+  fill: none;
+  stroke: #fff9;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The banner is cut into vertical strips that rise and fall out of step, so it waves. */
+.banner {
+  --strips: 12;
+  --wave: 2.4s;
+  position: relative;
+  display: block;
+  flex: none;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: -1.5px;
+  width: 2px;
+  border-radius: 1px;
+  background-color: var(--color-mist);
+}
+
+.sizer {
+  display: block;
+  visibility: hidden;
+}
+
+.face {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 0.9em 0.3em 0.7em;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .face {
+  direction: rtl;
+}
+
+.face .faceMark {
+  height: 1.15em;
+  color: var(--color-blue-500);
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  left: calc(var(--i) * 100% / var(--strips));
+  width: calc(100% / var(--strips) + 0.5px);
+  height: 100%;
+  overflow: hidden;
+  animation: announce-wave calc(var(--wave) / 2) ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * var(--wave) / var(--strips) * -1);
+}
+
+.strip > .face {
+  position: absolute;
+  top: 0;
+  left: calc(var(--i) * (100% - 0.5px) * -1);
+  width: calc(var(--strips) * (100% - 0.5px));
+  height: 100%;
+}
+
+.strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, #0000, #0a0c121f, #0000);
+  animation: announce-fold calc(var(--wave) / 2) ease-in-out infinite alternate;
+  animation-delay: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flight {
+    left: 50%;
+    translate: -50% -50%;
+    animation: none;
+  }
+}
+
+@media print {
+  .announce {
+    display: none;
+  }
+}
+
+@keyframes announce-cross {
+  0% {
+    transform: translate(100vw);
+  }
+  85%,
+  to {
+    transform: translate(-100%);
+  }
+}
+
+@keyframes announce-bob {
+  0% {
+    transform: translateY(-1.5px) rotate(-0.8deg);
+  }
+  to {
+    transform: translateY(1.5px) rotate(0.8deg);
+  }
+}
+
+@keyframes announce-spin {
+  to {
+    transform: scaleY(0.75);
+  }
+}
+
+@keyframes announce-blink {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes announce-wave {
+  0% {
+    transform: translateY(calc(-0.3px - var(--i) * 0.15px));
+  }
+  to {
+    transform: translateY(calc(0.3px + var(--i) * 0.15px));
+  }
+}
+
+@keyframes announce-fold {
+  0% {
+    opacity: 0;
+  }
+}

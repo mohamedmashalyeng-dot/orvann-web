@@ -10,6 +10,8 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 import { TransitionShell } from "@/components/layout/TransitionShell";
+import { AnnouncementBar } from "@/components/launch/AnnouncementBar";
+import { LaunchIntro, launchIntroScript } from "@/components/launch/LaunchIntro";
 import { MotionRuntime } from "@/components/motion/MotionRuntime";
 import "lenis/dist/lenis.css";
 import "@/styles/tokens.css";
@@ -83,11 +85,14 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: launchIntroScript }} />
       </head>
       <body id="top" className="tone-base">
+        <LaunchIntro intro={content.launch.intro} />
         <a id="skip-link" className="skip-link" href="#main">
           {content.a11y.skipToContent}
         </a>
+        <AnnouncementBar text={content.launch.announce} />
         <SiteHeader
           locale={content.locale}
           header={header}
