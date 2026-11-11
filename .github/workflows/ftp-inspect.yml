@@ -23,12 +23,14 @@ jobs:
           lftp -c "
             set ftp:ssl-allow no
             open -u \"$FTP_USERNAME\" --env-password \"$server\"
-            echo '--- quote PWD'
-            quote PWD
-            echo '--- ..'
-            cls -la ..
-            echo '--- ../..'
-            cls -la ../..
-            echo '--- / (depth 3, dirs only)'
-            find -d 3 / | grep '/$' | head -80
+            echo '--- domains/orvann.com'
+            cls -la /domains/orvann.com/
+            echo '--- domains/orvann.com/public_html'
+            cls -la /domains/orvann.com/public_html/
+            echo '--- dirs under domains/orvann.com (depth 3)'
+            find -d 3 /domains/orvann.com/ | grep '/$' | head -60
+            echo '--- .git_clones'
+            find -d 2 /.git_clones/ | head -30
+            echo '--- home index.html'
+            cat /domains/orvann.com/public_html/.htaccess
           " || true
