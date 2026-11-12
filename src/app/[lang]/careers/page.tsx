@@ -3,6 +3,7 @@ import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/motion/Reveal";
 import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
 import { PageIntro } from "@/components/page/PageIntro";
@@ -19,7 +20,8 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Careers & Internships. The application form (#application-form) posts to a small PHP
+ * Careers & Internships, a standalone page: outside the (site) group, so it has no header,
+ * footer, launch bar or WhatsApp shortcut; only the ORVANN logo above the intro. The application form (#application-form) posts to a small PHP
  * handler on the host that records the application, CV included, in the CRM and emails ORVANN.
  */
 export default async function CareersPage({ params }: LangParams) {
@@ -28,7 +30,10 @@ export default async function CareersPage({ params }: LangParams) {
   const { zones, regions } = content.pages.contact.form;
 
   return (
-    <>
+    <main id="main" tabIndex={-1} className={styles.standalone} data-standalone="">
+      <div className={cn("container", styles.brand)}>
+        <Logo label={content.meta.siteName} className={styles.logo} />
+      </div>
       <PageIntro intro={page.intro} visual={<ValuesOrbit values={page.process.steps.map((step) => step.title)} />}>
         <ButtonLink href="#application-form" icon="arrow">
           {page.apply}
@@ -85,6 +90,6 @@ export default async function CareersPage({ params }: LangParams) {
       </section>
 
       <FaqSection title={page.faqTitle} faqs={page.faqs} />
-    </>
+    </main>
   );
 }

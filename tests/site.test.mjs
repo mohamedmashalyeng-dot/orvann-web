@@ -35,6 +35,8 @@ const arabic = pages.has("/ar/");
 const work = pages.has("/our-projects/");
 const builtLocales = arabic ? ["en", "ar"] : ["en"];
 const inBuiltLocales = (paths) => paths.filter((path) => arabic || localeOf(path) === "en");
+// Standalone pages (outside src/app/[lang]/(site)) have no header, footer or launch bar.
+const standalone = (path) => /^(\/ar)?\/careers\/$/.test(path);
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
 // Each service area's own page (serviceSlugs in src/content/index.ts), by service id.
@@ -97,7 +99,7 @@ test("every page links to its other-language version and lists hreflang alternat
   eachPage((html, path) => {
     const other = otherPath(path);
     const switches = [...html.matchAll(/<a\b[^>]*hrefLang="(en|ar)"[^>]*>/g)].map(([tag]) => tag.match(/href="([^"]+)"/)[1]);
-    if (arabic) assert.ok(switches.length > 0, "language switch missing");
+    if (arabic && !standalone(path)) assert.ok(switches.length > 0, "language switch missing");
     else assert.equal(switches.length, 0, "language switch to a hidden language");
     for (const href of switches) assert.equal(href, other, "language switch points at the wrong page");
     for (const locale of builtLocales) {
@@ -288,8 +290,13 @@ test("the homepage no longer shows the numbers strip", () => {
   }
 });
 
-test("every page carries the UAE launch bar and intro", () => {
+test("every page carries the UAE launch bar and intro, and standalone pages no site chrome", () => {
   eachPage((html, path) => {
+    if (standalone(path)) {
+      assert.ok(!/data-launch-intro|orvann-intro|id="site-footer"|<header\b[^>]*site-header/.test(html), `${path}: site chrome on a standalone page`);
+      assert.ok(!/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: launch bar on a standalone page`);
+      return;
+    }
     assert.ok(/data-launch-intro/.test(html), `${path}: launch intro missing`);
     assert.ok(/orvann-intro/.test(html), `${path}: launch intro script missing`);
     assert.ok(/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: launch bar missing`);

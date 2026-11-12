@@ -1,3 +1,26 @@
+/* No fixed header or launch bar on this page: nothing to keep clear of. */
+:global(html:has([data-standalone])) {
+  --announce-height: 0px;
+  --header-offset: 4.5rem; /* room for the logo instead */
+}
+
+.standalone {
+  position: relative;
+}
+
+/* The logo sits over the top of the intro, where the header would have been. */
+.brand {
+  position: absolute;
+  inset-block-start: var(--space-6);
+  inset-inline: 0;
+  z-index: 2;
+}
+
+.logo {
+  width: 7rem;
+  height: auto;
+}
+
 .tracks,
 .steps {
   display: grid;

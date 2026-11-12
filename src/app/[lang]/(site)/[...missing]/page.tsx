@@ -10,4 +10,4 @@ export function generateStaticParams() {
   return [{ missing: ["404"] }];
 }
 
-export { default, generateMetadata } from "../not-found";
+export { default, generateMetadata } from "../../not-found";

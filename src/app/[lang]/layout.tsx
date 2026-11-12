@@ -3,15 +3,10 @@ import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { contentFor, type LangParams } from "@/content/server";
-import { analyticsId, flags, googleSiteVerification, isPublishedHref, publishedLocales, site, siteUrl } from "@/config/site";
+import { analyticsId, flags, googleSiteVerification, publishedLocales, siteUrl } from "@/config/site";
 import { analyticsScript } from "@/lib/analytics";
 import { DEFAULT_THEME, THEME_COLORS, themeScript } from "@/theme/theme";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import { FloatingWhatsApp } from "@/components/layout/FloatingWhatsApp";
 import { TransitionShell } from "@/components/layout/TransitionShell";
-import { AnnouncementBar } from "@/components/launch/AnnouncementBar";
-import { LaunchIntro, launchIntroScript } from "@/components/launch/LaunchIntro";
 import { MotionRuntime } from "@/components/motion/MotionRuntime";
 import "lenis/dist/lenis.css";
 import "@/styles/tokens.css";
@@ -66,13 +61,13 @@ export const viewport: Viewport = {
   themeColor: THEME_COLORS[DEFAULT_THEME],
 };
 
-// The header, footer, WhatsApp shortcut and page-transition curtain live here, so they
-// stay mounted while pages change underneath them. Each page renders its sections only.
+// The document itself: fonts, theme, skip link, the page-transition curtain and motion.
+// The header, footer, launch bar and WhatsApp shortcut are the site's own pages' chrome
+// ((site)/layout.tsx); a standalone page such as Careers renders without them, and each
+// page group supplies the <main id="main"> the skip link points at.
 // suppressHydrationWarning: the theme script may change data-theme before React hydrates.
 export default async function RootLayout({ children, params }: Readonly<{ children: React.ReactNode }> & LangParams) {
   const content = await contentFor(params);
-  // Links into hidden parts never reach the page, not even in the header's client data.
-  const header = { ...content.header, nav: content.header.nav.filter((item) => isPublishedHref(item.href)) };
 
   return (
     <html
@@ -85,31 +80,12 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <script dangerouslySetInnerHTML={{ __html: launchIntroScript }} />
       </head>
       <body id="top" className="tone-base">
-        <LaunchIntro intro={content.launch.intro} />
         <a id="skip-link" className="skip-link" href="#main">
           {content.a11y.skipToContent}
         </a>
-        <AnnouncementBar text={content.launch.announce} />
-        <SiteHeader
-          locale={content.locale}
-          header={header}
-          actions={content.actions}
-          nav={header.nav}
-          languageSwitch={flags.showArabic}
-          a11y={content.a11y}
-        />
-        <main id="main" tabIndex={-1}>
-          {children}
-        </main>
-        <SiteFooter content={content} />
-        <FloatingWhatsApp
-          href={site.whatsapp.href}
-          label={content.a11y.whatsappFloat}
-          newTabLabel={content.a11y.newTab}
-        />
+        {children}
         <TransitionShell />
         <MotionRuntime />
         {analyticsId && (
