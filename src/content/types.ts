@@ -4,6 +4,7 @@
  */
 
 import type { BudgetId, JobTitleId, RegionId, RegionZoneId, TimelineId } from "./lead-options";
+import type { ArrangementId, EducationId, EmploymentId, ExperienceId, InterestId } from "./career-options";
 
 export type Locale = "en" | "ar";
 export type Direction = "ltr" | "rtl";
@@ -253,6 +254,67 @@ export type SiteContent = {
       next: string;
       /** Link to the client's own website, on case studies that have one. */
       visitWebsite: string;
+    };
+    /**
+     * Careers & Internships: the application form posts to public/api/careers.php, which
+     * records it in the CRM and emails ORVANN. Residence reuses contact.form's regions.
+     */
+    careers: {
+      meta: PageMeta;
+      intro: PageIntro;
+      apply: string;
+      /** Who the page is for, before the form. */
+      tracks: { title: string; items: Step[] };
+      process: { title: string; steps: Step[] };
+      form: {
+        title: string;
+        lede: string;
+        /** The four groups of the form, in order. */
+        groups: { personal: string; background: string; preferences: string; documents: string };
+        name: string;
+        phone: string;
+        email: string;
+        region: string;
+        city: string;
+        education: string;
+        educations: Record<EducationId, string>;
+        graduationYear: string;
+        graduationYearHint: string;
+        specialization: string;
+        specializationHint: string;
+        experience: string;
+        experiences: Record<ExperienceId, string>;
+        employment: string;
+        employments: Record<EmploymentId, string>;
+        interest: string;
+        interests: Record<InterestId, string>;
+        arrangements: string;
+        arrangementsHint: string;
+        arrangementOptions: Record<ArrangementId, string>;
+        cv: string;
+        cvHint: string;
+        portfolioUrl: string;
+        portfolioFile: string;
+        portfolioHint: string;
+        linkedin: string;
+        /** Chosen file, and what is wrong with one that will not be accepted. */
+        chooseFile: string;
+        noFile: string;
+        /** "{mb}" becomes the limit. */
+        fileTooLarge: string;
+        fileType: string;
+        arrangementsRequired: string;
+        select: string;
+        optional: string;
+        /** The line above the button; {privacy} becomes a link to the privacy policy. */
+        consent: { before: string; link: string; after: string };
+        submit: string;
+        sending: string;
+        sent: string;
+        failed: string;
+      };
+      faqTitle: string;
+      faqs: Faq[];
     };
     privacy: { meta: PageMeta; intro: PageIntro; effective: string; sections: PolicySection[] };
     publicationLink: string;

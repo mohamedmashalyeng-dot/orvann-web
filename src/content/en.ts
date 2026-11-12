@@ -249,6 +249,7 @@ export const en: SiteContent = {
       { label: "About", href: "/about-us/" },
       { label: "Services", href: "/services/" },
       { label: "Our Work", href: "/our-projects/" },
+      { label: "Careers", href: "/careers/" },
       { label: "Contact", href: "/contact-us/" },
     ],
     rights: "All rights reserved.",

@@ -15,6 +15,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 | `/our-projects/<slug>/` | Case study: services, the challenge, ORVANN's role, execution, outcome, images from the work, next project |
 | `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
+| `/careers/` | Careers & Internships: job and internship tracks, the hiring steps, the application form (`#application-form`, with CV and portfolio uploads), FAQ |
 | `/contact-us/` | Start a Project form (`#project-form`), direct contact (`#direct-contact`), FAQ |
 | `/privacy-policy/` | Privacy policy |
 
@@ -78,6 +79,18 @@ That file is not committed
 it the form only emails. Every email carries a `CRM:` line — recorded, not recorded, or not
 connected — and the visitor is told the form was sent if either the CRM or the email took
 it, so a CRM that is down costs nothing but a lead to add by hand.
+
+**Careers & Internships form.** `public/api/careers.php` works the same way: it emails each
+application to info@orvann.com with the CV (PDF, DOC or DOCX, up to 5 MB) and portfolio
+(PDF, up to 10 MB) attached, and records it in the CRM's **Applications** section
+(`POST /api/applications`, the address next to `/api/leads` in `crm-config.php`; set
+`applications_url` there to override it). It uses the same `crm-config.php` and key, so no
+extra setup. Its lists (academic status, experience, employment status, interest, work
+arrangement) are in `src/content/career-options.ts`, `careers.php` and the CRM's
+`app/config.php` (`applications`); `npm test` checks the form against `careers.php`. Both
+the handler and the CRM check each file's content, not only its name. The host's PHP must
+accept uploads of that size (`upload_max_filesize` and `post_max_size` of at least 16M,
+Hostinger's defaults are higher).
 
 `next build` writes English under `out/en/` and Arabic under `out/ar/`. `public/.htaccess`
 serves English at the root, redirects `/en/…` and the old WordPress Arabic URLs, adds the

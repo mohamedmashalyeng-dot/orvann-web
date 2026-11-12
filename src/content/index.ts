@@ -52,4 +52,5 @@ export function switchLocalePath(pathname: string, to: Locale): string {
 }
 
 export * from "./lead-options";
+export * from "./career-options";
 export type * from "./types";

@@ -228,7 +228,7 @@ function NeedFromLink({ form, values }: { form: RefObject<HTMLFormElement | null
   return null;
 }
 
-function Field({
+export function Field({
   label,
   hint,
   required,
@@ -252,7 +252,7 @@ function Field({
 }
 
 /** A list that starts on an empty line, so nothing is chosen for the visitor. */
-function Select({ placeholder, children, ...props }: ComponentProps<"select"> & { placeholder: string }) {
+export function Select({ placeholder, children, ...props }: ComponentProps<"select"> & { placeholder: string }) {
   return (
     <span className={styles.select}>
       <select defaultValue="" className={styles.input} {...props}>

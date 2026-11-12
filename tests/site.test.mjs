@@ -61,7 +61,7 @@ const eachPage = (check) => {
 };
 
 test("the build contains every published page, in every published language", () => {
-  const published = ["/", "/services/", ...Object.values(servicePages), "/about-us/", "/about-us/company-profile/", "/contact-us/", "/privacy-policy/"];
+  const published = ["/", "/services/", ...Object.values(servicePages), "/about-us/", "/about-us/company-profile/", "/careers/", "/contact-us/", "/privacy-policy/"];
   if (work) published.push("/our-projects/", "/our-projects/tucano-2/");
   for (const path of published) {
     assert.ok(pages.has(path), `${path} was not prerendered`);
@@ -163,18 +163,22 @@ test("contact channels are real, working link formats", () => {
   }
 });
 
-test("the only form is the project form, and it posts to the handler that ships with it", () => {
-  assert.ok(existsSync(new URL("api/project.php", OUT)), "api/project.php is missing from the export");
+test("the only forms are the project and careers forms, each posting to the handler that ships with it", () => {
+  const handlers = { "/contact-us/": "/api/project.php", "/careers/": "/api/careers.php" };
+  for (const handler of Object.values(handlers)) {
+    assert.ok(existsSync(new URL(handler.slice(1), OUT)), `${handler.slice(1)} is missing from the export`);
+  }
   let forms = 0;
   eachPage((html, path) => {
     for (const [tag] of html.matchAll(/<form\b[^>]*>/g)) {
       forms += 1;
-      assert.ok(/\saction="\/api\/project\.php"/.test(tag), `form without the project handler: ${tag}`);
+      const page = path.replace(/^\/ar(?=\/)/, "");
+      assert.ok(page in handlers, `a form outside the contact and careers pages: ${tag}`);
+      assert.ok(tag.includes(` action="${handlers[page]}"`), `form without its handler (${handlers[page]}): ${tag}`);
       assert.ok(/\smethod="post"/i.test(tag), `form does not post: ${tag}`);
-      assert.ok(path.endsWith("/contact-us/"), "the project form belongs on the contact page");
     }
   });
-  assert.equal(forms, builtLocales.length, "expected the project form on each contact page");
+  assert.equal(forms, builtLocales.length * 2, "expected the project and careers forms on each language's pages");
 });
 
 test("every choice the project form offers is one its handler names", () => {
@@ -187,6 +191,25 @@ test("every choice the project form offers is one its handler names", () => {
     // Services, job titles, regions, timelines and budgets: the CRM's lists.
     assert.equal(ids.length, 7 + 8 + 34 + 4 + 5, `${path}: the form's lists have changed size`);
     for (const id of ids) assert.ok(handler.includes(`'${id}' =>`), `${path}: project.php does not name "${id}"`);
+  }
+});
+
+test("every choice the careers form offers is one its handler names, and it uploads files", () => {
+  const handler = read("api/careers.php");
+  for (const path of inBuiltLocales(["/careers/", "/ar/careers/"])) {
+    const [form] = /<form\b[\s\S]*?<\/form>/.exec(pages.get(path).html);
+    assert.ok(/\senctype="multipart\/form-data"/i.test(form), `${path}: the form cannot upload files`);
+    const inputs = [...form.matchAll(/<input\b[^>]*>/g)].map(([tag]) => tag);
+    const picks = inputs.filter((tag) => /\stype="(radio|checkbox)"/.test(tag));
+    const options = [...form.matchAll(/<select\b[^>]*name="(?!graduation_year)[^"]*"[^>]*>([\s\S]*?)<\/select>/g)]
+      .flatMap(([, body]) => [...body.matchAll(/<option\b[^>]*>/g)].map(([tag]) => tag));
+    const ids = [...picks, ...options].map((tag) => /\svalue="([^"]*)"/.exec(tag)?.[1]).filter(Boolean);
+    // Education, interest, arrangements, then regions, experience and employment.
+    assert.equal(ids.length, 2 + 2 + 4 + 34 + 5 + 3, `${path}: the form's lists have changed size`);
+    for (const id of ids) assert.ok(handler.includes(`'${id}' =>`), `${path}: careers.php does not name "${id}"`);
+    for (const name of ["cv", "portfolio"]) {
+      assert.ok(inputs.some((tag) => /\stype="file"/.test(tag) && tag.includes(` name="${name}"`)), `${path}: no ${name} upload`);
+    }
   }
 });
 

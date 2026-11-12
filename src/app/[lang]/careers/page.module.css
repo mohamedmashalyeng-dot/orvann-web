@@ -1,0 +1,44 @@
+.tracks,
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.track,
+.step {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+}
+
+.track {
+  padding: var(--space-6);
+}
+
+.number {
+  color: var(--accent-text);
+}
+
+/* Apply Now jumps here: keep the heading clear of the fixed header. */
+.formSection {
+  scroll-margin-block-start: var(--header-offset);
+}
+
+@media (min-width: 48em) {
+  .tracks,
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64em) {
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+}

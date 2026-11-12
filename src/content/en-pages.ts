@@ -732,6 +732,137 @@ export const enPages: SiteContent["pages"] = {
     visitWebsite: "Visit website",
   },
 
+  // [proposed] Careers & Internships. The lists (education, experience, availability,
+  // interest and work arrangement) are the CRM's ('applications' in its app/config.php).
+  careers: {
+    meta: {
+      title: "Careers & Internships at ORVANN | Join Our Team",
+      description:
+        "Apply for job opportunities and internships at ORVANN across strategy, branding, marketing, digital and production. Share your CV and portfolio with our team.",
+    },
+    intro: {
+      label: "Careers & Internships",
+      title: "Grow your career with ORVANN.",
+      lede: "We bring strategy, creative, marketing, digital and on-ground execution together, and we are always looking for people who take ownership of their work and want to see it make a real difference for the businesses we serve.",
+      body: [
+        "Whether you are an experienced professional or a student taking your first step, tell us about yourself and the kind of opportunity you are looking for.",
+      ],
+    },
+    apply: "Apply Now",
+    tracks: {
+      title: "Two ways to join us.",
+      items: [
+        {
+          title: "Job Opportunities",
+          text: "Full-time and part-time roles, on-site or remote, for professionals ready to take ownership of client work across our service areas.",
+        },
+        {
+          title: "Internships",
+          text: "Structured, hands-on experience for students and recent graduates, working alongside our team on real projects.",
+        },
+      ],
+    },
+    process: {
+      title: "How our hiring process works.",
+      steps: [
+        { title: "Apply", text: "Submit your details, CV and, where relevant, your portfolio through the form below." },
+        { title: "Review", text: "Our team reviews every application against current and upcoming opportunities." },
+        { title: "Interview", text: "Shortlisted candidates are contacted directly to arrange an interview." },
+        { title: "Welcome", text: "Successful candidates receive an offer and a clear onboarding plan." },
+      ],
+    },
+    form: {
+      title: "Submit your application.",
+      lede: "Fields marked * are required. All information is handled confidentially and used for recruitment purposes only.",
+      groups: {
+        personal: "Personal Information",
+        background: "Education & Experience",
+        preferences: "Opportunity & Availability",
+        documents: "CV, Portfolio & Profiles",
+      },
+      name: "Full Name",
+      phone: "Mobile Number",
+      email: "Email Address",
+      region: "Place of Residence",
+      city: "City / Area",
+      education: "Academic Status",
+      educations: { student: "Current Student", graduate: "Graduate" },
+      graduationYear: "Graduation Year",
+      graduationYearHint: "Your expected year, if you are still studying.",
+      specialization: "Field of Study / Specialization",
+      specializationHint: "For example: Marketing, Graphic Design, Computer Science.",
+      experience: "Years of Experience",
+      experiences: {
+        none: "No Experience Yet",
+        "lt-1": "Less than 1 Year",
+        "1-3": "1–3 Years",
+        "3-5": "3–5 Years",
+        "5-plus": "More than 5 Years",
+      },
+      employment: "Current Employment Status",
+      employments: {
+        available: "Available Full-Time",
+        employed: "Currently Employed Elsewhere",
+        freelance: "Working Freelance",
+      },
+      interest: "Interested In",
+      interests: { job: "Job Opportunity", internship: "Internship" },
+      arrangements: "Preferred Work Arrangement",
+      arrangementsHint: "Select all that apply.",
+      arrangementOptions: {
+        "full-time": "Full-Time",
+        "part-time": "Part-Time",
+        "on-site": "On-Site",
+        remote: "Remote",
+      },
+      cv: "CV / Résumé",
+      cvHint: "PDF, DOC or DOCX, up to 5 MB.",
+      portfolioUrl: "Portfolio Link",
+      portfolioFile: "Portfolio File",
+      portfolioHint: "A link, a PDF up to 10 MB, or both. Recommended for creative and digital roles.",
+      linkedin: "LinkedIn Profile",
+      chooseFile: "Choose File",
+      noFile: "No file chosen",
+      fileTooLarge: "This file is larger than {mb} MB. Please upload a smaller file.",
+      fileType: "This file type is not accepted. Please upload one of the formats listed.",
+      arrangementsRequired: "Please select at least one work arrangement.",
+      select: "Select…",
+      optional: "Optional.",
+      consent: {
+        before: "By submitting this form, you agree that ORVANN may store and process your application for recruitment purposes, as described in our ",
+        link: "Privacy Policy",
+        after: ".",
+      },
+      submit: "Submit Application",
+      sending: "Submitting…",
+      sent: "Thank you. Your application has been received. Our team will review it and contact you if your profile matches a current or upcoming opportunity.",
+      failed: "Your application could not be submitted. Please try again, or email your CV to info@orvann.com.",
+    },
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      {
+        question: "Can I apply if there is no open role that matches my profile?",
+        answer:
+          "Yes. Your application is kept on file, and our team reviews it whenever a suitable opportunity becomes available.",
+      },
+      {
+        question: "Can students apply for internships?",
+        answer:
+          "Yes. Current students and recent graduates are welcome to apply. Select “Internship” and add your expected graduation year.",
+      },
+      {
+        question: "Do I need a portfolio?",
+        answer:
+          "A portfolio is optional, but strongly recommended for creative, design, content and digital roles. You can share a link, a PDF, or both.",
+      },
+      {
+        question: "Can I update my application?",
+        answer:
+          "Yes. Submit the form again with the same mobile number or email address, and your latest details and files will replace the previous ones.",
+      },
+    ],
+  },
+
   // orvann.com/privacy-policy/ [site] — legal text restated, not rewritten. Confirm with counsel.
   privacy: {
     meta: {

@@ -242,6 +242,7 @@ export const ar: SiteContent = {
       { label: "من نحن", href: "/ar/about-us/" },
       { label: "خدماتنا", href: "/ar/services/" },
       { label: "أعمالنا", href: "/ar/our-projects/" },
+      { label: "الوظائف والتدريب", href: "/ar/careers/" },
       { label: "تواصل معنا", href: "/ar/contact-us/" },
     ],
     rights: "جميع الحقوق محفوظة.",

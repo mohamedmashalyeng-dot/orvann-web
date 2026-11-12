@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       : []),
     ["/about-us/", 0.8],
     ...content.pages.publications.map((publication): [string, number] => [`/about-us/${publication.slug}/`, 0.4]),
+    ["/careers/", 0.6],
     ["/contact-us/", 0.8],
     ["/privacy-policy/", 0.2],
   ];
