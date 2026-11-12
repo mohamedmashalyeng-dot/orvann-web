@@ -1,19 +1,19 @@
-/* No fixed header or launch bar on this page: nothing to keep clear of. */
+/* A page with the form only: no fixed header or launch bar to keep clear of. */
 :global(html:has([data-standalone])) {
   --announce-height: 0px;
-  --header-offset: 4.5rem; /* room for the logo instead */
+  --header-offset: 0px;
 }
 
-.standalone {
-  position: relative;
+.page {
+  min-height: 100vh;
+  padding-block: var(--space-7) var(--space-10);
 }
 
-/* The logo sits over the top of the intro, where the header would have been. */
-.brand {
-  position: absolute;
-  inset-block-start: var(--space-6);
-  inset-inline: 0;
-  z-index: 2;
+.inner {
+  display: grid;
+  gap: var(--space-8);
+  max-width: calc(56rem + 2 * var(--gutter));
+  margin-inline: auto;
 }
 
 .logo {
@@ -21,47 +21,13 @@
   height: auto;
 }
 
-.tracks,
-.steps {
+.head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
+  justify-items: start;
 }
 
-.track,
-.step {
-  display: grid;
-  gap: var(--space-3);
-  align-content: start;
-  padding: var(--space-5);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background-color: var(--surface-raised);
-}
-
-.track {
-  padding: var(--space-6);
-}
-
-.number {
-  color: var(--accent-text);
-}
-
-/* Apply Now jumps here: keep the heading clear of the fixed header. */
-.formSection {
-  scroll-margin-block-start: var(--header-offset);
-}
-
-@media (min-width: 48em) {
-  .tracks,
-  .steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 64em) {
-  .steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--grid-gap);
-  }
+.lede {
+  max-width: var(--measure);
+  color: var(--text-muted);
 }

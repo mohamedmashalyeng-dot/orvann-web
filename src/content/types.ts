@@ -256,16 +256,13 @@ export type SiteContent = {
       visitWebsite: string;
     };
     /**
-     * Careers & Internships: the application form posts to public/api/careers.php, which
+     * Careers & Internships, the application form only. It posts to public/api/careers.php, which
      * records it in the CRM and emails ORVANN. Residence reuses contact.form's regions.
      */
     careers: {
       meta: PageMeta;
-      intro: PageIntro;
-      apply: string;
-      /** Who the page is for, before the form. */
-      tracks: { title: string; items: Step[] };
-      process: { title: string; steps: Step[] };
+      /** The small label above the form's title. */
+      label: string;
       form: {
         title: string;
         lede: string;
@@ -313,8 +310,6 @@ export type SiteContent = {
         sent: string;
         failed: string;
       };
-      faqTitle: string;
-      faqs: Faq[];
     };
     privacy: { meta: PageMeta; intro: PageIntro; effective: string; sections: PolicySection[] };
     publicationLink: string;

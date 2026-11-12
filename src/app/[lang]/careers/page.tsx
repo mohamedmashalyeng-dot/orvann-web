@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
-import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Logo } from "@/components/ui/Logo";
-import { Reveal } from "@/components/motion/Reveal";
-import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
-import { PageIntro } from "@/components/page/PageIntro";
-import { SectionHead } from "@/components/page/SectionHead";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { CareersForm } from "@/components/page/CareersForm";
-import { FaqSection } from "@/components/page/FaqSection";
 import styles from "./page.module.css";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
@@ -17,12 +12,11 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
   return pageMetadata(content, content.pages.careers.meta, "/careers/");
 }
 
-const pad = (n: number) => String(n).padStart(2, "0");
-
 /**
- * Careers & Internships, a standalone page: outside the (site) group, so it has no header,
- * footer, launch bar or WhatsApp shortcut; only the ORVANN logo above the intro. The application form (#application-form) posts to a small PHP
- * handler on the host that records the application, CV included, in the CRM and emails ORVANN.
+ * Careers & Internships: the application form and nothing else. A standalone page, outside
+ * the (site) group, so it has no header, footer, launch bar or WhatsApp shortcut; only the
+ * ORVANN logo above the form. The form posts to a small PHP handler on the host that records
+ * the application, CV included, in the CRM and emails ORVANN.
  */
 export default async function CareersPage({ params }: LangParams) {
   const content = await contentFor(params);
@@ -30,66 +24,16 @@ export default async function CareersPage({ params }: LangParams) {
   const { zones, regions } = content.pages.contact.form;
 
   return (
-    <main id="main" tabIndex={-1} className={styles.standalone} data-standalone="">
-      <div className={cn("container", styles.brand)}>
+    <main id="main" tabIndex={-1} className={cn("tone-base", styles.page)} data-standalone="">
+      <div id="application-form" className={cn("container", styles.inner)}>
         <Logo label={content.meta.siteName} className={styles.logo} />
+        <header className={styles.head}>
+          <SectionLabel>{page.label}</SectionLabel>
+          <h1 className="type-h2">{page.form.title}</h1>
+          <p className={cn("type-body", styles.lede)}>{page.form.lede}</p>
+        </header>
+        <CareersForm locale={content.locale} copy={page.form} places={{ zones, regions }} />
       </div>
-      <PageIntro intro={page.intro} visual={<ValuesOrbit values={page.process.steps.map((step) => step.title)} />}>
-        <ButtonLink href="#application-form" icon="arrow">
-          {page.apply}
-        </ButtonLink>
-      </PageIntro>
-
-      <section className="tone-alt section" aria-labelledby="tracks-title">
-        <div className="container">
-          <SectionHead id="tracks-title" title={page.tracks.title} />
-          <Reveal>
-            <ul className={styles.tracks}>
-              {page.tracks.items.map((track, index) => (
-                <li key={track.title} className={styles.track} data-reveal="">
-                  <span className={cn("type-label", styles.number)} aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  <h3 className="type-h3">{track.title}</h3>
-                  <p className="type-body">{track.text}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="process-title">
-        <div className="container">
-          <SectionHead id="process-title" title={page.process.title} />
-          <Reveal>
-            <ol className={styles.steps}>
-              {page.process.steps.map((step, index) => (
-                <li key={step.title} className={styles.step} data-reveal="">
-                  <span className={cn("type-label", styles.number)} aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  <h3 className="type-h3">{step.title}</h3>
-                  <p className="type-body">{step.text}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="application-form" className={cn("tone-alt section", styles.formSection)} aria-labelledby="form-title">
-        <div className="container">
-          <SectionHead id="form-title" title={page.form.title} intro={page.form.lede} />
-          <Reveal>
-            <div data-reveal="">
-              <CareersForm locale={content.locale} copy={page.form} places={{ zones, regions }} />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <FaqSection title={page.faqTitle} faqs={page.faqs} />
     </main>
   );
 }
