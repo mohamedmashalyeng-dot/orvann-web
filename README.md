@@ -15,7 +15,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 | `/our-projects/<slug>/` | Case study: services, the challenge, ORVANN's role, execution, outcome, images from the work, next project |
 | `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
-| `/careers/` | Careers & Internships, a standalone page (no header, footer or launch bar; it sits outside `src/app/[lang]/(site)/`, the group whose layout holds them): job and internship tracks, the hiring steps, the application form (`#application-form`, with CV and portfolio uploads), FAQ |
+| `/careers/` | Careers & Internships: the application form only (`#application-form`, with CV and portfolio uploads), on a standalone page with no header, footer or launch bar (it sits outside `src/app/[lang]/(site)/`, the group whose layout holds them) |
 | `/contact-us/` | Start a Project form (`#project-form`), direct contact (`#direct-contact`), FAQ |
 | `/privacy-policy/` | Privacy policy |
 
