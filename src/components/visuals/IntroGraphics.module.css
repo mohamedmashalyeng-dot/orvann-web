@@ -130,6 +130,11 @@
   height: auto;
 }
 
+/* On the light theme's paper the monogram takes ORVANN's colour logo blue. */
+:global(:root[data-theme="light"]) .mark {
+  color: var(--color-logo-blue);
+}
+
 /* ---------- Motion ----------
    Entrance plays with the page intro (and after a page transition); the loops are slow and
    ambient. Reduced motion shows the finished illustration, still. */
