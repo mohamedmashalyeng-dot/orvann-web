@@ -4,9 +4,9 @@
 }
 
 /* The full logo, stacked: monogram, ORVANN and YOUR GROWTH PARTNER. ORVANN's own files,
-   black on the light theme and white on the dark (public/brand/orvann-logo-black.png and
-   orvann-logo-white.png: "orvann_final_logo-07" from ORVANN, Nov 2026, cropped to the
-   drawing, 884 × 565). */
+   blue (#034AFD) on the light theme and white on the dark (public/brand/orvann-logo-blue.png
+   and orvann-logo-white.png: "orvann_final_logo-09/07" from ORVANN, Nov 2026, cropped to
+   the drawing, 884 × 565). The black file (orvann-logo-black.png) is kept for print. */
 .full {
   aspect-ratio: 884 / 565;
   height: 3rem;
@@ -14,7 +14,7 @@
 }
 
 :global(:root[data-theme="light"]) .full {
-  background-image: url("/brand/orvann-logo-black.png");
+  background-image: url("/brand/orvann-logo-blue.png");
 }
 
 /* The monogram alone, drawn as a CSS mask so it takes the current text colour.
