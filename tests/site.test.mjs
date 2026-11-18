@@ -207,7 +207,7 @@ test("every choice the careers form offers is one its handler names, and it uplo
       .flatMap(([, body]) => [...body.matchAll(/<option\b[^>]*>/g)].map(([tag]) => tag));
     const ids = [...picks, ...options].map((tag) => /\svalue="([^"]*)"/.exec(tag)?.[1]).filter(Boolean);
     // Education, interest, arrangements, then regions, experience and employment.
-    assert.equal(ids.length, 2 + 2 + 4 + 34 + 5 + 3, `${path}: the form's lists have changed size`);
+    assert.equal(ids.length, 2 + 2 + 3 + 34 + 5 + 3, `${path}: the form's lists have changed size`);
     for (const id of ids) assert.ok(handler.includes(`'${id}' =>`), `${path}: careers.php does not name "${id}"`);
     for (const name of ["cv", "portfolio"]) {
       assert.ok(inputs.some((tag) => /\stype="file"/.test(tag) && tag.includes(` name="${name}"`)), `${path}: no ${name} upload`);

@@ -12,6 +12,7 @@ import {
   interestIds,
   localePath,
   regionZones,
+  studyYearIds,
   type Locale,
   type SiteContent,
 } from "@/content";
@@ -59,6 +60,8 @@ export function CareersForm({ locale, copy, places }: Props) {
   const status = submitted === "idle" ? redirected : submitted;
   const [fileNames, setFileNames] = useState<{ cv?: string; portfolio?: string }>({});
   const years = graduationYears();
+  // A student says which year they are in; a graduate, the year they graduated.
+  const [education, setEducation] = useState("");
 
   /** Checks a chosen file's size and format at once, before minutes of uploading. */
   const checkFile = (kind: keyof typeof fileTypes) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +105,7 @@ export function CareersForm({ locale, copy, places }: Props) {
       if (!response.ok || !result.ok) throw new Error("Not sent");
       form.reset();
       setFileNames({});
+      setEducation("");
       setStatus("sent");
       trackEvent("apply_job", { form: "careers", interest: String(data.get("interest") ?? ""), language: locale });
     } catch {
@@ -120,6 +124,7 @@ export function CareersForm({ locale, copy, places }: Props) {
       onChange={(event) => {
         const target = event.target;
         if (target instanceof HTMLInputElement && target.name === "arrangements[]") checkArrangements(event.currentTarget);
+        if (target instanceof HTMLInputElement && target.name === "education") setEducation(target.value);
       }}
     >
       <input type="hidden" name="lang" value={locale} />
@@ -165,15 +170,27 @@ export function CareersForm({ locale, copy, places }: Props) {
       <Group title={copy.groups.background} step={2}>
         <Choices label={copy.education} name="education" type="radio" required options={educationIds.map((id) => [id, copy.educations[id]])} />
         <div className={base.row}>
-          <Field label={copy.graduationYear} hint={copy.graduationYearHint} required>
-            <Select name="graduation_year" required placeholder={copy.select}>
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </Select>
-          </Field>
+          {education === "student" ? (
+            <Field label={copy.studyYear} required>
+              <Select key="study_year" name="study_year" required placeholder={copy.select}>
+                {studyYearIds.map((id) => (
+                  <option key={id} value={id}>
+                    {copy.studyYears[id]}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+          ) : (
+            <Field label={copy.graduationYear} required>
+              <Select key="graduation_year" name="graduation_year" required placeholder={copy.select}>
+                {years.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+          )}
           <Field label={copy.specialization} hint={copy.specializationHint} required>
             <input type="text" name="specialization" required maxLength={160} className={base.input} />
           </Field>

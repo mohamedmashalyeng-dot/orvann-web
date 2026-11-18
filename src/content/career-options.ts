@@ -20,13 +20,15 @@ export const interestIds = ["job", "internship"] as const;
 /** Several may be ticked. */
 export const arrangementIds = ["full-time", "part-time", "remote"] as const;
 
+/** A current student's year of study, first to sixth. */
+export const studyYearIds = ["1", "2", "3", "4", "5", "6"] as const;
+
 /**
- * Graduation years, newest first: a few years ahead for students' expected year, then
- * back far enough for experienced applicants. Fixed when the site is built.
+ * Graduates' graduation years, newest first: this year back far enough for experienced
+ * applicants. Fixed when the site is built.
  */
 export function graduationYears(thisYear = new Date().getFullYear()): number[] {
-  const first = thisYear + 6;
-  return Array.from({ length: 6 + 36 }, (_, index) => first - index);
+  return Array.from({ length: 37 }, (_, index) => thisYear - index);
 }
 
 /** Upload limits, in MB; careers.php and the CRM hold the same ones. */
@@ -36,4 +38,5 @@ export type EducationId = (typeof educationIds)[number];
 export type ExperienceId = (typeof experienceIds)[number];
 export type EmploymentId = (typeof employmentIds)[number];
 export type InterestId = (typeof interestIds)[number];
+export type StudyYearId = (typeof studyYearIds)[number];
 export type ArrangementId = (typeof arrangementIds)[number];

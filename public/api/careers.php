@@ -212,6 +212,14 @@ $city = line('city', 120);
 $education = choice('education', $educations);
 $year = line('graduation_year', 4);
 $year = preg_match('/^[0-9]{4}$/D', $year) && (int) $year >= 1960 && (int) $year <= (int) date('Y') + 8 ? $year : '';
+// A current student gives their year of study (1-6) instead of a graduation year.
+$studyYear = line('study_year', 1);
+$studyYear = preg_match('/^[1-6]$/D', $studyYear) ? $studyYear : '';
+if ($education === 'student') {
+    $year = '';
+} else {
+    $studyYear = '';
+}
 $specialization = line('specialization', 160);
 $experience = choice('experience', $experiences);
 $employment = choice('employment', $employments);
@@ -247,6 +255,7 @@ $recorded = $crmUrl !== '' && sendToCrm($crmUrl, (string) ($crm['key'] ?? ''), [
     'city' => $city,
     'education' => $education,
     'graduation_year' => $year,
+    'study_year' => $studyYear,
     'specialization' => $specialization,
     'experience' => $experience,
     'employment' => $employment,
@@ -263,6 +272,7 @@ $rows = [
     'Email address' => $email,
     'Place of residence' => trim(($regions[$region] ?? '') . ($city !== '' ? ', ' . $city : ''), ', '),
     'Academic status' => $educations[$education] ?? '',
+    'Year of study' => $studyYear,
     'Graduation year' => $year,
     'Field of study / specialization' => $specialization,
     'Years of experience' => $experiences[$experience] ?? '',

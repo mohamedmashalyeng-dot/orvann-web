@@ -4,7 +4,7 @@
  */
 
 import type { BudgetId, JobTitleId, RegionId, RegionZoneId, TimelineId } from "./lead-options";
-import type { ArrangementId, EducationId, EmploymentId, ExperienceId, InterestId } from "./career-options";
+import type { ArrangementId, EducationId, EmploymentId, ExperienceId, InterestId, StudyYearId } from "./career-options";
 
 export type Locale = "en" | "ar";
 export type Direction = "ltr" | "rtl";
@@ -276,7 +276,8 @@ export type SiteContent = {
         education: string;
         educations: Record<EducationId, string>;
         graduationYear: string;
-        graduationYearHint: string;
+        studyYear: string;
+        studyYears: Record<StudyYearId, string>;
         specialization: string;
         specializationHint: string;
         experience: string;
