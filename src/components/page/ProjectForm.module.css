@@ -189,8 +189,26 @@
 }
 
 .submit:disabled {
-  opacity: 0.6;
+  gap: var(--space-3);
+  opacity: 0.75;
   cursor: progress;
+}
+
+/* While sending: a small spinner before "Sending…". */
+.submit:disabled::before {
+  content: "";
+  width: 1.05em;
+  height: 1.05em;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .status:empty {

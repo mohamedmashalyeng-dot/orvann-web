@@ -24,6 +24,7 @@ import {
 } from "@/content";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
+import { SentDialog } from "./SentDialog";
 import styles from "./ProjectForm.module.css";
 
 /** The handler on the host (public/api/project.php); it sends the details to ORVANN's CRM and inbox. */
@@ -60,11 +61,20 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
   const [submitted, setStatus] = useState<Status>("idle");
   const redirected = useSyncExternalStore(noSubscription, redirectResult, noRedirectResult);
   const status = submitted === "idle" ? redirected : submitted;
+  // The thank-you pop-up stays open until it is closed; a new submission can open it again.
+  const [dismissed, setDismissed] = useState(false);
+  const closeSent = () => {
+    setDismissed(true);
+    setStatus("idle");
+    // Without JavaScript the handler came back with ?sent=1; drop it so a reload does not reopen.
+    if (window.location.search) window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+  };
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
+    setDismissed(false);
     setStatus("sending");
     try {
       const response = await fetch(PROJECT_FORM_ACTION, {
@@ -209,8 +219,9 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
           {status === "sending" ? copy.sending : copy.submit}
         </button>
         <p className={styles.status} role="status" aria-live="polite" data-status={status}>
-          {status === "sent" ? copy.sent : status === "failed" ? copy.failed : ""}
+          {status === "failed" ? copy.failed : ""}
         </p>
+        <SentDialog open={status === "sent" && !dismissed} title={copy.sentTitle} message={copy.sent} close={copy.close} onClose={closeSent} />
       </div>
     </form>
   );

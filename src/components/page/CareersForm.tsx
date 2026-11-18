@@ -20,6 +20,7 @@ import { site } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import { Field, Select } from "./ProjectForm";
+import { SentDialog } from "./SentDialog";
 import base from "./ProjectForm.module.css";
 import styles from "./CareersForm.module.css";
 
@@ -58,6 +59,14 @@ export function CareersForm({ locale, copy, places }: Props) {
   const [submitted, setStatus] = useState<Status>("idle");
   const redirected = useSyncExternalStore(noSubscription, redirectResult, noRedirectResult);
   const status = submitted === "idle" ? redirected : submitted;
+  // The thank-you pop-up stays open until it is closed; a new submission can open it again.
+  const [dismissed, setDismissed] = useState(false);
+  const closeSent = () => {
+    setDismissed(true);
+    setStatus("idle");
+    // Without JavaScript the handler came back with ?sent=1; drop it so a reload does not reopen.
+    if (window.location.search) window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+  };
   const [fileNames, setFileNames] = useState<{ cv?: string; portfolio?: string }>({});
   const years = graduationYears();
   // A student says which year they are in; a graduate, the year they graduated.
@@ -94,6 +103,7 @@ export function CareersForm({ locale, copy, places }: Props) {
       return;
     }
     const data = new FormData(form);
+    setDismissed(false);
     setStatus("sending");
     try {
       const response = await fetch(CAREERS_FORM_ACTION, {
@@ -278,8 +288,9 @@ export function CareersForm({ locale, copy, places }: Props) {
           {status === "sending" ? copy.sending : copy.submit}
         </button>
         <p className={base.status} role="status" aria-live="polite" data-status={status}>
-          {status === "sent" ? copy.sent : status === "failed" ? copy.failed : ""}
+          {status === "failed" ? copy.failed : ""}
         </p>
+        <SentDialog open={status === "sent" && !dismissed} title={copy.sentTitle} message={copy.sent} close={copy.close} onClose={closeSent} />
       </div>
     </form>
   );

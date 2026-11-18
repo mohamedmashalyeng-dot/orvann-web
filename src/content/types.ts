@@ -224,7 +224,11 @@ export type SiteContent = {
         optional: string;
         submit: string;
         sending: string;
+        /** The heading of the pop-up that opens once the form has been sent. */
+        sentTitle: string;
         sent: string;
+        /** The pop-up's button. */
+        close: string;
         failed: string;
       };
       direct: { title: string; email: string; phone: string; headquarters: string; address: string };
@@ -309,7 +313,11 @@ export type SiteContent = {
         consent: { before: string; link: string; after: string };
         submit: string;
         sending: string;
+        /** The heading of the pop-up that opens once the form has been sent. */
+        sentTitle: string;
         sent: string;
+        /** The pop-up's button. */
+        close: string;
         failed: string;
       };
     };
