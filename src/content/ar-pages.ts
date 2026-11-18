@@ -791,7 +791,6 @@ export const arPages: SiteContent["pages"] = {
       arrangementOptions: {
         "full-time": "دوام كامل",
         "part-time": "دوام جزئي",
-        "on-site": "من المقر",
         remote: "عن بُعد",
       },
       cv: "السيرة الذاتية (CV)",

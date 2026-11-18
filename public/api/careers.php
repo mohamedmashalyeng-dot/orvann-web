@@ -45,7 +45,6 @@ $interests = [
 $arrangementNames = [
     'full-time' => 'Full-Time',
     'part-time' => 'Part-Time',
-    'on-site' => 'On-Site',
     'remote' => 'Remote',
 ];
 // Governorates and countries: the project form's list (src/content/lead-options.ts).

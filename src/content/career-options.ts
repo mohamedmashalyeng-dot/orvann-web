@@ -18,7 +18,7 @@ export const employmentIds = ["available", "employed", "freelance"] as const;
 export const interestIds = ["job", "internship"] as const;
 
 /** Several may be ticked. */
-export const arrangementIds = ["full-time", "part-time", "on-site", "remote"] as const;
+export const arrangementIds = ["full-time", "part-time", "remote"] as const;
 
 /**
  * Graduation years, newest first: a few years ahead for students' expected year, then

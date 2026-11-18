@@ -782,7 +782,6 @@ export const enPages: SiteContent["pages"] = {
       arrangementOptions: {
         "full-time": "Full-Time",
         "part-time": "Part-Time",
-        "on-site": "On-Site",
         remote: "Remote",
       },
       cv: "CV / Résumé",
