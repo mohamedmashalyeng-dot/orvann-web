@@ -744,7 +744,6 @@ export const enPages: SiteContent["pages"] = {
     label: "Careers & Internships",
     form: {
       title: "Apply to join ORVANN.",
-      lede: "Fields marked * are required. All information is handled confidentially and used for recruitment purposes only.",
       groups: {
         personal: "Personal Information",
         background: "Education & Experience",

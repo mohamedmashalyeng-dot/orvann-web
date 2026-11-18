@@ -267,7 +267,6 @@ export type SiteContent = {
       label: string;
       form: {
         title: string;
-        lede: string;
         /** The four groups of the form, in order. */
         groups: { personal: string; background: string; preferences: string; documents: string };
         name: string;

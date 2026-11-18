@@ -31,7 +31,6 @@ export default async function CareersPage({ params }: LangParams) {
           <p className={cn("type-h3", styles.tagline)}>{page.tagline}</p>
           <SectionLabel>{page.label}</SectionLabel>
           <h1 className="type-h2">{page.form.title}</h1>
-          <p className={cn("type-body", styles.lede)}>{page.form.lede}</p>
         </header>
         <CareersForm locale={content.locale} copy={page.form} places={{ zones, regions }} />
       </div>
