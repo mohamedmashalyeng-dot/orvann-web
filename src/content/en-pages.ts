@@ -740,6 +740,7 @@ export const enPages: SiteContent["pages"] = {
       description:
         "Apply for job opportunities and internships at ORVANN across strategy, branding, marketing, digital and production. Share your CV and portfolio with our team.",
     },
+    tagline: "Let’s build what’s next. Together.",
     label: "Careers & Internships",
     form: {
       title: "Apply to join ORVANN.",
@@ -786,7 +787,7 @@ export const enPages: SiteContent["pages"] = {
         remote: "Remote",
       },
       cv: "CV / Résumé",
-      cvHint: "PDF, DOC or DOCX, up to 5 MB.",
+      cvHint: "Optional. PDF, DOC or DOCX, up to 5 MB.",
       portfolioUrl: "Portfolio Link",
       portfolioFile: "Portfolio File",
       portfolioHint: "A link, a PDF up to 10 MB, or both. Recommended for creative and digital roles.",

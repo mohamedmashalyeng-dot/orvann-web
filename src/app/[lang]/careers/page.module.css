@@ -27,6 +27,10 @@
   justify-items: start;
 }
 
+.tagline {
+  margin-block-end: var(--space-2);
+}
+
 .lede {
   max-width: var(--measure);
   color: var(--text-muted);

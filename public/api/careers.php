@@ -235,15 +235,15 @@ $linkedin = url('linkedin');
 $cv = upload('cv', ['pdf', 'doc', 'docx'], MAX_CV_MB);
 $portfolio = upload('portfolio', ['pdf'], MAX_PORTFOLIO_MB);
 
-// What an application cannot do without: a name, a way to reply, what they are applying for
-// and their CV. A file the page would have refused is refused here too. The other fields are
+// What an application cannot do without: a name, a way to reply and what they are applying
+// for. The CV is optional. A file the page would have refused is refused here too. The other fields are
 // asked for on the page but not insisted on, so a usable application is never turned away.
 if ($name === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false || $interest === ''
-    || !is_array($cv) || $portfolio === false) {
+    || $cv === false || $portfolio === false) {
     finish(false, 422, $wantsJson, $lang);
 }
 
-$files = ['cv' => $cv] + (is_array($portfolio) ? ['portfolio' => $portfolio] : []);
+$files = (is_array($cv) ? ['cv' => $cv] : []) + (is_array($portfolio) ? ['portfolio' => $portfolio] : []);
 
 $crm = is_file(CRM_CONFIG) ? (array) require CRM_CONFIG : [];
 $crmUrl = applicationsUrl($crm);

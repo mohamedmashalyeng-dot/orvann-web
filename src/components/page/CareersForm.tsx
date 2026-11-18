@@ -230,10 +230,9 @@ export function CareersForm({ locale, copy, places }: Props) {
       </Group>
 
       <Group title={copy.groups.documents} step={4}>
-        <Field label={copy.cv} hint={copy.cvHint} required>
+        <Field label={copy.cv} hint={copy.cvHint}>
           <FileInput
             name="cv"
-            required
             accept={fileTypes.cv.join(",")}
             chosen={fileNames.cv}
             onChange={checkFile("cv")}

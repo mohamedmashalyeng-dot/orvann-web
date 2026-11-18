@@ -261,6 +261,8 @@ export type SiteContent = {
      */
     careers: {
       meta: PageMeta;
+      /** The line that opens the page, above the label. */
+      tagline: string;
       /** The small label above the form's title. */
       label: string;
       form: {

@@ -749,6 +749,7 @@ export const arPages: SiteContent["pages"] = {
       description:
         "قدّم على فرص العمل والتدريب في أورفان في مجالات الاستراتيجية والهوية والتسويق والتجارب الرقمية والإنتاج، وشارك فريقنا سيرتك الذاتية وأعمالك.",
     },
+    tagline: "لنبنِ ما هو قادم. معًا.",
     label: "الوظائف والتدريب",
     form: {
       title: "قدّم للانضمام إلى أورفان.",
@@ -795,7 +796,7 @@ export const arPages: SiteContent["pages"] = {
         remote: "عن بُعد",
       },
       cv: "السيرة الذاتية (CV)",
-      cvHint: `${ltr("PDF")} أو ${ltr("DOC")} أو ${ltr("DOCX")}، بحد أقصى 5 ميجابايت.`,
+      cvHint: `اختياري. ${ltr("PDF")} أو ${ltr("DOC")} أو ${ltr("DOCX")}، بحد أقصى 5 ميجابايت.`,
       portfolioUrl: "رابط ملف الأعمال (Portfolio)",
       portfolioFile: "ملف الأعمال (Portfolio)",
       portfolioHint: `رابط، أو ملف ${ltr("PDF")} حتى 10 ميجابايت، أو كلاهما. يُنصح به للوظائف الإبداعية والرقمية.`,
