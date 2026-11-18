@@ -6,9 +6,11 @@
  *
  * Sent from info@orvann.com through the host's own mail, with Reply-To set to the
  * applicant. The CRM connection is the project form's (crm-config.php, same key); the
- * application goes to the CRM's /api/applications, next to its /api/leads. Either one
- * taking the application counts as sent. Answers JSON to the page's script; without
- * JavaScript it redirects back to the form with ?sent=1 or ?failed=1.
+ * application goes to the CRM's /api/applications, next to its /api/leads. The email goes
+ * first and the applicant is answered as soon as it has; then the CRM, and if it does not
+ * take the application a short alert email says so. Either one taking it counts as sent.
+ * Answers JSON to the page's script; without JavaScript it redirects back to the form with
+ * ?sent=1 or ?failed=1.
  */
 declare(strict_types=1);
 
@@ -79,6 +81,51 @@ function finish(bool $ok, int $status, bool $wantsJson, string $lang): void
         header('Location: ' . $page . ($ok ? '?sent=1' : '?failed=1') . '#application-form', true, 303);
     }
     exit;
+}
+
+/**
+ * Ends the visitor's request (their answer is already written) and keeps this script
+ * running, so the CRM's slower call does not keep them waiting. Where the server cannot,
+ * the visitor simply waits for it, as before.
+ */
+function release(): void
+{
+    ignore_user_abort(true);
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    } elseif (function_exists('litespeed_finish_request')) {
+        litespeed_finish_request();
+    } else {
+        flush();
+    }
+}
+
+/** Writes the answer to the visitor without ending the script (finish() does both). */
+function answer(bool $ok, int $status, bool $wantsJson, string $lang, string $page): void
+{
+    if ($wantsJson) {
+        http_response_code($status);
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-store');
+        echo json_encode(['ok' => $ok]);
+    } else {
+        header('Location: ' . $page . ($ok ? '?sent=1' : '?failed=1') . '#application-form', true, 303);
+    }
+}
+
+/** A short email telling ORVANN that the CRM did not take a submission the email carried. */
+function crmAlert(string $what, string $name, string $email, string $reason): void
+{
+    $subject = 'Not in the CRM: ' . $what . ' from ' . $name;
+    $body = "The website emailed this " . $what . " to " . RECIPIENT . ", but the CRM did not record it.\n"
+        . "Reason: " . $reason . "\n\nName: " . $name . "\nEmail: " . $email . "\n\n"
+        . "Add it to the CRM by hand from the original email.\n";
+    mail(RECIPIENT, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, [
+        'From' => 'ORVANN Website <' . SENDER . '>',
+        'MIME-Version' => '1.0',
+        'Content-Type' => 'text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding' => '8bit',
+    ], '-f' . SENDER);
 }
 
 /** One line of text: no line breaks (they could inject mail headers), trimmed and capped. */
@@ -245,27 +292,6 @@ if ($name === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false || $inte
 
 $files = (is_array($cv) ? ['cv' => $cv] : []) + (is_array($portfolio) ? ['portfolio' => $portfolio] : []);
 
-$crm = is_file(CRM_CONFIG) ? (array) require CRM_CONFIG : [];
-$crmUrl = applicationsUrl($crm);
-$recorded = $crmUrl !== '' && sendToCrm($crmUrl, (string) ($crm['key'] ?? ''), [
-    'full_name' => $name,
-    'phone' => $phone,
-    'email' => $email,
-    'region' => $region,
-    'city' => $city,
-    'education' => $education,
-    'graduation_year' => $year,
-    'study_year' => $studyYear,
-    'specialization' => $specialization,
-    'experience' => $experience,
-    'employment' => $employment,
-    'interest' => $interest,
-    'arrangements' => $arrangements,
-    'portfolio_url' => $portfolioUrl,
-    'linkedin' => $linkedin,
-    'source' => 'orvann.com careers (' . $lang . ')',
-], $files);
-
 $rows = [
     'Full name' => $name,
     'Mobile number' => $phone,
@@ -287,9 +313,6 @@ $rows = [
         return $file['name'];
     }, $files)),
     'Form language' => $lang === 'ar' ? 'Arabic' : 'English',
-    'CRM' => $recorded
-        ? 'Recorded in Applications'
-        : ($crmUrl === '' ? 'Not connected on this server (no crm-config.php)' : 'NOT recorded - add this application by hand'),
 ];
 $text = "New application from the website (Careers & Internships form).\n\n";
 foreach ($rows as $label => $value) {
@@ -329,5 +352,38 @@ $sent = mail(
     '-f' . SENDER
 );
 
-$ok = $sent || $recorded;
-finish($ok, $ok ? 200 : 500, $wantsJson, $lang);
+// The email comes first: once it has gone, the visitor is told at once, and the CRM is
+// sent the same application after that. If the CRM does not take it, a short alert email says so.
+if ($sent) {
+    answer(true, 200, $wantsJson, $lang, $lang === 'ar' ? '/ar/careers/' : '/careers/');
+    release();
+}
+
+$crm = is_file(CRM_CONFIG) ? (array) require CRM_CONFIG : [];
+$crmUrl = applicationsUrl($crm);
+$recorded = $crmUrl !== '' && sendToCrm($crmUrl, (string) ($crm['key'] ?? ''), [
+    'full_name' => $name,
+    'phone' => $phone,
+    'email' => $email,
+    'region' => $region,
+    'city' => $city,
+    'education' => $education,
+    'graduation_year' => $year,
+    'study_year' => $studyYear,
+    'specialization' => $specialization,
+    'experience' => $experience,
+    'employment' => $employment,
+    'interest' => $interest,
+    'arrangements' => $arrangements,
+    'portfolio_url' => $portfolioUrl,
+    'linkedin' => $linkedin,
+    'source' => 'orvann.com careers (' . $lang . ')',
+], $files);
+
+if ($sent) {
+    if (!$recorded) {
+        crmAlert('application', $name, $email, $crmUrl === '' ? 'the CRM is not connected on this server (no crm-config.php)' : 'the CRM did not accept it');
+    }
+    exit;
+}
+finish($recorded, $recorded ? 200 : 500, $wantsJson, $lang);

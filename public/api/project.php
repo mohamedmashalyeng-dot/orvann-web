@@ -6,7 +6,9 @@
  *
  * Sent from info@orvann.com through the host's own mail service (orvann.com's mail and SPF
  * are on Hostinger), with Reply-To set to the visitor, so a reply goes straight to them.
- * The email says whether the CRM took the lead; either one arriving counts as sent.
+ * The email goes first and the visitor is answered as soon as it has; the lead then goes to
+ * the CRM, and if the CRM does not take it a short alert email says so. Either one arriving
+ * counts as sent.
  * Answers JSON to the page's script; without JavaScript it redirects back to the form with
  * ?sent=1 or ?failed=1.
  */
@@ -109,6 +111,51 @@ function finish(bool $ok, int $status, bool $wantsJson, string $lang): void
     exit;
 }
 
+/**
+ * Ends the visitor's request (their answer is already written) and keeps this script
+ * running, so the CRM's slower call does not keep them waiting. Where the server cannot,
+ * the visitor simply waits for it, as before.
+ */
+function release(): void
+{
+    ignore_user_abort(true);
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    } elseif (function_exists('litespeed_finish_request')) {
+        litespeed_finish_request();
+    } else {
+        flush();
+    }
+}
+
+/** Writes the answer to the visitor without ending the script (finish() does both). */
+function answer(bool $ok, int $status, bool $wantsJson, string $lang, string $page): void
+{
+    if ($wantsJson) {
+        http_response_code($status);
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-store');
+        echo json_encode(['ok' => $ok]);
+    } else {
+        header('Location: ' . $page . ($ok ? '?sent=1' : '?failed=1') . '#project-form', true, 303);
+    }
+}
+
+/** A short email telling ORVANN that the CRM did not take a submission the email carried. */
+function crmAlert(string $what, string $name, string $email, string $reason): void
+{
+    $subject = 'Not in the CRM: ' . $what . ' from ' . $name;
+    $body = "The website emailed this " . $what . " to " . RECIPIENT . ", but the CRM did not record it.\n"
+        . "Reason: " . $reason . "\n\nName: " . $name . "\nEmail: " . $email . "\n\n"
+        . "Add it to the CRM by hand from the original email.\n";
+    mail(RECIPIENT, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, [
+        'From' => 'ORVANN Website <' . SENDER . '>',
+        'MIME-Version' => '1.0',
+        'Content-Type' => 'text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding' => '8bit',
+    ], '-f' . SENDER);
+}
+
 /** One line of text: no line breaks (they could inject mail headers), trimmed and capped. */
 function line(string $key, int $max): string
 {
@@ -175,23 +222,6 @@ if ($name === '' || $goal === '' || !isset($services[$need]) || filter_var($emai
     finish(false, 422, $wantsJson, $lang);
 }
 
-$crm = is_file(CRM_CONFIG) ? (array) require CRM_CONFIG : [];
-$crmUrl = (string) ($crm['url'] ?? '');
-$recorded = $crmUrl !== '' && sendToCrm($crmUrl, (string) ($crm['key'] ?? ''), [
-    'full_name' => $name,
-    'email' => $email,
-    'phone' => $phone,
-    'company' => $company,
-    'job_title' => $jobTitle,
-    'region' => $region,
-    'city' => $city,
-    'service' => $need,
-    'timeline' => $timeline,
-    'budget' => $budget,
-    'message' => $goal,
-    'source' => 'orvann.com (' . $lang . ')',
-]);
-
 $rows = [
     'Name' => $name,
     'Job title' => $jobTitles[$jobTitle] ?? '',
@@ -204,9 +234,6 @@ $rows = [
     'When do you need to start?' => $timelines[$timeline] ?? '',
     'Estimated budget range' => $budgets[$budget] ?? '',
     'Form language' => $lang === 'ar' ? 'Arabic' : 'English',
-    'CRM' => $recorded
-        ? 'Recorded as a lead'
-        : ($crmUrl === '' ? 'Not connected on this server (no crm-config.php)' : 'NOT recorded - add this enquiry by hand'),
 ];
 $body = "New project details from the website (Start a Project form).\n\n";
 foreach ($rows as $label => $value) {
@@ -231,5 +258,34 @@ $sent = mail(
     '-f' . SENDER
 );
 
-$ok = $sent || $recorded;
-finish($ok, $ok ? 200 : 500, $wantsJson, $lang);
+// The email comes first: once it has gone, the visitor is told at once, and the CRM is
+// sent the same enquiry after that. If the CRM does not take it, a short alert email says so.
+if ($sent) {
+    answer(true, 200, $wantsJson, $lang, $lang === 'ar' ? '/ar/contact-us/' : '/contact-us/');
+    release();
+}
+
+$crm = is_file(CRM_CONFIG) ? (array) require CRM_CONFIG : [];
+$crmUrl = (string) ($crm['url'] ?? '');
+$recorded = $crmUrl !== '' && sendToCrm($crmUrl, (string) ($crm['key'] ?? ''), [
+    'full_name' => $name,
+    'email' => $email,
+    'phone' => $phone,
+    'company' => $company,
+    'job_title' => $jobTitle,
+    'region' => $region,
+    'city' => $city,
+    'service' => $need,
+    'timeline' => $timeline,
+    'budget' => $budget,
+    'message' => $goal,
+    'source' => 'orvann.com (' . $lang . ')',
+]);
+
+if ($sent) {
+    if (!$recorded) {
+        crmAlert('enquiry', $name, $email, $crmUrl === '' ? 'the CRM is not connected on this server (no crm-config.php)' : 'the CRM did not accept it');
+    }
+    exit;
+}
+finish($recorded, $recorded ? 200 : 500, $wantsJson, $lang);
