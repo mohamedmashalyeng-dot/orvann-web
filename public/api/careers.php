@@ -14,6 +14,8 @@
  */
 declare(strict_types=1);
 
+require __DIR__ . '/mailer.php';
+
 const RECIPIENT = 'info@orvann.com';
 const SENDER = 'info@orvann.com';
 const CRM_CONFIG = __DIR__ . '/crm-config.php';
@@ -120,12 +122,12 @@ function crmAlert(string $what, string $name, string $email, string $reason): vo
     $body = "The website emailed this " . $what . " to " . RECIPIENT . ", but the CRM did not record it.\n"
         . "Reason: " . $reason . "\n\nName: " . $name . "\nEmail: " . $email . "\n\n"
         . "Add it to the CRM by hand from the original email.\n";
-    mail(RECIPIENT, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, [
+    sendMail(RECIPIENT, SENDER, $subject, $body, [
         'From' => 'ORVANN Website <' . SENDER . '>',
         'MIME-Version' => '1.0',
         'Content-Type' => 'text/plain; charset=UTF-8',
         'Content-Transfer-Encoding' => '8bit',
-    ], '-f' . SENDER);
+    ]);
 }
 
 /** One line of text: no line breaks (they could inject mail headers), trimmed and capped. */
@@ -344,13 +346,7 @@ $headers = [
     'Content-Type' => 'multipart/mixed; boundary="' . $boundary . '"',
 ];
 
-$sent = mail(
-    RECIPIENT,
-    '=?UTF-8?B?' . base64_encode($subject) . '?=',
-    $body,
-    $headers,
-    '-f' . SENDER
-);
+$sent = sendMail(RECIPIENT, SENDER, $subject, $body, $headers);
 
 // The email comes first: once it has gone, the visitor is told at once, and the CRM is
 // sent the same application after that. If the CRM does not take it, a short alert email says so.

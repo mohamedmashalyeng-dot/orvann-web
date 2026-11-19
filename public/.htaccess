@@ -16,8 +16,10 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.orvann\.com$ [NC]
 RewriteRule ^ https://orvann.com%{REQUEST_URI} [R=301,L]
 
-# The project form's CRM settings are read by api/project.php only, never served.
-RewriteRule ^api/crm-config\.php$ - [F,L]
+# The forms' CRM and mail settings, their mailer and its log are read by the handlers only,
+# never served.
+RewriteRule ^api/(crm-config|mail-config|mailer)\.php$ - [F,L]
+RewriteRule ^api/mail\.log - [F,L]
 
 # The WordPress site's Arabic pages had their own slugs; send each to its new page.
 RewriteRule ^ar/home-ar/?$ /ar/ [R=301,L]

@@ -36,6 +36,9 @@ yarn-error.log*
 
 # the CRM's address and key for the project form (see crm-config.example.php)
 /public/api/crm-config.php
+# the info@orvann.com mailbox password the forms send with (see mail-config.example.php)
+/public/api/mail-config.php
+/public/api/mail.log*
 
 # vercel
 .vercel

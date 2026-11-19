@@ -64,6 +64,16 @@ that address through Hostinger's mail (orvann.com's mail and SPF are there), wit
 to the visitor. It works on the host only: under `npm run dev` and `npm start` the form
 cannot send.
 
+**How the forms' email is sent.** Both handlers send through `public/api/mailer.php`: over
+SMTP, signed in as the info@orvann.com mailbox (`smtp.hostinger.com`, port 465), when
+`api/mail-config.php` is on the server, and with PHP `mail()` otherwise, which Hostinger
+may drop. The deploy writes `api/mail-config.php` from the repository secret
+**`SMTP_PASSWORD`** (the mailbox password; Settings → Secrets and variables → Actions);
+the variables `SMTP_USERNAME`, `SMTP_HOST` and `SMTP_PORT` override the defaults. Without
+the secret, a `mail-config.php` made by hand on the server (see `mail-config.example.php`)
+is used as it is. A failed send is written to `api/mail.log` on the server (never served),
+one line saying why: for example a refused sign-in.
+
 **CRM.** The same handler records each enquiry as a lead in ORVANN's CRM (`POST /api/leads`
 there), and the form asks what the CRM sorts leads by: job title, governorate or country,
 city, service, timeline and budget. Those lists send the CRM's own ids. They are written in

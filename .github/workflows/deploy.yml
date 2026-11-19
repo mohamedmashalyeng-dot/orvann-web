@@ -39,6 +39,30 @@ jobs:
       - run: npm run build
       - run: npm test
 
+      # The forms send their email as the info@orvann.com mailbox (public/api/mailer.php).
+      # With the SMTP_PASSWORD secret set, its settings ship as api/mail-config.php; without
+      # it, a mail-config.php already on the server is left as it is.
+      - name: Write the mail settings
+        if: env.HAS_FTP == 'true'
+        env:
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_USERNAME: ${{ vars.SMTP_USERNAME || 'info@orvann.com' }}
+          SMTP_HOST: ${{ vars.SMTP_HOST || 'smtp.hostinger.com' }}
+          SMTP_PORT: ${{ vars.SMTP_PORT || '465' }}
+        run: |
+          if [ -z "$SMTP_PASSWORD" ]; then
+            echo "::warning::SMTP_PASSWORD is not set: the forms send with the server's mail-config.php if there is one, else PHP mail()."
+            exit 0
+          fi
+          php -r '
+            $secure = getenv("SMTP_PORT") === "465" ? "ssl" : "tls";
+            $config = ["host" => getenv("SMTP_HOST"), "port" => (int) getenv("SMTP_PORT"), "secure" => $secure,
+              "username" => trim(getenv("SMTP_USERNAME")), "password" => rtrim(getenv("SMTP_PASSWORD"), "\r\n")];
+            file_put_contents("out/api/mail-config.php", "<?php\nreturn " . var_export($config, true) . ";\n");
+          '
+          php -l out/api/mail-config.php
+          echo "api/mail-config.php written for $SMTP_USERNAME on $SMTP_HOST:$SMTP_PORT"
+
       - name: Install lftp
         if: env.HAS_FTP == 'true'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
