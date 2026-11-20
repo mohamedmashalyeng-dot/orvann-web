@@ -14,7 +14,7 @@ const stagger = (index: number) => ({ "--i": index }) as CSSProperties;
 
 type Props = {
   hero: SiteContent["hero"];
-  /** The primary call to action (Start a Project). */
+  /** The primary call to action (Let's Talk). */
   primary: Link;
   /** Explore Our Work; left out while Our Work is hidden. */
   secondary?: Link;
@@ -38,6 +38,10 @@ export function Hero({ hero, primary, secondary, projects }: Props) {
       <HeroRays className={styles.rays} />
       <div className={cn("container", styles.inner)}>
         <div className={styles.composition}>
+          <p className={cn("type-label", styles.label)} data-enter="lede" lang="en">
+            {hero.label}
+          </p>
+
           <h1 id="hero-title" className={cn("type-display", styles.title)}>
             {hero.headline.map((line, index) => (
               <Fragment key={index}>
@@ -52,9 +56,13 @@ export function Hero({ hero, primary, secondary, projects }: Props) {
             {hero.subheadline}
           </p>
 
-          <p className={cn("type-lede", styles.lede)} data-enter="lede">
-            {hero.lede}
-          </p>
+          <div className={styles.lede} data-enter="lede">
+            {hero.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede">
+                {paragraph}
+              </p>
+            ))}
+          </div>
 
           <div className={styles.actions}>
             <StarButton data-enter="action" style={stagger(0)}>

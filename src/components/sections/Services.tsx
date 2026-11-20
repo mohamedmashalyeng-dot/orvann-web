@@ -1,19 +1,12 @@
-import Link from "next/link";
-import { localePath, servicePath, type Locale, type ServiceId, type SiteContent } from "@/content";
+import type { SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./Services.module.css";
 
-type Props = {
-  locale: Locale;
-  services: SiteContent["services"];
-  serviceNames: Record<ServiceId, string>;
-};
-
-/** The five services as numbered rows; each links to its own page. */
-export function Services({ locale, services, serviceNames }: Props) {
+/** ORVANN's integrated solutions as numbered rows, then how the work runs, step by step. */
+export function Services({ services }: { services: SiteContent["services"] }) {
   return (
     <section id="services" className="tone-alt section" aria-labelledby="services-title">
       <div className={cn("container", styles.layout)}>
@@ -22,26 +15,39 @@ export function Services({ locale, services, serviceNames }: Props) {
           <h2 id="services-title" className="type-h2" data-reveal="">
             {services.title}
           </h2>
-          <p className="type-lede" data-reveal="">
-            {services.intro}
-          </p>
+          {services.paragraphs.map((paragraph) => (
+            <p key={paragraph} className="type-lede" data-reveal="">
+              {paragraph}
+            </p>
+          ))}
         </Reveal>
 
         <Reveal className={styles.listWrap}>
           <ol className={styles.list}>
             {services.items.map((item, index) => (
-              <li key={item.id} className={styles.row} data-reveal="">
+              <li key={item.title} className={styles.row} data-reveal="">
                 <span className={cn("type-label", styles.number)} aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className={styles.body}>
-                  <h3 className={cn("type-h3", styles.title)}>{serviceNames[item.id]}</h3>
+                  <h3 className={cn("type-h3", styles.title)}>{item.title}</h3>
+                  {item.tagline && <p className={styles.tagline}>{item.tagline}</p>}
                   <p className="type-body">{item.text}</p>
-                  <Link href={localePath(locale, servicePath(item.id))} className={styles.link}>
-                    {item.link}
-                    <ArrowIcon className={styles.arrow} />
-                  </Link>
                 </div>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+
+        <Reveal className={styles.process}>
+          <h3 className={cn("type-label", styles.processLabel)} data-reveal="">
+            {services.process.label}
+          </h3>
+          <ol className={styles.steps}>
+            {services.process.steps.map((step, index) => (
+              <li key={step} className={styles.step} data-reveal="">
+                {index > 0 && <ArrowIcon className={styles.stepArrow} />}
+                <span>{step}</span>
               </li>
             ))}
           </ol>

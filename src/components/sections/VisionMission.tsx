@@ -9,7 +9,7 @@ type Props = {
   tone?: "tone-base" | "tone-alt";
 };
 
-/** Vision and mission side by side: a short label over one large sentence each. */
+/** Vision and mission side by side: a short label over a statement each. */
 export function VisionMission({ vision, mission, tone = "tone-alt" }: Props) {
   const statements = [
     { id: "vision", ...vision },

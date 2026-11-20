@@ -33,7 +33,7 @@ const layouts = [
  */
 export function Work({ locale, work, serviceNames, projects }: Props) {
   return (
-    <section id="work" className="tone-alt section" aria-labelledby="work-title">
+    <section id="work" className="tone-base section" aria-labelledby="work-title">
       <div className="container">
         <Reveal as="header" className={styles.head}>
           <div className={styles.headMain}>

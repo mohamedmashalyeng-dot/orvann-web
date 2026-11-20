@@ -90,168 +90,149 @@ export const en: SiteContent = {
     language: { label: "العربية", ariaLabel: "اقرأ هذه الصفحة بالعربية" },
   },
 
-  // [copy] ---- Homepage ----
+  // ---- Homepage ----
+  // [translation] of the Arabic homepage copy supplied by ORVANN (20 Nov 2026), to the end of
+  // the footer — needs ORVANN sign-off. The hero label and the footer's name and first
+  // tagline are ORVANN's own English.
   hero: {
-    headline: [[{ text: "Your " }, { text: "Growth", accent: true }], [{ text: "Partner." }]],
-    subheadline: "From strategy to delivery.",
-    lede: "ORVANN brings strategy, branding, marketing, digital and on-ground execution together so your business can move with one direction, one consistent identity and a clearer path from idea to delivery.",
+    label: "Your Growth Partner",
+    headline: [[{ text: "Your partner in" }], [{ text: "growth and success.", accent: true }]],
+    subheadline: "Business strategies and integrated solutions that make the difference.",
+    paragraphs: [
+      "At ORVANN Integrated Solutions, we understand your business, analyse your challenges and uncover your growth opportunities, to bring you the strategies and solutions that fit your goals.",
+      "We combine consulting expertise with the capacity to execute, helping you turn opportunities into practical steps that support your business’s success.",
+    ],
+    primaryCta: { label: "Let’s Talk", href: "/contact-us/" },
     secondaryCta: { label: "Explore Our Work", href: "/our-projects/" },
     projectsLabel: "Featured projects",
   },
 
-  clients: {
-    title: "Brands We’ve Worked With",
-    text: "Different businesses. Different challenges. One focus: work that is clear, consistent and built around what the project actually needs.",
-  },
-
   services: {
-    label: "What we do",
-    title: "Five connected capabilities. One partner.",
-    intro: "You can work with ORVANN on one specific need or combine multiple services into one coordinated project.",
+    label: "Our Integrated Solutions",
+    title: "Integrated solutions that start from what your business needs",
+    paragraphs: [
+      "At ORVANN, we bring together consulting expertise and management and execution capabilities to deliver solutions designed around the nature of your business and its goals.",
+      "Whether you are looking for one specialised service or connected solutions, we help you choose what fits your needs, and we link planning to execution to create real value for your business.",
+    ],
     items: [
       {
-        id: "strategy",
-        text: "We turn business goals into a clearer direction through research, positioning, growth planning and practical project strategy.",
-        link: "Explore Strategy & Consulting",
+        title: "Business Strategy & Development",
+        tagline: "We see the full picture to uncover growth opportunities.",
+        text: "We study your business, your market and your competitors, and analyse the challenges and opportunities ahead, to help you weigh the alternatives and choose the directions and strategies that strengthen your competitiveness and support your growth.",
       },
       {
-        id: "branding",
-        text: "We build the visual and creative systems that define how your business looks, communicates and stays consistent across different touchpoints.",
-        link: "Explore Branding & Creative",
+        // ORVANN asked for this one's description only, without its short line.
+        title: "Project Management",
+        text: "We start by understanding your project’s idea, goals and requirements, then develop the right solutions and coordinate the stages of their execution, following with you how the different works and disciplines connect, so every effort comes together to achieve the project’s goals.",
       },
       {
-        id: "marketing",
-        text: "We plan and manage content, campaigns and paid media around defined audiences, objectives and measurable performance.",
-        link: "Explore Marketing & Media",
+        title: "Marketing & Advertising Management",
+        tagline: "We don’t start with the ad, but with what the market needs.",
+        text: "We study the market, the audience and the competitors, and uncover what sets your brand apart, then develop marketing strategies and campaigns, putting content, creativity and the right channels to work to strengthen your presence and reach your target customers.",
       },
       {
-        id: "digital",
-        text: "We plan and manage websites and digital experiences around user needs, clear information architecture, search visibility and conversion.",
-        link: "Explore Digital Experiences",
+        title: "Software & Digital Solutions",
+        tagline: "Technology is a means to solve your business challenges.",
+        text: "We understand your business’s needs and the challenges your customers face, then define the right digital solutions and develop the websites, applications, systems and software that simplify operations, improve the user experience and support your business’s growth.",
       },
       {
-        id: "events",
-        text: "We take brands into the physical world through exhibitions, events, outdoor, print, branded materials and on-ground execution.",
-        link: "Explore Events, Outdoor & Production",
+        title: "Commercial Representation & Brokerage",
+        tagline: "We connect your business with the right opportunities and partnerships.",
+        text: "We study your products, your services and your target markets, and help you discover new business opportunities, reach potential partners and customers, and ease the relationships and negotiations that support your expansion.",
+      },
+      {
+        title: "Import, Export & Supply",
+        tagline: "We look for the right solution, not just the available product.",
+        text: "We understand your needs and the specifications of the products you require, search markets and sources of supply, and compare the alternatives to help you choose the best fit, then coordinate purchasing and supply and follow their execution against the agreed requirements.",
+      },
+      {
+        title: "E-commerce",
+        tagline: "We connect digital market opportunities with a complete buying experience.",
+        text: "We study your products, your customers’ behaviour and the market’s opportunities, then help you choose the right sales channels and develop the online shopping experience, from product display to order completion, to support the growth of your sales.",
+      },
+      {
+        title: "Conferences, Exhibitions & Events",
+        tagline: "We turn every participation into an opportunity that serves your business goals.",
+        text: "We understand the goals of your participation and your target audience, then develop the right idea and experience, bringing design, fit-out, promotion and execution together in one complete experience that reflects your brand’s identity and supports its presence.",
+      },
+      {
+        title: "Design & Craft Production",
+        tagline: "We turn ideas into exclusive pieces that carry your brand’s value.",
+        text: "We create and produce artworks, keepsakes and exclusive products designed especially for our clients, combining creativity, handcraft and precise detail, from developing the idea and choosing the materials to manufacturing and finishing, to deliver distinctive products that reflect the client’s identity and purpose.",
       },
     ],
-  },
-
-  integrated: {
-    title: "One Partner. From Plan to Delivery.",
-    subtitle: "Different channels should not feel like different brands.",
-    paragraphs: [
-      "A campaign, website, event, company profile or outdoor execution may be produced in different formats, but they should all communicate the same business clearly.",
-      "ORVANN connects the people working on strategy, creative, media, digital and production so decisions do not happen in isolation.",
-    ],
-    options: [
-      "Need one service? We can focus on that.",
-      "Need several teams moving toward one launch? We can connect the work under one direction.",
-    ],
+    process: {
+      label: "How we work",
+      steps: [
+        "We understand the need",
+        "We uncover the opportunity or challenge",
+        "We define the right solution",
+        "We help carry it out and follow it through",
+      ],
+    },
   },
 
   work: {
     label: "Our Work",
-    title: "See what the work looks like in practice.",
+    title: "Different projects, and solutions designed for every challenge.",
     paragraphs: [
-      "Explore projects across real estate, aviation, technology, healthcare, professional services, retail and other sectors.",
-      "Our role changes according to the project: sometimes it starts with strategy or identity; in other cases it includes websites, campaigns, social content, outdoor, print or event execution.",
+      "Discover how we have put our integrated expertise to work for our clients’ needs, turning their ideas and challenges into practical projects and solutions.",
     ],
     viewProject: "View project",
     link: { label: "View All Work", href: "/our-projects/" },
   },
 
-  deliverables: {
-    title: "More than one type of deliverable.",
-    intro: "Across our portfolio, ORVANN’s work includes:",
-    items: [
-      "Brand identities and visual systems",
-      "Websites and digital experiences",
-      "Content and social media systems",
-      "Advertising campaigns",
-      "Company profiles and sales materials",
-      "Outdoor and signage",
-      "Print and branded production",
-      "Exhibitions and event execution",
-    ],
-  },
-
-  why: {
-    label: "Why ORVANN",
-    title: "Why work with one integrated partner?",
-    subtitle: "Less fragmentation. More consistency.",
-    paragraphs: [
-      "Working across multiple suppliers can create gaps between strategy, creative, media, digital and production.",
-      "Our role is to connect those moving parts, define responsibilities clearly and keep the project aligned from one stage to the next.",
-    ],
-    points: [
-      { title: "Clear Direction", text: "We define what the project needs before execution begins." },
-      { title: "Connected Execution", text: "Brand, campaign, digital and physical touchpoints follow the same direction." },
-      { title: "Flexible Scope", text: "Work with us on one service, a defined project or a larger integrated scope." },
-      {
-        title: "Practical Delivery",
-        text: "Strategy is connected to what actually needs to be designed, launched, produced or delivered.",
-      },
-    ],
-  },
-
   vision: {
     title: "Our Vision",
-    text: "To be the partner businesses across the Middle East rely on to turn growth plans into completed work.",
+    text: "For ORVANN to become a leading model of strategic partnership in business growth, where expertise and solutions come together in one complete vision that creates new opportunities for success, and for our impact to reach from the Arab world to global markets, as a trusted partner in every client’s growth journey.",
   },
   mission: {
     title: "Our Mission",
-    text: "To connect strategy, design, marketing, digital and production, giving businesses one partner to move projects from brief to delivery.",
+    text: "To be a true partner in our clients’ business growth: understanding their challenges and uncovering their opportunities with a complete vision, delivering innovative solutions that bring our expertise and specialisms together around each client’s needs, and supporting them as they turn strategies into practical steps that create lasting value for their business.",
   },
 
-  faq: {
-    title: "Frequently asked questions",
-    items: [
+  philosophy: {
+    title: "Our Philosophy",
+    points: [
       {
-        question: "What does ORVANN do?",
-        answer:
-          "ORVANN provides five connected service areas: Strategy & Consulting, Branding & Creative, Marketing & Media, Digital Experiences, and Events, Outdoor & Production.",
+        title: "We see the full picture.",
+        text: "We don’t look at challenges in isolation. We understand your business and what shapes it, to uncover opportunities and solutions that may not appear when each side is seen on its own.",
       },
       {
-        question: "Is ORVANN only a marketing agency?",
-        answer:
-          "No. Marketing is one part of ORVANN’s work. Projects may also include business and brand strategy, identity, websites, events, exhibitions, outdoor, printing and production.",
+        title: "We put your interest first.",
+        text: "We don’t offer services just because we have them. We recommend what your business actually needs, and help you set priorities and choose the solutions that best fit your goals.",
       },
       {
-        question: "Can I hire ORVANN for only one service?",
-        answer: "Yes. Clients can work with ORVANN on one defined service or combine multiple capabilities into an integrated project.",
+        title: "We bring disciplines together.",
+        text: "We connect consulting, commercial, creative and digital expertise, so different solutions work in harmony, each completing the others in service of your business goals.",
       },
       {
-        question: "Does ORVANN build websites?",
-        answer:
-          "ORVANN manages website projects across strategy, structure, UX/UI, content, SEO considerations, implementation coordination, quality review and launch. The exact technical scope is defined for each project.",
-      },
-      {
-        question: "Does ORVANN manage advertising campaigns?",
-        answer:
-          "Yes. Marketing & Media projects can include campaign strategy, paid media, media buying, creative coordination, reporting and ongoing optimization.",
-      },
-      {
-        question: "Does ORVANN work on events and exhibitions?",
-        answer:
-          "Yes. Events, Outdoor & Production can include exhibition planning, booth and visual execution, branded materials, printing, signage, outdoor and on-ground production.",
+        title: "We stay partners in execution.",
+        text: "Our role doesn’t end with ideas and recommendations. We work beside you to put the agreed solutions in place, follow their progress and develop them as the business needs.",
       },
     ],
   },
 
-  // [copy] "ORVANN — Your Growth Partner." with the dash as a comma: no dashes on the site.
+  closing: {
+    title: "Let’s start with what’s next.",
+    text: "Whether you are planning a new project or looking to grow your business, share your ambitions and challenges with us, and together we’ll uncover the opportunities and choose the right next step for your growth.",
+    primary: { label: "Let’s Talk About Your Business", href: "/contact-us/#project-form" },
+  },
+
   footer: {
-    tagline: "ORVANN, Your Growth Partner.",
-    description:
-      "ORVANN is an Egypt-based growth and execution partner connecting strategy with creative, marketing, digital and on-ground delivery.",
-    explore: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about-us/" },
-      { label: "Services", href: "/services/" },
-      { label: "Our Work", href: "/our-projects/" },
-      { label: "Careers", href: "/careers/" },
-      { label: "Contact", href: "/contact-us/" },
-    ],
+    name: "ORVANN Integrated Solutions",
+    taglines: ["Your Growth Partner."],
+    explore: {
+      title: "Explore ORVANN",
+      links: [
+        { label: "About ORVANN", href: "/about-us/" },
+        { label: "Our Integrated Solutions", href: "/services/" },
+        { label: "Our Work", href: "/our-projects/" },
+        { label: "Contact Us", href: "/contact-us/" },
+      ],
+    },
+    contact: { title: "Contact Us", address: "Al-Haram St., Giza, Egypt" },
+    follow: "Follow ORVANN",
     rights: "All rights reserved.",
     privacy: "Privacy Policy",
   },

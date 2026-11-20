@@ -4,14 +4,10 @@ import { contentFor, type LangParams } from "@/content/server";
 import { flags, site, siteUrl } from "@/config/site";
 import { pageMetadata } from "@/lib/metadata";
 import { Hero } from "@/components/hero/Hero";
-import { Clients } from "@/components/sections/Clients";
 import { Services } from "@/components/sections/Services";
-import { Integrated } from "@/components/sections/Integrated";
 import { Work } from "@/components/sections/Work";
-import { Deliverables } from "@/components/sections/Deliverables";
-import { Why } from "@/components/sections/Why";
 import { VisionMission } from "@/components/sections/VisionMission";
-import { FaqSection } from "@/components/page/FaqSection";
+import { Philosophy } from "@/components/sections/Philosophy";
 import { CtaBand } from "@/components/page/CtaBand";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
@@ -49,21 +45,17 @@ export default async function HomePage({ params }: LangParams) {
     <>
       <Hero
         hero={content.hero}
-        primary={content.actions.startProject}
+        primary={content.hero.primaryCta}
         secondary={flags.showWork ? content.hero.secondaryCta : undefined}
         projects={content.projects.slice(0, 3).map((project) => project.image)}
       />
-      <Clients locale={content.locale} clients={content.clients} />
-      <Services locale={content.locale} services={content.services} serviceNames={content.serviceNames} />
-      <Integrated integrated={content.integrated} />
+      <Services services={content.services} />
       {flags.showWork && (
         <Work locale={content.locale} work={content.work} serviceNames={content.serviceNames} projects={featured} />
       )}
-      <Deliverables deliverables={content.deliverables} />
-      <Why why={content.why} />
-      <VisionMission vision={content.vision} mission={content.mission} tone="tone-base" />
-      <FaqSection title={content.faq.title} faqs={content.faq.items} tone="tone-alt" />
-      <CtaBand cta={content.pages.cta} />
+      <VisionMission vision={content.vision} mission={content.mission} tone="tone-alt" />
+      <Philosophy philosophy={content.philosophy} />
+      <CtaBand cta={content.closing} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd(content) }} />
     </>
   );

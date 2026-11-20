@@ -47,12 +47,24 @@
   mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 85%);
 }
 
+.label {
+  color: var(--accent-text);
+}
+
+/* English in both languages, so it keeps its capitals on the Arabic page too (specific enough
+   to beat [lang="ar"] .type-label). */
+.composition > .label[lang] {
+  text-transform: uppercase;
+}
+
 .subheadline {
   color: var(--accent-text);
 }
 
 .lede {
-  max-width: 34rem;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 38rem;
 }
 
 .actions {
@@ -80,21 +92,29 @@
     row-gap: 0;
   }
 
+  .label {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+    margin-block-end: var(--space-4);
+  }
+
   .title {
     grid-column: 1 / -1;
-    grid-row: 1 / span 2;
+    grid-row: 2 / span 2;
     display: grid;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
   }
 
+  /* Each line stops short of the project covers on the right and wraps rather than run
+     under them. */
   .line:nth-child(1) {
-    grid-column: 1 / span 8;
+    grid-column: 1 / span 7;
     grid-row: 1;
   }
 
   .line:nth-child(2) {
-    grid-column: 3 / -1;
+    grid-column: 3 / span 5;
     grid-row: 2;
   }
 
@@ -102,19 +122,19 @@
      the project covers. */
   .subheadline {
     grid-column: 1 / span 7;
-    grid-row: 3;
+    grid-row: 4;
     margin-block-start: var(--space-5);
   }
 
   .lede {
     grid-column: 1 / span 6;
-    grid-row: 4;
+    grid-row: 5;
     margin-block-start: var(--space-4);
   }
 
   .actions {
     grid-column: 1 / span 7;
-    grid-row: 5;
+    grid-row: 6;
     margin-block-start: var(--space-6);
   }
 }

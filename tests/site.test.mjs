@@ -111,8 +111,8 @@ test("every page links to its other-language version and lists hreflang alternat
 test("every page has exactly one h1; the homepages carry the approved headline", () => {
   eachPage((html) => assert.equal([...html.matchAll(/<h1\b/g)].length, 1, "expected one h1"));
   const headline = (path) => text(pages.get(path).html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)[1]);
-  assert.equal(headline("/"), "Your Growth Partner.");
-  if (arabic) assert.equal(headline("/ar/"), "شريكك في النمو.");
+  assert.equal(headline("/"), "Your partner in growth and success.");
+  if (arabic) assert.equal(headline("/ar/"), "شريكك في النمو والنجاح");
 });
 
 test("heading levels never skip", () => {
@@ -287,6 +287,18 @@ test("indexing settings agree across robots.txt, every page's robots meta and th
 test("the homepage no longer shows the numbers strip", () => {
   for (const path of inBuiltLocales(["/", "/ar/"])) {
     assert.ok(!/data-to="\d+"/.test(pages.get(path).html), `${path}: the numbers strip should be gone`);
+  }
+});
+
+test("the homepage follows ORVANN's copy of 20 Nov 2026: nine solutions, no logo strip, four projects off it", () => {
+  for (const path of inBuiltLocales(["/", "/ar/"])) {
+    const html = pages.get(path).html;
+    const services = html.match(/<section id="services"[\s\S]*?<\/section>/)?.[0] ?? "";
+    assert.equal([...services.matchAll(/<h3\b[^>]*class="[^"]*type-h3/g)].length, 9, `${path}: expected nine solutions`);
+    assert.ok(!/aria-labelledby="clients-title"/.test(html), `${path}: the client logo strip should be gone`);
+    for (const slug of ["al-nour-optics", "sami-alsalmi-law-office", "rgc-brokerage", "al-marefah-tech"]) {
+      assert.ok(!html.includes(`/our-projects/${slug}/`), `${path}: ${slug} should be off the homepage`);
+    }
   }
 });
 

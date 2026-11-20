@@ -5,7 +5,8 @@ import type { Project } from "./types";
  * ORVANN, 3 Oct 2026); challenges, solutions and results are [site], restated from each
  * project page on orvann.com/our-projects (inspected 23 Sep 2026), grammar lightly tidied.
  * Slugs match the live URLs, so /our-projects/<slug>/ keeps working. `featured` projects
- * also appear in Selected Work on the homepage.
+ * also appear in Selected Work on the homepage. ORVANN took Al Nour Optics, Sami Al-Salmi,
+ * RGC and Al Marefa Tech off the homepage on 20 Nov 2026; their case studies stay.
  *
  * The order is ORVANN's: Tucano, Eagles Developments and Intro are its most important
  * projects, so they come first and their covers open the homepage hero. Their images, and
@@ -255,7 +256,6 @@ export const enProjects: Project[] = [
       width: 1344,
       height: 616,
     },
-    featured: true,
   },
   {
     slug: "sami-alsalmi-law-office",
@@ -296,7 +296,6 @@ export const enProjects: Project[] = [
         height: 612,
       },
     ],
-    featured: true,
   },
   {
     slug: "rgc-brokerage",
@@ -324,7 +323,6 @@ export const enProjects: Project[] = [
       width: 1344,
       height: 616,
     },
-    featured: true,
   },
   {
     slug: "plaza-garden-real-estate-development",
@@ -377,7 +375,6 @@ export const enProjects: Project[] = [
       width: 1344,
       height: 616,
     },
-    featured: true,
   },
   {
     slug: "azdan-dental-center",

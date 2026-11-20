@@ -18,13 +18,13 @@
 
 .text {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-heading);
   font-variation-settings: "wdth" var(--wdth-heading);
   text-wrap: pretty;
-  max-width: 24ch;
+  max-width: 44ch;
 }
 
 @media (min-width: 64em) {

@@ -27,27 +27,6 @@
   border-block-start: 1px solid var(--line);
 }
 
-/* Accent hairline that draws along the row's top edge while its link is hovered or focused. */
-.row::before {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  inset-block-start: -1px;
-  height: 1px;
-  background-color: var(--accent-text);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--duration-slow) var(--ease-standard);
-}
-
-[dir="rtl"] .row::before {
-  transform-origin: right center;
-}
-
-.row:has(.link:hover, .link:focus-visible)::before {
-  transform: scaleX(1);
-}
-
 .number {
   padding-block-start: 0.7em;
   color: var(--text-muted);
@@ -64,38 +43,51 @@
   font-size: var(--text-2xl);
 }
 
-.link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 2.75rem;
+.tagline {
   font-weight: var(--weight-medium);
   color: var(--accent-text);
-  text-decoration: none;
 }
 
-.link:hover,
-.link:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+/* ---------- How we work ---------- */
+
+.process {
+  display: grid;
+  gap: var(--space-4);
+  padding-block-start: var(--space-6);
+  border-block-start: 1px solid var(--line-strong);
 }
 
-.arrow {
-  width: 1.125rem;
-  height: 1.125rem;
+.processLabel {
+  color: var(--text-muted);
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+}
+
+.stepArrow {
+  width: 1.25rem;
+  height: 1.25rem;
   flex: none;
-  transition: translate var(--duration-base) var(--ease-standard);
+  color: var(--accent-text);
 }
 
-.link:hover .arrow,
-.link:focus-visible .arrow {
-  translate: calc(0.25em * var(--dir)) 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .link:hover .arrow,
-  .link:focus-visible .arrow {
-    translate: none;
+@media (min-width: 48em) {
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4);
   }
 }
 
@@ -114,6 +106,10 @@
 
   .listWrap {
     grid-column: 6 / -1;
+  }
+
+  .process {
+    grid-column: 1 / -1;
   }
 
   .row {

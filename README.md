@@ -8,7 +8,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 
 | Route | Page |
 | --- | --- |
-| `/` | Homepage: hero, UAE launch bar and intro, client logos, the five services, integrated model, Selected Work, proof of execution, why ORVANN, vision & mission, FAQ, closing call to action |
+| `/` | Homepage (ORVANN's copy of 20 Nov 2026): hero, UAE launch bar and intro, the nine integrated solutions and how ORVANN works, Selected Work, vision & mission, ORVANN's philosophy, closing call to action |
 | `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), each with its deliverables and a link to its page, how they work together, FAQ |
 | `/services/<service>/` | One page per service (`strategy-consulting`, `branding-creative`, `marketing-media`, `digital-experiences`, `events-outdoor-production`): who it is for, what you get, how it works, related work, FAQ, and Start a Project with the service ticked (`/contact-us/?need=<id>#project-form`) |
 | `/our-projects/` | All 18 projects, filterable by the five services |
@@ -21,7 +21,9 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 
 The five service areas are the single list of services everywhere (`serviceIds` and each
 language's `serviceNames`; their page slugs are `serviceSlugs`): homepage, services page,
-service pages, project categories and footer. Links to a service open its own page. The old
+service pages and project categories. Links to a service open its own page. The homepage
+lists ORVANN's nine integrated solutions instead, as text (`services.items`); they have no
+pages of their own. The old
 `/exhibitions-conferences/` page redirects to `/services/#events`.
 
 See **RELEASE_NOTES.md** for what was built, what was verified and what is still open before launch.
@@ -148,8 +150,8 @@ src/
     layout/            SiteHeader (nav + mobile menu), SiteFooter, TransitionShell (page transitions),
                        FloatingWhatsApp — all mounted once in the root layout
     hero/              Hero (with the first three project covers), HeroStage (hero motion)
-    sections/          homepage sections: Clients, Services, Integrated, Work, Deliverables, Why,
-                       VisionMission (the closing band is the shared CtaBand); PartnerLogos
+    sections/          homepage sections: Services (the nine solutions), Work, VisionMission,
+                       Philosophy (the closing band is the shared CtaBand)
     page/              page building blocks: PageIntro, SectionHead, FaqList, FaqSection,
                        CtaBand, ProjectsIndex (filterable project grid), ProjectForm
     visuals/           page-intro illustrations (values orbit, reach globe, shield — SVG in

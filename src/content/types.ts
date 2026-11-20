@@ -127,31 +127,46 @@ export type SiteContent = {
   };
   // ---- Homepage ----
   hero: {
+    /** The small line above the headline: ORVANN's English line in both languages. */
+    label: string;
     headline: RichLine[];
     subheadline: string;
-    lede: string;
+    /** The paragraphs under the subheadline. */
+    paragraphs: string[];
+    /** The first call to action (Let's Talk). */
+    primaryCta: Link;
     secondaryCta: Link;
     /** Accessible name of the three project covers beside the headline. */
     projectsLabel: string;
   };
-  clients: { title: string; text: string };
+  /**
+   * ORVANN's integrated solutions, as numbered rows. A solution's `tagline` is the short line
+   * under its title; it is left out where ORVANN asked for the description only.
+   */
   services: {
     label: string;
     title: string;
-    intro: string;
-    items: { id: ServiceId; text: string; link: string }[];
+    paragraphs: string[];
+    items: { title: string; tagline?: string; text: string }[];
+    /** How ORVANN works, in steps read one after another. */
+    process: { label: string; steps: string[] };
   };
-  integrated: { title: string; subtitle: string; paragraphs: string[]; options: string[] };
   work: { label: string; title: string; paragraphs: string[]; viewProject: string; link: Link };
-  deliverables: { title: string; intro: string; items: string[] };
-  why: { label: string; title: string; subtitle: string; paragraphs: string[]; points: Step[] };
   vision: Step;
   mission: Step;
-  faq: { title: string; items: Faq[] };
+  /** How ORVANN works with clients: a title over its principles. */
+  philosophy: { title: string; points: Step[] };
+  /** The homepage's closing band. */
+  closing: Cta;
   footer: {
-    tagline: string;
-    description: string;
-    explore: Link[];
+    /** The company's full name, beside the logo. */
+    name: string;
+    /** Lines under the name; each sets its own direction, so an English line reads right in Arabic. */
+    taglines: string[];
+    explore: { title: string; links: Link[] };
+    contact: { title: string; address: string };
+    follow: string;
+    /** The line after "© <year> ORVANN Integrated Solutions." */
     rights: string;
     privacy: string;
   };
