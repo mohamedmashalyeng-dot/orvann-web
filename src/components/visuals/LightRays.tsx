@@ -46,6 +46,7 @@ export interface LightRaysProps {
   lightMode?: boolean;
   opacity?: number;
   maxDevicePixelRatio?: number;
+  paused?: boolean;
   className?: string;
   style?: CSSProperties;
 }
@@ -81,6 +82,7 @@ interface Settings {
   light: boolean;
   opacity: number;
   maxRatio: number;
+  paused: boolean;
 }
 
 interface Program {
@@ -331,6 +333,7 @@ const LightRays = ({
   lightMode = false,
   opacity = 1,
   maxDevicePixelRatio = 2,
+  paused = false,
   className = '',
   style
 }: LightRaysProps) => {
@@ -364,7 +367,8 @@ const LightRays = ({
     intro,
     light: lightMode,
     opacity: clamp(opacity, 0, 1),
-    maxRatio: clamp(maxDevicePixelRatio, 0.5, 3)
+    maxRatio: clamp(maxDevicePixelRatio, 0.5, 3),
+    paused
   };
   const settingsRef = useRef(settings);
 
@@ -436,7 +440,8 @@ const LightRays = ({
       const dt = clamp((now - last) / 1000 || 0, 0, 0.05);
       last = Math.max(last, now);
       time += dt * s.speed * (reduced ? 0.35 : 1);
-      if (opening < 1) opening = Math.min(1, opening + dt / 1.8);
+      if (s.paused) opening = 1;
+      else if (opening < 1) opening = Math.min(1, opening + dt / 1.8);
 
       const steer = 1 - Math.exp(-dt / 0.2);
       const aimX = s.follow && pointer.seen ? pointer.x : 0.5;
@@ -514,13 +519,23 @@ const LightRays = ({
       gl.uniform1f(u.uOpacity, s.opacity);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 
+      // Keep the exact light as a still image while paused. A visible WebGL canvas can
+      // still make every composited frame expensive, even without another draw call.
+      if (s.paused) {
+        container.style.backgroundImage = `url("${canvas.toDataURL('image/webp', 0.85)}")`;
+        canvas.style.display = 'none';
+      } else {
+        canvas.style.removeProperty('display');
+        container.style.removeProperty('background-image');
+      }
+
       const settling =
         Math.abs(aim.x - aimX) > 1e-4 ||
         Math.abs(aim.y - aimY) > 1e-4 ||
         (shade.presence > 1e-3 && Math.abs(shade.x - pointer.x) + Math.abs(shade.y - pointer.y) > 1e-4) ||
         Math.abs((shading ? 1 : 0) - shade.presence) > 1e-3 ||
         pulses.length > 0;
-      const busy = s.speed > 0 || opening < 1 || settling;
+      const busy = !s.paused && (s.speed > 0 || opening < 1 || settling);
       if (busy && visible && pageVisible) raf = requestAnimationFrame(frame);
     };
 
@@ -548,6 +563,7 @@ const LightRays = ({
     };
 
     const onPointerMove = (event: PointerEvent) => {
+      if (settingsRef.current.paused) return;
       const spot = locate(event);
       if (!pointer.inside && spot.inside) {
         shade.x = spot.x;
@@ -562,12 +578,13 @@ const LightRays = ({
     const onPointerDown = (event: PointerEvent) => {
       const s = settingsRef.current;
       const spot = locate(event);
-      if (!spot.inside || !s.clickPulse || reduced) return;
+      if (!spot.inside || !s.clickPulse || reduced || s.paused) return;
       pulses.push({ age: 0 });
       if (pulses.length > MAX_PULSES) pulses.shift();
       wake();
     };
     const onLeave = () => {
+      if (settingsRef.current.paused) return;
       pointer.inside = false;
       wake();
     };
@@ -613,6 +630,8 @@ const LightRays = ({
 
     return () => {
       cancelAnimationFrame(raf);
+      canvas.style.removeProperty('display');
+      container.style.removeProperty('background-image');
       wakeRef.current = null;
       resizeObserver.disconnect();
       intersection.disconnect();

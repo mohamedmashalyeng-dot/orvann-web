@@ -24,17 +24,9 @@
   fill: none;
   stroke: var(--accent-text);
   stroke-width: 2;
-  stroke-dasharray: 8 10;
+  stroke-dashoffset: 1;
   stroke-linecap: round;
   opacity: 0;
-}
-
-.reveal {
-  fill: none;
-  stroke: white;
-  stroke-width: 12;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
 }
 
 .flight {
@@ -42,10 +34,7 @@
   offset-anchor: 0px 0px;
   offset-rotate: auto;
   offset-distance: 0%;
-}
-
-.aircraft {
-  filter: drop-shadow(0 8px 9px rgb(0 0 0 / 0.3));
+  will-change: transform;
 }
 
 .rope {
@@ -61,43 +50,30 @@
   transform-origin: -106px 12px;
 }
 
+.strip {
+  --wave-height: calc(6px * (1 - var(--strip) / var(--paper-strips)));
+  --wave-angle: calc(3deg * (1 - var(--strip) / var(--paper-strips)));
+}
+
+.paperFace {
+  fill: #f3f4f6;
+  stroke: rgb(60 105 241 / 0.24);
+  stroke-width: 1;
+}
+
 .message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  min-height: 52px;
-  padding: 10px 16px;
-  border: 1px solid rgb(60 105 241 / 0.24);
-  border-radius: 3px 0 0 3px;
-  background: #f3f4f6;
-  color: #1463b8;
-  box-shadow: 0 5px 18px rgb(0 0 0 / 0.14);
+  fill: #1463b8;
   font-size: 16px;
   font-weight: var(--weight-semibold);
-  line-height: 1.5;
-  white-space: nowrap;
 }
 
 [dir="rtl"] .message {
   direction: rtl;
 }
 
-.flag {
-  display: grid;
-  flex: none;
-  width: 24px;
-  height: 16px;
-  padding-left: 6px;
-  overflow: hidden;
-  border-radius: 1px;
-  background: #ef3340;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+.fold {
+  opacity: 0.25;
 }
-
-.flag span:nth-child(1) { background: #009739; }
-.flag span:nth-child(2) { background: #fff; }
-.flag span:nth-child(3) { background: #111; }
 
 .stillMessage {
   display: none;
@@ -114,16 +90,36 @@
     animation: fly var(--flight-duration) linear var(--flight-delay) both;
   }
 
-  .scene[data-ready="true"] .reveal {
-    animation: draw var(--flight-duration) linear var(--flight-delay) both;
-  }
-
   .scene[data-ready="true"] .trail {
-    animation: fade-trail var(--flight-duration) linear var(--flight-delay) both;
+    animation:
+      draw var(--flight-duration) linear var(--flight-delay) both,
+      fade-trail var(--flight-duration) linear var(--flight-delay) both;
   }
 
-  .tow {
-    animation: flutter 1.3s ease-in-out infinite alternate;
+  .scene[data-ready="true"] .tow {
+    animation: flutter 1.6s ease-in-out infinite alternate;
+  }
+
+  .scene[data-ready="true"] .strip {
+    will-change: transform;
+    animation: paper-wave 1.15s ease-in-out infinite;
+    animation-delay: calc(var(--strip) * -1.15s / var(--paper-strips));
+  }
+
+  .scene[data-ready="true"] .fold {
+    animation: paper-fold 1.15s ease-in-out infinite;
+    animation-delay: calc(var(--strip) * -1.15s / var(--paper-strips));
+  }
+
+  .scene[data-finished="true"] .tow,
+  .scene[data-finished="true"] .strip,
+  .scene[data-finished="true"] .fold {
+    animation-play-state: paused;
+    will-change: auto;
+  }
+
+  .scene[data-finished="true"] .flight {
+    will-change: auto;
   }
 }
 
@@ -167,6 +163,20 @@
 }
 
 @keyframes flutter {
-  from { transform: rotate(-2deg) skewY(-1deg); }
-  to { transform: rotate(2deg) skewY(1deg); }
+  from { transform: rotate(-1deg); }
+  to { transform: rotate(1deg); }
+}
+
+@keyframes paper-wave {
+  0%, 100% {
+    transform: translateY(calc(-1 * var(--wave-height))) skewY(calc(-1 * var(--wave-angle)));
+  }
+  50% {
+    transform: translateY(var(--wave-height)) skewY(var(--wave-angle));
+  }
+}
+
+@keyframes paper-fold {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.8; }
 }
