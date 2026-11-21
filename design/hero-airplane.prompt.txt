@@ -1,0 +1,8 @@
+﻿Generator: built-in image_gen tool
+Transparent background: true
+Generated master: C:/Users/DELL/.codex/generated_images/01a1fe1a-dd84-71d1-9310-b89b602c3605/exec-4f4f3ff4-b763-416a-b45f-5c36d0452ab3.png
+Website asset: public/images/hero-airplane.webp
+Export: resized to 720px wide and encoded as WebP, quality 90, preserving alpha.
+
+Prompt:
+Use case: product-mockup. Generate a single photorealistic cutout airplane sprite for a premium website flight animation. A realistic small white and cobalt blue single-engine propeller airplane, viewed directly from its side with a slight elevated three-quarter view that reveals its wings, airplane nose pointing precisely RIGHT, tail on LEFT, horizontal flight attitude. Entire aircraft in frame, centered with tight 5% transparent padding. Real metallic fuselage, detailed blue cockpit glass, correctly formed wings and landing gear, subtle visible propeller blur. Crisp professionally lit realistic product photography, readable at 160px wide, soft natural material shading. Genuine transparent alpha background. No ground, no sky, no shadow on a surface, no scene, no text, no logo, no banner, no smoke, no trail, no watermark. Wide landscape composition. Save as a transparent PNG asset.

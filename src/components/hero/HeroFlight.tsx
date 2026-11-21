@@ -1,35 +1,71 @@
-import type { CSSProperties } from "react";
+﻿"use client";
+
+import { useEffect, useRef } from "react";
 import styles from "./HeroFlight.module.css";
 
-// Physical left-to-right flight in both languages, including a full loop before arrival.
-const ROUTE = "M-70 120C120 150 340 145 460 95C590 40 597 12 540 14C437 18 480 176 650 130C750 103 850 90 930 92";
-
+/** A flight above the existing hero content; it never takes up layout space. */
 export function HeroFlight({ message }: { message: string }) {
+  const sceneRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    const hero = scene?.closest<HTMLElement>("[data-hero-stage]");
+    const sky = scene?.querySelector("svg");
+    if (!scene || !hero || !sky) return;
+
+    const measure = () => {
+      const width = hero.clientWidth;
+      const height = hero.clientHeight;
+      const bounds = hero.getBoundingClientRect();
+      const title = hero.querySelector("h1")?.getBoundingClientRect();
+      const header = document.querySelector("[data-site-header]")?.getBoundingClientRect().height ?? 72;
+      const y = title ? title.top - bounds.top + title.height * 0.45 : height * 0.45;
+      const center = width * (width < 768 ? 0.65 : 0.52);
+      const radius = Math.max(36, Math.min(130, width * 0.17, (y - header - 65) / 1.7));
+      const route = `M-240 ${y}
+        C${width * 0.12} ${y + 30} ${width * 0.3} ${y + 65} ${center} ${y}
+        C${center + radius} ${y - radius * 0.65} ${center + radius} ${y - radius * 1.7} ${center} ${y - radius * 1.7}
+        C${center - radius} ${y - radius * 1.7} ${center - radius} ${y - radius * 0.2} ${center} ${y}
+        C${center + radius} ${y + radius * 0.6} ${width * 0.85} ${y - 35} ${width + 480} ${y - 60}`;
+
+      sky.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      scene.style.setProperty("--flight-route", `path('${route.replace(/\s+/g, " ")}')`);
+      scene.querySelectorAll("[data-flight-route]").forEach((path) => path.setAttribute("d", route));
+      scene.dataset.ready = "true";
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(hero);
+    const title = hero.querySelector("h1");
+    if (title) observer.observe(title);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={styles.scene} data-hero-flight="">
-      <svg
-        className={styles.sky}
-        viewBox="0 0 1000 180"
-        aria-hidden="true"
-        focusable="false"
-        style={{ "--flight-route": `path('${ROUTE}')` } as CSSProperties}
-      >
+    <div ref={sceneRef} className={styles.scene} data-hero-flight="">
+      <p className="visually-hidden">{message}</p>
+      <svg className={styles.sky} viewBox="0 0 1440 900" aria-hidden="true" focusable="false">
         <defs>
-          <mask id="hero-flight-trail" maskUnits="userSpaceOnUse" x="-100" y="-40" width="1200" height="260">
-            <path d={ROUTE} className={styles.reveal} pathLength={1} />
+          <mask id="hero-flight-trail" maskUnits="userSpaceOnUse" x="-500" y="-500" width="5000" height="5000">
+            <path data-flight-route="" className={styles.reveal} pathLength={1} />
           </mask>
         </defs>
-        <path d={ROUTE} className={styles.trail} mask="url(#hero-flight-trail)" />
-        <circle cx="953" cy="92" r="10" className={styles.ring} />
-        <circle cx="953" cy="92" r="3.5" className={styles.destination} />
+        <path data-flight-route="" className={styles.trail} mask="url(#hero-flight-trail)" />
         <g className={styles.flight}>
-          <path className={styles.aircraft} d="M22 0C22-1.8 20-2.6 17-2.6H5L-5-19H-10L-4.5-2.6H-14L-18-8.5H-21L-19.5 0L-21 8.5H-18L-14 2.6H-4.5L-10 19H-5L5 2.6H17C20 2.6 22 1.8 22 0Z" />
+          <g className={styles.payload}>
+            <path className={styles.rope} d="M-67 10Q-86 24-108 12" />
+            <foreignObject x="-388" y="-16" width="282" height="60" className={styles.tow}>
+              <div className={styles.message}>
+                <span className={styles.flag} aria-hidden="true"><span /><span /><span /></span>
+                <span>{message}</span>
+              </div>
+            </foreignObject>
+            <image className={styles.aircraft} href="/images/hero-airplane.webp" x="-90" y="-58" width="180" height="116" />
+          </g>
         </g>
       </svg>
-      <p className={styles.message}>
-        <span className={styles.flag} aria-hidden="true"><span /><span /><span /></span>
-        {message}
-      </p>
+      <p className={styles.stillMessage} aria-hidden="true">{message}</p>
     </div>
   );
 }

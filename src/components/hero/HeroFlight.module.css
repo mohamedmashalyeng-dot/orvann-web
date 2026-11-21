@@ -1,36 +1,32 @@
-.scene {
-  --flight-duration: 5.6s;
-  --flight-delay: calc(var(--page-enter-delay) + 600ms);
-  position: relative;
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-  height: var(--hero-flight-space);
-  margin-block-end: var(--space-5);
-  padding-inline: var(--gutter);
+﻿.scene {
+  --flight-duration: 13s;
+  --flight-delay: calc(var(--page-enter-delay) + 1.2s);
+  position: absolute;
+  inset: 0;
+  z-index: 5;
   pointer-events: none;
-  /* The flight keeps its direction on the Arabic page; the message keeps its own. */
   direction: ltr;
 }
 
 .sky {
   display: block;
-  width: 72%;
-  height: auto;
-  aspect-ratio: 1000 / 180;
+  width: 100%;
+  height: 100%;
   overflow: visible;
-  flex: 1;
-  min-width: 0;
+  visibility: hidden;
+}
+
+.scene[data-ready="true"] .sky {
+  visibility: visible;
 }
 
 .trail {
   fill: none;
   stroke: var(--accent-text);
   stroke-width: 2;
-  stroke-dasharray: 8 9;
+  stroke-dasharray: 8 10;
   stroke-linecap: round;
-  opacity: 0.65;
+  opacity: 0;
 }
 
 .reveal {
@@ -38,37 +34,49 @@
   stroke: white;
   stroke-width: 12;
   stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 .flight {
   offset-path: var(--flight-route);
   offset-anchor: 0px 0px;
   offset-rotate: auto;
-  offset-distance: 100%;
-  fill: var(--text);
+  offset-distance: 0%;
 }
 
-.ring {
+.aircraft {
+  filter: drop-shadow(0 8px 9px rgb(0 0 0 / 0.3));
+}
+
+.rope {
   fill: none;
-  stroke: var(--accent-text);
-  stroke-width: 1;
-  opacity: 0.35;
+  stroke: var(--text);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0.65;
 }
 
-.destination {
-  fill: var(--accent-text);
+.tow {
+  overflow: visible;
+  transform-origin: -106px 12px;
 }
 
 .message {
   display: flex;
-  flex: 0 1 19rem;
+  justify-content: center;
   align-items: center;
-  gap: var(--space-3);
-  color: var(--accent-text);
-  font-size: clamp(1rem, 1.3vw, 1.375rem);
+  gap: 10px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 1px solid rgb(60 105 241 / 0.24);
+  border-radius: 3px 0 0 3px;
+  background: #f3f4f6;
+  color: #1463b8;
+  box-shadow: 0 5px 18px rgb(0 0 0 / 0.14);
+  font-size: 16px;
   font-weight: var(--weight-semibold);
-  line-height: 1.6;
-  text-wrap: balance;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
 [dir="rtl"] .message {
@@ -76,59 +84,70 @@
 }
 
 .flag {
-  position: relative;
   display: grid;
   flex: none;
-  width: 1.75rem;
-  height: 1.125rem;
-  padding-left: 0.4375rem;
+  width: 24px;
+  height: 16px;
+  padding-left: 6px;
   overflow: hidden;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px var(--line);
+  border-radius: 1px;
   background: #ef3340;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
 }
 
 .flag span:nth-child(1) { background: #009739; }
 .flag span:nth-child(2) { background: #fff; }
 .flag span:nth-child(3) { background: #111; }
 
+.stillMessage {
+  display: none;
+}
+
 @media (max-width: 47.99em) {
-  .scene {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    gap: 0;
-  }
-
-  .sky {
-    flex: none;
-    width: 100%;
-    height: 7rem;
-  }
-
-  .message {
-    flex: none;
-    align-self: flex-end;
-    font-size: var(--text-base);
-  }
-
-  .aircraft {
-    transform: scale(1.7);
-  }
-
-  .trail {
-    stroke-width: 4;
-    stroke-dasharray: 12 13;
+  .payload {
+    transform: scale(0.72);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .flight {
+  .scene[data-ready="true"] .flight {
     animation: fly var(--flight-duration) linear var(--flight-delay) both;
   }
 
-  .reveal {
+  .scene[data-ready="true"] .reveal {
     animation: draw var(--flight-duration) linear var(--flight-delay) both;
+  }
+
+  .scene[data-ready="true"] .trail {
+    animation: fade-trail var(--flight-duration) linear var(--flight-delay) both;
+  }
+
+  .tow {
+    animation: flutter 1.3s ease-in-out infinite alternate;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene .sky {
+    display: none;
+  }
+
+  .stillMessage {
+    position: absolute;
+    inset-block-start: calc(var(--header-offset) + var(--space-4));
+    inset-inline-end: var(--gutter);
+    display: block;
+    max-width: calc(100% - var(--gutter) * 2);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--accent-text);
+    font-size: var(--text-sm);
+    direction: inherit;
+  }
+
+  [dir="rtl"] .stillMessage {
+    direction: rtl;
   }
 }
 
@@ -140,4 +159,14 @@
 @keyframes draw {
   from { stroke-dashoffset: 1; }
   to { stroke-dashoffset: 0; }
+}
+
+@keyframes fade-trail {
+  0%, 100% { opacity: 0; }
+  8%, 85% { opacity: 0.45; }
+}
+
+@keyframes flutter {
+  from { transform: rotate(-2deg) skewY(-1deg); }
+  to { transform: rotate(2deg) skewY(1deg); }
 }
