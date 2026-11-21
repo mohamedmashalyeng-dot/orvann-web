@@ -90,6 +90,11 @@ export function HeroFlight({ message }: { message: string }) {
             <stop offset="0.5" stopColor="#192031" stopOpacity="0.07" />
             <stop offset="1" stopColor="#192031" stopOpacity="0" />
           </linearGradient>
+          <linearGradient id="hero-paper-material" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="0.55" stopColor="#f3f4f6" />
+            <stop offset="1" stopColor="#dfe7f5" />
+          </linearGradient>
         </defs>
         <path data-flight-route="" className={styles.trail} pathLength={1} />
         <g
@@ -102,7 +107,7 @@ export function HeroFlight({ message }: { message: string }) {
           }}
         >
           <g className={styles.payload}>
-            <path className={styles.rope} d="M-67 10Q-86 24-108 12" />
+            <path className={styles.rope} d="M-67 10Q-86 15-108 3M-67 10Q-86 24-108 31" />
             <g className={styles.tow}>
               <g transform="translate(-388 -14)" style={{ "--paper-strips": PAPER_STRIPS } as CSSProperties}>
                 {Array.from({ length: PAPER_STRIPS }, (_, index) => (
@@ -110,7 +115,7 @@ export function HeroFlight({ message }: { message: string }) {
                     <g className={styles.strip} data-paper-strip="" style={{ "--strip": index } as CSSProperties}>
                       <g clipPath="url(#hero-paper-strip)">
                         <g transform={`translate(${-index * STRIP_WIDTH} 0)`}>
-                          <rect width={PAPER_WIDTH} height="52" rx="2" className={styles.paperFace} />
+                          <rect width={PAPER_WIDTH} height="52" rx="2" fill="url(#hero-paper-material)" className={styles.paperFace} />
                           <text x={PAPER_WIDTH / 2} y="27" textAnchor="middle" dominantBaseline="middle" className={styles.message}>
                             {message}
                           </text>
@@ -122,7 +127,12 @@ export function HeroFlight({ message }: { message: string }) {
                 ))}
               </g>
             </g>
-            <image href="/images/hero-airplane.webp" x="-90" y="-58" width="180" height="116" />
+            <g className={styles.airframe}>
+              <image href="/images/hero-airplane.webp" x="-90" y="-58" width="180" height="116" />
+              <g transform="translate(80 -3)">
+                <ellipse className={styles.propeller} rx="2.5" ry="19" />
+              </g>
+            </g>
           </g>
         </g>
       </svg>
