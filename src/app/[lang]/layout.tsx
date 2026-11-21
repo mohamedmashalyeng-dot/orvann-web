@@ -62,7 +62,7 @@ export const viewport: Viewport = {
 };
 
 // The document itself: fonts, theme, skip link, the page-transition curtain and motion.
-// The header, footer, launch bar and WhatsApp shortcut are the site's own pages' chrome
+// The header, footer and WhatsApp shortcut are the site's own pages' chrome
 // ((site)/layout.tsx); a standalone page such as Careers renders without them, and each
 // page group supplies the <main id="main"> the skip link points at.
 // suppressHydrationWarning: the theme script may change data-theme before React hydrates.

@@ -35,7 +35,7 @@ const arabic = pages.has("/ar/");
 const work = pages.has("/our-projects/");
 const builtLocales = arabic ? ["en", "ar"] : ["en"];
 const inBuiltLocales = (paths) => paths.filter((path) => arabic || localeOf(path) === "en");
-// Standalone pages (outside src/app/[lang]/(site)) have no header, footer or launch bar.
+// Standalone pages (outside src/app/[lang]/(site)) have no header, footer or launch intro.
 const standalone = (path) => /^(\/ar)?\/careers\/$/.test(path);
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
@@ -302,16 +302,23 @@ test("the homepage follows ORVANN's copy of 20 Nov 2026: nine solutions, no logo
   }
 });
 
-test("every page carries the UAE launch bar and intro, and standalone pages no site chrome", () => {
+test("the UAE flight lives in the homepage hero; site pages keep the intro and standalone pages have no chrome", () => {
   eachPage((html, path) => {
+    assert.ok(!/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: outdated UAE announcement`);
     if (standalone(path)) {
       assert.ok(!/data-launch-intro|orvann-intro|id="site-footer"|<header\b[^>]*site-header/.test(html), `${path}: site chrome on a standalone page`);
-      assert.ok(!/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: launch bar on a standalone page`);
+      assert.ok(!/data-hero-flight/.test(html), `${path}: hero flight on a standalone page`);
       return;
     }
     assert.ok(/data-launch-intro/.test(html), `${path}: launch intro missing`);
     assert.ok(/orvann-intro/.test(html), `${path}: launch intro script missing`);
-    assert.ok(/Coming soon to the UAE|قريبًا في الإمارات/.test(html), `${path}: launch bar missing`);
+    const hero = html.match(/<section\b[^>]*data-hero-stage[^>]*>[\s\S]*?<\/section>/)?.[0];
+    if (path === "/" || path === "/ar/") {
+      assert.ok(hero?.includes('data-hero-flight=""'), `${path}: flight missing from the hero`);
+      assert.ok(hero.includes(path === "/ar/" ? "أورفان الآن في الإمارات" : "ORVANN. Now in the UAE."), `${path}: UAE presence message missing`);
+    } else {
+      assert.ok(!/data-hero-flight/.test(html), `${path}: homepage flight on an inner page`);
+    }
   });
 });
 

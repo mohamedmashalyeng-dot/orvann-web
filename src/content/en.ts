@@ -46,13 +46,13 @@ export const en: SiteContent = {
   },
 
   launch: {
-    announce: "Coming soon to the UAE",
+    heroMessage: "ORVANN. Now in the UAE.",
     intro: {
       skip: "Skip intro",
       from: "Cairo",
       to: "UAE",
-      eyebrow: "Next destination",
-      title: "Coming soon",
+      eyebrow: "A new chapter",
+      title: "Now in the UAE",
       place: "ORVANN in the United Arab Emirates",
     },
   },

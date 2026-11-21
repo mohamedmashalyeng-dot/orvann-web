@@ -1,4 +1,5 @@
 .hero {
+  --hero-flight-space: 10rem;
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -6,6 +7,12 @@
   flex-direction: column;
   min-height: 100svh;
   padding-block: calc(var(--header-offset) + var(--space-6)) var(--space-8);
+}
+
+@media (min-width: 48em) {
+  .hero {
+    --hero-flight-space: 8rem;
+  }
 }
 
 /* The composition sits at the foot of the screen. On small screens the project covers come
@@ -78,7 +85,7 @@
   /* Beside the text, clear of it: the covers take the right of the screen, the text the left. */
   .projects {
     position: absolute;
-    inset-block-start: calc(var(--header-offset) + var(--space-5));
+    inset-block-start: calc(var(--header-offset) + var(--hero-flight-space) + var(--space-6) + var(--space-5));
     inset-inline-end: var(--gutter);
     width: min(40vw, 38rem);
     margin: 0;

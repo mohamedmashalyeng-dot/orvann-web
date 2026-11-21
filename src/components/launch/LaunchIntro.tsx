@@ -30,7 +30,7 @@ timer=setTimeout(end,10000);
 
 const ROUTE = "M90.4 273.2A500 500 0 0 1 909.6 273.2";
 
-/** The full-screen UAE launch opening: a flight from Cairo to the UAE, then "Coming soon". */
+/** The full-screen opening: a flight from Cairo to ORVANN's presence in the UAE. */
 export function LaunchIntro({ intro }: { intro: SiteContent["launch"]["intro"] }) {
   return (
     <div className={styles.intro} data-launch-intro="" data-lenis-prevent="">

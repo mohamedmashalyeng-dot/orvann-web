@@ -1,0 +1,143 @@
+.scene {
+  --flight-duration: 5.6s;
+  --flight-delay: calc(var(--page-enter-delay) + 600ms);
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: var(--hero-flight-space);
+  margin-block-end: var(--space-5);
+  padding-inline: var(--gutter);
+  pointer-events: none;
+  /* The flight keeps its direction on the Arabic page; the message keeps its own. */
+  direction: ltr;
+}
+
+.sky {
+  display: block;
+  width: 72%;
+  height: auto;
+  aspect-ratio: 1000 / 180;
+  overflow: visible;
+  flex: 1;
+  min-width: 0;
+}
+
+.trail {
+  fill: none;
+  stroke: var(--accent-text);
+  stroke-width: 2;
+  stroke-dasharray: 8 9;
+  stroke-linecap: round;
+  opacity: 0.65;
+}
+
+.reveal {
+  fill: none;
+  stroke: white;
+  stroke-width: 12;
+  stroke-dasharray: 1;
+}
+
+.flight {
+  offset-path: var(--flight-route);
+  offset-anchor: 0px 0px;
+  offset-rotate: auto;
+  offset-distance: 100%;
+  fill: var(--text);
+}
+
+.ring {
+  fill: none;
+  stroke: var(--accent-text);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+
+.destination {
+  fill: var(--accent-text);
+}
+
+.message {
+  display: flex;
+  flex: 0 1 19rem;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--accent-text);
+  font-size: clamp(1rem, 1.3vw, 1.375rem);
+  font-weight: var(--weight-semibold);
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+[dir="rtl"] .message {
+  direction: rtl;
+}
+
+.flag {
+  position: relative;
+  display: grid;
+  flex: none;
+  width: 1.75rem;
+  height: 1.125rem;
+  padding-left: 0.4375rem;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--line);
+  background: #ef3340;
+}
+
+.flag span:nth-child(1) { background: #009739; }
+.flag span:nth-child(2) { background: #fff; }
+.flag span:nth-child(3) { background: #111; }
+
+@media (max-width: 47.99em) {
+  .scene {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .sky {
+    flex: none;
+    width: 100%;
+    height: 7rem;
+  }
+
+  .message {
+    flex: none;
+    align-self: flex-end;
+    font-size: var(--text-base);
+  }
+
+  .aircraft {
+    transform: scale(1.7);
+  }
+
+  .trail {
+    stroke-width: 4;
+    stroke-dasharray: 12 13;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flight {
+    animation: fly var(--flight-duration) linear var(--flight-delay) both;
+  }
+
+  .reveal {
+    animation: draw var(--flight-duration) linear var(--flight-delay) both;
+  }
+}
+
+@keyframes fly {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+@keyframes draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}

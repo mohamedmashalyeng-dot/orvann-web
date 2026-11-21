@@ -109,9 +109,9 @@ export type SiteContent = {
     whatsappFloat: string;
   };
   review: { proposedCopy: string };
-  /** The UAE launch: the bar above the header and the opening intro. */
+  /** UAE presence: the hero flight announcement and the opening intro. */
   launch: {
-    announce: string;
+    heroMessage: string;
     intro: { skip: string; from: string; to: string; eyebrow: string; title: string; place: string };
   };
   /** The five service names, by id. */

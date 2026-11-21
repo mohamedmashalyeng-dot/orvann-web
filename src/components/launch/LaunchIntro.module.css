@@ -1,6 +1,6 @@
 /*
  * UAE launch intro: a full-screen opening, once per browser session, where a plane flies
- * from Cairo to the UAE before "Coming soon" lands, then the curtain lifts to the page.
+ * from Cairo to the UAE before the arrival message lands, then the curtain lifts to the page.
  * The script in LaunchIntro.tsx sets html[data-intro] before paint; without it (a repeat
  * visit, reduced motion, or no JS) the intro stays hidden.
  */

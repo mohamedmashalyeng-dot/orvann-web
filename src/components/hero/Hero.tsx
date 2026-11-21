@@ -7,6 +7,7 @@ import { BlurText, wordCount } from "@/components/motion/BlurText";
 import { ProjectFan } from "@/components/visuals/ProjectFan";
 import { HeroRays } from "./HeroRays";
 import { HeroStage } from "./HeroStage";
+import { HeroFlight } from "./HeroFlight";
 import styles from "./Hero.module.css";
 
 /** Sets the stagger index read by the entrance keyframes (see globals.css). */
@@ -14,6 +15,7 @@ const stagger = (index: number) => ({ "--i": index }) as CSSProperties;
 
 type Props = {
   hero: SiteContent["hero"];
+  announcement: string;
   /** The primary call to action (Let's Talk). */
   primary: Link;
   /** Explore Our Work; left out while Our Work is hidden. */
@@ -27,7 +29,7 @@ type Props = {
  * after another (Blur Text), then the rest follows. Behind it, Light Rays; around the
  * primary call to action, Star Border. Pointer depth and scroll live in HeroStage.
  */
-export function Hero({ hero, primary, secondary, projects }: Props) {
+export function Hero({ hero, announcement, primary, secondary, projects }: Props) {
   // Each line's words continue the stagger from the line before.
   const starts = hero.headline.map((_, index) =>
     hero.headline.slice(0, index).reduce((total, line) => total + wordCount(line), 0),
@@ -36,6 +38,7 @@ export function Hero({ hero, primary, secondary, projects }: Props) {
   return (
     <HeroStage className={cn("tone-base", styles.hero)} aria-labelledby="hero-title">
       <HeroRays className={styles.rays} />
+      <HeroFlight message={announcement} />
       <div className={cn("container", styles.inner)}>
         <div className={styles.composition}>
           <p className={cn("type-label", styles.label)} data-enter="lede" lang="en">

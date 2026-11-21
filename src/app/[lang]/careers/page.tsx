@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 
 /**
  * Careers & Internships: the application form and nothing else. A standalone page, outside
- * the (site) group, so it has no header, footer, launch bar or WhatsApp shortcut; only the
+ * the (site) group, so it has no header, footer or WhatsApp shortcut; only the
  * ORVANN logo above the form. The form posts to a small PHP handler on the host that records
  * the application, CV included, in the CRM and emails ORVANN.
  */

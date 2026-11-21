@@ -45,6 +45,7 @@ export default async function HomePage({ params }: LangParams) {
     <>
       <Hero
         hero={content.hero}
+        announcement={content.launch.heroMessage}
         primary={content.hero.primaryCta}
         secondary={flags.showWork ? content.hero.secondaryCta : undefined}
         projects={content.projects.slice(0, 3).map((project) => project.image)}
