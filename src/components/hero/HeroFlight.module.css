@@ -1,5 +1,5 @@
 ﻿.scene {
-  --flight-duration: 7.2s;
+  --flight-duration: 5.6s;
   --flight-delay: calc(var(--page-enter-delay) + 0.7s);
   --flight-size: 1;
   --flight-pace: cubic-bezier(0.3, 0.18, 0.72, 0.6);
@@ -183,19 +183,16 @@
 }
 
 @keyframes fly-depth {
-  0% { transform: scale(calc(var(--flight-size) * 0.92)); }
-  35% { transform: scale(var(--flight-size)); }
-  55% { transform: scale(calc(var(--flight-size) * 1.055)); }
-  75% { transform: scale(var(--flight-size)); }
+  0% { transform: scale(calc(var(--flight-size) * 0.94)); }
+  50% { transform: scale(var(--flight-size)); }
   100% { transform: scale(calc(var(--flight-size) * 0.94)); }
 }
 
+/* A light sway along the straight flight; no roll, since there is no loop. */
 @keyframes bank {
-  0%, 100% { transform: rotate(0deg) scaleY(1); }
-  35% { transform: rotate(-2deg) scaleY(0.98); }
-  50% { transform: rotate(-4deg) scaleY(0.9); }
-  65% { transform: rotate(3deg) scaleY(0.96); }
-  80% { transform: rotate(0deg) scaleY(1); }
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-1.5deg); }
+  70% { transform: rotate(1deg); }
 }
 
 @keyframes propeller-spin {

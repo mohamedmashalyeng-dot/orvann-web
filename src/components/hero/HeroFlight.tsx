@@ -27,17 +27,13 @@ export function HeroFlight({ message }: { message: string }) {
       const width = hero.clientWidth;
       const height = hero.clientHeight;
       const bounds = hero.getBoundingClientRect();
-      const title = hero.querySelector("h1")?.getBoundingClientRect();
-      const header = document.querySelector("[data-site-header]")?.getBoundingClientRect().height ?? 72;
-      const y = title ? title.top - bounds.top + title.height * 0.45 : height * 0.45;
-      const center = width * (width < 768 ? 0.65 : 0.52);
-      const radius = Math.max(36, Math.min(130, width * 0.17, (y - header - 65) / 1.7));
-      // Matching tangents at every join prevents a sudden bank into or out of the loop.
+      // Across the middle of the screen (as seen with the page at the top), in one gentle
+      // wave with no loop: a slight dip, then back to the middle on the way out.
+      const heroTop = bounds.top + window.scrollY;
+      const screenMiddle = document.documentElement.clientHeight / 2 - heroTop;
+      const y = Math.min(Math.max(screenMiddle, 80), height - 80);
       const route = `M-240 ${y}
-        C${width * 0.12} ${y + 30} ${center - radius * 0.9} ${y + radius * 0.55} ${center} ${y}
-        C${center + radius * 0.9} ${y - radius * 0.55} ${center + radius} ${y - radius * 1.7} ${center} ${y - radius * 1.7}
-        C${center - radius} ${y - radius * 1.7} ${center - radius * 0.9} ${y - radius * 0.55} ${center} ${y}
-        C${center + radius * 0.9} ${y + radius * 0.55} ${width * 0.85} ${y - 35} ${width + 480} ${y - 60}`;
+        C${width * 0.3} ${y + 30} ${width * 0.6} ${y - 30} ${width + 480} ${y}`;
 
       const geometry = `${width} ${height} ${route}`;
       if (geometry === previousGeometry) return;

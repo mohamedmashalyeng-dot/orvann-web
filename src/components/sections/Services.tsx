@@ -9,35 +9,39 @@ import styles from "./Services.module.css";
 export function Services({ services }: { services: SiteContent["services"] }) {
   return (
     <section id="services" className="tone-alt section" aria-labelledby="services-title">
-      <div className={cn("container", styles.layout)}>
-        <Reveal as="header" className={styles.head}>
-          <SectionLabel data-reveal="">{services.label}</SectionLabel>
-          <h2 id="services-title" className="type-h2" data-reveal="">
-            {services.title}
-          </h2>
-          {services.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="type-lede" data-reveal="">
-              {paragraph}
-            </p>
-          ))}
-        </Reveal>
-
-        <Reveal className={styles.listWrap}>
-          <ol className={styles.list}>
-            {services.items.map((item, index) => (
-              <li key={item.title} className={styles.row} data-reveal="">
-                <span className={cn("type-label", styles.number)} aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className={styles.body}>
-                  <h3 className={cn("type-h3", styles.title)}>{item.title}</h3>
-                  {item.tagline && <p className={styles.tagline}>{item.tagline}</p>}
-                  <p className="type-body">{item.text}</p>
-                </div>
-              </li>
+      {/* The process sits outside .layout, so the sticky head stops before it rather than
+          riding over it. */}
+      <div className="container">
+        <div className={styles.layout}>
+          <Reveal as="header" className={styles.head}>
+            <SectionLabel data-reveal="">{services.label}</SectionLabel>
+            <h2 id="services-title" className="type-h2" data-reveal="">
+              {services.title}
+            </h2>
+            {services.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
             ))}
-          </ol>
-        </Reveal>
+          </Reveal>
+
+          <Reveal className={styles.listWrap}>
+            <ol className={styles.list}>
+              {services.items.map((item, index) => (
+                <li key={item.title} className={styles.row} data-reveal="">
+                  <span className={cn("type-label", styles.number)} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.body}>
+                    <h3 className={cn("type-h3", styles.title)}>{item.title}</h3>
+                    {item.tagline && <p className={styles.tagline}>{item.tagline}</p>}
+                    <p className="type-body">{item.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </div>
 
         <Reveal className={styles.process}>
           <h3 className={cn("type-label", styles.processLabel)} data-reveal="">

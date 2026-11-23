@@ -53,6 +53,7 @@
 .process {
   display: grid;
   gap: var(--space-4);
+  margin-block-start: var(--space-7);
   padding-block-start: var(--space-6);
   border-block-start: 1px solid var(--line-strong);
 }
@@ -106,10 +107,6 @@
 
   .listWrap {
     grid-column: 6 / -1;
-  }
-
-  .process {
-    grid-column: 1 / -1;
   }
 
   .row {
