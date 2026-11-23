@@ -204,6 +204,9 @@
   --theme-inverse-surface: var(--color-paper);
   --theme-inverse-text: var(--color-ink);
   --theme-inverse-muted: var(--color-graphite);
+  /* The tint tone: the logo blue let into the ground, never white on the dark theme. */
+  --theme-tint: color-mix(in srgb, var(--color-blue-700) 24%, var(--color-ink));
+  --theme-tint-raised: color-mix(in srgb, var(--color-blue-700) 36%, var(--color-ink));
 }
 
 [data-theme="light"] {
@@ -223,18 +226,22 @@
   --theme-inverse-surface: var(--color-ink);
   --theme-inverse-text: var(--color-paper);
   --theme-inverse-muted: var(--color-mist);
+  /* The tint tone: a pale wash of the logo blue, never black on the light theme. */
+  --theme-tint: color-mix(in srgb, var(--color-blue-500) 12%, var(--color-white));
+  --theme-tint-raised: var(--color-white);
 }
 
 /* ---- Tones: a section picks one; components only read the semantic roles ---- */
 
 /* Zero specificity, so a component can still override the painted background. */
-:where(.tone-base, .tone-alt, .tone-inverse, .tone-accent) {
+:where(.tone-base, .tone-alt, .tone-tint, .tone-inverse, .tone-accent) {
   background-color: var(--surface);
   color: var(--text);
 }
 
 .tone-base,
-.tone-alt {
+.tone-alt,
+.tone-tint {
   --surface: var(--theme-base);
   --surface-raised: var(--theme-raised);
   --text: var(--theme-text);
@@ -252,6 +259,13 @@
 .tone-alt {
   --surface: var(--theme-alt);
   --surface-raised: var(--theme-base);
+}
+
+/* A section set apart in colour, not by flipping light and dark: the theme's own text on
+   the tint (see --theme-tint). */
+.tone-tint {
+  --surface: var(--theme-tint);
+  --surface-raised: var(--theme-tint-raised);
 }
 
 .tone-inverse {

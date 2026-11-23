@@ -54,7 +54,7 @@ export default async function HomePage({ params }: LangParams) {
       {flags.showWork && (
         <Work locale={content.locale} work={content.work} serviceNames={content.serviceNames} projects={featured} />
       )}
-      <VisionMission vision={content.vision} mission={content.mission} tone="tone-alt" />
+      <VisionMission vision={content.vision} mission={content.mission} tone="tone-tint" />
       <Philosophy philosophy={content.philosophy} />
       <CtaBand cta={content.closing} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd(content) }} />

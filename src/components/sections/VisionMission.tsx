@@ -6,7 +6,7 @@ import styles from "./VisionMission.module.css";
 type Props = {
   vision: Step;
   mission: Step;
-  tone?: "tone-base" | "tone-alt";
+  tone?: "tone-base" | "tone-alt" | "tone-tint";
 };
 
 /** Vision and mission side by side: a short label over a statement each. */
