@@ -27,13 +27,12 @@ const CRM_CONFIG = __DIR__ . '/crm-config.php';
 // The form's lists, by the id it sends (the CRM's own ids) and named for the email. Keep
 // them in step with src/content/lead-options.ts and the CRM's app/config.php.
 $services = [
-    'strategy' => 'Strategy & Consulting',
-    'branding' => 'Branding & Creative',
-    'marketing' => 'Marketing & Media',
-    'digital' => 'Digital Experiences',
-    'events' => 'Events, Outdoor & Production',
-    'multiple' => 'Multiple Services',
-    'unsure' => 'Not Sure Yet',
+    'strategy' => 'Business development & growth strategies',
+    'launch' => 'Launching a new project or expanding into markets',
+    'marketing' => 'Marketing & brand development',
+    'digital' => 'Software & digital solutions',
+    'commercial' => 'Partnerships & commercial services',
+    'unsure' => 'Another service or an unspecified need',
 ];
 $jobTitles = [
     'owner' => 'Business Owner / Founder',
@@ -213,13 +212,16 @@ $email = line('email', 200);
 $phone = line('phone', 60);
 $region = choice('region', $regions);
 $city = line('city', 120);
+// The topic is optional on the page; without one the enquiry is filed as "unsure".
 $need = line('need', 40);
+if ($need === '') {
+    $need = 'unsure';
+}
 $timeline = choice('timeline', $timelines);
 $budget = choice('budget', $budgets);
 $goal = mb_substr(trim(str_replace("\r\n", "\n", (string) ($_POST['goal'] ?? ''))), 0, 4000);
 
-// The page also asks for a phone number, job title and region. They are not insisted on
-// here, so an enquiry that can be answered is never turned away over one of them.
+// Only the name, email and need are required on the page; the rest is optional there too.
 if ($name === '' || $goal === '' || !isset($services[$need]) || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
     finish(false, 422, $wantsJson, $lang);
 }
@@ -228,20 +230,20 @@ $rows = [
     'Name' => $name,
     'Job title' => $jobTitles[$jobTitle] ?? '',
     'Company' => $company,
-    'Work email' => $email,
+    'Email' => $email,
     'Phone / WhatsApp' => $phone,
     'Governorate / Country' => $regions[$region] ?? '',
     'City / Area' => $city,
-    'What do you need?' => $services[$need],
+    'What would you like to discuss?' => $services[$need],
     'When do you need to start?' => $timelines[$timeline] ?? '',
     'Estimated budget range' => $budgets[$budget] ?? '',
     'Form language' => $lang === 'ar' ? 'Arabic' : 'English',
 ];
-$body = "New project details from the website (Start a Project form).\n\n";
+$body = "New discovery session request from the website (contact form).\n\n";
 foreach ($rows as $label => $value) {
     $body .= $label . ': ' . ($value === '' ? '(not given)' : $value) . "\n";
 }
-$body .= "\nWhat are you trying to achieve?\n" . $goal . "\n";
+$body .= "\nTheir need:\n" . $goal . "\n";
 
 $subject = 'Project enquiry: ' . $name . ($company !== '' ? ' (' . $company . ')' : '');
 $headers = [

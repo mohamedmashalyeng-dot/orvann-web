@@ -3,7 +3,7 @@
  * Arabic later means adding one set of files (see ./index.ts) — components never hold copy.
  */
 
-import type { BudgetId, JobTitleId, RegionId, RegionZoneId, TimelineId } from "./lead-options";
+import type { BudgetId, JobTitleId, RegionId, RegionZoneId, TimelineId, TopicId } from "./lead-options";
 import type { ArrangementId, EducationId, EmploymentId, ExperienceId, InterestId, StudyYearId } from "./career-options";
 
 export type Locale = "en" | "ar";
@@ -18,21 +18,29 @@ export type Link = { label: string; href: string };
 export type ImageAsset = { src: string; alt: string; width: number; height: number };
 
 export type Step = { title: string; text: string };
-export type Faq = { question: string; answer: string };
 export type PageMeta = { title: string; description: string };
 /** Opening of an inner page; `body` adds paragraphs under the lede. */
-export type PageIntro = { label: string; title: string; lede: string; body?: string[] };
+export type PageIntro = { label: string; title: string; lede?: string; body?: string[] };
 
 /**
- * ORVANN's five service areas, in their fixed order (see `serviceIds` in ./index.ts). They
- * are the services everywhere: homepage, services page, project categories and footer.
+ * ORVANN's nine integrated solutions, in their fixed order (see `serviceIds` in ./index.ts).
+ * They are the solutions everywhere: homepage, solutions page, project categories.
  */
-export type ServiceId = "strategy" | "branding" | "marketing" | "digital" | "events";
+export type ServiceId =
+  | "strategy"
+  | "projects"
+  | "marketing"
+  | "digital"
+  | "representation"
+  | "supply"
+  | "ecommerce"
+  | "events"
+  | "craft";
 export type ProjectCategory = ServiceId;
 
 /**
- * An ORVANN project (source: orvann.com/our-projects). The services come from the five
- * service areas only.
+ * An ORVANN project (source: orvann.com/our-projects). The services come from the nine
+ * solutions only.
  */
 export type Project = {
   slug: string;
@@ -57,28 +65,57 @@ export type Project = {
   featured?: boolean;
 };
 
+/** A client story on a solution's page ("From our experience"). */
+export type ServiceCase = {
+  /** The client, after the section label ("From our experience | Tucano Aircraft"). */
+  client?: string;
+  title: string;
+  /** Key facts (sector, duration…), set apart above the story. */
+  facts?: { label: string; value: string }[];
+  paragraphs: string[];
+  /** A short labelled list, e.g. the exhibitions taken part in. */
+  list?: { label: string; items: string[] };
+  /** The story's closing line, set in bold. */
+  closing?: string;
+  /** Case studies whose pictures make the gallery (and are linked from it). */
+  projects?: string[];
+  /** The label above the gallery. */
+  galleryLabel?: string;
+  /** What the gallery shows, as tags. */
+  tags?: string[];
+};
+
 export type ServiceFamily = {
   id: ServiceId;
-  title: string;
+  /** The short line under the name on the solutions page. */
+  tagline: string;
   text: string;
-  /** What the service delivers: titles on the services page, in full on the service's own page. */
-  items: Step[];
-  bestFor: string;
-  /** The service's own page, /services/<slug>/ (see serviceSlugs in ./index.ts). */
+  /** The solution's own page, /services/<slug>/ (see serviceSlugs in ./index.ts). */
   page: {
     meta: PageMeta;
-    /** The h1 and its lede; the label above it is the service name. */
+    /** The English name, shown under the label on the Arabic page. */
+    englishName?: string;
+    /** The h1, then the opening paragraphs and an optional line set in bold. */
     title: string;
-    lede: string;
-    /** Who the service is for: the situations clients come to it in. */
-    audience: string[];
-    /** How the work runs, step by step. */
-    process: Step[];
-    faqs: Faq[];
+    paragraphs: string[];
+    highlight?: string;
+    offerings: { title: string; items: Step[] };
+    /** "From our experience" (or "From our creations"), then the client stories. */
+    casesLabel: string;
+    cases: ServiceCase[];
+    /** Work across sectors, on the digital solutions page. */
+    sectors?: {
+      title: string;
+      groups: { title: string; text: string; names?: string }[];
+      galleryLabel?: string;
+      tags?: string[];
+    };
+    /** The closing band; its button opens the form with the matching topic chosen. */
+    cta: { title: string; text: string; emphasis?: string };
   };
 };
 
-export type PolicySection = { heading: string; paragraphs?: string[]; list?: string[] };
+export type PolicySection = { heading: string; paragraphs?: string[]; list?: string[]; after?: string[] };
 
 export type Publication = {
   slug: string;
@@ -89,7 +126,7 @@ export type Publication = {
 };
 
 /** The closing band: an invitation and one or two next steps. */
-export type Cta = { label?: string; title: string; text: string; primary: Link; secondary?: Link };
+export type Cta = { label?: string; title: string; text: string; emphasis?: string; primary: Link; secondary?: Link };
 
 export type SiteContent = {
   locale: Locale;
@@ -114,7 +151,7 @@ export type SiteContent = {
     heroMessage: string;
     intro: { skip: string; from: string; to: string; eyebrow: string; title: string; place: string };
   };
-  /** The five service names, by id. */
+  /** The nine solution names, by id. */
   serviceNames: Record<ServiceId, string>;
   /** Shared links: Start a Project (the form) and Talk to Us (direct contact). */
   actions: { startProject: Link; talkToUs: Link };
@@ -174,39 +211,33 @@ export type SiteContent = {
     about: {
       meta: PageMeta;
       intro: PageIntro;
-      cta: Link;
-      who: { title: string; intro: string; paragraphs: string[] };
-      story: { title: string; paragraphs: string[]; sequence: string[]; closing: string };
-      capabilities: { title: string; items: { id: ServiceId; text: string }[] };
-      process: { title: string; steps: Step[] };
-      model: { title: string; paragraphs: string[] };
-      values: { title: string; items: Step[] };
-      faqTitle: string;
-      faqs: Faq[];
+      approach: { title: string; paragraphs: string[] };
+      value: { title: string; paragraphs: string[]; highlight: string; after: string[]; cta: Link };
+      /** The expertise behind the solutions, beside a link to each solution's page. */
+      expertise: { title: string; paragraphs: string[] };
+      vision: Step;
+      mission: Step;
+      commitments: { title: string; items: Step[] };
+      closing: Cta;
     };
     services: {
       meta: PageMeta;
       intro: PageIntro;
+      /** The intro's buttons: down to the list, and to the form. */
+      explore: Link;
+      discuss: Link;
+      together: { title: string; paragraphs: string[]; closing: string };
+      listTitle: string;
       families: ServiceFamily[];
-      bestForLabel: string;
-      /** Link from each service on the services page to its own page, e.g. "Explore Strategy & Consulting". */
-      explore: (service: string) => string;
-      /** Section names on a service's own page. */
+      /** Each solution's button to its own page. */
+      exploreService: string;
+      /** Labels on a solution's own page. */
       servicePage: {
         back: string;
-        audience: string;
-        deliverables: string;
-        process: string;
-        work: string;
-        workIntro: (service: string) => string;
-        allWork: string;
-        faq: string;
-        /** The closing band: its title names the service; Start a Project ticks it in the form. */
-        cta: { label: string; title: (service: string) => string; text: string };
+        /** The closing band's button, which opens the form. */
+        start: string;
+        viewCase: string;
       };
-      together: { title: string; paragraphs: string[]; exampleLabel: string; sequence: ServiceId[]; closing: string };
-      faqTitle: string;
-      faqs: Faq[];
     };
     contact: {
       meta: PageMeta;
@@ -214,22 +245,28 @@ export type SiteContent = {
       form: {
         title: string;
         name: string;
+        namePlaceholder: string;
+        company: string;
+        companyPlaceholder: string;
+        email: string;
+        emailPlaceholder: string;
+        phone: string;
+        phonePlaceholder: string;
+        /** What the visitor wants to discuss: the CRM's topics (lead-options.ts). */
+        topic: string;
+        topicPlaceholder: string;
+        topics: Record<TopicId, string>;
+        need: string;
+        needPlaceholder: string;
+        /** The optional details the CRM sorts leads by, in a group of their own. */
+        more: string;
         jobTitle: string;
         jobTitles: Record<JobTitleId, string>;
-        company: string;
-        email: string;
-        phone: string;
         region: string;
         /** Headings that group the regions in their list. */
         zones: Record<RegionZoneId, string>;
         regions: Record<RegionId, string>;
         city: string;
-        need: string;
-        /** Choices after the five services. */
-        multiple: string;
-        unsure: string;
-        goal: string;
-        goalHint: string;
         start: string;
         timelines: Record<TimelineId, string>;
         budget: string;
@@ -238,6 +275,8 @@ export type SiteContent = {
         select: string;
         optional: string;
         submit: string;
+        /** The line under the button. */
+        note: string;
         sending: string;
         /** The heading of the pop-up that opens once the form has been sent. */
         sentTitle: string;
@@ -246,15 +285,13 @@ export type SiteContent = {
         close: string;
         failed: string;
       };
-      direct: { title: string; email: string; phone: string; headquarters: string; address: string };
-      faqTitle: string;
-      faqs: Faq[];
+      direct: { title: string; email: string; phone: string };
     };
     work: {
       meta: PageMeta;
       intro: PageIntro;
       filterLabel: string;
-      /** "All"; the other filters are the five service names. */
+      /** "All"; the other filters are the solution names. */
       all: string;
       countLabel: (count: number) => string;
       empty: string;

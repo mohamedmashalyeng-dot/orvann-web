@@ -42,9 +42,11 @@ export function PageIntro({ intro, children, aside, visual, className }: Props) 
           ))}
         </h1>
         <div className={styles.foot}>
-          <p className="type-lede" data-enter="lede">
-            {intro.lede}
-          </p>
+          {intro.lede && (
+            <p className="type-lede" data-enter="lede">
+              {intro.lede}
+            </p>
+          )}
           {intro.body?.map((paragraph) => (
             <p key={paragraph} className="type-lede" data-enter="lede">
               {paragraph}

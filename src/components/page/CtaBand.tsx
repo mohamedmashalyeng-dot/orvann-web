@@ -21,6 +21,11 @@ export function CtaBand({ cta }: { cta: Cta }) {
         <p className="type-lede" data-reveal="">
           {cta.text}
         </p>
+        {cta.emphasis && (
+          <p className={cn("type-lede", styles.emphasis)} data-reveal="">
+            {cta.emphasis}
+          </p>
+        )}
         <div className={styles.actions} data-reveal="">
           <StarButton tone="accent">
             <ButtonLink href={cta.primary.href} icon="arrow" magnetic>

@@ -1,20 +1,48 @@
 import { ar } from "./ar";
 import { en } from "./en";
 import type { Locale, ServiceId, SiteContent } from "./types";
+import type { TopicId } from "./lead-options";
 
 export const locales = ["en", "ar"] as const satisfies readonly Locale[];
 export const defaultLocale: Locale = "en";
 
-/** ORVANN's five service areas, in the order they appear everywhere. */
-export const serviceIds = ["strategy", "branding", "marketing", "digital", "events"] as const satisfies readonly ServiceId[];
+/** ORVANN's nine integrated solutions, in the order they appear everywhere. */
+export const serviceIds = [
+  "strategy",
+  "projects",
+  "marketing",
+  "digital",
+  "representation",
+  "supply",
+  "ecommerce",
+  "events",
+  "craft",
+] as const satisfies readonly ServiceId[];
 
-/** Each service's own page, /services/<slug>/ in every language. */
+/** Each solution's own page, /services/<slug>/ in every language. */
 export const serviceSlugs: Record<ServiceId, string> = {
-  strategy: "strategy-consulting",
-  branding: "branding-creative",
-  marketing: "marketing-media",
-  digital: "digital-experiences",
-  events: "events-outdoor-production",
+  strategy: "business-strategy-development",
+  projects: "project-management-launch",
+  marketing: "marketing-advertising",
+  digital: "software-digital-solutions",
+  representation: "business-representation-brokerage",
+  supply: "import-export-supply",
+  ecommerce: "e-commerce",
+  events: "exhibitions-conferences-events",
+  craft: "bespoke-craftsmanship",
+};
+
+/** The contact form topic each solution's page chooses when it opens the form (?need=…). */
+export const serviceTopics: Record<ServiceId, TopicId> = {
+  strategy: "strategy",
+  projects: "launch",
+  marketing: "marketing",
+  digital: "digital",
+  representation: "commercial",
+  supply: "commercial",
+  ecommerce: "digital",
+  events: "unsure",
+  craft: "unsure",
 };
 
 /** The English path of a service's page ("/services/strategy-consulting/"); see localePath. */

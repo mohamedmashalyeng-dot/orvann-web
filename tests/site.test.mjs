@@ -39,14 +39,21 @@ const inBuiltLocales = (paths) => paths.filter((path) => arabic || localeOf(path
 const standalone = (path) => /^(\/ar)?\/careers\/$/.test(path);
 const otherPath = (path) => (localeOf(path) === "ar" ? path.replace(/^\/ar/, "") || "/" : `/ar${path}`);
 
-// Each service area's own page (serviceSlugs in src/content/index.ts), by service id.
+// Each solution's own page (serviceSlugs in src/content/index.ts) and the contact form topic
+// its button chooses (serviceTopics there), by solution id.
 const servicePages = {
-  strategy: "/services/strategy-consulting/",
-  branding: "/services/branding-creative/",
-  marketing: "/services/marketing-media/",
-  digital: "/services/digital-experiences/",
-  events: "/services/events-outdoor-production/",
+  strategy: ["/services/business-strategy-development/", "strategy"],
+  projects: ["/services/project-management-launch/", "launch"],
+  marketing: ["/services/marketing-advertising/", "marketing"],
+  digital: ["/services/software-digital-solutions/", "digital"],
+  representation: ["/services/business-representation-brokerage/", "commercial"],
+  supply: ["/services/import-export-supply/", "commercial"],
+  ecommerce: ["/services/e-commerce/", "digital"],
+  events: ["/services/exhibitions-conferences-events/", "unsure"],
+  craft: ["/services/bespoke-craftsmanship/", "unsure"],
 };
+// Solutions whose stories draw on a case study (cases[].projects in the content).
+const withCaseStudies = ["strategy", "projects", "marketing", "digital", "ecommerce", "events"];
 
 const text = (fragment) => fragment.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const decode = (value) => value.replace(/&amp;/g, "&");
@@ -63,7 +70,7 @@ const eachPage = (check) => {
 };
 
 test("the build contains every published page, in every published language", () => {
-  const published = ["/", "/services/", ...Object.values(servicePages), "/about-us/", "/about-us/company-profile/", "/careers/", "/contact-us/", "/privacy-policy/"];
+  const published = ["/", "/services/", ...Object.values(servicePages).map(([path]) => path), "/about-us/", "/about-us/company-profile/", "/careers/", "/contact-us/", "/privacy-policy/"];
   if (work) published.push("/our-projects/", "/our-projects/tucano-2/");
   for (const path of published) {
     assert.ok(pages.has(path), `${path} was not prerendered`);
@@ -187,11 +194,10 @@ test("every choice the project form offers is one its handler names", () => {
   const handler = read("api/project.php");
   for (const path of inBuiltLocales(["/contact-us/", "/ar/contact-us/"])) {
     const [form] = /<form\b[\s\S]*?<\/form>/.exec(pages.get(path).html);
-    const radios = [...form.matchAll(/<input\b[^>]*>/g)].map(([tag]) => tag).filter((tag) => /\stype="radio"/.test(tag));
     const options = [...form.matchAll(/<option\b[^>]*>/g)].map(([tag]) => tag);
-    const ids = [...radios, ...options].map((tag) => /\svalue="([^"]*)"/.exec(tag)?.[1]).filter(Boolean);
-    // Services, job titles, regions, timelines and budgets: the CRM's lists.
-    assert.equal(ids.length, 7 + 8 + 34 + 4 + 5, `${path}: the form's lists have changed size`);
+    const ids = options.map((tag) => /\svalue="([^"]*)"/.exec(tag)?.[1]).filter(Boolean);
+    // Topics, job titles, regions, timelines and budgets: the CRM's lists.
+    assert.equal(ids.length, 6 + 8 + 34 + 4 + 5, `${path}: the form's lists have changed size`);
     for (const id of ids) assert.ok(handler.includes(`'${id}' =>`), `${path}: project.php does not name "${id}"`);
   }
 });
@@ -337,15 +343,18 @@ test("every page has its own title and description", () => {
   });
 });
 
-test("every service page leads to the form with its service ticked, and to work that included it", () => {
-  const form = pages.get("/contact-us/").html;
-  for (const [id, servicePath] of Object.entries(servicePages)) {
-    assert.ok(new RegExp(`<input[^>]*name="need"[^>]*value="${id}"`).test(form), `the form has no "${id}" choice`);
+test("every solution page leads to the form with its topic chosen, and to the work behind its stories", () => {
+  const [form] = /<form\b[\s\S]*?<\/form>/.exec(pages.get("/contact-us/").html);
+  const [, topics] = /<select[^>]*name="need"[^>]*>([\s\S]*?)<\/select>/.exec(form);
+  for (const [id, [servicePath, topic]] of Object.entries(servicePages)) {
+    assert.ok(topics.includes(`value="${topic}"`), `the form has no "${topic}" topic`);
     for (const path of inBuiltLocales([servicePath, `/ar${servicePath}`])) {
       const { html } = pages.get(path);
       const contact = localeOf(path) === "ar" ? "/ar/contact-us/" : "/contact-us/";
-      assert.ok(html.includes(`href="${contact}?need=${id}#project-form"`), `${path}: no Start a Project link for ${id}`);
-      if (work) assert.ok(/href="(\/ar)?\/our-projects\/[^"]+\/"/.test(html), `${path}: no related case study`);
+      assert.ok(html.includes(`href="${contact}?need=${topic}#project-form"`), `${path}: no link to the form for ${id}`);
+      if (work && withCaseStudies.includes(id)) {
+        assert.ok(/href="(\/ar)?\/our-projects\/[^"]+\/"/.test(html), `${path}: no related case study`);
+      }
     }
   }
 });

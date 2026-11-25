@@ -14,11 +14,11 @@ export const ar: SiteContent = {
   locale: "ar",
   dir: "rtl",
 
-  // [translation] of the homepage SEO title and description; also the site-wide defaults
+  // The homepage SEO title and description, from ORVANN's copy (20 Nov 2026); also the site-wide defaults
   meta: {
-    title: "أورفان | الاستراتيجية والهوية والتسويق والتجارب الرقمية والفعاليات",
+    title: "أورفان للحلول المتكاملة | شريكك في النمو والنجاح",
     description:
-      "أورفان شريك نمو وتنفيذ في مصر يقدّم خدمات الاستراتيجية والهوية والتسويق والتجارب الرقمية والفعاليات والإعلانات الخارجية والإنتاج.",
+      "في أورفان للحلول المتكاملة، نفهم أعمالك، ونحلل تحدياتك، ونكتشف فرص نموك، لنقدم لك الاستراتيجيات والحلول التي تناسب أهدافك.",
     siteName: "ORVANN أورفان",
     ogLocale: "ar_EG",
   },
@@ -60,13 +60,17 @@ export const ar: SiteContent = {
     proposedCopy: "نص مقترح",
   },
 
-  // [translation] of the site copy supplied by ORVANN (3 Oct 2026), from here to the footer
+  // The nine solutions as named on the Integrated Solutions page (25 Nov 2026).
   serviceNames: {
-    strategy: "الاستراتيجية والاستشارات",
-    branding: "الهوية والإبداع",
-    marketing: "التسويق والإعلام",
-    digital: "التجارب الرقمية",
-    events: "الفعاليات والإعلانات الخارجية والإنتاج",
+    strategy: "استراتيجية وتطوير الأعمال",
+    projects: "إدارة المشاريع والإطلاق",
+    marketing: "إدارة التسويق والدعاية",
+    digital: "البرمجة والحلول الرقمية",
+    representation: "تمثيل الشركات والوساطة التجارية",
+    supply: "الاستيراد والتصدير والتوريدات",
+    ecommerce: "التجارة الإلكترونية",
+    events: "المؤتمرات والمعارض والفعاليات",
+    craft: "التصميم والإنتاج الحرفي حسب الطلب",
   },
 
   actions: {
@@ -78,7 +82,7 @@ export const ar: SiteContent = {
     nav: [
       { label: "الرئيسية", href: "/ar/" },
       { label: "من نحن", href: "/ar/about-us/" },
-      { label: "خدماتنا", href: "/ar/services/" },
+      { label: "حلولنا المتكاملة", href: "/ar/services/" },
       { label: "أعمالنا", href: "/ar/our-projects/" },
       { label: "تواصل معنا", href: "/ar/contact-us/" },
     ],

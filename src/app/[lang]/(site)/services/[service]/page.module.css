@@ -1,4 +1,4 @@
-/* ---------- The five services beside the intro (desktop) ---------- */
+/* ---------- The nine solutions beside the intro (desktop) ---------- */
 
 .index {
   display: grid;
@@ -10,7 +10,7 @@
   grid-template-columns: 2.5rem minmax(0, 1fr);
   align-items: baseline;
   gap: var(--space-3);
-  padding-block: var(--space-3);
+  padding-block: var(--space-2);
   border-block-end: 1px solid var(--line);
   text-decoration: none;
   transition: color var(--duration-base) var(--ease-standard);
@@ -34,35 +34,25 @@
   color: var(--accent-text);
 }
 
-/* ---------- Who it's for ---------- */
-
-.audience {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--grid-gap);
+/* A line set apart in the accent colour: the intro's aim, a story's closing line. */
+.highlight,
+.closing {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--accent-text);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  font-variation-settings: "wdth" var(--wdth-heading);
 }
 
-.situation {
-  display: grid;
-  gap: var(--space-4);
-  align-content: start;
-  padding-block-start: var(--space-5);
-  border-block-start: 1px solid var(--line-strong);
+/* In the intro it sits on a line of its own above the buttons. */
+.highlight {
+  flex-basis: 100%;
+  margin-block-end: var(--space-3);
 }
 
-@media (min-width: 48em) {
-  .audience {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 80em) {
-  .audience {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* ---------- What you get ---------- */
+/* ---------- How ORVANN delivers it ---------- */
 
 .split {
   display: grid;
@@ -74,10 +64,6 @@
   display: grid;
   gap: var(--space-5);
   align-content: start;
-}
-
-.splitHead p {
-  max-width: 32ch;
 }
 
 .items {
@@ -102,7 +88,7 @@
     column-gap: var(--grid-gap);
   }
 
-  /* The heading stays in view while the deliverables scroll past. */
+  /* The heading stays in view while the offerings scroll past. */
   .splitHead {
     grid-column: 1 / span 5;
     position: sticky;
@@ -115,64 +101,98 @@
   }
 }
 
-/* ---------- How it works ---------- */
+/* ---------- Client stories ---------- */
 
-.steps {
+.cases {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-7) var(--grid-gap);
+  gap: var(--space-9, 6rem);
 }
 
-.step {
+.case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+}
+
+.case + .case {
+  padding-block-start: var(--space-8);
+  border-block-start: 1px solid var(--line);
+}
+
+.caseHead,
+.caseBody {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.caseLabel {
+  color: var(--accent-text);
+}
+
+/* The facts the designers asked to see before the pictures: set apart in a panel. */
+.facts {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--accent-text);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+}
+
+.fact {
+  display: grid;
+  gap: var(--space-1, 0.25rem);
+}
+
+.fact dt {
+  color: var(--text-muted);
+}
+
+.fact dd {
+  font-weight: var(--weight-medium);
+}
+
+.caseList {
   display: grid;
   gap: var(--space-3);
-  align-content: start;
-  padding-block-start: var(--space-5);
-  border-block-start: 1px solid var(--line-strong);
 }
 
-.step p {
-  max-width: var(--measure);
+.caseList p {
+  color: var(--accent-text);
 }
 
-@media (min-width: 48em) {
-  .steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.caseList ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
-@media (min-width: 80em) {
-  .steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+.caseList li {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-medium);
 }
 
-/* ---------- Related work ---------- */
+.gallery {
+  display: grid;
+  gap: var(--space-5);
+}
 
-.work {
+.images {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-8) var(--grid-gap);
+  gap: var(--grid-gap);
   align-items: start;
 }
 
-@media (min-width: 48em) {
-  .work {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.card {
-  display: grid;
-  gap: var(--space-3);
-}
-
-/* The frame takes the image's own proportions, so every project is shown whole. */
+/* The frame takes the image's own proportions, so every picture is shown whole. */
 .media {
   position: relative;
   overflow: hidden;
-  aspect-ratio: var(--ratio, 2 / 1);
-  margin-block-end: var(--space-2);
+  aspect-ratio: var(--ratio, 3 / 2);
   background-color: var(--surface-raised);
 }
 
@@ -190,21 +210,27 @@
   inset: 0;
 }
 
-.cardLink {
-  text-decoration: none;
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
 }
 
-.cardLink:hover,
-.cardLink:focus-visible {
-  text-decoration: underline;
+.tag {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
 }
 
-.disciplines {
-  color: var(--accent-text);
+.tag:not(:last-child)::after {
+  content: "|";
+  margin-inline-start: var(--space-4);
+  color: var(--line-strong);
 }
 
-.more {
-  margin-block-start: var(--space-8);
+.caseLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
 }
 
 .moreLink {
@@ -233,6 +259,76 @@
 .moreLink:hover .arrow,
 .moreLink:focus-visible .arrow {
   translate: calc(0.25em * var(--dir)) 0;
+}
+
+@media (min-width: 48em) {
+  .images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64em) {
+  .case {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .caseHead {
+    grid-column: 1 / span 5;
+  }
+
+  .caseBody {
+    grid-column: 7 / -1;
+  }
+
+  .gallery {
+    grid-column: 1 / -1;
+  }
+
+  .images {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Work across sectors ---------- */
+
+.sectorsHead {
+  margin-block-end: var(--space-7);
+}
+
+.sectors {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7) var(--grid-gap);
+}
+
+.sector {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line-strong);
+}
+
+.names {
+  font-weight: var(--weight-medium);
+  color: var(--accent-text);
+}
+
+.sectorsTags {
+  margin-block-start: var(--space-7);
+}
+
+@media (min-width: 48em) {
+  .sectors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80em) {
+  .sectors {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

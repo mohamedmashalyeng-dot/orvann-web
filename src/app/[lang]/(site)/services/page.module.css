@@ -1,4 +1,4 @@
-/* ---------- Family index beside the intro (desktop) ---------- */
+/* ---------- The nine solutions beside the intro (desktop) ---------- */
 
 .index {
   display: grid;
@@ -10,7 +10,7 @@
   grid-template-columns: 2.5rem minmax(0, 1fr);
   align-items: baseline;
   gap: var(--space-3);
-  padding-block: var(--space-3);
+  padding-block: var(--space-2);
   border-block-end: 1px solid var(--line);
   text-decoration: none;
   transition: color var(--duration-base) var(--ease-standard);
@@ -25,65 +25,91 @@
   color: var(--accent-text);
 }
 
-/* ---------- Service families ---------- */
+/* ---------- When solutions work together ---------- */
 
-/* "Explore …" links land on a family: keep its heading clear of the fixed header. */
-.family {
-  scroll-margin-block-start: var(--header-offset);
-}
-
-.family + .family {
-  border-block-start: 1px solid var(--line);
-}
-
-.familyLayout {
+.together {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-8);
+  gap: var(--space-7);
 }
 
-.familyHead {
+.togetherHead,
+.togetherBody {
   display: grid;
   gap: var(--space-5);
-  justify-items: start;
   align-content: start;
 }
 
-.familyNumber {
-  color: var(--accent-text);
+.togetherHead h2 {
+  max-width: 18ch;
 }
 
-.bestFor {
-  max-width: var(--measure);
-  padding-block-start: var(--space-4);
-  border-block-start: 1px solid var(--line);
-  line-height: var(--leading-body);
+/* The section's last line, set apart in the accent colour. */
+.closing {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--accent-text);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  font-variation-settings: "wdth" var(--wdth-heading);
 }
 
-.bestForLabel {
-  color: var(--accent-text);
+@media (min-width: 64em) {
+  .together {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .togetherHead {
+    grid-column: 1 / span 5;
+  }
+
+  .togetherBody {
+    grid-column: 7 / -1;
+  }
 }
 
-.items {
+/* ---------- The solutions ---------- */
+
+/* The index's links land on a card: keep it clear of the fixed header. */
+.solutions,
+.card {
+  scroll-margin-block-start: var(--header-offset);
+}
+
+.grid {
   display: grid;
-  border-block-start: 1px solid var(--line-strong);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap);
 }
 
-.item {
-  padding-block: var(--space-4);
-  border-block-end: 1px solid var(--line);
+.card {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
 }
 
-/* The way to the service's own page, under its deliverables. */
-.explore {
-  margin-block-start: var(--space-6);
+.number {
+  color: var(--accent-text);
+}
+
+.tagline {
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
 }
 
 .exploreLink {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   gap: var(--space-2);
   min-height: 2.75rem;
+  margin-block-start: var(--space-2);
   font-weight: var(--weight-medium);
   color: var(--accent-text);
   text-decoration: none;
@@ -107,114 +133,25 @@
   translate: calc(0.25em * var(--dir)) 0;
 }
 
+@media (min-width: 48em) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80em) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .exploreIcon {
+    transition: none;
+  }
+
   .exploreLink:hover .exploreIcon,
   .exploreLink:focus-visible .exploreIcon {
     translate: none;
-  }
-}
-
-/* ---------- How the services work together ---------- */
-
-.together {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-7);
-}
-
-.togetherHead,
-.togetherFlow {
-  display: grid;
-  gap: var(--space-5);
-  align-content: start;
-  justify-items: start;
-}
-
-.togetherHead h2 {
-  max-width: 18ch;
-}
-
-.exampleLabel {
-  color: var(--accent-text);
-}
-
-/* The example sequence: one service after another, each linking to its own page. */
-.flow {
-  display: grid;
-  gap: var(--space-2);
-  width: 100%;
-}
-
-.flowStep {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-2);
-}
-
-.flowLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding-inline: var(--space-5);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-pill);
-  background-color: var(--surface-raised);
-  font-weight: var(--weight-medium);
-  text-decoration: none;
-  transition:
-    border-color var(--duration-base) var(--ease-standard),
-    color var(--duration-base) var(--ease-standard);
-}
-
-.flowLink:hover,
-.flowLink:focus-visible {
-  border-color: var(--accent-text);
-  color: var(--accent-text);
-}
-
-/* Down the page between steps (the arrow points along the reading direction, turned down). */
-.flowArrow {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-inline-start: var(--space-5);
-  color: var(--accent-text);
-  rotate: 90deg;
-}
-
-[dir="rtl"] .flowArrow {
-  rotate: -90deg;
-}
-
-@media (min-width: 64em) {
-  .together {
-    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-    column-gap: var(--grid-gap);
-  }
-
-  .togetherHead {
-    grid-column: 1 / span 6;
-  }
-
-  .togetherFlow {
-    grid-column: 8 / -1;
-  }
-}
-
-@media (min-width: 64em) {
-  .familyLayout {
-    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-    column-gap: var(--grid-gap);
-  }
-
-  /* The family's heading stays in view while its services scroll past. */
-  .familyHead {
-    grid-column: 1 / span 5;
-    position: sticky;
-    inset-block-start: calc(var(--header-offset) + var(--space-6));
-    align-self: start;
-  }
-
-  .itemsWrap {
-    grid-column: 7 / -1;
   }
 }

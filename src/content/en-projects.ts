@@ -8,6 +8,11 @@ import type { Project } from "./types";
  * also appear in Selected Work on the homepage. ORVANN took Al Nour Optics, Sami Al-Salmi,
  * RGC and Al Marefa Tech off the homepage on 20 Nov 2026; their case studies stay.
  *
+ * Categories are the nine solutions of 25 Nov 2026 [proposed]: the old Branding & Creative
+ * became Marketing & Advertising (branding sits there now), and the solution pages' stories
+ * add the rest (Tucano: strategy and events; Roshan Masr and Intro: project launch; Eagles:
+ * events; Al Nour: e-commerce). ORVANN to confirm.
+ *
  * The order is ORVANN's: Tucano, Eagles Developments and Intro are its most important
  * projects, so they come first and their covers open the homepage hero. Their images, and
  * Roshan Masr's, come from ORVANN's media library (upload.orvann.com, Oct 2026). Intro and
@@ -23,7 +28,7 @@ export const enProjects: Project[] = [
   {
     slug: "tucano-2",
     title: "Tucano",
-    categories: ["branding", "marketing", "digital", "events"],
+    categories: ["strategy", "marketing", "digital", "events"],
     summary:
       "Creating a cohesive premium brand presence across identity, company profile, digital channels, campaigns and event-related execution.",
     challenge:
@@ -69,7 +74,7 @@ export const enProjects: Project[] = [
   {
     slug: "eagles-real-estate-development",
     title: "Eagles Developments",
-    categories: ["strategy", "branding", "marketing", "digital"],
+    categories: ["marketing", "digital", "events"],
     summary:
       "Supporting a real estate brand across strategic direction, rebranding, company communication, website and campaigns.",
     challenge:
@@ -121,7 +126,7 @@ export const enProjects: Project[] = [
   {
     slug: "intro",
     title: "Intro",
-    categories: ["branding", "marketing", "digital"],
+    categories: ["projects", "marketing", "events"],
     summary:
       "Launching Intro, Roshan Masr’s new destination in west Cairo, across identity, print, website and outdoor campaigns.",
     // [proposed] read from the work; to be confirmed by ORVANN.
@@ -181,7 +186,7 @@ export const enProjects: Project[] = [
   {
     slug: "roshan-masr",
     title: "Roshan Masr",
-    categories: ["branding", "marketing", "digital"],
+    categories: ["projects", "marketing", "digital", "events"],
     summary:
       "Building a real estate brand made to be recognized at a glance, across identity, company profile, website and outdoor campaigns.",
     solution: [
@@ -233,7 +238,7 @@ export const enProjects: Project[] = [
   {
     slug: "al-nour-optics",
     title: "Al Nour Optics",
-    categories: ["branding", "marketing", "digital"],
+    categories: ["marketing", "digital", "ecommerce"],
     summary:
       "Building a more consistent brand and digital presence across identity, website, SEO, content and social media.",
     challenge:
@@ -260,7 +265,7 @@ export const enProjects: Project[] = [
   {
     slug: "sami-alsalmi-law-office",
     title: "Sami Al-Salmi Law Office",
-    categories: ["branding", "digital"],
+    categories: ["marketing", "digital"],
     summary:
       "Creating a professional visual and digital presence through identity, website and appointment-booking requirements.",
     challenge:
@@ -300,7 +305,7 @@ export const enProjects: Project[] = [
   {
     slug: "rgc-brokerage",
     title: "RGC Brokerage",
-    categories: ["branding", "marketing", "digital"],
+    categories: ["marketing", "digital"],
     summary:
       "Connecting identity, website, social content, paid campaigns and company communication for a real estate brokerage.",
     challenge:
@@ -327,7 +332,7 @@ export const enProjects: Project[] = [
   {
     slug: "plaza-garden-real-estate-development",
     title: "Plaza Gardens",
-    categories: ["branding", "digital"],
+    categories: ["marketing", "digital"],
     summary:
       "Bringing the real estate brand and its bilingual digital presence into one consistent visual direction.",
     challenge:
@@ -352,7 +357,7 @@ export const enProjects: Project[] = [
   {
     slug: "al-marefah-tech",
     title: "Al Marefah Tech",
-    categories: ["strategy", "branding", "digital"],
+    categories: ["strategy", "marketing", "digital"],
     summary:
       "Connecting strategy, visual identity, website and content direction for a technology business.",
     challenge:
@@ -379,7 +384,7 @@ export const enProjects: Project[] = [
   {
     slug: "azdan-dental-center",
     title: "Azdan Dental Center",
-    categories: ["branding", "marketing", "digital", "events"],
+    categories: ["marketing", "digital", "events"],
     summary:
       "Building a consistent healthcare brand across identity, landing experience, campaigns, social communication and physical brand applications.",
     challenge:
@@ -408,7 +413,7 @@ export const enProjects: Project[] = [
   {
     slug: "domivento",
     title: "Domivento",
-    categories: ["branding", "marketing", "digital"],
+    categories: ["marketing", "digital"],
     summary:
       "Creating a more cohesive presence for an interior design brand across identity, digital experience, social content and portfolio presentation.",
     challenge:
@@ -436,7 +441,7 @@ export const enProjects: Project[] = [
   {
     slug: "akam",
     title: "AKAM",
-    categories: ["branding", "digital"],
+    categories: ["marketing", "digital"],
     summary:
       "Developing digital brand assets and a more consistent identity system across the required touchpoints.",
     challenge:
@@ -464,7 +469,7 @@ export const enProjects: Project[] = [
   {
     slug: "suncrete",
     title: "Suncrete",
-    categories: ["strategy", "branding"],
+    categories: ["strategy", "marketing"],
     summary:
       "Defining positioning, communication direction and the identity system for an industrial brand.",
     challenge:
@@ -490,7 +495,7 @@ export const enProjects: Project[] = [
   {
     slug: "alkholy-lights",
     title: "Alkholy Lights",
-    categories: ["branding", "marketing"],
+    categories: ["marketing"],
     summary:
       "Building a consistent visual and communication system across identity, social media, product imagery and brand voice.",
     challenge:
@@ -516,7 +521,7 @@ export const enProjects: Project[] = [
   {
     slug: "diwanyah-culture",
     title: "Diwanyah Culture",
-    categories: ["strategy", "branding", "marketing"],
+    categories: ["strategy", "marketing"],
     summary:
       "Connecting market understanding, visual identity and social communication for a culture-focused brand.",
     challenge:
@@ -540,7 +545,7 @@ export const enProjects: Project[] = [
   {
     slug: "modern-fix",
     title: "Modern Fix",
-    categories: ["branding", "marketing"],
+    categories: ["marketing"],
     summary:
       "Preparing the brand for launch through logo development, social presence and content planning.",
     challenge:
@@ -565,7 +570,7 @@ export const enProjects: Project[] = [
   {
     slug: "iconic",
     title: "Iconic Construction & Real Estate",
-    categories: ["branding"],
+    categories: ["marketing"],
     summary:
       "Establishing the visual foundations and core identity system for a construction and real estate brand.",
     challenge:

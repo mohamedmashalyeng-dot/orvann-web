@@ -4,7 +4,6 @@ import { localePath, serviceIds, servicePath } from "@/content";
 import { contentFor, type LangParams } from "@/content/server";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
-import { flags } from "@/config/site";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
@@ -12,7 +11,6 @@ import { VisionMission } from "@/components/sections/VisionMission";
 import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
-import { FaqSection } from "@/components/page/FaqSection";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
@@ -30,18 +28,64 @@ export default async function AboutPage({ params }: LangParams) {
 
   return (
     <>
-      <PageIntro intro={page.intro} visual={<ValuesOrbit values={page.values.items.map((value) => value.title)} />}>
-        {flags.showWork && (
-          <ButtonLink href={page.cta.href} icon="arrow">
-            {page.cta.label}
-          </ButtonLink>
-        )}
-      </PageIntro>
+      <PageIntro
+        intro={page.intro}
+        visual={<ValuesOrbit values={page.commitments.items.map((item) => item.title)} />}
+      />
 
-      {/* Who is ORVANN: the five capabilities, each linking to its service page. */}
-      <section className="section" aria-labelledby="who-title">
+      {/* We start where you are. */}
+      <section className="tone-alt section" aria-labelledby="approach-title">
+        <div className={cn("container", styles.split)}>
+          <Reveal className={styles.splitHead}>
+            <h2 id="approach-title" className="type-h2" data-reveal="">
+              {page.approach.title}
+            </h2>
+          </Reveal>
+          <Reveal className={styles.splitBody}>
+            {page.approach.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Worth more than the sum of the services: where ORVANN adds value. */}
+      <section className="section" aria-labelledby="value-title">
+        <div className={cn("container", styles.split)}>
+          <Reveal className={styles.splitHead}>
+            <h2 id="value-title" className="type-h2" data-reveal="">
+              {page.value.title}
+            </h2>
+          </Reveal>
+          <Reveal className={styles.splitBody}>
+            {page.value.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+            <p className={styles.highlight} data-reveal="">
+              {page.value.highlight}
+            </p>
+            {page.value.after.map((paragraph) => (
+              <p key={paragraph} className="type-lede" data-reveal="">
+                {paragraph}
+              </p>
+            ))}
+            <div data-reveal="">
+              <ButtonLink href={page.value.cta.href} icon="arrow">
+                {page.value.cta.label}
+              </ButtonLink>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* The expertise behind the solutions, each solution linking to its page. */}
+      <section className="tone-alt section" aria-labelledby="expertise-title">
         <div className="container">
-          <SectionHead id="who-title" title={page.who.title} intro={page.who.intro} />
+          <SectionHead id="expertise-title" title={page.expertise.title} />
           <Reveal className={styles.who}>
             <ol className={styles.capabilityLinks}>
               {serviceIds.map((id, index) => (
@@ -57,7 +101,7 @@ export default async function AboutPage({ params }: LangParams) {
               ))}
             </ol>
             <div className={styles.paragraphs} data-reveal="">
-              {page.who.paragraphs.map((paragraph) => (
+              {page.expertise.paragraphs.map((paragraph) => (
                 <p key={paragraph} className="type-lede">
                   {paragraph}
                 </p>
@@ -67,101 +111,20 @@ export default async function AboutPage({ params }: LangParams) {
         </div>
       </section>
 
-      {/* Our story: how one deliverable kept leading to the next. */}
-      <section className="tone-alt section" aria-labelledby="story-title">
-        <div className={cn("container", styles.split)}>
-          <Reveal className={styles.splitHead}>
-            <h2 id="story-title" className="type-h2" data-reveal="">
-              {page.story.title}
-            </h2>
-          </Reveal>
-          <Reveal className={styles.splitBody}>
-            {page.story.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="type-lede" data-reveal="">
-                {paragraph}
-              </p>
-            ))}
-            <ol className={styles.sequence}>
-              {page.story.sequence.map((line) => (
-                <li key={line} className={styles.sequenceLine} data-reveal="">
-                  {line}
-                </li>
-              ))}
-            </ol>
-            <p className="type-lede" data-reveal="">
-              {page.story.closing}
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <VisionMission vision={page.vision} mission={page.mission} tone="tone-tint" />
 
-      <section className="section" aria-labelledby="capabilities-title">
+      <section className="section" aria-labelledby="commitments-title">
         <div className="container">
-          <SectionHead id="capabilities-title" title={page.capabilities.title} />
-          <Reveal>
-            <ul className={styles.capabilities}>
-              {page.capabilities.items.map((item, index) => (
-                <li key={item.id} className={styles.capability} data-reveal="">
-                  <span className={cn("type-label", styles.number)} aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  <h3 className="type-h3">{serviceNames[item.id]}</h3>
-                  <p className="type-body">{item.text}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="tone-alt section" aria-labelledby="process-title">
-        <div className="container">
-          <SectionHead id="process-title" title={page.process.title} />
-          <Reveal>
-            <ol className={styles.steps}>
-              {page.process.steps.map((step, index) => (
-                <li key={step.title} className={styles.step} data-reveal="">
-                  <span className={cn("type-label", styles.number)} aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  <h3 className="type-h3">{step.title}</h3>
-                  <p className="type-body">{step.text}</p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="model-title">
-        <div className={cn("container", styles.split)}>
-          <Reveal className={styles.splitHead}>
-            <h2 id="model-title" className="type-h2" data-reveal="">
-              {page.model.title}
-            </h2>
-          </Reveal>
-          <Reveal className={styles.splitBody}>
-            {page.model.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="type-lede" data-reveal="">
-                {paragraph}
-              </p>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="tone-alt section" aria-labelledby="values-title">
-        <div className="container">
-          <SectionHead id="values-title" title={page.values.title} />
+          <SectionHead id="commitments-title" title={page.commitments.title} />
           <Reveal>
             <ul className={styles.values}>
-              {page.values.items.map((value, index) => (
-                <li key={value.title} className={styles.value} data-reveal="">
+              {page.commitments.items.map((item, index) => (
+                <li key={item.title} className={styles.value} data-reveal="">
                   <span className={cn("type-label", styles.number)} aria-hidden="true">
                     {pad(index + 1)}
                   </span>
-                  <h3 className={styles.valueTitle}>{value.title}</h3>
-                  <p className="type-lede">{value.text}</p>
+                  <h3 className={styles.valueTitle}>{item.title}</h3>
+                  <p className="type-lede">{item.text}</p>
                 </li>
               ))}
             </ul>
@@ -169,11 +132,7 @@ export default async function AboutPage({ params }: LangParams) {
         </div>
       </section>
 
-      <VisionMission vision={content.vision} mission={content.mission} tone="tone-base" />
-
-      <FaqSection title={page.faqTitle} faqs={page.faqs} tone="tone-alt" />
-
-      <CtaBand cta={content.pages.cta} />
+      <CtaBand cta={page.closing} />
     </>
   );
 }

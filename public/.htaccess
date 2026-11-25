@@ -29,11 +29,18 @@ RewriteRule ^ar/contact-ar/?$ /ar/contact-us/ [R=301,L]
 RewriteRule ^ar/privacy-policy-ar/?$ /ar/privacy-policy/ [R=301,L]
 # المعارض-والمؤتمرات (exhibitions and conferences), matched as browsers send it: percent-encoded.
 RewriteCond %{THE_REQUEST} \s/ar/%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6-%D9%88%D8%A7%D9%84%D9%85%D8%A4%D8%AA%D9%85%D8%B1%D8%A7%D8%AA/?[\s?] [NC]
-RewriteRule ^ /ar/services/#events [R=301,NE,L]
+RewriteRule ^ /ar/services/exhibitions-conferences-events/ [R=301,L]
 
-# The exhibitions & conferences page is now part of Events, Outdoor & Production on Services.
-RewriteRule ^exhibitions-conferences/?$ /services/#events [R=301,NE,L]
-RewriteRule ^ar/exhibitions-conferences/?$ /ar/services/#events [R=301,NE,L]
+# The exhibitions & conferences page is now the Exhibitions, Conferences & Events solution.
+RewriteRule ^exhibitions-conferences/?$ /services/exhibitions-conferences-events/ [R=301,L]
+RewriteRule ^ar/exhibitions-conferences/?$ /ar/services/exhibitions-conferences-events/ [R=301,L]
+
+# The five service pages became the nine integrated solutions (25 Nov 2026).
+RewriteRule ^(ar/)?services/strategy-consulting/?$ /$1services/business-strategy-development/ [R=301,L]
+RewriteRule ^(ar/)?services/branding-creative/?$ /$1services/marketing-advertising/ [R=301,L]
+RewriteRule ^(ar/)?services/marketing-media/?$ /$1services/marketing-advertising/ [R=301,L]
+RewriteRule ^(ar/)?services/digital-experiences/?$ /$1services/software-digital-solutions/ [R=301,L]
+RewriteRule ^(ar/)?services/events-outdoor-production/?$ /$1services/exhibitions-conferences-events/ [R=301,L]
 
 # Parts that can be hidden (flags.showWork and flags.showArabic in src/config/site.ts). A
 # hidden part is not built, so these rules test for its files: they only act while it is

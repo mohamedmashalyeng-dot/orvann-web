@@ -1,10 +1,16 @@
 /**
- * The lists the Start a Project form shares with ORVANN's CRM. The ids are the CRM's own
- * (app/config.php there) and are what the form sends, so the CRM can sort each lead by job
- * title, region, timeline and budget. A list changed in the CRM must change here, in each
+ * The lists the contact form shares with ORVANN's CRM. The ids are the CRM's own
+ * (app/config.php there) and are what the form sends, so the CRM can sort each lead by topic,
+ * job title, region, timeline and budget. A list changed in the CRM must change here, in each
  * language's names (contact.form in en-pages.ts / ar-pages.ts) and in
  * public/api/project.php, which names each id in the email.
  */
+
+/**
+ * What the visitor wants to discuss (sent as "need"). "launch" and "commercial" came with the
+ * copy of 25 Nov 2026 and must be added to the CRM's list; the others were already there.
+ */
+export const topicIds = ["strategy", "launch", "marketing", "digital", "commercial", "unsure"] as const;
 
 export const jobTitleIds = [
   "owner",
@@ -34,6 +40,7 @@ export const timelineIds = ["asap", "month", "quarter", "exploring"] as const;
 
 export const budgetIds = ["lt-10k", "10k-50k", "50k-200k", "gt-200k", "unknown"] as const;
 
+export type TopicId = (typeof topicIds)[number];
 export type JobTitleId = (typeof jobTitleIds)[number];
 export type RegionZoneId = (typeof regionZones)[number]["id"];
 export type RegionId = (typeof regionZones)[number]["regions"][number];

@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 
 const sectionId = (index: number) => `policy-${index + 1}`;
 
-/** The privacy policy restated from orvann.com, with a table of contents beside it on desktop. */
+/** The privacy policy ORVANN supplied, with a table of contents beside it on desktop. */
 export default async function PrivacyPage({ params }: LangParams) {
   const page = (await contentFor(params)).pages.privacy;
   return (
@@ -56,6 +56,11 @@ export default async function PrivacyPage({ params }: LangParams) {
                     ))}
                   </ul>
                 )}
+                {section.after?.map((paragraph) => (
+                  <p key={paragraph} className="type-body">
+                    {paragraph}
+                  </p>
+                ))}
               </section>
             ))}
           </div>

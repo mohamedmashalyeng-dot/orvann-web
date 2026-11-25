@@ -15,11 +15,12 @@ export const en: SiteContent = {
   locale: "en",
   dir: "ltr",
 
-  // [copy] homepage SEO title and description; also the site-wide defaults
+  // [translation] homepage SEO title and description, from ORVANN's copy (20 Nov 2026); also
+  // the site-wide defaults
   meta: {
-    title: "ORVANN | Strategy, Branding, Marketing, Digital & Events",
+    title: "ORVANN Integrated Solutions | Your Growth Partner",
     description:
-      "ORVANN is a growth and execution partner in Egypt providing strategy, branding, marketing, digital experiences, events, outdoor and production services.",
+      "At ORVANN Integrated Solutions, we understand your business, analyse your challenges and uncover your growth opportunities, to offer the strategies and solutions that fit your goals.",
     siteName: "ORVANN",
     ogLocale: "en_US",
   },
@@ -60,13 +61,17 @@ export const en: SiteContent = {
     proposedCopy: "Proposed copy",
   },
 
-  // [copy] the five service areas
+  // The nine solutions, by the English names in ORVANN's copy (25 Nov 2026).
   serviceNames: {
-    strategy: "Strategy & Consulting",
-    branding: "Branding & Creative",
-    marketing: "Marketing & Media",
-    digital: "Digital Experiences",
-    events: "Events, Outdoor & Production",
+    strategy: "Business Strategy & Development",
+    projects: "Project Management & Launch",
+    marketing: "Marketing & Advertising Management",
+    digital: "Software Development & Digital Solutions",
+    representation: "Business Representation & Commercial Brokerage",
+    supply: "Import, Export & Supply Solutions",
+    ecommerce: "E-Commerce Solutions",
+    events: "Exhibitions, Conferences & Events",
+    craft: "Bespoke Artistry & Heritage Craftsmanship",
   },
 
   // [copy] primary and secondary calls to action. The second is [proposed]: it was "Book a
@@ -81,7 +86,7 @@ export const en: SiteContent = {
     nav: [
       { label: "Home", href: "/" },
       { label: "About", href: "/about-us/" },
-      { label: "Services", href: "/services/" },
+      { label: "Integrated Solutions", href: "/services/" },
       { label: "Our Work", href: "/our-projects/" },
       { label: "Contact", href: "/contact-us/" },
     ],

@@ -16,10 +16,9 @@ import {
   budgetIds,
   jobTitleIds,
   regionZones,
-  serviceIds,
   timelineIds,
+  topicIds,
   type Locale,
-  type ServiceId,
   type SiteContent,
 } from "@/content";
 import { trackEvent } from "@/lib/analytics";
@@ -43,20 +42,19 @@ const noRedirectResult = (): Status => "idle";
 type Props = {
   locale: Locale;
   copy: SiteContent["pages"]["contact"]["form"];
-  serviceNames: Record<ServiceId, string>;
 };
 
 /**
- * Start a Project. With JavaScript it posts in the background and reports the result in a
+ * The contact form (a free discovery session). With JavaScript it posts in the background and reports the result in a
  * live region; without it, the handler redirects back here with ?sent=1 or ?failed=1. The
  * "website" field is a honeypot: hidden from people, filled in by bots, and ignored.
  *
- * The fields are the CRM's: its lists (job title, region, timeline, budget) send the CRM's
- * own ids (content/lead-options.ts), so each lead arrives there already sorted.
- * A service page's link (?need=<service>) ticks that service. Analytics records a form the
+ * Only the name, email and need are required. The lists (topic, then the optional job title,
+ * region, timeline and budget) send the CRM's own ids (content/lead-options.ts), so each lead
+ * arrives there already sorted. A solution page's link (?need=<topic>) chooses that topic. Analytics records a form the
  * handler accepted as generate_lead: a click on the button alone is not a lead.
  */
-export function ProjectForm({ locale, copy, serviceNames }: Props) {
+export function ProjectForm({ locale, copy }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setStatus] = useState<Status>("idle");
   const redirected = useSyncExternalStore(noSubscription, redirectResult, noRedirectResult);
@@ -86,22 +84,16 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
       if (!response.ok || !result.ok) throw new Error("Not sent");
       form.reset();
       setStatus("sent");
-      trackEvent("generate_lead", { form: "start_project", service: String(data.get("need") ?? ""), language: locale });
+      trackEvent("generate_lead", { form: "start_project", service: String(data.get("need") || "unsure"), language: locale });
     } catch {
       setStatus("failed");
     }
   };
 
-  const needs: { value: string; label: string }[] = [
-    ...serviceIds.map((id) => ({ value: id, label: serviceNames[id] })),
-    { value: "multiple", label: copy.multiple },
-    { value: "unsure", label: copy.unsure },
-  ];
-
   return (
     <form ref={formRef} action={PROJECT_FORM_ACTION} method="post" className={styles.form} onSubmit={submit}>
       <Suspense fallback={null}>
-        <NeedFromLink form={formRef} values={needs.map((need) => need.value)} />
+        <NeedFromLink form={formRef} values={[...topicIds]} />
       </Suspense>
       <input type="hidden" name="lang" value={locale} />
       <div className={styles.honeypot} aria-hidden="true">
@@ -113,22 +105,27 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
 
       <div className={styles.row}>
         <Field label={copy.name} required>
-          <input type="text" name="name" required maxLength={120} autoComplete="name" className={styles.input} />
+          <input
+            type="text"
+            name="name"
+            required
+            maxLength={120}
+            autoComplete="name"
+            placeholder={copy.namePlaceholder}
+            className={styles.input}
+          />
         </Field>
-        <Field label={copy.jobTitle} required>
-          <Select name="job_title" required placeholder={copy.select}>
-            {jobTitleIds.map((id) => (
-              <option key={id} value={id}>
-                {copy.jobTitles[id]}
-              </option>
-            ))}
-          </Select>
+        <Field label={copy.company}>
+          <input
+            type="text"
+            name="company"
+            maxLength={160}
+            autoComplete="organization"
+            placeholder={copy.companyPlaceholder}
+            className={styles.input}
+          />
         </Field>
       </div>
-
-      <Field label={copy.company}>
-        <input type="text" name="company" maxLength={160} autoComplete="organization" className={styles.input} />
-      </Field>
 
       <div className={styles.row}>
         <Field label={copy.email} required>
@@ -139,85 +136,103 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
             maxLength={200}
             autoComplete="email"
             dir="ltr"
+            placeholder={copy.emailPlaceholder}
             className={styles.input}
           />
         </Field>
-        <Field label={copy.phone} required>
+        <Field label={copy.phone}>
           <input
             type="tel"
             name="phone"
-            required
             maxLength={60}
             autoComplete="tel"
             dir="ltr"
+            placeholder={copy.phonePlaceholder}
             className={styles.input}
           />
         </Field>
       </div>
 
-      <div className={styles.row}>
-        <Field label={copy.region} required>
-          <Select name="region" required placeholder={copy.select}>
-            {regionZones.map((zone) => (
-              <optgroup key={zone.id} label={copy.zones[zone.id]}>
-                {zone.regions.map((id) => (
-                  <option key={id} value={id}>
-                    {copy.regions[id]}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </Select>
-        </Field>
-        <Field label={copy.city}>
-          <input type="text" name="city" maxLength={120} autoComplete="address-level2" className={styles.input} />
-        </Field>
-      </div>
-
-      <fieldset className={styles.choices}>
-        <legend className={styles.label}>
-          {copy.need}
-          <span aria-hidden="true"> *</span>
-        </legend>
-        <div className={styles.options}>
-          {needs.map((need) => (
-            <label key={need.value} className={styles.option}>
-              <input type="radio" name="need" value={need.value} required className={styles.radio} />
-              <span>{need.label}</span>
-            </label>
+      <Field label={copy.topic}>
+        <Select name="need" placeholder={copy.topicPlaceholder}>
+          {topicIds.map((id) => (
+            <option key={id} value={id}>
+              {copy.topics[id]}
+            </option>
           ))}
-        </div>
-      </fieldset>
-
-      <Field label={copy.goal} hint={copy.goalHint} required>
-        <textarea name="goal" required rows={5} maxLength={4000} className={cn(styles.input, styles.textarea)} />
+        </Select>
       </Field>
 
-      <div className={styles.row}>
-        <Field label={copy.start}>
-          <Select name="timeline" placeholder={copy.select}>
-            {timelineIds.map((id) => (
-              <option key={id} value={id}>
-                {copy.timelines[id]}
-              </option>
-            ))}
-          </Select>
-        </Field>
-        <Field label={copy.budget} hint={copy.optional}>
-          <Select name="budget" placeholder={copy.select}>
-            {budgetIds.map((id) => (
-              <option key={id} value={id}>
-                {copy.budgets[id]}
-              </option>
-            ))}
-          </Select>
-        </Field>
-      </div>
+      <Field label={copy.need} required>
+        <textarea
+          name="goal"
+          required
+          rows={5}
+          maxLength={4000}
+          placeholder={copy.needPlaceholder}
+          className={cn(styles.input, styles.textarea)}
+        />
+      </Field>
+
+      {/* What the CRM sorts leads by: optional, so they never stand between a visitor and the button. */}
+      <fieldset className={styles.choices}>
+        <legend className={styles.label}>{copy.more}</legend>
+        <div className={styles.more}>
+          <div className={styles.row}>
+            <Field label={copy.jobTitle}>
+              <Select name="job_title" placeholder={copy.select}>
+                {jobTitleIds.map((id) => (
+                  <option key={id} value={id}>
+                    {copy.jobTitles[id]}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <Field label={copy.region}>
+              <Select name="region" placeholder={copy.select}>
+                {regionZones.map((zone) => (
+                  <optgroup key={zone.id} label={copy.zones[zone.id]}>
+                    {zone.regions.map((id) => (
+                      <option key={id} value={id}>
+                        {copy.regions[id]}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </Select>
+            </Field>
+          </div>
+          <div className={styles.row}>
+            <Field label={copy.city}>
+              <input type="text" name="city" maxLength={120} autoComplete="address-level2" className={styles.input} />
+            </Field>
+            <Field label={copy.start}>
+              <Select name="timeline" placeholder={copy.select}>
+                {timelineIds.map((id) => (
+                  <option key={id} value={id}>
+                    {copy.timelines[id]}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+          </div>
+          <Field label={copy.budget}>
+            <Select name="budget" placeholder={copy.select}>
+              {budgetIds.map((id) => (
+                <option key={id} value={id}>
+                  {copy.budgets[id]}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        </div>
+      </fieldset>
 
       <div className={styles.footer}>
         <button type="submit" className={styles.submit} disabled={status === "sending"}>
           {status === "sending" ? copy.sending : copy.submit}
         </button>
+        <p className={styles.note}>{copy.note}</p>
         <p className={styles.status} role="status" aria-live="polite" data-status={status}>
           {status === "failed" ? copy.failed : ""}
         </p>
@@ -227,14 +242,14 @@ export function ProjectForm({ locale, copy, serviceNames }: Props) {
   );
 }
 
-/** Ticks the service named in the link that opened the form (?need=strategy), if it is one. */
+/** Chooses the topic named in the link that opened the form (?need=strategy), if it is one. */
 function NeedFromLink({ form, values }: { form: RefObject<HTMLFormElement | null>; values: string[] }) {
   const need = useSearchParams().get("need");
   const known = need !== null && values.includes(need) ? need : null;
   useEffect(() => {
     if (!known) return;
-    const radio = form.current?.querySelector<HTMLInputElement>(`input[name="need"][value="${known}"]`);
-    if (radio) radio.checked = true;
+    const select = form.current?.querySelector<HTMLSelectElement>('select[name="need"]');
+    if (select) select.value = known;
   }, [form, known]);
   return null;
 }

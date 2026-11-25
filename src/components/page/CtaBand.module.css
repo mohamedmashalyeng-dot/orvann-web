@@ -54,3 +54,8 @@
   gap: var(--space-3);
   margin-block-start: var(--space-3);
 }
+
+/* The closing line some bands end on, in bold. */
+.emphasis {
+  font-weight: var(--weight-semibold, 600);
+}

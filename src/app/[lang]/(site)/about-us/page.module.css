@@ -2,7 +2,7 @@
   color: var(--accent-text);
 }
 
-/* ---------- Who is ORVANN ---------- */
+/* ---------- Expertise: the solutions beside the text ---------- */
 
 .who {
   display: grid;
@@ -54,7 +54,7 @@
   gap: var(--space-4);
 }
 
-/* ---------- Title beside text (story, model) ---------- */
+/* ---------- Title beside text ---------- */
 
 .split {
   display: grid;
@@ -72,55 +72,15 @@
   align-content: start;
 }
 
-/* One deliverable leading to the next: each line steps further in. */
-.sequence {
-  display: grid;
-  gap: var(--space-3);
-  padding-block: var(--space-3);
-}
-
-.sequenceLine {
+/* The line the section turns on, set apart in the accent colour. */
+.highlight {
   padding-inline-start: var(--space-4);
   border-inline-start: 2px solid var(--accent-text);
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   font-variation-settings: "wdth" var(--wdth-heading);
-}
-
-@media (min-width: 48em) {
-  .sequenceLine:nth-child(2) {
-    margin-inline-start: var(--space-5);
-  }
-
-  .sequenceLine:nth-child(3) {
-    margin-inline-start: var(--space-7);
-  }
-
-  .sequenceLine:nth-child(4) {
-    margin-inline-start: var(--space-9);
-  }
-}
-
-/* ---------- Cards: capabilities and process ---------- */
-
-.capabilities,
-.steps {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
-}
-
-.capability,
-.step {
-  display: grid;
-  gap: var(--space-3);
-  align-content: start;
-  padding: var(--space-5);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background-color: var(--surface-raised);
 }
 
 /* ---------- Values ---------- */
@@ -150,13 +110,6 @@
   color: var(--text);
 }
 
-@media (min-width: 48em) {
-  .capabilities,
-  .steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (min-width: 64em) {
   .who {
     grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
@@ -183,15 +136,6 @@
 
   .splitBody {
     grid-column: 7 / -1;
-  }
-
-  .capabilities {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .steps {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: var(--grid-gap);
   }
 
   .value {

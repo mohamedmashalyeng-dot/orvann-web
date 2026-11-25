@@ -9,22 +9,22 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 | Route | Page |
 | --- | --- |
 | `/` | Homepage (ORVANN's copy of 20 Nov 2026): hero, UAE launch bar and intro, the nine integrated solutions and how ORVANN works, Selected Work, vision & mission, ORVANN's philosophy, closing call to action |
-| `/services/` | The five service areas (anchors `#strategy`, `#branding`, `#marketing`, `#digital`, `#events`), each with its deliverables and a link to its page, how they work together, FAQ |
-| `/services/<service>/` | One page per service (`strategy-consulting`, `branding-creative`, `marketing-media`, `digital-experiences`, `events-outdoor-production`): who it is for, what you get, how it works, related work, FAQ, and Start a Project with the service ticked (`/contact-us/?need=<id>#project-form`) |
-| `/our-projects/` | All 18 projects, filterable by the five services |
+| `/services/` | Integrated Solutions (ORVANN's copy of 25 Nov 2026): how the solutions work together, then the nine solutions (anchors `#strategy`, `#projects`, `#marketing`, `#digital`, `#representation`, `#supply`, `#ecommerce`, `#events`, `#craft`), each linking to its page |
+| `/services/<service>/` | One page per solution (`business-strategy-development`, `project-management-launch`, `marketing-advertising`, `software-digital-solutions`, `business-representation-brokerage`, `import-export-supply`, `e-commerce`, `exhibitions-conferences-events`, `bespoke-craftsmanship`): the offer, how ORVANN delivers it, client stories with pictures from the case studies, and a free discovery session button that opens the form on the matching topic (`/contact-us/?need=<topic>#project-form`) |
+| `/our-projects/` | All 18 projects, filterable by the solutions they include |
 | `/our-projects/<slug>/` | Case study: services, the challenge, ORVANN's role, execution, outcome, images from the work, next project |
-| `/about-us/` | Who ORVANN is, story, capabilities, how we work, model, values, vision & mission, FAQ |
+| `/about-us/` | ORVANN's copy of 25 Nov 2026: who ORVANN is, its approach, where it adds value, its expertise (linking each solution), vision & mission, its commitments, closing call to action |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
 | `/careers/` | Careers & Internships: the application form only (`#application-form`, with optional CV and portfolio uploads), on a standalone page with no header, footer or launch bar (it sits outside `src/app/[lang]/(site)/`, the group whose layout holds them) |
-| `/contact-us/` | Start a Project form (`#project-form`), direct contact (`#direct-contact`), FAQ |
-| `/privacy-policy/` | Privacy policy |
+| `/contact-us/` | ORVANN's copy of 25 Nov 2026: the discovery session form (`#project-form`; name, email and need required, the CRM's lists optional) and direct contact (`#direct-contact`) |
+| `/privacy-policy/` | Privacy policy (ORVANN's text of 25 Nov 2026) |
 
-The five service areas are the single list of services everywhere (`serviceIds` and each
-language's `serviceNames`; their page slugs are `serviceSlugs`): homepage, services page,
-service pages and project categories. Links to a service open its own page. The homepage
-lists ORVANN's nine integrated solutions instead, as text (`services.items`); they have no
-pages of their own. The old
-`/exhibitions-conferences/` page redirects to `/services/#events`.
+The nine integrated solutions are the single list of services everywhere (`serviceIds` and
+each language's `serviceNames`; their page slugs are `serviceSlugs`, and the contact form
+topic each page chooses is `serviceTopics`): solutions page, solution pages and project
+categories. The homepage shows them as text (`services.items`, in ORVANN's homepage wording).
+The old five service pages and `/exhibitions-conferences/` redirect to their new pages
+(`public/.htaccess`).
 
 See **RELEASE_NOTES.md** for what was built, what was verified and what is still open before launch.
 
@@ -152,8 +152,8 @@ src/
     hero/              Hero (with the first three project covers), HeroStage (hero motion)
     sections/          homepage sections: Services (the nine solutions), Work, VisionMission,
                        Philosophy (the closing band is the shared CtaBand)
-    page/              page building blocks: PageIntro, SectionHead, FaqList, FaqSection,
-                       CtaBand, ProjectsIndex (filterable project grid), ProjectForm
+    page/              page building blocks: PageIntro, SectionHead, CtaBand,
+                       ProjectsIndex (filterable project grid), ProjectForm
     visuals/           page-intro illustrations (values orbit, reach globe, shield — SVG in
                        the brand's line language), ProjectFan, ImageMarquee (moving project strip)
     motion/            Reveal, MediaFrame, StepsProgress, Marquee, ScrubText, MotionRuntime

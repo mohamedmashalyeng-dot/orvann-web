@@ -6,10 +6,9 @@ import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import { PageIntro } from "@/components/page/PageIntro";
-import { FaqSection } from "@/components/page/FaqSection";
+import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
 
@@ -20,10 +19,11 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
+/** Integrated Solutions: how the solutions work together, then the nine, each to its own page. */
 export default async function ServicesPage({ params }: LangParams) {
   const content = await contentFor(params);
   const page = content.pages.services;
-  const { serviceNames } = content;
+  const { locale, serviceNames } = content;
 
   return (
     <>
@@ -42,93 +42,60 @@ export default async function ServicesPage({ params }: LangParams) {
           </ol>
         }
       >
-        <ButtonLink href={content.actions.startProject.href} icon="arrow">
-          {content.actions.startProject.label}
+        <ButtonLink href={page.explore.href} icon="arrow">
+          {page.explore.label}
+        </ButtonLink>
+        <ButtonLink href={page.discuss.href} variant="secondary">
+          {page.discuss.label}
         </ButtonLink>
       </PageIntro>
 
-      {/* Each family's id is the service id (the anchor older links point at). The deliverables
-          are listed by name; each service's own page describes them and links its work. */}
-      <div className="tone-alt">
-        {page.families.map((family, index) => (
-          <section
-            key={family.id}
-            id={family.id}
-            className={cn("section", styles.family)}
-            aria-labelledby={`${family.id}-title`}
-          >
-            <div className={cn("container", styles.familyLayout)}>
-              <Reveal className={styles.familyHead}>
-                <p className={cn("type-label", styles.familyNumber)} data-reveal="">
-                  {pad(index + 1)} / {pad(page.families.length)}
-                </p>
-                <SectionLabel data-reveal="">{serviceNames[family.id]}</SectionLabel>
-                <h2 id={`${family.id}-title`} className="type-h2" data-reveal="">
-                  {family.title}
-                </h2>
-                <p className="type-lede" data-reveal="">
-                  {family.text}
-                </p>
-                <p className={styles.bestFor} data-reveal="">
-                  <span className={cn("type-label", styles.bestForLabel)}>{page.bestForLabel}</span> {family.bestFor}
-                </p>
-              </Reveal>
-
-              <Reveal className={styles.itemsWrap}>
-                <ul className={styles.items}>
-                  {family.items.map((item) => (
-                    <li key={item.title} className={cn("type-h3", styles.item)} data-reveal="">
-                      {item.title}
-                    </li>
-                  ))}
-                </ul>
-                <div className={styles.explore} data-reveal="">
-                  <Link href={localePath(content.locale, servicePath(family.id))} className={styles.exploreLink}>
-                    {page.explore(serviceNames[family.id])}
-                    <ArrowIcon className={styles.exploreIcon} />
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
-          </section>
-        ))}
-      </div>
-
-      {/* How the services work together: one example sequence, which changes per project. */}
-      <section className="tone-base section" aria-labelledby="together-title">
+      {/* When solutions work together. */}
+      <section className="tone-alt section" aria-labelledby="together-title">
         <div className={cn("container", styles.together)}>
           <Reveal className={styles.togetherHead}>
             <h2 id="together-title" className="type-h2" data-reveal="">
               {page.together.title}
             </h2>
+          </Reveal>
+          <Reveal className={styles.togetherBody}>
             {page.together.paragraphs.map((paragraph) => (
               <p key={paragraph} className="type-lede" data-reveal="">
                 {paragraph}
               </p>
             ))}
-          </Reveal>
-          <Reveal className={styles.togetherFlow}>
-            <p className={cn("type-label", styles.exampleLabel)} data-reveal="">
-              {page.together.exampleLabel}
-            </p>
-            <ol className={styles.flow}>
-              {page.together.sequence.map((id, index) => (
-                <li key={id} className={styles.flowStep} data-reveal="">
-                  <Link href={localePath(content.locale, servicePath(id))} className={styles.flowLink}>
-                    {serviceNames[id]}
-                  </Link>
-                  {index < page.together.sequence.length - 1 && <ArrowIcon className={styles.flowArrow} />}
-                </li>
-              ))}
-            </ol>
-            <p className="type-body" data-reveal="">
+            <p className={styles.closing} data-reveal="">
               {page.together.closing}
             </p>
           </Reveal>
         </div>
       </section>
 
-      <FaqSection title={page.faqTitle} faqs={page.faqs} tone="tone-alt" />
+      {/* The nine solutions. Each card's id is the solution id, the anchor the index points at. */}
+      <section id="solutions" className={cn("section", styles.solutions)} aria-labelledby="solutions-title">
+        <div className="container">
+          <SectionHead id="solutions-title" title={page.listTitle} />
+          <Reveal>
+            <ol className={styles.grid}>
+              {page.families.map((family, index) => (
+                <li key={family.id} id={family.id} className={styles.card} data-reveal="">
+                  <span className={cn("type-label", styles.number)} aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <h3 className="type-h3">{serviceNames[family.id]}</h3>
+                  <p className={styles.tagline}>{family.tagline}</p>
+                  <p className="type-body">{family.text}</p>
+                  <Link href={localePath(locale, servicePath(family.id))} className={styles.exploreLink}>
+                    {page.exploreService}
+                    <span className="visually-hidden">: {serviceNames[family.id]}</span>
+                    <ArrowIcon className={styles.exploreIcon} />
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </div>
+      </section>
 
       <CtaBand cta={content.pages.cta} />
     </>

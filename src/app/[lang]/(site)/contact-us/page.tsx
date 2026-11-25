@@ -9,7 +9,6 @@ import { ReachGlobe } from "@/components/visuals/IntroGraphics";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { ProjectForm } from "@/components/page/ProjectForm";
-import { FaqSection } from "@/components/page/FaqSection";
 import styles from "./page.module.css";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
@@ -18,7 +17,8 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 }
 
 /**
- * Start a Project (#project-form) and Talk to Us (#direct-contact) both land here.
+ * The contact form (#project-form, a free discovery session) and the direct channels
+ * (#direct-contact) are both here.
  * The form posts to a small PHP handler on the host that records the lead in the CRM and
  * emails ORVANN.
  */
@@ -28,16 +28,15 @@ export default async function ContactPage({ params }: LangParams) {
   const { direct } = page;
 
   const channels = [
-    { label: direct.email, value: site.email, href: `mailto:${site.email}`, ltr: true },
-    { label: direct.phone, value: site.phone.display, href: site.phone.href, ltr: true },
-    { label: direct.headquarters, value: direct.address },
+    { label: direct.email, value: site.email, href: `mailto:${site.email}` },
+    { label: direct.phone, value: site.phone.display, href: site.phone.href },
   ];
 
   return (
     <>
       <PageIntro intro={page.intro} visual={<ReachGlobe place={site.address.locality} />}>
         <ButtonLink href="#project-form" icon="arrow">
-          {content.actions.startProject.label}
+          {page.form.submit}
         </ButtonLink>
       </PageIntro>
 
@@ -46,7 +45,7 @@ export default async function ContactPage({ params }: LangParams) {
           <SectionHead id="form-title" title={page.form.title} />
           <Reveal>
             <div data-reveal="">
-              <ProjectForm locale={content.locale} copy={page.form} serviceNames={content.serviceNames} />
+              <ProjectForm locale={content.locale} copy={page.form} />
             </div>
           </Reveal>
         </div>
@@ -61,13 +60,9 @@ export default async function ContactPage({ params }: LangParams) {
                 <div key={channel.label} className={styles.channel} data-reveal="">
                   <dt className={cn("type-label", styles.channelLabel)}>{channel.label}</dt>
                   <dd className={styles.channelValue}>
-                    {channel.href ? (
-                      <a href={channel.href} className={styles.channelLink} dir={channel.ltr ? "ltr" : undefined}>
-                        {channel.value}
-                      </a>
-                    ) : (
-                      channel.value
-                    )}
+                    <a href={channel.href} className={styles.channelLink} dir="ltr">
+                      {channel.value}
+                    </a>
                   </dd>
                 </div>
               ))}
@@ -75,8 +70,6 @@ export default async function ContactPage({ params }: LangParams) {
           </Reveal>
         </div>
       </section>
-
-      <FaqSection title={page.faqTitle} faqs={page.faqs} />
     </>
   );
 }
