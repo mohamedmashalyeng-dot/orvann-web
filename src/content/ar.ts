@@ -225,7 +225,7 @@ export const ar: SiteContent = {
         { label: "تواصل معنا", href: "/ar/contact-us/" },
       ],
     },
-    contact: { title: "تواصل معنا", address: "شارع الهرم، الجيزة، مصر" },
+    contact: { title: "تواصل معنا", address: "مصر والإمارات" },
     follow: "تابع أورفان",
     rights: "جميع الحقوق محفوظة.",
     privacy: "سياسة الخصوصية",

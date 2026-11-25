@@ -236,7 +236,7 @@ export const en: SiteContent = {
         { label: "Contact Us", href: "/contact-us/" },
       ],
     },
-    contact: { title: "Contact Us", address: "Al-Haram St., Giza, Egypt" },
+    contact: { title: "Contact Us", address: "Egypt & UAE" },
     follow: "Follow ORVANN",
     rights: "All rights reserved.",
     privacy: "Privacy Policy",
