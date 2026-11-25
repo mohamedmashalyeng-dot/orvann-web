@@ -388,3 +388,14 @@ test("the export carries the host's rewrite rules and a 404 page per language", 
     assert.ok(/<meta name="robots" content="noindex/.test(html), `${locale} 404 page must not be indexed`);
   }
 });
+
+// A byte-order mark at the top of a stylesheet ends up inside the bundled CSS, where it is
+// part of the next selector and silently drops that rule (it once took the hero flight's
+// `position: absolute` and let it grow the page to tens of thousands of pixels on phones).
+test("no stylesheet carries a byte-order mark", () => {
+  const css = readdirSync(OUT, { recursive: true }).filter((name) => String(name).endsWith(".css"));
+  assert.ok(css.length > 0, "no CSS in the export");
+  for (const name of css) {
+    assert.ok(!readFileSync(new URL(String(name), OUT)).includes(Buffer.from([0xef, 0xbb, 0xbf])), `${name} has a byte-order mark`);
+  }
+});

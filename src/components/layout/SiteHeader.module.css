@@ -101,8 +101,10 @@
   margin-inline-start: auto;
 }
 
-.cta,
-.secondaryCta {
+/* Scoped to .tools so these beat ButtonLink's own display, whatever order the bundled
+   stylesheets load in. */
+.tools .cta,
+.tools .secondaryCta {
   display: none;
 }
 
@@ -280,13 +282,13 @@
 
 @media (min-width: 64em) {
   .nav,
-  .cta {
+  .tools .cta {
     display: flex;
   }
 
   /* Talk to Us joins Start a Project once the bar has room for both. */
   @media (min-width: 80em) {
-    .secondaryCta {
+    .tools .secondaryCta {
       display: flex;
     }
   }

@@ -1,4 +1,4 @@
-﻿.scene {
+.scene {
   --flight-duration: 5.6s;
   --flight-delay: calc(var(--page-enter-delay) + 0.7s);
   --flight-size: 1;
