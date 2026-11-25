@@ -125,13 +125,11 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
 .type-mega,
 .type-h2,
 .type-h3 {
-  font-family: var(--font-display);
-  font-weight: var(--weight-medium);
   text-wrap: balance;
 }
 
-/* Page and section titles take the headline face (Poppins in English, Bukra in Arabic) at
-   the headline weight. */
+/* Page and section titles take the headline face (Archivo drawn in to a condensed bold, in
+   capitals, in English; Bukra in Arabic) at the headline weight. */
 .type-display,
 .type-mega,
 .type-h2 {
@@ -139,7 +137,8 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
   font-weight: var(--weight-headline);
   letter-spacing: var(--tracking-headline);
   word-spacing: var(--word-spacing-headline);
-  font-variation-settings: normal;
+  text-transform: var(--case-headline);
+  font-variation-settings: "wdth" var(--wdth-display);
 }
 
 .type-display {
@@ -157,11 +156,26 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
   line-height: max(1.04, var(--leading-headline));
 }
 
+/* Subheadings: Inter, medium-bold, as on the boards. */
 .type-h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
-  font-variation-settings: "wdth" var(--wdth-heading);
+}
+
+/* The blue dot that closes a headline (see withDot in components/ui/Dot.tsx). */
+.dot {
+  color: var(--dot, var(--color-blue));
+}
+
+/* A brand line in the italic serif ("Every detail. The whole vision."). */
+.type-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .type-lede {
@@ -202,7 +216,7 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
   font-size: var(--text-sm);
 }
 
-/* Bukra is about as wide as Poppins, so it shares the sizes; it needs taller lines. */
+/* Bukra shares the sizes; it needs taller lines. */
 [lang="ar"] .type-mega {
   line-height: 1.1;
 }
@@ -213,7 +227,7 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
 }
 
 :root[lang="ar"] [lang="en"] {
-  font-family: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
 }
 
 /* ---------- Accessibility utilities ---------- */

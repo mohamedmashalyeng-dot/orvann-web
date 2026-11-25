@@ -13,6 +13,7 @@ import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const content = await contentFor(params);
@@ -38,7 +39,7 @@ export default async function AboutPage({ params }: LangParams) {
         <div className={cn("container", styles.split)}>
           <Reveal className={styles.splitHead}>
             <h2 id="approach-title" className="type-h2" data-reveal="">
-              {page.approach.title}
+              {withDot(page.approach.title)}
             </h2>
           </Reveal>
           <Reveal className={styles.splitBody}>
@@ -56,7 +57,7 @@ export default async function AboutPage({ params }: LangParams) {
         <div className={cn("container", styles.split)}>
           <Reveal className={styles.splitHead}>
             <h2 id="value-title" className="type-h2" data-reveal="">
-              {page.value.title}
+              {withDot(page.value.title)}
             </h2>
           </Reveal>
           <Reveal className={styles.splitBody}>

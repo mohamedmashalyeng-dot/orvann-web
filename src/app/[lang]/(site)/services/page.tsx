@@ -11,6 +11,7 @@ import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const content = await contentFor(params);
@@ -55,7 +56,7 @@ export default async function ServicesPage({ params }: LangParams) {
         <div className={cn("container", styles.together)}>
           <Reveal className={styles.togetherHead}>
             <h2 id="together-title" className="type-h2" data-reveal="">
-              {page.together.title}
+              {withDot(page.together.title)}
             </h2>
           </Reveal>
           <Reveal className={styles.togetherBody}>

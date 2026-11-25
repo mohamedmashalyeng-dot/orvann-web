@@ -12,6 +12,6 @@ span.ring {
 .plain {
   display: inline-flex;
   padding: 2px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   vertical-align: middle;
 }

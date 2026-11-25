@@ -4,37 +4,19 @@
   overflow: clip;
 }
 
-/* The O of the monogram as a slow-turning ring in the corner (decorative). */
-.orbit {
+/* The golden spiral across the end of the band, in white on the blue (decorative). */
+.spiral {
   position: absolute;
   z-index: -1;
-  inset-block-start: 50%;
-  inset-inline-end: -12vw;
-  width: min(70vw, 52rem);
-  aspect-ratio: 1;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  translate: 0 -50%;
+  inset-block-end: -12%;
+  inset-inline-end: -8vw;
+  width: min(62vw, 56rem);
+  height: auto;
+  color: rgb(255 255 255 / 0.32);
 }
 
-.orbit::before {
-  content: "";
-  position: absolute;
-  inset: 12%;
-  border: 1px dashed var(--line);
-  border-radius: 50%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .orbit::before {
-    animation: spin 60s linear infinite;
-  }
-}
-
-@keyframes spin {
-  to {
-    rotate: 360deg;
-  }
+[dir="rtl"] .spiral {
+  scale: -1 1;
 }
 
 .inner {
@@ -58,4 +40,12 @@
 /* The closing line some bands end on, in bold. */
 .emphasis {
   font-weight: var(--weight-semibold, 600);
+}
+
+/* On phones the text runs full width: keep the spiral faint behind it. */
+@media (max-width: 47.99em) {
+  .spiral {
+    width: 110vw;
+    color: rgb(255 255 255 / 0.18);
+  }
 }

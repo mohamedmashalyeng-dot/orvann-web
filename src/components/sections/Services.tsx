@@ -4,6 +4,7 @@ import { ArrowIcon } from "@/components/ui/Icons";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./Services.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 /** ORVANN's integrated solutions as numbered rows, then how the work runs, step by step. */
 export function Services({ services }: { services: SiteContent["services"] }) {
@@ -16,7 +17,7 @@ export function Services({ services }: { services: SiteContent["services"] }) {
           <Reveal as="header" className={styles.head}>
             <SectionLabel data-reveal="">{services.label}</SectionLabel>
             <h2 id="services-title" className="type-h2" data-reveal="">
-              {services.title}
+              {withDot(services.title)}
             </h2>
             {services.paragraphs.map((paragraph) => (
               <p key={paragraph} className="type-lede" data-reveal="">

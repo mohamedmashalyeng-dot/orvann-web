@@ -1,3 +1,4 @@
+import { withDot } from "@/components/ui/Dot";
 import { Fragment, type CSSProperties } from "react";
 import type { RichLine } from "@/content";
 
@@ -20,7 +21,7 @@ export function BlurText({ line, start = 0 }: { line: RichLine; start?: number }
         part
       ) : (
         <span key={key} className="blur-word" data-enter="blur" style={{ "--i": index++ } as CSSProperties}>
-          {part}
+          {withDot(part)}
         </span>
       ),
     );

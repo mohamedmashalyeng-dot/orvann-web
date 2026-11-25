@@ -9,6 +9,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { MediaFrame } from "@/components/motion/MediaFrame";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./Work.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 type Props = {
   locale: Locale;
@@ -39,7 +40,7 @@ export function Work({ locale, work, serviceNames, projects }: Props) {
           <div className={styles.headMain}>
             <SectionLabel data-reveal="">{work.label}</SectionLabel>
             <h2 id="work-title" className="type-h2" data-reveal="">
-              {work.title}
+              {withDot(work.title)}
             </h2>
           </div>
           <div className={styles.intro} data-reveal="">

@@ -1,42 +1,52 @@
 /*
  * ORVANN design tokens — the single source for colour, type, space, layout and motion.
  *
- * Brand colours are carried over from orvann.com (inspected 22 Sep 2026):
- *   #3C69F1 site accent · #5899FF secondary blue · #192031 navy · #1463B8 logo blue.
- * Neutrals, type scale, spacing, radii and motion are new for this redesign.
+ * The palette is ORVANN's new direction ("NEW DIRCTION" boards, Nov 2026):
+ *   #0B0B0D black · #181F24 charcoal · #145CFF ORVANN blue · #F3EBDD warm cream ·
+ *   #F7F7F5 warm white · #A7ADB5 cool grey.
+ * Black-and-blue on cream, condensed headlines ending on a blue dot, the golden spiral and
+ * the arrow as graphic language, square corners.
  *
- * Themes: <html data-theme="dark|light"> picks a palette (set before paint by the script
- * in layout.tsx; dark is the default). Sections then pick a tone — base, alt, inverse or
- * accent — and components only ever read the semantic roles (--surface, --text, …).
+ * Themes: <html data-theme="light|dark"> picks a palette (set before paint by the script
+ * in layout.tsx; light, on cream, is the default). Sections then pick a tone — base, alt,
+ * tint (black), inverse or accent (blue) — and components only read the semantic roles.
  *
  * Breakpoints (media queries cannot read custom properties, so use these literals):
  *   sm 40em (640px) · md 48em (768px) · lg 64em (1024px) · xl 80em (1280px)
  */
 
 :root {
-  /* ---- Brand palette (verified) ---- */
-  --color-blue-400: #5899ff;
-  --color-blue-500: #3c69f1;
-  /* ORVANN's colour logo blue (orvann_final_logo-09), for the logo on white or paper. */
-  --color-logo-blue: #034afd;
-  --color-blue-700: #1463b8;
-  --color-navy-900: #192031;
+  /* ---- Brand palette ---- */
+  --color-blue: #145cff;
+  /* Blue for text: darker on cream (5.9:1), lighter on black (5.7:1). */
+  --color-blue-ink: #0f4bd8;
+  --color-blue-light: #4d84ff;
+  /* Older names, kept so every component reads the new blue. */
+  --color-blue-400: var(--color-blue-light);
+  --color-blue-500: var(--color-blue);
+  --color-logo-blue: var(--color-blue);
+  --color-blue-700: var(--color-blue-ink);
+  --color-navy-900: #181f24;
 
-  /* ---- Neutrals (provisional) ---- */
-  --color-ink: #0a0c12;
-  --color-ink-2: #12151e;
-  --color-graphite: #525a6b;
-  --color-mist: #a3a9b8;
-  --color-paper: #f3f4f6;
+  /* ---- Neutrals ---- */
+  --color-ink: #0b0b0d;
+  --color-ink-2: #181f24;
+  --color-charcoal-2: #1f272d;
+  --color-graphite: #5a6068;
+  --color-mist: #a7adb5;
+  --color-cream: #f3ebdd;
+  --color-paper: #f7f7f5;
   --color-white: #ffffff;
 
   /* ---- Type families (next/font sets the --font-* source variables on <html>) ---- */
-  /* Poppins carries every role in English (labels too, set apart by size, capitals and
-     tracking); Arabic switches all roles to Bukra (see :root[lang="ar"]). */
-  --font-sans: var(--font-poppins), "Helvetica Neue", Arial, system-ui, sans-serif;
+  /* English: Inter for text and labels, Archivo condensed (its width axis drawn in) for
+     headlines, Instrument Serif in italics for brand lines ("Strategy. Creative.
+     Execution."). Arabic switches every role to Bukra (see :root[lang="ar"]). */
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-mono: var(--font-sans);
-  --font-display: var(--font-sans);
-  --font-headline: var(--font-sans);
+  --font-display: var(--font-archivo), "Arial Narrow", var(--font-sans);
+  --font-headline: var(--font-display);
+  --font-serif: var(--font-instrument), Georgia, "Times New Roman", serif;
 
   /* ---- Type scale ---- */
   --text-xs: 0.75rem;
@@ -57,26 +67,29 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
-  --weight-headline: 600;
+  --weight-bold: 800;
+  --weight-headline: 800;
 
-  /* Width-axis settings, for a variable font with a wdth axis (Poppins has none: no effect). */
+  /* Width-axis settings for Archivo (62–125): headlines are drawn in, condensed. */
   --wdth-body: 100;
-  --wdth-heading: 106;
-  --wdth-display: 112;
+  /* Large text that is not a headline (quotes, highlighted lines) keeps the normal width. */
+  --wdth-heading: 100;
+  --wdth-display: 68;
+  /* English headlines are set in capitals, as on the boards. */
+  --case-headline: uppercase;
 
-  --leading-display: 0.9;
-  --leading-heading: 1.02;
+  --leading-display: 0.92;
+  --leading-heading: 0.98;
   --leading-snug: 1.2;
   --leading-body: 1.6;
 
-  --tracking-display: -0.045em;
-  --tracking-heading: -0.03em;
+  --tracking-display: -0.01em;
+  --tracking-heading: -0.005em;
   --tracking-snug: -0.015em;
   --tracking-label: 0.08em;
-  /* Poppins is wide and round: draw headlines in a little, with room between lines. */
-  --tracking-headline: -0.02em;
+  --tracking-headline: -0.005em;
   --word-spacing-headline: normal;
-  --leading-headline: 1.1;
+  --leading-headline: 0.95;
 
   /* ---- Spacing ---- */
   --space-1: 0.25rem;
@@ -102,8 +115,9 @@
 
   /* ---- Radii ---- */
   --radius-0: 0;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.75rem;
+  /* Square corners, as on the boards; the pill stays for round marks (dots, toggles). */
+  --radius-sm: 0;
+  --radius-md: 0;
   --radius-pill: 999px;
 
   /* ---- Motion ---- */
@@ -164,10 +178,13 @@
    break the joined letters) and no capitals, and needs taller lines for its dots and
    ascenders. Everything else — sizes, spacing, tones — is shared with English. */
 :root[lang="ar"] {
-  --font-sans: var(--font-bukra), var(--font-poppins), Tahoma, Arial, sans-serif;
+  --font-sans: var(--font-bukra), var(--font-inter), Tahoma, Arial, sans-serif;
   --font-display: var(--font-sans);
   --font-headline: var(--font-sans);
   --font-mono: var(--font-sans);
+  --font-serif: var(--font-sans);
+  --case-headline: none;
+  --weight-headline: 700;
 
   --tracking-display: 0;
   --tracking-heading: 0;
@@ -186,49 +203,52 @@
 /* ---- Theme palettes ---- */
 
 :root,
+[data-theme="light"] {
+  color-scheme: light;
+  --theme-base: var(--color-cream);
+  --theme-alt: var(--color-paper);
+  --theme-raised: var(--color-paper);
+  --theme-text: var(--color-ink);
+  --theme-muted: var(--color-graphite);
+  --theme-line: rgb(11 11 13 / 0.14);
+  --theme-line-strong: rgb(11 11 13 / 0.55);
+  --theme-accent-text: var(--color-blue-ink);
+  --theme-focus: var(--color-blue-ink);
+  --theme-hover-bg: var(--color-ink);
+  --theme-hover-fg: var(--color-cream);
+  --theme-header: color-mix(in srgb, var(--color-cream) 88%, transparent);
+  --theme-inverse-surface: var(--color-ink);
+  --theme-inverse-text: var(--color-cream);
+  --theme-inverse-muted: var(--color-mist);
+  /* The tint tone: a black section on the cream page. */
+  --theme-tint: var(--color-ink);
+  --theme-tint-raised: var(--color-ink-2);
+  --theme-tint-text: var(--color-cream);
+  --theme-tint-muted: var(--color-mist);
+}
+
 [data-theme="dark"] {
   color-scheme: dark;
   --theme-base: var(--color-ink);
   --theme-alt: var(--color-ink-2);
-  --theme-raised: var(--color-navy-900);
-  --theme-text: var(--color-paper);
+  --theme-raised: var(--color-charcoal-2);
+  --theme-text: var(--color-cream);
   --theme-muted: var(--color-mist);
-  --theme-line: rgb(243 244 246 / 0.14);
-  --theme-line-strong: rgb(243 244 246 / 0.5);
-  --theme-accent-text: var(--color-blue-400);
-  --theme-focus: var(--color-blue-400);
-  --theme-hover-bg: var(--color-paper);
+  --theme-line: rgb(243 235 221 / 0.14);
+  --theme-line-strong: rgb(243 235 221 / 0.5);
+  --theme-accent-text: var(--color-blue-light);
+  --theme-focus: var(--color-blue-light);
+  --theme-hover-bg: var(--color-cream);
   --theme-hover-fg: var(--color-ink);
   --theme-header: color-mix(in srgb, var(--color-ink) 86%, transparent);
-  /* The inverse tone flips against the theme. */
-  --theme-inverse-surface: var(--color-paper);
+  --theme-inverse-surface: var(--color-cream);
   --theme-inverse-text: var(--color-ink);
   --theme-inverse-muted: var(--color-graphite);
-  /* The tint tone: the logo blue let into the ground, never white on the dark theme. */
-  --theme-tint: color-mix(in srgb, var(--color-blue-700) 24%, var(--color-ink));
-  --theme-tint-raised: color-mix(in srgb, var(--color-blue-700) 36%, var(--color-ink));
-}
-
-[data-theme="light"] {
-  color-scheme: light;
-  --theme-base: var(--color-paper);
-  --theme-alt: var(--color-white);
-  --theme-raised: var(--color-white);
-  --theme-text: var(--color-ink);
-  --theme-muted: var(--color-graphite);
-  --theme-line: rgb(10 12 18 / 0.14);
-  --theme-line-strong: rgb(10 12 18 / 0.45);
-  --theme-accent-text: var(--color-blue-700);
-  --theme-focus: var(--color-blue-700);
-  --theme-hover-bg: var(--color-ink);
-  --theme-hover-fg: var(--color-paper);
-  --theme-header: color-mix(in srgb, var(--color-paper) 86%, transparent);
-  --theme-inverse-surface: var(--color-ink);
-  --theme-inverse-text: var(--color-paper);
-  --theme-inverse-muted: var(--color-mist);
-  /* The tint tone: a pale wash of the logo blue, never black on the light theme. */
-  --theme-tint: color-mix(in srgb, var(--color-blue-500) 12%, var(--color-white));
-  --theme-tint-raised: var(--color-white);
+  /* The tint tone: charcoal on the black page. */
+  --theme-tint: var(--color-ink-2);
+  --theme-tint-raised: var(--color-charcoal-2);
+  --theme-tint-text: var(--color-cream);
+  --theme-tint-muted: var(--color-mist);
 }
 
 /* ---- Tones: a section picks one; components only read the semantic roles ---- */
@@ -261,11 +281,19 @@
   --surface-raised: var(--theme-base);
 }
 
-/* A section set apart in colour, not by flipping light and dark: the theme's own text on
-   the tint (see --theme-tint). */
+/* A section set apart: black on the cream page, charcoal on the black one, always with
+   cream text and the light blue for accents. */
 .tone-tint {
   --surface: var(--theme-tint);
   --surface-raised: var(--theme-tint-raised);
+  --text: var(--theme-tint-text);
+  --text-muted: var(--theme-tint-muted);
+  --line: rgb(243 235 221 / 0.16);
+  --line-strong: rgb(243 235 221 / 0.5);
+  --accent-text: var(--color-blue-light);
+  --focus: var(--color-blue-light);
+  --hover-bg: var(--color-cream);
+  --hover-fg: var(--color-ink);
 }
 
 .tone-inverse {
@@ -283,16 +311,17 @@
   --hover-fg: var(--theme-inverse-surface);
 }
 
-/* Logo blue ground in both themes: white text 6:1, muted text 4.8:1. */
+/* ORVANN blue ground in both themes: white text 5.2:1. */
 .tone-accent {
-  --surface: var(--color-blue-700);
-  --surface-raised: var(--color-blue-500);
+  --dot: var(--color-ink);
+  --surface: var(--color-blue);
+  --surface-raised: var(--color-blue-ink);
   --text: var(--color-white);
   --text-muted: rgb(255 255 255 / 0.85);
   --line: rgb(255 255 255 / 0.28);
   --line-strong: rgb(255 255 255 / 0.7);
   --accent: var(--color-white);
-  --on-accent: var(--color-blue-700);
+  --on-accent: var(--color-blue);
   --accent-text: var(--color-white);
   --focus: var(--color-white);
   --hover-bg: var(--color-ink);

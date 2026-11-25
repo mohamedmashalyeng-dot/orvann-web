@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./not-found.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 /** not-found receives no params; the language comes from the root segment instead. */
 async function localizedContent() {
@@ -31,7 +32,7 @@ export default async function NotFound() {
       <div className={cn("container", styles.body)}>
         <SectionLabel>{copy.label}</SectionLabel>
         <h1 id="not-found-title" className="type-display">
-          {copy.title}
+          {withDot(copy.title)}
         </h1>
         <p className="type-lede">{copy.text}</p>
         <div className={styles.actions}>

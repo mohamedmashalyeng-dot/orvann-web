@@ -2,6 +2,7 @@ import { Fragment, type CSSProperties, type ReactNode } from "react";
 import type { PageIntro as PageIntroContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { withDot } from "@/components/ui/Dot";
 import styles from "./PageIntro.module.css";
 
 type Props = {
@@ -34,7 +35,7 @@ export function PageIntro({ intro, children, aside, visual, className }: Props) 
             <Fragment key={index}>
               <span className={styles.word}>
                 <span className={styles.wordInner} data-enter="word" style={{ "--i": index } as CSSProperties}>
-                  {word}
+                  {index === words.length - 1 ? withDot(word) : word}
                 </span>
               </span>
               {index < words.length - 1 ? " " : null}

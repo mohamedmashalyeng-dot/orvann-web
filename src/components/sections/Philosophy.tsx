@@ -2,6 +2,7 @@ import type { SiteContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./Philosophy.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 /** How ORVANN works with clients: a title, then its four principles. */
 export function Philosophy({ philosophy }: { philosophy: SiteContent["philosophy"] }) {
@@ -10,7 +11,7 @@ export function Philosophy({ philosophy }: { philosophy: SiteContent["philosophy
       <div className="container">
         <Reveal className={styles.head}>
           <h2 id="philosophy-title" className="type-h2" data-reveal="">
-            {philosophy.title}
+            {withDot(philosophy.title)}
           </h2>
         </Reveal>
 

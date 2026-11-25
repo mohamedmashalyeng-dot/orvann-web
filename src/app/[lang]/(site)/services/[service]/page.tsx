@@ -25,6 +25,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { PageIntro } from "@/components/page/PageIntro";
 import { CtaBand } from "@/components/page/CtaBand";
 import styles from "./page.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 type Props = { params: Promise<{ lang: string; service: string }> };
 
@@ -116,7 +117,7 @@ function CaseStory({
           )}
         </p>
         <h3 id={titleId} className="type-h2" data-reveal="">
-          {story.title}
+          {withDot(story.title)}
         </h3>
         {story.facts && (
           <dl className={styles.facts} data-reveal="">
@@ -257,7 +258,7 @@ export default async function ServicePage({ params }: Props) {
         <div className={cn("container", styles.split)}>
           <Reveal as="header" className={styles.splitHead}>
             <h2 id="offerings-title" className="type-h2" data-reveal="">
-              {page.offerings.title}
+              {withDot(page.offerings.title)}
             </h2>
           </Reveal>
           <Reveal className={styles.splitBody}>
@@ -300,7 +301,7 @@ export default async function ServicePage({ params }: Props) {
           <div className="container">
             <Reveal className={styles.sectorsHead}>
               <h2 id="sectors-title" className="type-h2" data-reveal="">
-                {page.sectors.title}
+                {withDot(page.sectors.title)}
               </h2>
             </Reveal>
             <Reveal>

@@ -2,6 +2,7 @@ import { cn } from "@/lib/cn";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Reveal } from "@/components/motion/Reveal";
 import styles from "./SectionHead.module.css";
+import { withDot } from "@/components/ui/Dot";
 
 type Props = {
   /** id of the h2, for the section's aria-labelledby. */
@@ -19,7 +20,7 @@ export function SectionHead({ id, label, title, intro, className }: Props) {
       <div className={styles.main}>
         {label && <SectionLabel data-reveal="">{label}</SectionLabel>}
         <h2 id={id} className={cn("type-h2", styles.title)} data-reveal="">
-          {title}
+          {withDot(title)}
         </h2>
       </div>
       {intro && (

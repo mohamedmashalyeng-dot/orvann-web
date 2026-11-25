@@ -138,3 +138,10 @@
     margin-block-start: var(--space-6);
   }
 }
+
+/* The blue dot that closes every ORVANN headline: the copy's own full stop is coloured
+   (withDot); a headline without one gets it drawn here. */
+.title:not(:has(.dot)) > .line:last-of-type::after {
+  content: ".";
+  color: var(--color-blue);
+}
