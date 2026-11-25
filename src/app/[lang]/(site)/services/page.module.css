@@ -44,6 +44,12 @@
   max-width: 18ch;
 }
 
+.togetherPhoto {
+  aspect-ratio: 944 / 504;
+  max-width: 32rem;
+  margin-block-start: var(--space-3);
+}
+
 /* The section's last line, set apart in the accent colour. */
 .closing {
   padding-inline-start: var(--space-4);

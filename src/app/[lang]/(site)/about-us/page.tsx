@@ -8,7 +8,7 @@ import { ArrowIcon } from "@/components/ui/Icons";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { VisionMission } from "@/components/sections/VisionMission";
-import { ValuesOrbit } from "@/components/visuals/IntroGraphics";
+import { DirectionPhoto } from "@/components/visuals/DirectionPhoto";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -31,7 +31,7 @@ export default async function AboutPage({ params }: LangParams) {
     <>
       <PageIntro
         intro={page.intro}
-        visual={<ValuesOrbit values={page.commitments.items.map((item) => item.title)} />}
+        visual={<DirectionPhoto photo="arch" priority />}
       />
 
       {/* We start where you are. */}

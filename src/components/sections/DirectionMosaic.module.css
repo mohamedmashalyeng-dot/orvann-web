@@ -1,0 +1,55 @@
+.mosaic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+}
+
+.tile {
+  position: relative;
+  height: clamp(13rem, 9rem + 14vw, 22rem);
+}
+
+.photo {
+  height: 100%;
+}
+
+/* The board's label: small, spaced capitals with a short rule under them, at the top left
+   as on the board (the labels are English in both languages). */
+.label {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-white);
+  font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.35);
+}
+
+.label::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background-color: currentColor;
+}
+
+@media (min-width: 48em) {
+  .mosaic {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .tile[data-tile="perspective"],
+  .tile[data-tile="connected"] {
+    grid-column: span 7;
+  }
+
+  .tile[data-tile="people"],
+  .tile[data-tile="detail"] {
+    grid-column: span 5;
+  }
+}

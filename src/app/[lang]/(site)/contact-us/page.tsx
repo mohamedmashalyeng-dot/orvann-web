@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
-import { ReachGlobe } from "@/components/visuals/IntroGraphics";
+import { DirectionPhoto } from "@/components/visuals/DirectionPhoto";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { ProjectForm } from "@/components/page/ProjectForm";
@@ -34,7 +34,7 @@ export default async function ContactPage({ params }: LangParams) {
 
   return (
     <>
-      <PageIntro intro={page.intro} visual={<ReachGlobe place={site.address.locality} />}>
+      <PageIntro intro={page.intro} visual={<DirectionPhoto photo="people" priority />}>
         <ButtonLink href="#project-form" icon="arrow">
           {page.form.submit}
         </ButtonLink>

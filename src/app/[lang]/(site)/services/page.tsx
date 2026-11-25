@@ -10,6 +10,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { PageIntro } from "@/components/page/PageIntro";
 import { SectionHead } from "@/components/page/SectionHead";
 import { CtaBand } from "@/components/page/CtaBand";
+import { DirectionPhoto } from "@/components/visuals/DirectionPhoto";
 import styles from "./page.module.css";
 import { withDot } from "@/components/ui/Dot";
 
@@ -58,6 +59,9 @@ export default async function ServicesPage({ params }: LangParams) {
             <h2 id="together-title" className="type-h2" data-reveal="">
               {withDot(page.together.title)}
             </h2>
+            <div data-reveal="">
+              <DirectionPhoto photo="curve" className={styles.togetherPhoto} sizes="(min-width: 64em) 40vw, 92vw" />
+            </div>
           </Reveal>
           <Reveal className={styles.togetherBody}>
             {page.together.paragraphs.map((paragraph) => (

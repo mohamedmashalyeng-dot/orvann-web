@@ -6,6 +6,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { Hero } from "@/components/hero/Hero";
 import { Services } from "@/components/sections/Services";
 import { Work } from "@/components/sections/Work";
+import { DirectionMosaic } from "@/components/sections/DirectionMosaic";
 import { VisionMission } from "@/components/sections/VisionMission";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -51,6 +52,7 @@ export default async function HomePage({ params }: LangParams) {
         projects={content.projects.slice(0, 3).map((project) => project.image)}
       />
       <Services services={content.services} />
+      <DirectionMosaic />
       {flags.showWork && (
         <Work locale={content.locale} work={content.work} serviceNames={content.serviceNames} projects={featured} />
       )}
