@@ -34,7 +34,7 @@ export default async function ContactPage({ params }: LangParams) {
 
   return (
     <>
-      <PageIntro intro={page.intro} visual={<DirectionPhoto photo="people" priority />}>
+      <PageIntro intro={page.intro} visual={<DirectionPhoto photo="people" priority className={styles.introPhoto} />}>
         <ButtonLink href="#project-form" icon="arrow">
           {page.form.submit}
         </ButtonLink>

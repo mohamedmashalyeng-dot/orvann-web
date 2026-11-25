@@ -62,3 +62,9 @@
     font-size: var(--text-xl);
   }
 }
+
+/* The intro's photo, kept to about its own size (it is cut from the brand boards). */
+span.introPhoto {
+  max-width: 22rem;
+  margin-inline-start: auto;
+}

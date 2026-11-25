@@ -4,16 +4,18 @@ import styles from "./DirectionPhoto.module.css";
 
 /**
  * Photography from ORVANN's new direction (NEW DIRCTION boards, Nov 2026), framed with the
- * blue square the boards set in a corner. The images are cut from the boards themselves and
- * stand in until ORVANN supplies the originals (public/images/direction/).
+ * blue square the boards set in a corner. The images are cut from the boards themselves, at
+ * their own (small) size, and stand in until ORVANN supplies the originals
+ * (public/images/direction/): they are shown no larger than about their own size, so they stay
+ * sharp, and a fine grain gives them a photographic finish.
  */
 export const directionPhotos = {
-  arch: { src: "/images/direction/arch.webp", width: 700, height: 716 },
-  people: { src: "/images/direction/people.webp", width: 696, height: 600 },
-  perspective: { src: "/images/direction/perspective.webp", width: 1248, height: 490 },
-  detail: { src: "/images/direction/detail.webp", width: 854, height: 382 },
-  connected: { src: "/images/direction/connected.webp", width: 1090, height: 384 },
-  curve: { src: "/images/direction/curve.webp", width: 944, height: 504 },
+  arch: { src: "/images/direction/arch.webp", width: 350, height: 358 },
+  people: { src: "/images/direction/people.webp", width: 348, height: 300 },
+  perspective: { src: "/images/direction/perspective.webp", width: 624, height: 245 },
+  detail: { src: "/images/direction/detail.webp", width: 427, height: 191 },
+  connected: { src: "/images/direction/connected.webp", width: 545, height: 192 },
+  curve: { src: "/images/direction/curve.webp", width: 472, height: 252 },
 } as const;
 
 export type DirectionPhotoId = keyof typeof directionPhotos;

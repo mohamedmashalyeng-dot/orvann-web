@@ -18,9 +18,9 @@
 :root {
   /* ---- Brand palette ---- */
   --color-blue: #145cff;
-  /* Blue for text: darker on cream (5.9:1), lighter on black (5.7:1). */
+  /* Blue for text: darker on cream (5.9:1), lighter on black and charcoal (5.4:1 or more). */
   --color-blue-ink: #0f4bd8;
-  --color-blue-light: #4d84ff;
+  --color-blue-light: #6a98ff;
   /* Older names, kept so every component reads the new blue. */
   --color-blue-400: var(--color-blue-light);
   --color-blue-500: var(--color-blue);
@@ -317,7 +317,8 @@
   --surface: var(--color-blue);
   --surface-raised: var(--color-blue-ink);
   --text: var(--color-white);
-  --text-muted: rgb(255 255 255 / 0.85);
+  /* Full white: anything lighter than white on the blue falls under 4.5:1. */
+  --text-muted: var(--color-white);
   --line: rgb(255 255 255 / 0.28);
   --line-strong: rgb(255 255 255 / 0.7);
   --accent: var(--color-white);

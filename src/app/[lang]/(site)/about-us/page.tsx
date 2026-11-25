@@ -31,7 +31,7 @@ export default async function AboutPage({ params }: LangParams) {
     <>
       <PageIntro
         intro={page.intro}
-        visual={<DirectionPhoto photo="arch" priority />}
+        visual={<DirectionPhoto photo="arch" priority className={styles.introPhoto} />}
       />
 
       {/* We start where you are. */}

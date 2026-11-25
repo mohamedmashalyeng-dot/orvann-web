@@ -45,8 +45,8 @@
 }
 
 .togetherPhoto {
-  aspect-ratio: 944 / 504;
-  max-width: 32rem;
+  aspect-ratio: 472 / 252;
+  max-width: 30rem;
   margin-block-start: var(--space-3);
 }
 

@@ -1,13 +1,17 @@
-.mosaic {
+/* Kept to about the pictures' own size (they are cut from the brand boards), so they stay sharp.
+   (div.: wins over .container's own max-width.) */
+div.mosaic {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
+  max-width: 68rem;
+  margin-inline: auto;
   padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
 }
 
 .tile {
   position: relative;
-  height: clamp(13rem, 9rem + 14vw, 22rem);
+  height: clamp(11rem, 8rem + 8vw, 15rem);
 }
 
 .photo {
@@ -39,7 +43,7 @@
 }
 
 @media (min-width: 48em) {
-  .mosaic {
+  div.mosaic {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
@@ -52,4 +56,9 @@
   .tile[data-tile="detail"] {
     grid-column: span 5;
   }
+}
+
+/* Keep the top of the connected-work picture (its "Strategy that moves." page) in frame. */
+.tile[data-tile="connected"] img {
+  object-position: 50% 20%;
 }
