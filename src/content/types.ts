@@ -79,6 +79,8 @@ export type ServiceCase = {
   closing?: string;
   /** Case studies whose pictures make the gallery (and are linked from it). */
   projects?: string[];
+  /** Pictures of the work itself, shown as the gallery when there is no case study. */
+  images?: ImageAsset[];
   /** The label above the gallery. */
   galleryLabel?: string;
   /** What the gallery shows, as tags. */
@@ -99,7 +101,10 @@ export type ServiceFamily = {
     title: string;
     paragraphs: string[];
     highlight?: string;
-    offerings: { title: string; items: Step[] };
+    /** A wide picture under the intro. */
+    cover?: ImageAsset;
+    /** With a picture each, the offerings run as alternating picture-and-text rows. */
+    offerings: { title: string; items: (Step & { image?: ImageAsset })[] };
     /** "From our experience" (or "From our creations"), then the client stories. */
     casesLabel: string;
     cases: ServiceCase[];

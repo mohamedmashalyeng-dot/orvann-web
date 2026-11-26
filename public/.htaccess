@@ -42,6 +42,9 @@ RewriteRule ^(ar/)?services/marketing-media/?$ /$1services/marketing-advertising
 RewriteRule ^(ar/)?services/digital-experiences/?$ /$1services/software-digital-solutions/ [R=301,L]
 RewriteRule ^(ar/)?services/events-outdoor-production/?$ /$1services/exhibitions-conferences-events/ [R=301,L]
 
+# Case studies taken off the site (26 Nov 2026): to Our Work.
+RewriteRule ^(ar/)?our-projects/(sami-alsalmi-law-office|rgc-brokerage|al-marefah-tech|azdan-dental-center|domivento|akam|suncrete|alkholy-lights|diwanyah-culture|modern-fix|iconic|geocell-keystone)/?$ /$1our-projects/ [R=301,L]
+
 # Parts that can be hidden (flags.showWork and flags.showArabic in src/config/site.ts). A
 # hidden part is not built, so these rules test for its files: they only act while it is
 # hidden, and need no change when it comes back. The redirects are temporary (302).

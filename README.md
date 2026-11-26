@@ -11,7 +11,7 @@ English keeps the URLs it has on orvann.com today; Arabic is the same page under
 | `/` | Homepage (ORVANN's copy of 20 Nov 2026): hero, UAE launch bar and intro, the nine integrated solutions and how ORVANN works, Selected Work, vision & mission, ORVANN's philosophy, closing call to action |
 | `/services/` | Integrated Solutions (ORVANN's copy of 25 Nov 2026): how the solutions work together, then the nine solutions (anchors `#strategy`, `#projects`, `#marketing`, `#digital`, `#representation`, `#supply`, `#ecommerce`, `#events`, `#craft`), each linking to its page |
 | `/services/<service>/` | One page per solution (`business-strategy-development`, `project-management-launch`, `marketing-advertising`, `software-digital-solutions`, `business-representation-brokerage`, `import-export-supply`, `e-commerce`, `exhibitions-conferences-events`, `bespoke-craftsmanship`): the offer, how ORVANN delivers it, client stories with pictures from the case studies, and a free discovery session button that opens the form on the matching topic (`/contact-us/?need=<topic>#project-form`) |
-| `/our-projects/` | All 18 projects, filterable by the solutions they include |
+| `/our-projects/` | The six projects ORVANN keeps (Tucano, Eagles, Intro, Roshan Masr, Al Nour, Plaza Garden), filterable by the solutions they include |
 | `/our-projects/<slug>/` | Case study: services, the challenge, ORVANN's role, execution, outcome, images from the work, next project |
 | `/about-us/` | ORVANN's copy of 25 Nov 2026: who ORVANN is, its approach, where it adds value, its expertise (linking each solution), vision & mission, its commitments, closing call to action |
 | `/about-us/<slug>/` | Publications (company profile, summer giveaway, VIP gifts) as flipbooks |
@@ -137,7 +137,7 @@ src/
   app/                 robots, sitemap, icons, share image, globals.css
   content/             every piece of copy — types.ts (shape); en.ts / ar.ts (homepage and shared
                        copy), en-pages.ts / ar-pages.ts (inner pages), en-projects.ts / ar-projects.ts
-                       (the 18 projects); index.ts (locales, localePath), server.ts (contentFor)
+                       (the six projects); index.ts (locales, localePath), server.ts (contentFor)
   fonts/               Druk (English titles) and 29LT Bukra (Arabic), as woff2 — see Fonts
   config/site.ts       verified business facts, partner logos, build-time flags
   lib/metadata.ts      per-page title, canonical URL and sharing metadata

@@ -40,7 +40,9 @@ export function generateStaticParams() {
 async function serviceFor(params: Props["params"]) {
   const content = await contentFor(params);
   const { service } = await params;
-  const id = serviceIds.find((serviceId) => serviceSlugs[serviceId] === service);
+  const id = serviceIds.find(
+    (serviceId) => serviceSlugs[serviceId] === service,
+  );
   const family = content.pages.services.families.find((item) => item.id === id);
   if (!id || !family) notFound();
   return { content, id, family };
@@ -54,10 +56,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const pad = (value: number) => String(value).padStart(2, "0");
 // Pictures per case study in a story's gallery: its cover and the first of its gallery.
 const perProject = 3;
-const ratio = (image: ImageAsset) => ({ "--ratio": `${image.width} / ${image.height}` }) as CSSProperties;
+const ratio = (image: ImageAsset) =>
+  ({ "--ratio": `${image.width} / ${image.height}` }) as CSSProperties;
 
 /** Service structured data: what the page describes, provided by ORVANN. */
-function serviceJsonLd(content: SiteContent, id: ServiceId, description: string) {
+function serviceJsonLd(
+  content: SiteContent,
+  id: ServiceId,
+  description: string,
+) {
   const data = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -65,7 +72,11 @@ function serviceJsonLd(content: SiteContent, id: ServiceId, description: string)
     serviceType: content.serviceNames[id],
     description,
     url: `${siteUrl}${localePath(content.locale, servicePath(id))}`,
-    provider: { "@type": "Organization", name: site.name, url: `${siteUrl}${localePath(content.locale, "/")}` },
+    provider: {
+      "@type": "Organization",
+      name: site.name,
+      url: `${siteUrl}${localePath(content.locale, "/")}`,
+    },
   };
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
@@ -100,9 +111,14 @@ function CaseStory({
   const { locale } = content;
   const copy = content.pages.services.servicePage;
   const titleId = `case-${index + 1}-title`;
-  const images = projects.flatMap((project) =>
-    [project.image, ...(project.gallery ?? [])].slice(0, perProject).map((image) => ({ project, image })),
-  );
+  const images: { project?: Project; image: ImageAsset }[] = [
+    ...projects.flatMap((project) =>
+      [project.image, ...(project.gallery ?? [])]
+        .slice(0, perProject)
+        .map((image) => ({ project, image })),
+    ),
+    ...(story.images ?? []).map((image) => ({ image })),
+  ];
 
   return (
     <article className={styles.case} aria-labelledby={titleId}>
@@ -164,23 +180,33 @@ function CaseStory({
             </p>
           )}
           {images.length > 0 && (
-            <ul className={styles.images}>
+            <ul className={cn(styles.images, !projects.length && styles.even)}>
               {images.map(({ project, image }) => (
-                <li key={image.src} className={styles.media} style={ratio(image)} data-reveal="">
+                <li
+                  key={image.src}
+                  className={styles.media}
+                  style={project ? ratio(image) : undefined}
+                  data-reveal=""
+                >
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
-                    sizes="(min-width: 90rem) 650px, (min-width: 48em) 46vw, 92vw"
+                    sizes="(min-width: 90rem) 440px, (min-width: 64em) 30vw, (min-width: 48em) 46vw, 92vw"
                     className={styles.image}
                   />
                   {/* Pointer shortcut to the case study (the link below is the tab stop). */}
-                  <Link
-                    href={localePath(locale, `/our-projects/${project.slug}/`)}
-                    className={styles.mediaLink}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  />
+                  {project && (
+                    <Link
+                      href={localePath(
+                        locale,
+                        `/our-projects/${project.slug}/`,
+                      )}
+                      className={styles.mediaLink}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    />
+                  )}
                 </li>
               ))}
             </ul>
@@ -190,7 +216,10 @@ function CaseStory({
             <ul className={styles.caseLinks} data-reveal="">
               {projects.map((project) => (
                 <li key={project.slug}>
-                  <Link href={localePath(locale, `/our-projects/${project.slug}/`)} className={styles.moreLink}>
+                  <Link
+                    href={localePath(locale, `/our-projects/${project.slug}/`)}
+                    className={styles.moreLink}
+                  >
                     {copy.viewCase}: <span dir="ltr">{project.title}</span>
                     <ArrowIcon className={styles.arrow} />
                   </Link>
@@ -214,18 +243,29 @@ export default async function ServicePage({ params }: Props) {
   const copy = content.pages.services.servicePage;
   const { page } = family;
   const name = serviceNames[id];
-  const start = { label: copy.start, href: `${localePath(locale, "/contact-us/")}?need=${serviceTopics[id]}#project-form` };
+  const start = {
+    label: copy.start,
+    href: `${localePath(locale, "/contact-us/")}?need=${serviceTopics[id]}#project-form`,
+  };
   // Case studies are only linked while Our Work is published.
   const projectsFor = (story: ServiceCase) =>
     flags.showWork
-      ? (story.projects ?? []).flatMap((slug) => content.projects.find((project) => project.slug === slug) ?? [])
+      ? (story.projects ?? []).flatMap(
+          (slug) =>
+            content.projects.find((project) => project.slug === slug) ?? [],
+        )
       : [];
   const [lede, ...body] = page.paragraphs;
 
   return (
     <>
       <PageIntro
-        intro={{ label: page.englishName ? `${name} | ${page.englishName}` : name, title: page.title, lede, body }}
+        intro={{
+          label: page.englishName ? `${name} | ${page.englishName}` : name,
+          title: page.title,
+          lede,
+          body,
+        }}
         aside={
           <nav aria-label={content.a11y.footerServices}>
             <ol className={styles.index}>
@@ -254,28 +294,93 @@ export default async function ServicePage({ params }: Props) {
         </ButtonLink>
       </PageIntro>
 
-      <section className="tone-alt section" aria-labelledby="offerings-title">
-        <div className={cn("container", styles.split)}>
-          <Reveal as="header" className={styles.splitHead}>
-            <h2 id="offerings-title" className="type-h2" data-reveal="">
-              {withDot(page.offerings.title)}
-            </h2>
-          </Reveal>
-          <Reveal className={styles.splitBody}>
-            <ol className={styles.items}>
+      {page.cover && (
+        <div
+          className={cn("container", styles.cover)}
+          style={ratio(page.cover)}
+        >
+          <Image
+            src={page.cover.src}
+            alt={page.cover.alt}
+            fill
+            preload
+            sizes="(min-width: 90rem) 1328px, 92vw"
+            className={styles.coverImage}
+          />
+          <span className={styles.coverMark} aria-hidden="true" />
+        </div>
+      )}
+
+      {page.offerings.items.every((item) => item.image) ? (
+        /* Each offering beside its own picture, the sides alternating down the page. */
+        <section className="section" aria-labelledby="offerings-title">
+          <div className="container">
+            <Reveal as="header" className={styles.rowsHead}>
+              <h2 id="offerings-title" className="type-h2" data-reveal="">
+                {withDot(page.offerings.title)}
+              </h2>
+            </Reveal>
+            <ol className={styles.rows}>
               {page.offerings.items.map((item, index) => (
-                <li key={item.title} className={styles.item} data-reveal="">
-                  <span className={cn("type-label", styles.number)} aria-hidden="true">
-                    {pad(index + 1)}
-                  </span>
-                  <h3 className="type-h3">{item.title}</h3>
-                  <p className="type-body">{item.text}</p>
+                <li key={item.title} className={styles.row}>
+                  <Reveal className={styles.rowMedia}>
+                    <div className={styles.rowFrame} data-reveal="">
+                      <Image
+                        src={item.image!.src}
+                        alt={item.image!.alt}
+                        fill
+                        sizes="(min-width: 64em) 52vw, 92vw"
+                        className={styles.image}
+                      />
+                      <span className={styles.coverMark} aria-hidden="true" />
+                    </div>
+                  </Reveal>
+                  <Reveal className={styles.rowText}>
+                    <span
+                      className={cn("type-label", styles.number)}
+                      data-reveal=""
+                    >
+                      {pad(index + 1)} / {pad(page.offerings.items.length)}
+                    </span>
+                    <h3 className="type-h2" data-reveal="">
+                      {item.title}
+                    </h3>
+                    <p className="type-lede" data-reveal="">
+                      {item.text}
+                    </p>
+                  </Reveal>
                 </li>
               ))}
             </ol>
-          </Reveal>
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : (
+        <section className="tone-alt section" aria-labelledby="offerings-title">
+          <div className={cn("container", styles.split)}>
+            <Reveal as="header" className={styles.splitHead}>
+              <h2 id="offerings-title" className="type-h2" data-reveal="">
+                {withDot(page.offerings.title)}
+              </h2>
+            </Reveal>
+            <Reveal className={styles.splitBody}>
+              <ol className={styles.items}>
+                {page.offerings.items.map((item, index) => (
+                  <li key={item.title} className={styles.item} data-reveal="">
+                    <span
+                      className={cn("type-label", styles.number)}
+                      aria-hidden="true"
+                    >
+                      {pad(index + 1)}
+                    </span>
+                    <h3 className="type-h3">{item.title}</h3>
+                    <p className="type-body">{item.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       <section className="section" aria-labelledby="cases-title">
         <div className={cn("container", styles.cases)}>
@@ -307,7 +412,11 @@ export default async function ServicePage({ params }: Props) {
             <Reveal>
               <ul className={styles.sectors}>
                 {page.sectors.groups.map((group) => (
-                  <li key={group.title} className={styles.sector} data-reveal="">
+                  <li
+                    key={group.title}
+                    className={styles.sector}
+                    data-reveal=""
+                  >
                     <h3 className="type-h3">{group.title}</h3>
                     <p className="type-body">{group.text}</p>
                     {group.names && (
@@ -330,10 +439,19 @@ export default async function ServicePage({ params }: Props) {
         </section>
       )}
 
-      <CtaBand cta={{ title: page.cta.title, text: page.cta.text, emphasis: page.cta.emphasis, primary: start }} />
+      <CtaBand
+        cta={{
+          title: page.cta.title,
+          text: page.cta.text,
+          emphasis: page.cta.emphasis,
+          primary: start,
+        }}
+      />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serviceJsonLd(content, id, page.meta.description) }}
+        dangerouslySetInnerHTML={{
+          __html: serviceJsonLd(content, id, page.meta.description),
+        }}
       />
     </>
   );

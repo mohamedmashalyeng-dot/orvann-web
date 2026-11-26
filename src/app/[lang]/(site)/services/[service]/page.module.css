@@ -346,3 +346,93 @@
     translate: none;
   }
 }
+
+/* ---------- A wide picture under the intro ---------- */
+
+.cover {
+  position: relative;
+  aspect-ratio: var(--ratio, 16 / 9);
+  max-height: 80svh;
+  overflow: hidden;
+  background-color: var(--surface-raised);
+}
+
+.coverImage {
+  object-fit: cover;
+}
+
+/* The brand's small blue square, in a corner of a picture. */
+.coverMark {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  width: clamp(1.5rem, 3vw, 2.75rem);
+  aspect-ratio: 1;
+  background-color: var(--color-blue);
+}
+
+/* ---------- Offerings beside their pictures, sides alternating ---------- */
+
+.rowsHead {
+  margin-block-end: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+}
+
+.rows {
+  display: grid;
+  gap: clamp(3.5rem, 2rem + 6vw, 8rem);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.rowFrame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--surface-raised);
+}
+
+.rowText {
+  display: grid;
+  gap: var(--space-4);
+  align-content: center;
+}
+
+.rowText h3 {
+  max-width: 16ch;
+}
+
+@media (min-width: 64em) {
+  .row {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .rowMedia {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+  }
+
+  .rowText {
+    grid-column: 9 / -1;
+    grid-row: 1;
+  }
+
+  /* Every other row turns round: text first, then the picture. */
+  .row:nth-child(even) .rowMedia {
+    grid-column: 6 / -1;
+  }
+
+  .row:nth-child(even) .rowText {
+    grid-column: 1 / span 4;
+  }
+}
+
+/* A gallery of the work itself (no case study): an even grid of 4:3 pictures. */
+.even .media {
+  aspect-ratio: 4 / 3;
+}

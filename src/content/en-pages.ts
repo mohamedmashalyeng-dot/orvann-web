@@ -1,4 +1,5 @@
 import type { SiteContent } from "./types";
+import { craftImage } from "./craft-images";
 
 /**
  * Inner pages. About, Integrated Solutions (and each solution's page), Contact and the
@@ -687,28 +688,34 @@ export const enPages: SiteContent["pages"] = {
             "At ORVANN, we bring the authenticity of Egyptian crafts to life in a contemporary spirit, turning ideas and personal visions into exclusive works of art, made with care, that combine beautiful design, precise execution and the value of heritage.",
             "From gold, silver and copper to wood and stone, each piece is shaped by skilled craftspeople to embody the character of the person it was made for, and carries a signature like no other.",
           ],
+          cover: craftImage("oval-boxes", "Three oval boxes inlaid with mother-of-pearl in geometric and arabesque patterns, on sunlit limestone steps."),
           offerings: {
             title: "Art in every detail",
             items: [
               {
                 title: "Exclusive art pieces",
                 text: "We create works of art and special designs that reflect the client’s vision and identity, far from standard models and mass production.",
+                image: craftImage("mosaic-boxes", "Two domed boxes clad in a mosaic of mother-of-pearl and abalone with geometric stars, on dark stone."),
               },
               {
                 title: "Precious metalwork",
                 text: "We craft works in gold, silver and copper, with care for the artistic details and the quality of the finish.",
+                image: craftImage("brass-plaques", "Two brass plates hand-engraved with Arabic calligraphy and circular ornament, against dark stone."),
               },
               {
                 title: "Wood and stone work",
                 text: "We make distinctive pieces that combine the beauty of wood and stone with craftsmanship, for a striking visual presence.",
+                image: craftImage("walnut-abalone", "A walnut box centred on a blue abalone arabesque, framed in mother-of-pearl and inlaid wood bands."),
               },
               {
                 title: "Designs inspired by Egyptian heritage",
                 text: "We draw creative elements from the richness of Egyptian civilisation, its arts and its symbols, and reshape them into works that are both authentic and contemporary.",
+                image: craftImage("lattice-chest", "A floor chest inlaid with mother-of-pearl in star patterns from Egyptian Islamic ornament, in soft light."),
               },
               {
                 title: "Made to order",
                 text: "From the first idea and the choice of materials to making and finishing, we work to deliver a piece that carries the details that make it exceptional.",
+                image: craftImage("ivory-set", "A set of five mother-of-pearl boxes in graded sizes, each with its own abalone and brass pattern."),
               },
             ],
           },
@@ -719,6 +726,17 @@ export const enPages: SiteContent["pages"] = {
               paragraphs: [
                 "Every work we make is a creative experience of its own, beginning with an idea and completed by craftsmanship that gives it its own character.",
                 "We believe the value of an exclusive piece lies not in its rarity alone, but in the story it carries, the details that set it apart and the care with which it was made.",
+              ],
+              images: [
+                craftImage("arabesque-oval", "An oval box inlaid with mother-of-pearl, centred on a white arabesque, on limestone."),
+                craftImage("rosette-chest", "A footed wooden box inlaid with mother-of-pearl and bone, with star patterns and a rosette on its front."),
+                craftImage("inlay-panel", "A wooden panel inlaid with mother-of-pearl eight-pointed stars within a geometric border."),
+                craftImage("wooden-boxes", "Four wooden boxes inlaid with mother-of-pearl and abalone in geometric and floral patterns."),
+                craftImage("amber-silver", "Six round boxes, three in silvery mother-of-pearl mosaic and three in amber, on steps."),
+                craftImage("floral-star", "A mother-of-pearl box centred on star flowers of mother-of-pearl and abalone."),
+                craftImage("turquoise-boxes", "A turquoise and amber box beside two boxes in a white star pattern, in sunlight."),
+                craftImage("walnut-chests", "Walnut chests with pierced and engraved brass ornament."),
+                craftImage("diamond-inlay", "A mother-of-pearl box centred on an abalone checkerboard in a turquoise frame, on linen."),
               ],
               galleryLabel: "Our exclusive works",
               tags: ["Gold and silver work", "Copper work", "Wood pieces", "Stone work", "Designs inspired by Egyptian heritage"],
