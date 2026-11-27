@@ -30,7 +30,12 @@ export default async function SiteLayout({ children, params }: Readonly<{ childr
         {children}
       </main>
       <SiteFooter content={content} />
-      <FloatingWhatsApp href={site.whatsapp.href} label={content.a11y.whatsappFloat} newTabLabel={content.a11y.newTab} />
+      <FloatingWhatsApp
+        href={site.whatsapp.href}
+        name={content.footer.social.whatsapp}
+        label={content.a11y.whatsappFloat}
+        newTabLabel={content.a11y.newTab}
+      />
     </>
   );
 }

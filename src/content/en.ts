@@ -92,7 +92,7 @@ export const en: SiteContent = {
     ],
     menu: "Menu",
     close: "Close",
-    language: { label: "العربية", ariaLabel: "اقرأ هذه الصفحة بالعربية" },
+    language: { label: "Arabic", ariaLabel: "Read this page in Arabic" },
   },
 
   // ---- Homepage ----
@@ -224,6 +224,8 @@ export const en: SiteContent = {
     primary: { label: "Let’s Talk About Your Business", href: "/contact-us/#project-form" },
   },
 
+  direction: { perspective: "Perspective", people: "People", detail: "Detail", connected: "Connected work" },
+
   footer: {
     name: "ORVANN Integrated Solutions",
     taglines: ["Your Growth Partner."],
@@ -238,6 +240,7 @@ export const en: SiteContent = {
     },
     contact: { title: "Contact Us", address: "Egypt & UAE" },
     follow: "Follow ORVANN",
+    social: { linkedin: "LinkedIn", instagram: "Instagram", facebook: "Facebook", whatsapp: "WhatsApp" },
     rights: "All rights reserved.",
     privacy: "Privacy Policy",
   },

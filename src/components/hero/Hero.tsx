@@ -41,7 +41,7 @@ export function Hero({ hero, announcement, primary, secondary, projects }: Props
       <HeroFlight message={announcement} />
       <div className={cn("container", styles.inner)}>
         <div className={styles.composition}>
-          <p className={cn("type-label", styles.label)} data-enter="lede" lang="en">
+          <p className={cn("type-label", styles.label)} data-enter="lede">
             {hero.label}
           </p>
 

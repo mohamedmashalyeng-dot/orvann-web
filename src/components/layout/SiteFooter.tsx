@@ -23,7 +23,7 @@ export function SiteFooter({ content }: Props) {
             <Link href={localePath(content.locale, "/")} className={styles.brandLink} aria-label={a11y.home}>
               <Logo className={styles.brandLogo} />
             </Link>
-            <p className={styles.name} lang="en">
+            <p className={styles.name}>
               {footer.name}
             </p>
             {footer.taglines.map((line) => (
@@ -74,7 +74,7 @@ export function SiteFooter({ content }: Props) {
                 <li key={profile.id}>
                   <a href={profile.href} className={cn(styles.link, styles.social)} target="_blank" rel="noopener noreferrer">
                     <SocialIcon id={profile.id} className={styles.socialIcon} />
-                    {profile.label}
+                    {footer.social[profile.id]}
                     <span className="visually-hidden"> {a11y.newTab}</span>
                   </a>
                 </li>

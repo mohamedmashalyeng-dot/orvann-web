@@ -19,7 +19,7 @@ export const ar: SiteContent = {
     title: "أورفان للحلول المتكاملة | شريكك في النمو والنجاح",
     description:
       "في أورفان للحلول المتكاملة، نفهم أعمالك، ونحلل تحدياتك، ونكتشف فرص نموك، لنقدم لك الاستراتيجيات والحلول التي تناسب أهدافك.",
-    siteName: "ORVANN أورفان",
+    siteName: "أورفان",
     ogLocale: "ar_EG",
   },
 
@@ -88,13 +88,13 @@ export const ar: SiteContent = {
     ],
     menu: "القائمة",
     close: "إغلاق",
-    language: { label: "English", ariaLabel: "Read this page in English" },
+    language: { label: "الإنجليزية", ariaLabel: "اقرأ هذه الصفحة بالإنجليزية" },
   },
 
   // ---- Homepage ----
   // The homepage copy supplied by ORVANN (20 Nov 2026), word for word, to the end of the footer.
   hero: {
-    label: "Your Growth Partner",
+    label: "شريكك في النمو",
     headline: [[{ text: "شريكك في" }], [{ text: "النمو والنجاح", accent: true }]],
     subheadline: "استراتيجيات أعمال وحلول متكاملة تصنع الفارق.",
     paragraphs: [
@@ -213,9 +213,11 @@ export const ar: SiteContent = {
     primary: { label: "لنتحدث عن أعمالك", href: "/ar/contact-us/#project-form" },
   },
 
+  direction: { perspective: "منظور", people: "الناس", detail: "التفاصيل", connected: "عمل مترابط" },
+
   footer: {
-    name: "ORVANN Integrated Solutions",
-    taglines: ["Your Growth Partner.", "شريكك في النمو والنجاح."],
+    name: "أورفان للحلول المتكاملة",
+    taglines: ["شريكك في النمو والنجاح."],
     explore: {
       title: "استكشف أورفان",
       links: [
@@ -227,6 +229,7 @@ export const ar: SiteContent = {
     },
     contact: { title: "تواصل معنا", address: "مصر والإمارات" },
     follow: "تابع أورفان",
+    social: { linkedin: "لينكدإن", instagram: "إنستجرام", facebook: "فيسبوك", whatsapp: "واتساب" },
     rights: "جميع الحقوق محفوظة.",
     privacy: "سياسة الخصوصية",
   },

@@ -977,6 +977,8 @@ export const enPages: SiteContent["pages"] = {
       portfolioFile: "Portfolio File",
       portfolioHint: "A link, a PDF up to 10 MB, or both. Recommended for creative and digital roles.",
       linkedin: "LinkedIn Profile",
+      portfolioPlaceholder: "https://",
+      linkedinPlaceholder: "https://www.linkedin.com/in/…",
       chooseFile: "Choose File",
       noFile: "No file chosen",
       fileTooLarge: "This file is larger than {mb} MB. Please upload a smaller file.",

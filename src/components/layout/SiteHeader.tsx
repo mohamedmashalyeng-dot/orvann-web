@@ -56,7 +56,6 @@ function LanguageLink({ pathname, locale, language, className }: {
     <a
       href={switchLocalePath(pathname, other)}
       hrefLang={other}
-      lang={other}
       aria-label={language.ariaLabel}
       className={className}
       data-reload=""

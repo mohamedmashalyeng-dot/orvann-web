@@ -20,7 +20,17 @@ const pastFirstScreen = () => window.scrollY > window.innerHeight * 0.75;
  * A quick WhatsApp shortcut in the corner — the fastest way to reach ORVANN. Hidden (and
  * removed from the tab order) until it's useful, and while the mobile menu is open.
  */
-export function FloatingWhatsApp({ href, label, newTabLabel }: { href: string; label: string; newTabLabel: string }) {
+export function FloatingWhatsApp({
+  href,
+  name,
+  label,
+  newTabLabel,
+}: {
+  href: string;
+  name: string;
+  label: string;
+  newTabLabel: string;
+}) {
   const visible = useSyncExternalStore(subscribe, pastFirstScreen, () => false);
 
   return (
@@ -35,7 +45,7 @@ export function FloatingWhatsApp({ href, label, newTabLabel }: { href: string; l
     >
       <span className={styles.pulse} aria-hidden="true" />
       <SocialIcon id="whatsapp" className={styles.icon} />
-      <span className={styles.label}>WhatsApp</span>
+      <span className={styles.label}>{name}</span>
       <span className="visually-hidden">
         {label} {newTabLabel}
       </span>

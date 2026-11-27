@@ -253,7 +253,7 @@ export function CareersForm({ locale, copy, places }: Props) {
         <p className={base.hint}>{copy.portfolioHint}</p>
         <div className={base.row}>
           <Field label={copy.portfolioUrl} hint={copy.optional}>
-            <input type="url" name="portfolio_url" maxLength={300} dir="ltr" placeholder="https://" className={base.input} />
+            <input type="url" name="portfolio_url" maxLength={300} placeholder={copy.portfolioPlaceholder} className={base.input} />
           </Field>
           <Field label={copy.portfolioFile} hint={copy.optional}>
             <FileInput
@@ -271,8 +271,7 @@ export function CareersForm({ locale, copy, places }: Props) {
             type="url"
             name="linkedin"
             maxLength={300}
-            dir="ltr"
-            placeholder="https://www.linkedin.com/in/…"
+            placeholder={copy.linkedinPlaceholder}
             className={base.input}
           />
         </Field>

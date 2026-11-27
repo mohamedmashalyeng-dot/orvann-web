@@ -200,14 +200,19 @@ export type SiteContent = {
   philosophy: { title: string; points: Step[] };
   /** The homepage's closing band. */
   closing: Cta;
+  /** The four themes of the homepage photo band, in this language. */
+  direction: { perspective: string; people: string; detail: string; connected: string };
+
   footer: {
     /** The company's full name, beside the logo. */
     name: string;
-    /** Lines under the name; each sets its own direction, so an English line reads right in Arabic. */
+    /** Lines under the name, in this language only. */
     taglines: string[];
     explore: { title: string; links: Link[] };
     contact: { title: string; address: string };
     follow: string;
+    /** The social networks' names, in this language (the WhatsApp one is the floating button's). */
+    social: { linkedin: string; instagram: string; facebook: string; whatsapp: string };
     /** The line after "© <year> ORVANN Integrated Solutions." */
     rights: string;
     privacy: string;
@@ -357,6 +362,8 @@ export type SiteContent = {
         portfolioFile: string;
         portfolioHint: string;
         linkedin: string;
+        portfolioPlaceholder: string;
+        linkedinPlaceholder: string;
         /** Chosen file, and what is wrong with one that will not be accepted. */
         chooseFile: string;
         noFile: string;

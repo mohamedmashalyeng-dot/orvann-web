@@ -52,7 +52,7 @@ export default async function HomePage({ params }: LangParams) {
         projects={content.projects.slice(0, 3).map((project) => project.image)}
       />
       <Services services={content.services} />
-      <DirectionMosaic />
+      <DirectionMosaic labels={content.direction} />
       {flags.showWork && (
         <Work locale={content.locale} work={content.work} serviceNames={content.serviceNames} projects={featured} />
       )}
