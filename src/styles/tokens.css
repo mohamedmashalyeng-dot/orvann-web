@@ -41,7 +41,8 @@
   /* ---- Type families (next/font sets the --font-* source variables on <html>) ---- */
   /* English: Inter for text and labels, Archivo condensed (its width axis drawn in) for
      headlines, Instrument Serif in italics for brand lines ("Strategy. Creative.
-     Execution."). Arabic switches every role to Bukra (see :root[lang="ar"]). */
+     Execution."). Arabic switches every role to Thmanyah Sans (see :root[lang="ar"]). */
+  --font-thmanyah: "Thmanyah Sans"; /* @font-face in globals.css */
   --font-sans: var(--font-inter), "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-mono: var(--font-sans);
   --font-display: var(--font-archivo), "Arial Narrow", var(--font-sans);
@@ -174,11 +175,11 @@
 }
 
 /* ---- Arabic ----
-   29LT Bukra carries every role, display to labels. Arabic takes no tracking (it would
+   Thmanyah Sans carries every role, display to labels. Arabic takes no tracking (it would
    break the joined letters) and no capitals, and needs taller lines for its dots and
    ascenders. Everything else — sizes, spacing, tones — is shared with English. */
 :root[lang="ar"] {
-  --font-sans: var(--font-bukra), var(--font-inter), Tahoma, Arial, sans-serif;
+  --font-sans: var(--font-thmanyah), var(--font-inter), Tahoma, Arial, sans-serif;
   --font-display: var(--font-sans);
   --font-headline: var(--font-sans);
   --font-mono: var(--font-sans);

@@ -138,7 +138,6 @@ src/
   content/             every piece of copy — types.ts (shape); en.ts / ar.ts (homepage and shared
                        copy), en-pages.ts / ar-pages.ts (inner pages), en-projects.ts / ar-projects.ts
                        (the six projects); index.ts (locales, localePath), server.ts (contentFor)
-  fonts/               Druk (English titles) and 29LT Bukra (Arabic), as woff2 — see Fonts
   config/site.ts       verified business facts, partner logos, build-time flags
   lib/metadata.ts      per-page title, canonical URL and sharing metadata
   theme/theme.ts       dark/light theme settings and the pre-paint theme script
@@ -222,7 +221,7 @@ redirect to the new ones (`public/.htaccess`).
 
 Arabic is right-to-left throughout: layout uses logical properties, directional icons flip,
 motion reads a `--dir` multiplier, and drawings keep left-to-right coordinates. Its type
-tokens (`:root[lang="ar"]` in `tokens.css`) set Bukra for every role, no letter-spacing (it
+tokens (`:root[lang="ar"]` in `tokens.css`) set Thmanyah Sans for every role, no letter-spacing (it
 breaks joined letters) and taller lines.
 
 Copy provenance is marked inline in the content files: `[brief]`, `[site]` (orvann.com or
@@ -236,7 +235,7 @@ build.
 | Face | Used for | Files | Licence |
 | --- | --- | --- | --- |
 | Poppins | All English text: titles, body and labels | Google Fonts via `next/font` | Open Font License |
-| 29LT Bukra (29Letters) | All Arabic text | `src/fonts/29lt-bukra-*.woff2` | **Web licence needed** before the Arabic site is published (the copy supplied came from a free-download site). |
+| Thmanyah Sans (thmanyah) | All Arabic text | `public/fonts/thmanyah/thmanyahsans-*.woff2` (400, 500, 700), `@font-face` in `globals.css` | thmanyah's free font licence: the files must not be shared, so they are **gitignored and not on GitHub**. Keep them locally in that folder and on the server in `/fonts/thmanyah/` (the deploy only adds files, never deletes). |
 
 One family per line: the accented word in the headline (Growth) is set in the same face as the words around it and picked out by colour (`.type-accent`).
 

@@ -1,5 +1,33 @@
 /* Base styles and shared utilities. Tokens live in src/styles/tokens.css. */
 
+/* Arabic: Thmanyah Sans (thmanyah, free under its own licence). Its licence forbids sharing
+   the files, so they are not in the repository: they sit in public/fonts/thmanyah/ locally
+   (gitignored) and in /fonts/thmanyah/ on the server, which the deploy never deletes. Only
+   Arabic text asks for it, so English pages never download it. */
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah/thmanyahsans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -129,7 +157,7 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
 }
 
 /* Page and section titles take the headline face (Archivo drawn in to a condensed bold, in
-   capitals, in English; Bukra in Arabic) at the headline weight. */
+   capitals, in English; Thmanyah Sans in Arabic) at the headline weight. */
 .type-display,
 .type-mega,
 .type-h2 {
@@ -216,14 +244,14 @@ html[data-intro="play"] body > :not([data-launch-intro]) * {
   font-size: var(--text-sm);
 }
 
-/* Bukra shares the sizes; it needs taller lines. */
+/* Thmanyah shares the sizes; it needs taller lines. */
 [lang="ar"] .type-mega {
   line-height: 1.1;
 }
 
 /* A phrase in the other language (the language switch): its own script's typeface. */
 :root:not([lang="ar"]) [lang="ar"] {
-  font-family: var(--font-bukra), Tahoma, Arial, sans-serif;
+  font-family: var(--font-thmanyah), Tahoma, Arial, sans-serif;
 }
 
 :root[lang="ar"] [lang="en"] {

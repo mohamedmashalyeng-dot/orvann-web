@@ -47,6 +47,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# font archives as delivered (the fonts the site uses live in src/fonts)
+# font archives as delivered
 *.zip
+# Thmanyah Sans: its licence forbids sharing the files, so they stay off GitHub. They live
+# in this folder locally and in /fonts/thmanyah/ on the server; the deploy never deletes them.
+/public/fonts/thmanyah/
 /release/

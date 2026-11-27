@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter, Instrument_Serif } from "next/font/google";
-import localFont from "next/font/local";
 import Script from "next/script";
 import { contentFor, type LangParams } from "@/content/server";
 import { analyticsId, flags, googleSiteVerification, publishedLocales, siteUrl } from "@/config/site";
@@ -37,20 +36,10 @@ const instrument = Instrument_Serif({
   preload: false,
 });
 
-// Arabic text, from display to body (29LT Bukra by 29Letters). A web licence is needed
-// before launch. Not preloaded: English pages never use it.
-const bukra = localFont({
-  src: [
-    { path: "../../fonts/29lt-bukra-light.woff2", weight: "300", style: "normal" },
-    { path: "../../fonts/29lt-bukra-regular.woff2", weight: "400", style: "normal" },
-    { path: "../../fonts/29lt-bukra-bold.woff2", weight: "700", style: "normal" },
-  ],
-  variable: "--font-bukra",
-  display: "swap",
-  preload: false,
-});
+// Arabic text is set in Thmanyah Sans, declared with @font-face in globals.css: its files
+// stay off GitHub (licence), so next/font cannot bundle them.
 
-const fontVariables = [inter, archivo, instrument, bukra].map((font) => font.variable).join(" ");
+const fontVariables = [inter, archivo, instrument].map((font) => font.variable).join(" ");
 
 // Only the published languages are built; anything else under the language segment is a 404.
 export const dynamicParams = false;
